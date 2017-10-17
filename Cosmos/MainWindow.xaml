@@ -1,0 +1,23 @@
+﻿<Window x:Class="Cosmos.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cosmos"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1180">    
+
+    <Grid Name="grdMain">
+
+        <Border BorderThickness="15" BorderBrush="DarkGoldenrod" CornerRadius="30" />
+        <Border BorderThickness="7" BorderBrush="White" />
+        <Border BorderThickness="7" BorderBrush="White" CornerRadius="20" />
+        <Border BorderThickness="7" BorderBrush="White" CornerRadius="30" />
+
+        <!--<Border BorderThickness="15" BorderBrush="White" CornerRadius="30" />
+        <Border BorderThickness="7" BorderBrush="DarkGoldenrod" />
+        <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="20" />
+        <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="30" />-->
+
+    </Grid>
+</Window>
