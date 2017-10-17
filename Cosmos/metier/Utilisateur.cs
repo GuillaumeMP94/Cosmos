@@ -6,19 +6,46 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-	public class Unite : Carte
-	{
-		#region Propriétés
-		public int Attaque { get; set; }
-		public int Defense { get; set; }
-		#endregion
-		#region Constructeur
-		public Unite(string nom, Effet effet, Ressource cout, int attaque, int defense)
-			: base(nom, effet, cout)
+    /// <summary>
+    /// Classe pour les informations de l'utilisateur.
+    /// </summary>
+    public class Utilisateur : Joueur
+    {
+        #region Propriétés
+        public string Nom { get; set; }
+        //TODO: Pertinence des champs
+        public int NiveauDebloque { get; set; }
+        public string Courriel { get; set; }
+        public string MotDePasse { get; set; }
+        public string Salt { get; set; }
+        //public list<Deck> DecksUtilisateurs
+        public List<Carte> CartesUtilisateurs;
+        #endregion
+        #region Constructeur
+        public Utilisateur(string nom)
+            :base()
+        {
+            Nom = nom;
+            NiveauDebloque = 1;
+        }
+        public Utilisateur(string nom, int niveau)
+            :base()
 		{
-			Attaque = attaque;
-			Defense = defense;
+            Nom = nom;
+            NiveauDebloque = niveau;
 		}
-		#endregion
-	}
+        public Utilisateur(string nom, int niveau, string courriel): this(nom,niveau)
+        {
+            Courriel = courriel;
+        }
+        public Utilisateur(string nom, int niveau, string courriel,string motDePasse) : this(nom, niveau, courriel)
+        {
+            MotDePasse = motDePasse;
+        }
+        public Utilisateur(string nom, int niveau, string courriel, string motDePasse, string salt) : this(nom, niveau, courriel, motDePasse)
+        {
+            Salt = salt;
+        }
+        #endregion
+    }
 }

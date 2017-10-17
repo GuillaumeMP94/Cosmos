@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
+    /// <summary>
+    /// Classe contenant les informations d'un gain qui est un type d'effet.
+    /// </summary>
 	public class Gain : Effet
 	{
 		#region Propriétés
