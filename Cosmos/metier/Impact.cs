@@ -24,6 +24,14 @@ namespace Cosmos.metier
 			Cible = cible;
 			NbCible = nbCible;
 		}
-		#endregion
-	}
+        #endregion
+        /// <summary>
+        /// Fonction qui permet la deep copy d'un Impact.
+        /// </summary>
+        /// <returns></returns>
+        public override Effet Clone()
+        {
+            return new Impact(this.Type,this.Valeur,this.Cible,this.NbCible);
+        }
+    }
 }

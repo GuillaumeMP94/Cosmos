@@ -16,15 +16,20 @@ namespace Cosmos.metier
         {
 
         }
-        #endregion
-        #region Operateurs Surchargés
-
-        public static Deck operator =(Deck a, Deck b)
+        
+        /// <summary>
+        /// Constructeur qui permet de faire une Deep copy du deck passé en paramêtre.
+        /// </summary>
+        /// <param name="aCopier"></param>
+        public Deck(Deck aCopier)
         {
-            
+            foreach (Carte uneCarte in aCopier.CartesDuDeck)
+            {
+                this.CartesDuDeck.Add(uneCarte.Clone());
+            }
         }
-        
-        
-        
+        #endregion
+
+
     }
 }

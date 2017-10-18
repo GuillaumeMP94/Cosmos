@@ -12,11 +12,19 @@ namespace Cosmos.metier
 	public class Gadget : Carte
 	{
 		#region Constructeur
-		public Gadget(string nom, Effet effet, Ressource cout, int defense)
+		public Gadget(string nom, Effet effet, Ressource cout)
 			: base(nom, effet, cout)
 		{
 
 		}
-		#endregion
-	}
+        #endregion
+        /// <summary>
+        /// Fonction qui fait une deep copy d'un gadget.
+        /// </summary>
+        /// <returns></returns>
+        public override Carte Clone()
+        {
+            return new Gadget(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout));
+        }
+    }
 }
