@@ -20,6 +20,7 @@ namespace Cosmos.view
     /// </summary>
     public partial class Campagne : UserControl
     {
+        public DistributionRessources DistRess { get; set; }
         public MainWindow Main { get; set; }
         public double btnHeight;
         public double btnWidth;
@@ -55,7 +56,21 @@ namespace Cosmos.view
 
         private void btnNiveau1_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+
+
+            //TODO: Move to campagne screen
+            Rectangle rect = new Rectangle();
+            rect.Fill = Brushes.Black;
+            rect.Opacity = 0.2;
+            grdCampgne.Children.Add(rect);
+
+
+            DistRess = new DistributionRessources();
+
+            grdCampgne.Children.Add(DistRess);
+
+
+
         }
 
         private void btnMouseEnter(object sender, MouseEventArgs e)

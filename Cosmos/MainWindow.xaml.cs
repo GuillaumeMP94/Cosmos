@@ -27,7 +27,7 @@ namespace Cosmos
         public CreationCompte Creation { get; set; }
         public RecuperationCompte Recuperation { get; set; }
         public OptionCompte OptionCompte { get; set; }
-        public Campagne Campagne { get; set; }
+        public Campagne Campagne { get; set; }        
         public MainWindow()
         {
             InitializeComponent();
@@ -37,8 +37,12 @@ namespace Cosmos
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
 
+
+
+
+
             //TODO: Enlever la prochaine ligne avant remise
-            // EcranMenuPrincipal();
+            EcranCampagne();
 
 
         }
