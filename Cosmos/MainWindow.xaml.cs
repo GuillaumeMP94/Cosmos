@@ -37,9 +37,10 @@ namespace Cosmos
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
 
-            //TODO: Enlever la prochaine ligne avant remise Test commit meme fichier
-            //EcranMenuPrincipal();
-			//Test Simon
+            //TODO: Enlever la prochaine ligne avant remise
+            // EcranMenuPrincipal();
+
+
         }
 
         public void QuitterMain()
