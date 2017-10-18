@@ -20,6 +20,14 @@ namespace Cosmos.metier
 		{
 			Defense = defense;
 		}
-		#endregion
-	}
+        #endregion
+        /// <summary>
+        /// Fonction qui fait une deep copy d'un Batiment.
+        /// </summary>
+        /// <returns></returns>
+        public override Carte Clone()
+        {
+            return new Batiment(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Defense);
+        }
+    }
 }

@@ -25,6 +25,8 @@ namespace Cosmos.metier
 			Cout = cout;
             NomImage = n + ".jpg";
 		}
-		#endregion
+        #endregion
+        public abstract Carte Clone();
+
 	}
 }

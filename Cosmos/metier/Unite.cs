@@ -22,6 +22,14 @@ namespace Cosmos.metier
 			Attaque = attaque;
 			Defense = defense;
 		}
-		#endregion
+        #endregion
+        /// <summary>
+        /// Fonction qui fait une deep copy d'une unite.
+        /// </summary>
+        /// <returns></returns>
+        public override Carte Clone()
+        {
+            return new Unite(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Attaque, this.Defense);
+        }
 	}
 }

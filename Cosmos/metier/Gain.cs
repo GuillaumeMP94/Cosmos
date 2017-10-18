@@ -29,6 +29,14 @@ namespace Cosmos.metier
 			RessourceJoueur = joueur;
 			RessourceAdversaire = adversaire;
 		}
-		#endregion
-	}
+        #endregion
+        /// <summary>
+        /// Fonction qui permet la deep copy d'un gain.
+        /// </summary>
+        /// <returns></returns>
+        public override Effet Clone()
+        {
+            return new Gain(this.Type,new Ressource(this.RessourceJoueur),new Ressource(this.RessourceAdversaire));
+        }
+    }
 }
