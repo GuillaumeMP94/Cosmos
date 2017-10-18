@@ -60,8 +60,10 @@
     <Compile Include="metier\Gadget.cs" />
     <Compile Include="metier\Gain.cs" />
     <Compile Include="metier\Impact.cs" />
+    <Compile Include="metier\Joueur.cs" />
     <Compile Include="metier\Ressource.cs" />
     <Compile Include="metier\Unite.cs" />
+    <Compile Include="metier\Utilisateur.cs" />
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>

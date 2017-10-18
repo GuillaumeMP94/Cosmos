@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
+    /// <summary>
+    /// Classe pour les impacts qui est un type d'effet.
+    /// </summary>
 	public class Impact : Effet
 	{
 		#region Propriétés
