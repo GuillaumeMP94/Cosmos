@@ -85,7 +85,6 @@ namespace Cosmos.metier
 					  .Append(" Alain Dollars");
 			return ressources.ToString();
 		}
-		#endregion
-		// test 2
-	}
+        #endregion
+    }
 }

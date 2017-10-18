@@ -18,8 +18,8 @@ namespace Cosmos.metier
         public string Courriel { get; set; }
         public string MotDePasse { get; set; }
         public string Salt { get; set; }
-        //public list<Deck> DecksUtilisateurs
-        public List<Carte> CartesUtilisateurs;
+        public List<Deck> DecksUtilisateurs { get; set; }
+        public List<Carte> CartesUtilisateurs { get; set; }
         #endregion
         #region Constructeur
         public Utilisateur(string nom)

@@ -17,13 +17,19 @@ namespace Cosmos.metier
         public string Avatar { get; set; }
         public int PointDeBlindage { get; set; }
         public string NomJoueur { get; set; }
-        // public Deck DeckAJouer { get; set;}
+        public Deck DeckAJouer { get; set;}
         public Ressource Active { get; set; }
         public Ressource Level { get; set; }
         #endregion
         #region Constructeur
         public Joueur()
         {
+            Reinitialiser();
+        }
+
+        public void Reinitialiser()
+        {
+            PointDeBlindage = 25;
             Active = new Ressource(0, 0, 0);
             Level = new Ressource(1, 1, 1);
         }
