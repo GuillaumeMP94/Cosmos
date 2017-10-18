@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
+    /// <summary>
+    /// Classe pour une unite qui est un type de carte.
+    /// </summary>
 	public class Unite : Carte
 	{
 		#region Propriétés

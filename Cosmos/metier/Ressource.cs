@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
+    /// <summary>
+    /// Classe pour stocker les ressources du jeu.
+    /// </summary>
 	public class Ressource
 	{
 		#region Propriétés
@@ -82,7 +85,6 @@ namespace Cosmos.metier
 					  .Append(" Alain Dollars");
 			return ressources.ToString();
 		}
-		#endregion
-		// test 2
-	}
+        #endregion
+    }
 }
