@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Cosmos.view.Partie"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1400">
+    <Grid Margin="0,0,0,0" Name="grd1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="column1" Width="Auto"/>
+            <ColumnDefinition Name="column2" Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+
+        <Grid Margin="0,0,1000,0" x:Name="grd2">
+            <TextBlock x:Name="txBlPBA" Text="Points de blindage adverse" Background="Beige"
+                       Margin="20,130,200,820"/>
+            <TextBlock x:Name="txBlnbBlindageJ" Text="26" Background="Beige"
+                       Margin="20,845,200,100"/>
+            <TextBlock x:Name="txBltxtPBJ" Text="Points de blindage" Background="Beige"
+                       Margin="20,790,200,160"/>
+            <TextBlock x:Name="txBlnbBlindageA" Text="26" Background="Beige"
+                       Margin="20,190,200,760"/>
+
+            <TextBlock  x:Name="txBlphaseRessource" Text="Phase de ressources" Background="Crimson"
+                       Margin="20,400,0,550"/>
+            <TextBlock  x:Name="txBlphasePrincipale" Text="Phase principale" Background="Beige"
+                       Margin="20,450,0,500"/>
+            <TextBlock  x:Name="txBlphaseAttaque" Text="Phase d'attaque" Background="Beige"
+                       Margin="20,500,0,450"/>
+            <TextBlock  x:Name="txBlphaseFin" Text="Phase de fin" Background="Beige"
+                       Margin="20,550,0,400"/>
+
+        </Grid>
+        <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
+                Width="150" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Cross"
+                 Click="btnTerminerPhase_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="MediumSlateBlue" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Terminer la phase
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</UserControl>

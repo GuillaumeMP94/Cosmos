@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    /// <summary>
-    /// Classe pour une unite qui est un type de carte.
-    /// </summary>
 	public class Unite : Carte
 	{
 		#region Propriétés
@@ -22,14 +19,6 @@ namespace Cosmos.metier
 			Attaque = attaque;
 			Defense = defense;
 		}
-        #endregion
-        /// <summary>
-        /// Fonction qui fait une deep copy d'une unite.
-        /// </summary>
-        /// <returns></returns>
-        public override Carte Clone()
-        {
-            return new Unite(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Attaque, this.Defense);
-        }
+		#endregion
 	}
 }

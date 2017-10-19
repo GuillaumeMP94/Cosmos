@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    /// <summary>
-    /// Classe pour les informations d'un batiment qui est un type de carte.
-    /// </summary>
 	public class Batiment : Carte
 	{
 		#region Propriétés
@@ -20,14 +17,6 @@ namespace Cosmos.metier
 		{
 			Defense = defense;
 		}
-        #endregion
-        /// <summary>
-        /// Fonction qui fait une deep copy d'un Batiment.
-        /// </summary>
-        /// <returns></returns>
-        public override Carte Clone()
-        {
-            return new Batiment(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Defense);
-        }
-    }
+		#endregion
+	}
 }
