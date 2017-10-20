@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cosmos"
         mc:Ignorable="d"
-        WindowStyle="None"
         WindowState="Maximized"
-        Title="MainWindow" Height="1000" Width="1400">    
+        WindowStyle="None"
+        Title="MainWindow" Height="800" Width="1180">    
 
     <Grid Name="grdMain">
 
@@ -20,10 +20,6 @@
         <Border BorderThickness="7" BorderBrush="DarkGoldenrod" />
         <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="20" />
         <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="30" />-->
-
-        <!--<Border HorizontalAlignment="Center" Width="400" VerticalAlignment="Center" CornerRadius="25">
-            <Image Source="/images/cartes/Usine Nucléaire.jpg" />
-        </Border>-->
 
     </Grid>
 </Window>
