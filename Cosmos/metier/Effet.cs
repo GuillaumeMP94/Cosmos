@@ -17,5 +17,9 @@ namespace Cosmos.metier
 			Type = type;
 		}
 		#endregion
+		public virtual Effet Clone()
+		{
+		    return new Effet(this.Type);
+		}
 	}
 }
