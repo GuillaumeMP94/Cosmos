@@ -30,7 +30,7 @@ namespace Cosmos.view
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
         {
-            Main.Close();
+            Main.EcranConnexion();
         }
 
         private void btnRegleTuto_Click(object sender, RoutedEventArgs e)

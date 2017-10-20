@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    /// <summary>
-    /// Classe contenant les informations d'un gain qui est un type d'effet.
-    /// </summary>
 	public class Gain : Effet
 	{
 		#region Propriétés
@@ -29,14 +26,6 @@ namespace Cosmos.metier
 			RessourceJoueur = joueur;
 			RessourceAdversaire = adversaire;
 		}
-        #endregion
-        /// <summary>
-        /// Fonction qui permet la deep copy d'un gain.
-        /// </summary>
-        /// <returns></returns>
-        public override Effet Clone()
-        {
-            return new Gain(this.Type,new Ressource(this.RessourceJoueur),new Ressource(this.RessourceAdversaire));
-        }
-    }
+		#endregion
+	}
 }

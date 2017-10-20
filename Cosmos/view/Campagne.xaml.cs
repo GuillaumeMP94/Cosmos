@@ -55,7 +55,7 @@ namespace Cosmos.view
 
         private void btnNiveau1_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+            Main.EcranPartie(); //EN COURS
         }
 
         private void btnMouseEnter(object sender, MouseEventArgs e)
