@@ -1,4 +1,5 @@
-﻿using Cosmos.view;
+﻿using Cosmos.metier;
+using Cosmos.view;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
 
             //TODO: Enlever la prochaine ligne avant remise
-            // EcranMenuPrincipal();
+            EcranPartie();
 
 
         }
@@ -99,6 +100,19 @@ namespace Cosmos
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
+
+            grdMain.Children.Add(ContenuEcran);
+        }
+
+        public void EcranPartie()
+        {
+            grdMain.Children.Remove(ContenuEcran);
+            // TODO remove all this shit et passer des joueurs pour vrai
+            Joueur joueur1 = new Joueur();
+            Joueur joueur2 = new Joueur();
+            ContenuEcran = new view.Partie(this, joueur1, joueur2);
+
+            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgNiv01.jpg")));
 
             grdMain.Children.Add(ContenuEcran);
         }

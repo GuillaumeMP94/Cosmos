@@ -19,7 +19,7 @@
         <Grid Margin="0,0,1000,0" x:Name="grd2">
             <TextBlock x:Name="txBlPBA" Text="Points de blindage adverse" Background="Beige"
                        Margin="20,130,200,820"/>
-            <TextBlock x:Name="txBlnbBlindageJ" Text="26" Background="Beige"
+            <TextBlock x:Name="txBlnbBlindageJ" Text="{Binding Source=joueur1, Path=PointDeBlindage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Beige"
                        Margin="20,845,200,100"/>
             <TextBlock x:Name="txBltxtPBJ" Text="Points de blindage" Background="Beige"
                        Margin="20,790,200,160"/>

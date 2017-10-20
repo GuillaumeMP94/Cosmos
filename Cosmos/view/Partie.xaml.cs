@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cosmos.metier;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,59 +22,74 @@ namespace Cosmos.view
     public partial class Partie : UserControl
     {
         public MainWindow Main { get; set; }
-        // Variables accessibles partout dans la partie
-        int phase = 1;
 
-        public Partie(MainWindow main)
+        int phase;
+
+        public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
         {
             InitializeComponent();
+
+            TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
+
             this.DataContext = this; // TODO changé pour bon binding
-            /*      Example année passé
-            dtgListePersonnes.ItemsSource = LstPersonnes;
-            grdModification.DataContext = LstPersonnes;
-            */
+            grd1.DataContext = this; // TODO
+            grd2.DataContext = this; // TODO
+
             Main = main;
 
+            // Initialiser les points de blindage
+            txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
+            txBlnbBlindageA.Text = joueur2.PointDeBlindage.ToString();
 
-
-            // Initialiser le nombre de points de blindage de chaque joueurs (25)
-            //
-            // nbBlindageJ.Text = joueur.nbBlindage
-            // nbBlindageA.Text = adversaire.nbBlindage
-
-
-            // Initialiser les ressources de chaque joueurs (0)
-            //
-            // nbCharroniteJ = joueur.ressource.charronite
-            // nbBarilsJ = joueur.ressource.baril
-            // nbAlainDollarJ = joueur.ressource.alainDollar
-            // nbCharroniteA = adversaire.ressource.baril
-            // nbBarilsA = adversaire.ressource.baril
-            // nbAlainDollarJ = adversaire.ressource.alainDollar
-
+            // Initialiser les points de ressources
+            // txBlnbCharroniteJ.Text = joueur1.Active.Charronite
+            // txBlnbBarilJ.Text = joueur1.Active.BarilNucleaire
+            // txBlnbAlainDollarJ.Text = joueur1.Active.AlainDollar
+            // txBlnbCharroniteA.Text = joueur2.Active.Charronite
+            // txBlnbBarilA.Text = joueur2.Active.BarilNucleaire
+            // txBlnbAlainDollarA.Text = joueur2.Active.AlainDollar
 
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 
-
             // Initialiser la phase à "phase de ressource"
+            phase = laTableDeJeu.Phase;
 
+            // Brasser les deck
+            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
+            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
 
-            // Déterminer au hasard qui débute la partie
-
-
-            // Donner une main à chaque joueurs ? (Ici ou pas ? )
+            // Donner une main à chaque joueurs 
             // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
+            int compteurNbCarte = 0;
+            while( compteurNbCarte != 7 )
+            {
+                laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
+                compteurNbCarte++;
+            }
 
+            compteurNbCarte = 0;
+            while (compteurNbCarte != 7)
+            {
+                laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
+                compteurNbCarte++;
+            }
 
-            // Initialiser les emplacements d'unités et de bâtiements
+            // Initialiser les emplacements d'unités 
+            // TODO 
 
+            // Initialiser les emplacements de bâtiements
+            //
+
+            // Binding Points de blindage
+            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage; //TODO pas testé
+            txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
 
         }
 
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();
+            changerPhase();            
         }
 
         private void changerPhase()
@@ -101,6 +117,8 @@ namespace Cosmos.view
                     txBlphaseRessource.Background = Brushes.Crimson;
                     break;
             }
+            
+
         }
     }
 }

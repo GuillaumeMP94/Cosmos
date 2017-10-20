@@ -25,7 +25,7 @@ namespace Cosmos.metier
         {
             foreach (Carte uneCarte in aCopier.CartesDuDeck)
             {
-                this.CartesDuDeck.Add(uneCarte.Clone());
+               // this.CartesDuDeck.Add(uneCarte.Clone());
             }
         }
         #endregion

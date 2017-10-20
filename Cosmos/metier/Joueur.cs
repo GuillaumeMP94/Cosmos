@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,26 @@ namespace Cosmos.metier
     /// </summary>
     public class Joueur
     {
+        int pointDeBlindage;
+
+        public event PropertyChangedEventHandler modifPropriete;
 
         #region Propriétés
         //TODO: Avatar path? ou Image?
         public string Avatar { get; set; }
-        public int PointDeBlindage { get; set; }
+        public int PointDeBlindage
+        {
+            get { return pointDeBlindage; }
+            set
+            {
+                pointDeBlindage = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("PointDeBlindage"));
+                }
+
+            }
+        }
         public string NomJoueur { get; set; }
         public Deck DeckAJouer { get; set;}
         public Ressource Active { get; set; }
@@ -34,5 +50,28 @@ namespace Cosmos.metier
             Level = new Ressource(1, 1, 1);
         }
         #endregion
+
+        public void SetRessource(Ressource neoValeur)
+        {
+            Active = new Ressource(neoValeur);
+        }
+        /// <summary>
+        /// Permet l'addition ou la soustraction de ressource à celle du joueur. 
+        /// </summary>
+        /// <param name="addition"> Permet l'addition ou la soustraction de ressource à celle du joueur. </param>
+        /// <param name="valeur"></param>
+        public void ModifierRessource(bool addition, Ressource valeur)
+        {
+            if (addition)
+            {
+                Active = Active + new Ressource(valeur);
+            }
+            else
+            {
+                Active = Active - new Ressource(valeur);
+            }
+        }
+
+
     }
 }
