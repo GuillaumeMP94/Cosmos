@@ -10,11 +10,12 @@ namespace Cosmos.metier
     {
         #region Propriétés
         public List<Carte> CartesDuDeck { get; set; }
+        public bool EstChoisi { get; set; }
         #endregion
         #region Constructeurs
-        public Deck()
+        public Deck(bool estChoisi)
         {
-
+            EstChoisi = estChoisi;
         }
         
         /// <summary>

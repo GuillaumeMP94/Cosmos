@@ -12,12 +12,13 @@ namespace Cosmos.metier
 	public class Unite : Carte
 	{
 		#region Propriétés
+
 		public int Attaque { get; set; }
 		public int Defense { get; set; }
 		#endregion
 		#region Constructeur
-		public Unite(string nom, Effet effet, Ressource cout, int attaque, int defense)
-			: base(nom, effet, cout)
+		public Unite(int idCarte, string nom, Effet effet, Ressource cout, int attaque, int defense)
+			: base(idCarte, nom, effet, cout)
 		{
 			Attaque = attaque;
 			Defense = defense;
@@ -29,7 +30,7 @@ namespace Cosmos.metier
         /// <returns></returns>
         public override Carte Clone()
         {
-            return new Unite(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Attaque, this.Defense);
+            return new Unite(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Attaque, this.Defense);
         }
 	}
 }

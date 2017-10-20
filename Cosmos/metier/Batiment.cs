@@ -15,8 +15,8 @@ namespace Cosmos.metier
 		public int Defense { get; set; }
 		#endregion
 		#region Constructeur
-		public Batiment(string nom, Effet effet, Ressource cout, int defense)
-			: base(nom, effet, cout)
+		public Batiment(int idCarte, string nom, Effet effet, Ressource cout, int defense)
+			: base(idCarte, nom, effet, cout)
 		{
 			Defense = defense;
 		}
@@ -27,7 +27,7 @@ namespace Cosmos.metier
         /// <returns></returns>
         public override Carte Clone()
         {
-            return new Batiment(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Defense);
+            return new Batiment(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Defense);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Cosmos.metier
 	public class Gadget : Carte
 	{
 		#region Constructeur
-		public Gadget(string nom, Effet effet, Ressource cout)
-			: base(nom, effet, cout)
+		public Gadget(int idCarte, string nom, Effet effet, Ressource cout)
+			: base(idCarte, nom, effet, cout)
 		{
 
 		}
@@ -24,7 +24,7 @@ namespace Cosmos.metier
         /// <returns></returns>
         public override Carte Clone()
         {
-            return new Gadget(this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout));
+            return new Gadget(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout));
         }
     }
 }

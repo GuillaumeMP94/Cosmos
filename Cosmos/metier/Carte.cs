@@ -11,15 +11,17 @@ namespace Cosmos.metier
     /// </summary>
 	public abstract class Carte
 	{
-		#region Propriétés
-		public string Nom { get; set; }
-		public Effet EffetCarte { get; set; }
+        #region Propriétés
+        public int IdCarte { get; set; }
+        public string Nom { get; set; }
+        public Effet EffetCarte { get; set; }
 		public Ressource Cout { get; set; }
         public string NomImage { get; set; }
         #endregion
         #region Constructeur
-        public Carte(string n, Effet effet, Ressource cout)
+        public Carte(int idCarte,string n, Effet effet, Ressource cout)
 		{
+            IdCarte = idCarte;
 			Nom = n;
 			EffetCarte = effet;
 			Cout = cout;
