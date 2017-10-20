@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -54,6 +57,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="accesBD\MySqlCarteService.cs" />
+    <Compile Include="accesBD\MySqlConnexion.cs" />
+    <Compile Include="accesBD\MySqlDeckService.cs" />
+    <Compile Include="accesBD\MySqlEffetService.cs" />
+    <Compile Include="accesBD\MySqlUtilisateurService.cs" />
     <Compile Include="metier\Batiment.cs" />
     <Compile Include="metier\Carte.cs" />
     <Compile Include="metier\Deck.cs" />
@@ -153,6 +161,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -173,9 +182,7 @@
     <Resource Include="images\campagne\planete4.png" />
     <Resource Include="images\campagne\planete5.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="accesBD\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="images\CosmosLogo.PNG" />
   </ItemGroup>
