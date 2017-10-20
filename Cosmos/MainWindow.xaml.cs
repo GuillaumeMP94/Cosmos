@@ -27,7 +27,8 @@ namespace Cosmos
         public CreationCompte Creation { get; set; }
         public RecuperationCompte Recuperation { get; set; }
         public OptionCompte OptionCompte { get; set; }
-        public Campagne Campagne { get; set; }        
+        public Campagne Campagne { get; set; }
+        public Partie Partie { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace Cosmos
 
 
             //TODO: Enlever la prochaine ligne avant remise
-            EcranCampagne();
+            EcranPartie();
 
 
         }
@@ -103,6 +104,16 @@ namespace Cosmos
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
+
+            grdMain.Children.Add(ContenuEcran);
+        }
+
+        public void EcranPartie()
+        {
+            grdMain.Children.Remove(ContenuEcran);
+            ContenuEcran = new Partie(this);
+
+            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
 
             grdMain.Children.Add(ContenuEcran);
         }

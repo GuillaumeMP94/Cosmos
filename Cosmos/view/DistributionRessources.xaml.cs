@@ -24,5 +24,23 @@ namespace Cosmos.view
         {
             InitializeComponent();
         }
+
+
+
+
+        // À déplacer dans l'écran de partie
+        //public DistributionRessources DistRess { get; set; }
+
+        /// <summary>
+        /// À déplacer dans l'écran de partie
+        /// </summary>
+        private void RectangleOmbrage()
+        {
+            Rectangle rect = new Rectangle();
+            rect.Fill = Brushes.Black;
+            rect.Opacity = 0.2;
+            //TODOL Insérer le bon nom de grid
+            //???.Children.Add(rect);
+        }
     }
 }
