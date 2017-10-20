@@ -83,6 +83,9 @@
     <Compile Include="view\RecuperationCompte.xaml.cs">
       <DependentUpon>RecuperationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ReglementsTutoriel.xaml.cs">
+      <DependentUpon>ReglementsTutoriel.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\RecuperationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ReglementsTutoriel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

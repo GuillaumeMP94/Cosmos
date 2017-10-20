@@ -38,7 +38,7 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
 
             //TODO: Enlever la prochaine ligne avant remise
-            // EcranMenuPrincipal();
+            EcranReglements();
 
 
         }
@@ -99,6 +99,14 @@ namespace Cosmos
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
+
+            grdMain.Children.Add(ContenuEcran);
+        }
+
+        public void EcranReglements()
+        {
+            grdMain.Children.Remove(ContenuEcran);
+            ContenuEcran = new ReglementsTutoriel(this);
 
             grdMain.Children.Add(ContenuEcran);
         }

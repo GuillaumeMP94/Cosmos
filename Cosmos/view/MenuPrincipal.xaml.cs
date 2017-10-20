@@ -35,7 +35,7 @@ namespace Cosmos.view
 
         private void btnRegleTuto_Click(object sender, RoutedEventArgs e)
         {
-
+            Main.EcranReglements();
         }
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
