@@ -17,6 +17,10 @@ namespace Cosmos.metier
 			Type = type;
 		}
 		#endregion
+		/// <summary>
+		/// Fonction qui permet la deep copy d'un effet.
+		/// </summary>
+		/// <returns></returns>
 		public virtual Effet Clone()
 		{
 		    return new Effet(this.Type);
