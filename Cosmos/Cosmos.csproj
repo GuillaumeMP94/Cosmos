@@ -79,6 +79,9 @@
     <Compile Include="view\OptionCompte.xaml.cs">
       <DependentUpon>OptionCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\Partie.xaml.cs">
+      <DependentUpon>Partie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\RecuperationCompte.xaml.cs">
       <DependentUpon>RecuperationCompte.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
     <Page Include="view\OptionCompte.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\Partie.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="view\RecuperationCompte.xaml">
       <SubType>Designer</SubType>
@@ -162,6 +169,32 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\CosmosLogo.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\partie\partie_BG.jpg" />
+    <Resource Include="images\partie\partie_BG_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cartes\ATX-317.jpg" />
+    <Resource Include="images\cartes\Croiseur de Guerre.jpg" />
+    <Resource Include="images\cartes\Elite.jpg" />
+    <Resource Include="images\cartes\Explorateur de l%27Aliance.jpg" />
+    <Resource Include="images\cartes\Exploreur Taligari.jpg" />
+    <Resource Include="images\cartes\Exterminateur.jpg" />
+    <Resource Include="images\cartes\Gronar.jpg" />
+    <Resource Include="images\cartes\Guerrier Spartan.jpg" />
+    <Resource Include="images\cartes\Katarina.jpg" />
+    <Resource Include="images\cartes\Marine Elite.jpg" />
+    <Resource Include="images\cartes\Marine Taligari.jpg" />
+    <Resource Include="images\cartes\Nova.jpg" />
+    <Resource Include="images\cartes\Orianna Revak.jpg" />
+    <Resource Include="images\cartes\Samus Aran.jpg" />
+    <Resource Include="images\cartes\Transporteur UNSC.jpg" />
+    <Resource Include="images\cartes\Usine de Charronite.jpg" />
+    <Resource Include="images\cartes\Usine Nucléaire.jpg" />
+    <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
+    <Resource Include="images\cartes\Warthog.jpg" />
+    <Resource Include="images\cartes\Xenos.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
