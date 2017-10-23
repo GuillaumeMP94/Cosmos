@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace Cosmos.accesBD
 {
@@ -25,10 +26,7 @@ namespace Cosmos.accesBD
             // Ici, il faut définir la connexion.
             // Elle est présentée sur plusieurs lignes seulement pour clarifier les différents éléments de celle-ci.
             // On doit évidemment faire attention de ne pas mettre un mot de passe important en texte dans le code.
-            CONNECTION_STRING = "server=420.cstj.qc.ca;"
-                              + "userid=Magico;"
-                              + "password=Inf157486;"
-                              + "database=magico";
+            CONNECTION_STRING = ConfigurationManager.ConnectionStrings["MySqlConnexion"].ConnectionString;
         }
 
         public MySqlConnexion()
