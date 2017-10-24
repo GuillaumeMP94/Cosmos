@@ -1,4 +1,5 @@
-﻿using Cosmos.view;
+﻿using Cosmos.metier;
+using Cosmos.view;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,9 +114,11 @@ namespace Cosmos
         public void EcranPartie()
         {
             grdMain.Children.Remove(ContenuEcran);
+
             ContenuEcran = new Partie(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
+
 
             grdMain.Children.Add(ContenuEcran);
         }

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1400">
+
     <Grid Margin="15,15,15,15" Name="grd1">
 
         <Border BorderThickness="5" BorderBrush="Yellow" />
@@ -224,6 +225,7 @@
             </Button.Template>
         </Button>
 
+
         <Button Name="btnAbandonner" Height="30" Margin="0,325,10,235"
                 Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand"
                  Click="btnAbandonner_Click" >
@@ -237,5 +239,6 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+
     </Grid>
 </UserControl>

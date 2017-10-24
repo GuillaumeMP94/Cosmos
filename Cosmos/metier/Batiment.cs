@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    /// <summary>
-    /// Classe pour les informations d'un batiment qui est un type de carte.
-    /// </summary>
 	public class Batiment : Carte
 	{
 		#region Propriétés
