@@ -29,14 +29,21 @@ namespace Cosmos
         public RecuperationCompte Recuperation { get; set; }
         public OptionCompte OptionCompte { get; set; }
         public Campagne Campagne { get; set; }
+        public Partie Partie { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Topmost = true;
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
 
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
+
+
+
+
 
             //TODO: Enlever la prochaine ligne avant remise
             EcranPartie();
@@ -107,12 +114,11 @@ namespace Cosmos
         public void EcranPartie()
         {
             grdMain.Children.Remove(ContenuEcran);
-            // TODO remove all this shit et passer des joueurs pour vrai
-            Joueur joueur1 = new Joueur();
-            Joueur joueur2 = new Joueur();
-            ContenuEcran = new view.Partie(this, joueur1, joueur2);
 
-            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgNiv01.jpg")));
+            ContenuEcran = new Partie(this);
+
+            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
+
 
             grdMain.Children.Add(ContenuEcran);
         }

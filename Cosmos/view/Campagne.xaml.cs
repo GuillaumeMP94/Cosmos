@@ -156,6 +156,6 @@ namespace Cosmos.view
                     brdStory.Margin = new Thickness(btn.Margin.Left, btn.Margin.Top - brdStory.Height - 20, 0, 0);
                 }
             }
-        }
+        }              
     }
 }

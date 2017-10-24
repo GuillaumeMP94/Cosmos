@@ -6,42 +6,217 @@
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1400">
-    <Grid Margin="0,0,0,0" Name="grd1">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Name="column1" Width="Auto"/>
-            <ColumnDefinition Name="column2" Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
 
-        <Grid Margin="0,0,1000,0" x:Name="grd2">
-            <TextBlock x:Name="txBlPBA" Text="Points de blindage adverse" Background="Beige"
-                       Margin="20,130,200,820"/>
-            <TextBlock x:Name="txBlnbBlindageJ" Text="{Binding Source=joueur1, Path=PointDeBlindage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Beige"
-                       Margin="20,845,200,100"/>
-            <TextBlock x:Name="txBltxtPBJ" Text="Points de blindage" Background="Beige"
-                       Margin="20,790,200,160"/>
-            <TextBlock x:Name="txBlnbBlindageA" Text="26" Background="Beige"
-                       Margin="20,190,200,760"/>
+    <Grid Margin="15,15,15,15" Name="grd1">
 
-            <TextBlock  x:Name="txBlphaseRessource" Text="Phase de ressources" Background="Crimson"
-                       Margin="20,400,0,550"/>
-            <TextBlock  x:Name="txBlphasePrincipale" Text="Phase principale" Background="Beige"
-                       Margin="20,450,0,500"/>
-            <TextBlock  x:Name="txBlphaseAttaque" Text="Phase d'attaque" Background="Beige"
-                       Margin="20,500,0,450"/>
-            <TextBlock  x:Name="txBlphaseFin" Text="Phase de fin" Background="Beige"
-                       Margin="20,550,0,400"/>
+        <Border BorderThickness="5" BorderBrush="Yellow" />
+
+        <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
+            
+            <Border BorderThickness="5" BorderBrush="Pink" />
+
+            <TextBlock x:Name="txBlPBA" Text="BLINDAGE&#10;ADVERSE" Foreground="Red"
+                       VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,40,0,0"
+                       FontSize="30" FontWeight="Bold" TextAlignment="Center"/>
+
+            <Border Margin="5,130,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
+                    BorderThickness="3" BorderBrush="Red">
+
+                <Border Margin="5,5,5,5"
+                        BorderThickness="3" BorderBrush="Red">
+                    <TextBlock x:Name="txBlnbBlindageJ" Text="26" FontSize="45" Foreground="Red"
+                                Padding="10,10,10,10" FontWeight="Bold"/>
+
+                </Border>
+            </Border>
+            <TextBlock x:Name="txBltxtPBJ" Text="BLINDAGE" Foreground="DarkGoldenrod"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,50"
+                       FontWeight="Bold" FontSize="30"/>
+
+            <Border Margin="5,0,0,100" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                    BorderThickness="3" BorderBrush="DarkGoldenrod">
+                
+                <Border Margin="5,5,5,5"
+                        BorderThickness="3" BorderBrush="DarkGoldenrod">
+                
+                    <TextBlock x:Name="txBlnbBlindageA" Text="26" Foreground="DarkGoldenrod" FontSize="45"
+                               Padding="10,10,10,10" FontWeight="Bold" />          
+                
+                </Border>
+            </Border>
+            
+            <StackPanel Name="spPanelPhases" Margin="10,10,10,10" Height="auto" VerticalAlignment="Center">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7" />
+                </StackPanel.Background>
+
+                <TextBlock  x:Name="txBlphaseRessource" Text="Phase de ressources" Background="DarkGoldenrod"
+                            Margin="10,10,10,0" FontSize="20" TextAlignment="Center" Foreground="Black"/>
+                <TextBlock  x:Name="txBlphasePrincipale" Text="Phase principale" Background="Transparent"
+                           Margin="10,0,10,0" FontSize="20" Foreground="DarkGoldenrod" TextAlignment="Center"/>
+                <TextBlock  x:Name="txBlphaseAttaque" Text="Phase d'attaque" Background="Transparent"
+                           Margin="10,0,10,0" FontSize="20" Foreground="DarkGoldenrod" TextAlignment="Center"/>
+                <TextBlock  x:Name="txBlphaseFin" Text="Phase de fin" Background="Transparent"
+                           Margin="10,0,10,10" FontSize="20" Foreground="DarkGoldenrod" TextAlignment="Center"/>
+
+            </StackPanel>
+            
 
         </Grid>
-        <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
-                Width="150" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Cross"
+
+        <Grid Name="grdCartesJoueur" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="320,0,0,10"
+              Width="850" Height="200">
+            <Grid.ColumnDefinitions>
+                <!--<ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>-->
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Name="carteJoueur1" BorderThickness="5" BorderBrush="Purple" Grid.Column="0"/>
+            <Border Name="carteJoueur2" BorderThickness="5" BorderBrush="Purple" Grid.Column="1"/>
+            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Purple" Grid.Column="2"/>
+           
+            
+            <!--<Image Source="/images/cartes/ATX-317.jpg" Height="300" Width="700" Margin="0,40,0,0"
+                   Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="1"/>
+
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Width="700" Margin="50,40,0,0"
+                   Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="2"/>
+            
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Margin="100,40,0,0" Width="700"
+                   Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="3"/>
+            
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Margin="150,40,0,0" Width="700"
+                   Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="4"/>
+            
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Margin="200,40,0,0" Width="700"
+                       Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="5"/>
+            
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Margin="250,40,0,0" Width="700"
+                       Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="6"/>
+            
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Margin="300,40,0,0" Width="700"
+                       Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="7"/>
+            
+            <Image Source="/images/cartes/ATX-317.jpg" Height="300" Margin="350,40,0,0" Width="700"
+                       Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="8"/>-->
+
+        </Grid>
+
+        <Grid Name="grdCartesAdversaire" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="320,10,0,0"
+              Width="800" Height="200">
+
+            <Border BorderThickness="5" BorderBrush="Red" />
+
+        </Grid>
+
+        <Grid Name="grdBatiments" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="320,0,0,0"
+              Width="300" Height="400">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5">
+                <Image Source="/images/cartes/ATX-317.jpg" />
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5">
+
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5">
+
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5">
+
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5">
+
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5">
+                <Image Source="/images/cartes/Marine Elite.jpg" />
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5">
+
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5">
+
+            </Border>
+
+        </Grid>
+
+        <Grid Name="grdCartesEnjeu"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="630,0,0,0"
+              Width="500" Height="450">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Border Name="emplacementCreature1" BorderThickness="5" BorderBrush="Green" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5">
+                <Image Source="/images/cartes/ATX-317.jpg" />
+            </Border>
+
+            <Border Name="emplacementCreature2" BorderThickness="5" BorderBrush="Green" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5">
+                <Rectangle Fill="WhiteSmoke" Opacity=".5"/>
+            </Border>
+
+            <Border Name="emplacementCreature3" BorderThickness="5" BorderBrush="Green" Grid.Column="2" Grid.Row="0" Padding="5,5,5,5">
+                <Image Source="/images/cartes/Marine Elite.jpg" />
+            </Border>
+
+            <Border Name="emplacementCreature4" BorderThickness="5" BorderBrush="Green" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5">
+                <Image Source="/images/cartes/Croiseur de Guerre.jpg" />
+            </Border>
+
+            <Border Name="emplacementCreature5" BorderThickness="5" BorderBrush="Green" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5">
+                <Image Name="imgCarteEnJeu5" Source="/images/cartes/Xenos.jpg" Cursor="Hand" PreviewMouseLeftButtonDown="Image_PreviewMouseLeftButtonDown"/>
+            </Border>
+
+            <Border Name="emplacementCreature6" BorderThickness="5" BorderBrush="Green" Grid.Column="2" Grid.Row="1" Padding="5,5,5,5" >
+
+            </Border>
+
+
+        </Grid>
+
+            <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
+                Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand"
                  Click="btnTerminerPhase_Click" >
             <Button.Template>
                 <ControlTemplate>
-                    <Border Background="MediumSlateBlue" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
                             Terminer la phase
                         </TextBlock>
@@ -49,5 +224,21 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+
+
+        <Button Name="btnAbandonner" Height="30" Margin="0,325,10,235"
+                Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand"
+                 Click="btnAbandonner_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Abandonner
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
     </Grid>
 </UserControl>

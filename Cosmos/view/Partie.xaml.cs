@@ -49,6 +49,7 @@ namespace Cosmos.view
             // txBlnbBarilA.Text = joueur2.Active.BarilNucleaire
             // txBlnbAlainDollarA.Text = joueur2.Active.AlainDollar
 
+
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 
@@ -98,27 +99,80 @@ namespace Cosmos.view
             {
                 case 1:
                     phase++;
-                    txBlphaseRessource.Background = Brushes.Beige;
-                    txBlphasePrincipale.Background = Brushes.Crimson;
+                    txBlphaseRessource.Background = Brushes.Transparent;
+                    txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
+                    txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
+                    txBlphasePrincipale.Foreground = Brushes.Black;
                     break;
                 case 2:
                     phase++;
-                    txBlphasePrincipale.Background = Brushes.Beige;
-                    txBlphaseAttaque.Background = Brushes.Crimson;
+                    txBlphasePrincipale.Background = Brushes.Transparent;
+                    txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
+                    txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
+                    txBlphaseAttaque.Foreground = Brushes.Black;
                     break;
                 case 3:
                     phase++;
-                    txBlphaseAttaque.Background = Brushes.Beige;
-                    txBlphaseFin.Background = Brushes.Crimson;
+                    txBlphaseAttaque.Background = Brushes.Transparent;
+                    txBlphaseFin.Background = Brushes.DarkGoldenrod;
+                    txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
+                    txBlphaseFin.Foreground = Brushes.Black;
                     break;
                 case 4:
                     phase = 1; // La phase de fin est terminer, nous retournons à la première phase
-                    txBlphaseFin.Background = Brushes.Beige;
-                    txBlphaseRessource.Background = Brushes.Crimson;
+                    txBlphaseFin.Background = Brushes.Transparent;
+                    txBlphaseRessource.Background = Brushes.DarkGoldenrod;
+                    txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
+                    txBlphaseRessource.Foreground = Brushes.Black;
                     break;
             }
-            
+        }
 
+        private void btnAbandonner_Click(object sender, RoutedEventArgs e)
+        {
+            Main.QuitterMain();
+        }
+
+        private void Image_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.QuitterMain();
+
+            
+        }
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            Thickness margin = img.Margin;
+
+            img.Margin = new Thickness(margin.Left, 0, 0, 0);
+        }
+
+        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            Thickness margin = img.Margin;
+            
+            img.Margin = new Thickness(margin.Left, 40, 0, 0);
+        }
+
+        private void InsererCarteMain(String nom, int position)
+        {
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Height = 300;
+            carte.Width = 700;
+            carte.VerticalAlignment = VerticalAlignment.Top;
+            carte.HorizontalAlignment = HorizontalAlignment.Left;
+            carte.Name = "carte" + position;
+            carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
+            carte.SetValue(Panel.ZIndexProperty, position);
+            carte.Cursor = Cursors.Hand;
+            carte.MouseEnter += Image_MouseEnter;
+            carte.MouseLeave += Image_MouseLeave;
+            grdCartesJoueur.Children.Add(carte);            
         }
     }
 }
