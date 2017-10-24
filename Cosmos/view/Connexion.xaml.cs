@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+using Cosmos.accesBD;
 
 namespace Cosmos.view
 {
@@ -30,7 +32,12 @@ namespace Cosmos.view
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+            if (ValiderChampSaisi(txbPseudo.Text))
+            {
+
+                Main.EcranMenuPrincipal();
+
+            }
         }
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
@@ -46,6 +53,29 @@ namespace Cosmos.view
         private void btnPasswordOublie_Click(object sender, RoutedEventArgs e)
         {
             Main.EcranRecuperation();
+        }
+
+        private bool ValiderChampSaisi(string champ)
+        {
+            if (champ.Length > 2)
+            {
+                string pattern = @"([a-zA-Z0-9]+)";
+                Match resultat = Regex.Match(champ, pattern);
+
+                if (resultat.Success)
+                {
+                    if(MySqlUtilisateurService.RetrieveByNom(champ) != null)
+                    {
+                        Main.EcranMenuPrincipal();
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+
+            return false;
         }
     }
 }
