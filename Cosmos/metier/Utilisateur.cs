@@ -48,5 +48,18 @@ namespace Cosmos.metier
             Salt = salt;
         }
         #endregion
+        public override void Reinitialiser()
+        {
+            PointDeBlindage = 25;
+            Active = new Ressource(0, 0, 0);
+            Level = new Ressource(1, 1, 1);
+            foreach (Deck unDeck in this.DecksUtilisateurs)
+            {
+                if (unDeck.EstChoisi == true)
+                {
+                    DeckAJouer = new Deck(unDeck);
+                }
+            }
+        }
     }
 }
