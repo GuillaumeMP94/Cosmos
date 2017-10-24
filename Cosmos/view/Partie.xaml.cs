@@ -34,12 +34,14 @@ namespace Cosmos.view
             */
             Main = main;
 
-            imgCarteEnJeu5.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(Image_PreviewMouseLeftButtonDown); 
+
+
+            imgCarteEnJeu5.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(Image_PreviewMouseLeftButtonDown);
 
             // Initialiser le nombre de points de blindage de chaque joueurs (25)
             //
-            // nbBlindageJ.Text = joueur.nbBlindage
-            // nbBlindageA.Text = adversaire.nbBlindage
+            //txBlnbBlindageJ.Text = joueur.nbBlindage
+            //txBlnbBlindageA.Text = adversaire.nbBlindage
 
 
             // Initialiser les ressources de chaque joueurs (0)
@@ -121,6 +123,41 @@ namespace Cosmos.view
             Main.QuitterMain();
 
             
+        }
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            Thickness margin = img.Margin;
+
+            img.Margin = new Thickness(margin.Left, 0, 0, 0);
+        }
+
+        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            Thickness margin = img.Margin;
+            
+            img.Margin = new Thickness(margin.Left, 40, 0, 0);
+        }
+
+        private void InsererCarteMain(String nom, int position)
+        {
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Height = 300;
+            carte.Width = 700;
+            carte.VerticalAlignment = VerticalAlignment.Top;
+            carte.HorizontalAlignment = HorizontalAlignment.Left;
+            carte.Name = "carte" + position;
+            carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
+            carte.SetValue(Panel.ZIndexProperty, position);
+            carte.Cursor = Cursors.Hand;
+            carte.MouseEnter += Image_MouseEnter;
+            carte.MouseLeave += Image_MouseLeave;
+            grdCartesJoueur.Children.Add(carte);            
         }
     }
 }
