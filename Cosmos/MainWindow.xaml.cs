@@ -1,4 +1,6 @@
-﻿using Cosmos.view;
+﻿using Cosmos.accesBD;
+using Cosmos.metier;
+using Cosmos.view;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,8 @@ namespace Cosmos
             InitializeComponent();
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
+            
+            Utilisateur LaUtilisateur = MySqlUtilisateurService.RetrieveByNom("Bob");
 
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);

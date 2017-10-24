@@ -53,7 +53,7 @@ namespace Cosmos.accesBD
         {
             //List<Carte> lstCartesUtilisateur;
             //List<Deck> lstDecksUtilisateur;
-            Utilisateur resultat;
+            Utilisateur resultat = null;
             DataSet dsResultat;
             DataTable dtResultat;
             DataRow drResultat;
@@ -62,20 +62,23 @@ namespace Cosmos.accesBD
 
             dsResultat = ConnectionBD.Query(query);
             dtResultat = dsResultat.Tables[0];
-            drResultat = dtResultat.Rows[0];
+            if (dtResultat.Rows.Count > 0)
+            {
+                drResultat = dtResultat.Rows[0];
 
-            resultat = new Utilisateur((int)drResultat["idUtilisateur"]
-                                     , (string)drResultat["nom"]
-                                     , (string)drResultat["courriel"]
-                                     , (int)drResultat["idNiveau"]
-                                     , (string)drResultat["motDePasse"]
-                                     , (string)drResultat["salt"]
-                                     );
+                resultat = new Utilisateur((int)drResultat["idUtilisateur"]
+                                         , (string)drResultat["nom"]
+                                         , (string)drResultat["courriel"]
+                                         , (int)drResultat["idNiveau"]
+                                         , (string)drResultat["motDePasse"]
+                                         , (string)drResultat["salt"]
+                                         );
 
-            // On va chercher les cartes
-            //lstCartesUtilisateur = MySqlCarteService.RetrieveByIdUtilisateur(pIdUtilisateur);
-            // On va chercher les decks
-            //lstDecksUtilisateur = MySqlDeckService.RetrieveByIdUtilisateur(pIdUtilisateur);
+                // On va chercher les cartes
+                //lstCartesUtilisateur = MySqlCarteService.RetrieveByIdUtilisateur(pIdUtilisateur);
+                // On va chercher les decks
+                //lstDecksUtilisateur = MySqlDeckService.RetrieveByIdUtilisateur(pIdUtilisateur);
+            }
             return resultat;
         }
         /// <summary>
@@ -99,7 +102,7 @@ namespace Cosmos.accesBD
         public static Utilisateur RetrieveByNom(string pNom)
         {
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT * FROM Visites WHERE nom = ").Append(pNom);
+            query.Append("SELECT * FROM Utilisateurs WHERE nom = '").Append(pNom).Append("'");
 
             return Retrieve(query.ToString());
             
@@ -112,7 +115,7 @@ namespace Cosmos.accesBD
         public static Utilisateur RetrieveByCourriel(string pCourriel)
         {
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT * FROM Visites WHERE courriel = ").Append(pCourriel);
+            query.Append("SELECT * FROM Utilisateurs WHERE courriel = '").Append(pCourriel).Append("'");
 
             return Retrieve(query.ToString());
 
