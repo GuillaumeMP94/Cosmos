@@ -205,13 +205,13 @@ namespace Cosmos.metier
         {
             if (estJoueur1)
             {
-                LstMainJ1.Add(leDeck.CartesDuDeck[0]);
-                leDeck.CartesDuDeck.RemoveAt(0);
+                //LstMainJ1.Add(leDeck.CartesDuDeck[0]);
+                //leDeck.CartesDuDeck.RemoveAt(0);
             }
             else
             {
-                LstMainJ2.Add(leDeck.CartesDuDeck[0]);
-                leDeck.CartesDuDeck.RemoveAt(0);
+                //LstMainJ2.Add(leDeck.CartesDuDeck[0]);
+                //leDeck.CartesDuDeck.RemoveAt(0);
             }
         }
 
@@ -234,7 +234,7 @@ namespace Cosmos.metier
         {
             Deck aBrasser = new Deck(leDeck);
             var rnd = new Random();
-            aBrasser.CartesDuDeck.OrderBy(item => rnd.Next());
+            //aBrasser.CartesDuDeck.OrderBy(item => rnd.Next());
             return aBrasser;
             /* Algo alternatif probablement plus efficace
                 int n = list.Count;
