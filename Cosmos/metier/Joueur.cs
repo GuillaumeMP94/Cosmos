@@ -12,7 +12,8 @@ namespace Cosmos.metier
     /// </summary>
     public class Joueur
     {
-        int pointDeBlindage;
+        private int pointDeBlindage;
+        private Ressource ressourceActive;
 
         public event PropertyChangedEventHandler modifPropriete;
 
@@ -34,7 +35,19 @@ namespace Cosmos.metier
         }
         public string NomJoueur { get; set; }
         public Deck DeckAJouer { get; set;}
-        public Ressource Active { get; set; }
+        public Ressource RessourceActive
+        {
+            get { return ressourceActive; }
+            set
+            {
+                ressourceActive = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("ressourceActive"));
+                }
+
+            }
+        }
         public Ressource Level { get; set; }
         #endregion
         #region Constructeur
@@ -46,14 +59,14 @@ namespace Cosmos.metier
         public void Reinitialiser()
         {
             PointDeBlindage = 25;
-            Active = new Ressource(0, 0, 0);
+            RessourceActive = new Ressource(0, 0, 0);
             Level = new Ressource(1, 1, 1);
         }
         #endregion
 
         public void SetRessource(Ressource neoValeur)
         {
-            Active = new Ressource(neoValeur);
+            RessourceActive = new Ressource(neoValeur);
         }
         /// <summary>
         /// Permet l'addition ou la soustraction de ressource à celle du joueur. 
@@ -64,13 +77,15 @@ namespace Cosmos.metier
         {
             if (addition)
             {
-                Active = Active + new Ressource(valeur);
+                RessourceActive = RessourceActive + new Ressource(valeur);
             }
             else
             {
-                Active = Active - new Ressource(valeur);
+                RessourceActive = RessourceActive - new Ressource(valeur);
             }
         }
+
+
 
 
     }

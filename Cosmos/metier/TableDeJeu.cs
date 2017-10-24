@@ -11,8 +11,14 @@ namespace Cosmos.metier
     {
         private int phase;
         private bool joueurActifEst1;
+        private Joueur joueurActif;
 
-        public event PropertyChangedEventHandler modifPropriete; 
+        public event PropertyChangedEventHandler modifPropriete;
+
+        // Les deux joueurs
+        private Joueur joueur1;
+        private Joueur joueur2;
+
 
         // Deck des joueurs
         public Deck DeckJ1 { get; set; }
@@ -58,7 +64,48 @@ namespace Cosmos.metier
 
             }
         }
+        /*
+        public Joueur JoueurActif
+        {
+            get { return joueurActif; }
+            set
+            {
+                joueurActif = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("JoueurActif"));
+                }
 
+            }
+        }*/
+
+        public Joueur Joueur1
+        {
+            get { return joueur1; }
+            set
+            {
+                joueur1 = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("Joueur1"));
+                }
+
+            }
+        }
+
+        public Joueur Joueur2
+        {
+            get { return joueur2; }
+            set
+            {
+                joueur2 = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("Joueur2"));
+                }
+
+            }
+        }
 
         // Constructeur de la table de jeu.
         // Celle-ci à besoin d'avoir les decks des deux joueurs pour mélanger ceux-ci et distribuer les mains de départs.
@@ -78,32 +125,77 @@ namespace Cosmos.metier
 
             Phase = 1; // La partie commence en phase "1", c'est à dire la phase de ressource. Il n'y a pas de phase 0.
 
+            //TODO use only 1
             JoueurActifEst1 = true; // Il y a deux joueur : Joueur 1 et joueur 2. Lorsque ce bool est vrai, c'est au joueur 1 et vice-versa.
+            //joueurActif = joueur1;
+
 
 
         }
-
+        /// <summary>
+        /// Retourne vrai si le coup est valide
+        /// </summary>
+        /// <param name="carteAJouer"></param>
+        /// <param name="leJoueur"></param>
+        /// <returns></returns>
         public bool validerCoup(Carte carteAJouer, Joueur leJoueur)
         {
             Ressource temp = new Ressource(0, 0, 0);
 
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
-            if ( leJoueur.Active - carteAJouer.Cout > temp ) 
+            if ( leJoueur.RessourceActive - carteAJouer.Cout > temp ) 
             {
                 return true;
             }
             return false;
         }
 
-        public void JouerCarte(Carte carteAJouer)
+        public void JouerCarte(Carte carteAJouer, Joueur leJoueur, bool joueurActifEst1 )
         {
-            // Valider si le joueur a les ressources nécessaire
-            // Valider ailleur ? La table connait pas les joueur en ce moment
+            // Le coup à déjà été validé rendu ici
 
-            // Jouer la carte
+            // On enleve les ressources au joueurs
+            leJoueur.RessourceActive -= carteAJouer.Cout;
 
-
+            // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
+            if (joueurActifEst1)
+            {
+                if (carteAJouer is Unite)
+                {
+                    LstMainJ1.Remove(carteAJouer);
+                    LstUniteJ1.Add((Unite)carteAJouer);
+                }
+                if (carteAJouer is Batiment)
+                {
+                    LstMainJ1.Remove(carteAJouer);
+                    LstBatimentJ1.Add((Batiment)carteAJouer);
+                }
+                if (carteAJouer is Gadget)
+                {
+                    LstMainJ1.Remove(carteAJouer);
+                    LstUsineRecyclageJ1.Add(carteAJouer);
+                }
+            }
+            else
+            {
+                if (carteAJouer is Unite)
+                {
+                    LstMainJ2.Remove(carteAJouer);
+                    LstUniteJ2.Add((Unite)carteAJouer);
+                }
+                if (carteAJouer is Batiment)
+                {
+                    LstMainJ2.Remove(carteAJouer);
+                    LstBatimentJ2.Add((Batiment)carteAJouer);
+                }
+                if (carteAJouer is Gadget)
+                {
+                    LstMainJ2.Remove(carteAJouer);
+                    LstUsineRecyclageJ2.Add(carteAJouer);
+                }
+            }                                 
         }
+
         /// <summary>
         /// Pige une carte dans le deck spécifié pour l'ajouter à la main du joueur propriétaire du deck
         /// </summary>
@@ -155,7 +247,45 @@ namespace Cosmos.metier
                 list[n] = value;              
             */
         }
+        /// <summary>
+        /// Fonction pour défausser une carte de la main d'un joueur jusqu'à l'usine de recyclage
+        /// </summary>
+        /// <param name="carteADeffausser"></param>
+        /// <param name="estJoueur1"></param>
+        public void DeffausserCarte( Carte carteADeffausser, bool estJoueur1 )
+        {
+            if(estJoueur1)
+            {
+                LstMainJ1.Remove(carteADeffausser);
+                LstUsineRecyclageJ1.Add(carteADeffausser);
+            }
+            else
+            {
+                LstMainJ2.Remove(carteADeffausser);
+                LstUsineRecyclageJ2.Add(carteADeffausser);
+            }
+        }
+        /// <summary>
+        /// Deux unités font un combat et se font des dégats. Cette fonctionne assume qu'il n'y a aucun effet sur les cartes
+        /// </summary>
+        /// <param name="unite1"></param>
+        /// <param name="unite2"></param>
+        public void CombatUniteAucunEffet(Unite unite1, Unite unite2)
+        {
+            unite1.Defense -= unite2.Attaque;
+            unite2.Defense -= unite1.Attaque;
 
+            // Si la defense de l'unité est a zero ou moins elle est détruite.
+            if( unite1.Defense < 1)
+            {
+                LstUniteJ1.Remove(unite1);
+            }
+
+            if (unite2.Defense < 1)
+            {
+                LstUniteJ2.Remove(unite2);
+            }
+        }
 
 
     }

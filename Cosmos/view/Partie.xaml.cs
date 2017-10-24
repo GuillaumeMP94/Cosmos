@@ -62,14 +62,14 @@ namespace Cosmos.view
             // Donner une main à chaque joueurs 
             // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
             int compteurNbCarte = 0;
-            while( compteurNbCarte != 7 )
+            while( compteurNbCarte != 6 )
             {
                 laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
                 compteurNbCarte++;
             }
 
             compteurNbCarte = 0;
-            while (compteurNbCarte != 7)
+            while (compteurNbCarte != 6)
             {
                 laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
                 compteurNbCarte++;
