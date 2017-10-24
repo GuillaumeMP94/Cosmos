@@ -25,8 +25,6 @@ namespace Cosmos.accesBD
             List<Utilisateur> lstResultat = new List<Utilisateur>();
             DataSet dsResultat;
             DataTable dtResultat;
-            // MySqlCarteService
-            // MySqlDeckService
 
             ConnectionBD = new MySqlConnexion();
 
@@ -51,8 +49,6 @@ namespace Cosmos.accesBD
         /// <returns>Un utilisateur avec ses decks et ses cartes.</returns>
         private static Utilisateur Retrieve(string query)
         {
-            //List<Carte> lstCartesUtilisateur;
-            //List<Deck> lstDecksUtilisateur;
             Utilisateur resultat = null;
             DataSet dsResultat;
             DataTable dtResultat;
@@ -75,9 +71,9 @@ namespace Cosmos.accesBD
                                          );
 
                 // On va chercher les cartes
-                //lstCartesUtilisateur = MySqlCarteService.RetrieveByIdUtilisateur(pIdUtilisateur);
+                resultat.CartesUtilisateurs = MySqlCarteService.RetrieveAllUserCard((int)drResultat["idUtilisateur"]);
                 // On va chercher les decks
-                //lstDecksUtilisateur = MySqlDeckService.RetrieveByIdUtilisateur(pIdUtilisateur);
+                resultat.DecksUtilisateurs = MySqlDeckService.RetrieveAllUserDeck((int)drResultat["idUtilisateur"]);
             }
             return resultat;
         }

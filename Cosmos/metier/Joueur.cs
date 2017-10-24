@@ -24,15 +24,14 @@ namespace Cosmos.metier
         #region Constructeur
         public Joueur()
         {
-            Reinitialiser();
         }
 
-        public void Reinitialiser()
+        #endregion
+        public virtual void Reinitialiser()
         {
             PointDeBlindage = 25;
             Active = new Ressource(0, 0, 0);
             Level = new Ressource(1, 1, 1);
         }
-        #endregion
     }
 }
