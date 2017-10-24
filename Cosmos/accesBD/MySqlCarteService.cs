@@ -31,8 +31,12 @@ namespace Cosmos.accesBD
 
             foreach (DataRow dr in dtResultat.Rows)
             {
-                Effet effetCarte = MySqlEffetService.RetrieveById((int)dr["idEffet"]);
-                if ((string)dr["typeUnite"] != null) // TODO: vérifié si le if fonctionne sinon changé pour "null"
+                Effet effetCarte = null;
+                if (dr["idEffet"] != DBNull.Value)
+                {
+                    effetCarte = MySqlEffetService.RetrieveById((int)dr["idEffet"]);
+                }
+                if (dr["typeUnite"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
                 {
                     lstResultat.Add(new Unite((int)dr["idCarte"]
                                              , (string)dr["nom"]
@@ -43,7 +47,7 @@ namespace Cosmos.accesBD
                                              )
                                    );
                 }
-                else if ((string)dr["pointsDefense"] != null) // TODO: vérifié si le if fonctionne sinon changé pour "null"
+                else if (dr["pointsDefense"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
                 {
                     lstResultat.Add(new Batiment((int)dr["idCarte"]
                                              , (string)dr["nom"]
@@ -84,9 +88,10 @@ namespace Cosmos.accesBD
             dsResultat = ConnectionBD.Query(query);
             dtResultat = dsResultat.Tables[0];
             drResultat = dtResultat.Rows[0];
-
-            Effet effetCarte = MySqlEffetService.RetrieveById((int)drResultat["idEffet"]);
-            if ((string)drResultat["typeUnite"] != null) // TODO: vérifié si le if fonctionne sinon changé pour "null"
+            Effet effetCarte = null;
+            if (drResultat["idEffet"] != DBNull.Value)
+                effetCarte = MySqlEffetService.RetrieveById((int)drResultat["idEffet"]);
+            if (drResultat["typeUnite"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
             {
                 resultat = new Unite((int)drResultat["idCarte"]
                                          , (string)drResultat["nom"]
@@ -96,7 +101,7 @@ namespace Cosmos.accesBD
                                          , (int)drResultat["pointsDefense"]
                                          );
             }
-            else if ((string)drResultat["pointsDefense"] != null) // TODO: vérifié si le if fonctionne sinon changé pour "null"
+            else if (drResultat["pointsDefense"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
             {
                 resultat = new Batiment((int)drResultat["idCarte"]
                                          , (string)drResultat["nom"]
@@ -130,9 +135,9 @@ namespace Cosmos.accesBD
             return Retrieve(query.ToString());
 
         }
-        public static List<Carte> RetriveAllCard()
+        public static List<Carte> RetrieveAllCard()
         {
-            return RetrieveAll("SELECT * FROM Carte");
+            return RetrieveAll("SELECT * FROM Cartes");
         }
         
         public static List<Carte> RetrieveAllUserCard(int pIdUtilisateur)

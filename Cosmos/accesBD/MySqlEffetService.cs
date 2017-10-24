@@ -28,7 +28,7 @@ namespace Cosmos.accesBD
 
             ConnectionBD = new MySqlConnexion();
 
-            dsResultat = ConnectionBD.Query("SELECT * FROM Effet");
+            dsResultat = ConnectionBD.Query("SELECT * FROM Effets");
             dtResultat = dsResultat.Tables[0];
 
             foreach (DataRow dr in dtResultat.Rows)
