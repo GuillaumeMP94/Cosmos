@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using Cosmos.accesBD;
+using System.Threading;
+using Cosmos.metier;
 
 namespace Cosmos.view
 {
@@ -32,11 +34,35 @@ namespace Cosmos.view
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
         {
-            if (ValiderChampSaisi(txbPseudo.Text))
+            if (ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
             {
+                Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
+                if (unUtilsateur != null )
+                {
+                    if (unUtilsateur.MotDePasse == passbPassword.Password)
+                    {
+                        Main.EcranMenuPrincipal();
+                    }
+                    else
+                    {
+                        txbPseudo.Text = "";
+                        passbPassword.Password = "";
+                        this.txblErreur.Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    txbPseudo.Text = "";
+                    passbPassword.Password = "";
+                    this.txblErreur.Visibility = Visibility.Visible;
+                }
 
-                Main.EcranMenuPrincipal();
-
+            }
+            else
+            {
+                txbPseudo.Text = "";
+                passbPassword.Password = "";
+                this.txblErreur.Visibility = Visibility.Visible;  
             }
         }
 
@@ -55,27 +81,12 @@ namespace Cosmos.view
             Main.EcranRecuperation();
         }
 
-        private bool ValiderChampSaisi(string champ)
+        private string ValiderChampSaisi(string champ)
         {
-            if (champ.Length > 2)
-            {
-                string pattern = @"([a-zA-Z0-9]+)";
-                Match resultat = Regex.Match(champ, pattern);
+            string pattern = @"([a-zA-Z0-9]*)";
+            Match resultat = Regex.Match(champ, pattern);
 
-                if (resultat.Success)
-                {
-                    if(MySqlUtilisateurService.RetrieveByNom(champ) != null)
-                    {
-                        Main.EcranMenuPrincipal();
-                    }
-                }
-            }
-            else
-            {
-                
-            }
-
-            return false;
+            return resultat.ToString();
         }
     }
 }

@@ -93,6 +93,8 @@
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
+        <TextBlock Width="300" Height="40" Name="txblErreur" VerticalAlignment="Bottom" Margin="0,0,0,150" Foreground="Red" Text ="Le nom d'utilisateur ou le mot de passe contient des caractères invalides." Visibility="Hidden" FontSize="15" TextWrapping="Wrap"  />
+        
         <Button Width="300" Name="btnQuitter" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,30" Cursor="Hand" Click="btnQuitter_Click">
             <Button.Template>
                 <ControlTemplate>
