@@ -18,7 +18,7 @@ namespace Cosmos.accesBD
         /// Fonction qui retourne toutes les cartes.
         /// </summary>
         /// <returns>Liste de toutes les cartes avec leurs effets.</returns>
-        public static List<Carte> RetrieveAll()
+        private static List<Carte> RetrieveAll(string query)
         {
             List<Carte> lstResultat = new List<Carte>();
             DataSet dsResultat;
@@ -26,13 +26,17 @@ namespace Cosmos.accesBD
 
             ConnectionBD = new MySqlConnexion();
 
-            dsResultat = ConnectionBD.Query("SELECT * FROM Carte");
+            dsResultat = ConnectionBD.Query(query);
             dtResultat = dsResultat.Tables[0];
 
             foreach (DataRow dr in dtResultat.Rows)
             {
-                Effet effetCarte = MySqlEffetService.RetrieveById((int)dr["idEffet"]);
-                if ((string)dr["typeUnite"] != null) // TODO: vérifié si le if fonctionne
+                Effet effetCarte = null;
+                if (dr["idEffet"] != DBNull.Value)
+                {
+                    effetCarte = MySqlEffetService.RetrieveById((int)dr["idEffet"]);
+                }
+                if (dr["typeUnite"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
                 {
                     lstResultat.Add(new Unite((int)dr["idCarte"]
                                              , (string)dr["nom"]
@@ -43,7 +47,7 @@ namespace Cosmos.accesBD
                                              )
                                    );
                 }
-                else if ((string)dr["pointsDefense"] != null) // TODO: vérifié si le if fonctionne
+                else if (dr["pointsDefense"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
                 {
                     lstResultat.Add(new Batiment((int)dr["idCarte"]
                                              , (string)dr["nom"]
@@ -65,17 +69,16 @@ namespace Cosmos.accesBD
                 }
             }
             return lstResultat;
-        }/*
+        }
         /// <summary>
         /// Fonction qui retourne une carte.
         /// </summary>
         /// <param name="query">Requête à effectuer sur la BD</param>
         /// <returns>Une carte avec son effet.</returns>
-        private static Utilisateur Retrieve(string query)
+        private static Carte Retrieve(string query)
         {
-            List<Carte> lstCartesUtilisateur;
-            List<Deck> lstDecksUtilisateur;
-            Utilisateur resultat;
+
+            Carte resultat;
             DataSet dsResultat;
             DataTable dtResultat;
             DataRow drResultat;
@@ -85,19 +88,38 @@ namespace Cosmos.accesBD
             dsResultat = ConnectionBD.Query(query);
             dtResultat = dsResultat.Tables[0];
             drResultat = dtResultat.Rows[0];
+            Effet effetCarte = null;
+            if (drResultat["idEffet"] != DBNull.Value)
+                effetCarte = MySqlEffetService.RetrieveById((int)drResultat["idEffet"]);
+            if (drResultat["typeUnite"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
+            {
+                resultat = new Unite((int)drResultat["idCarte"]
+                                         , (string)drResultat["nom"]
+                                         , effetCarte
+                                         , new Ressource((int)drResultat["coutCharronite"], (int)drResultat["coutBarilNucleaire"], (int)drResultat["coutAlainDollars"])
+                                         , (int)drResultat["pointsAttaque"]
+                                         , (int)drResultat["pointsDefense"]
+                                         );
+            }
+            else if (drResultat["pointsDefense"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
+            {
+                resultat = new Batiment((int)drResultat["idCarte"]
+                                         , (string)drResultat["nom"]
+                                         , effetCarte
+                                         , new Ressource((int)drResultat["coutCharronite"], (int)drResultat["coutBarilNucleaire"], (int)drResultat["coutAlainDollars"])
+                                         , (int)drResultat["pointsDefense"]
+                                         );
 
-            resultat = new Utilisateur((int)drResultat["idUtilisateur"]
-                                     , (string)drResultat["nom"]
-                                     , (string)drResultat["courriel"]
-                                     , (int)drResultat["idNiveau"]
-                                     , (string)drResultat["motDePasse"]
-                                     , (string)drResultat["salt"]
-                                     );
+            }
+            else
+            {
+                resultat = new Gadget((int)drResultat["idCarte"]
+                                         , (string)drResultat["nom"]
+                                         , effetCarte
+                                         , new Ressource((int)drResultat["coutCharronite"], (int)drResultat["coutBarilNucleaire"], (int)drResultat["coutAlainDollars"])
+                                         );
+            }
 
-            // On va chercher les cartes
-            //lstCartesUtilisateur = MySqlCarteService.RetrieveByIdUtilisateur(pIdUtilisateur);
-            // On va chercher les decks
-            //lstDecksUtilisateur = MySqlDeckService.RetrieveByIdUtilisateur(pIdUtilisateur);
             return resultat;
         }
         /// <summary>
@@ -105,39 +127,30 @@ namespace Cosmos.accesBD
         /// </summary>
         /// <param name="pIdUtilisateur"></param>
         /// <returns>Retourne l'utilisateur associé au id en paramêtre.</returns>
-        public static Utilisateur RetrieveById(int pIdUtilisateur)
+        public static Carte RetrieveById(int pIdCarte)
         {
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT * FROM Utilisateurs WHERE idUtilisateur = ").Append(pIdUtilisateur.ToString());
+            query.Append("SELECT * FROM Cartes WHERE idCarte = ").Append(pIdCarte.ToString());
 
             return Retrieve(query.ToString());
 
         }
-        /// <summary>
-        /// Fonction qui construit la commande SQL pour la requête par nom et qui la passe ensuite à Retrieve
-        /// </summary>
-        /// <param name="pNom"></param>
-        /// <returns>Retourne l'utilisateur associé au nom en paramêtre.</returns>
-        public static Utilisateur RetrieveByNom(string pNom)
+        public static List<Carte> RetrieveAllCard()
         {
-            StringBuilder query = new StringBuilder();
-            query.Append("SELECT * FROM Visites WHERE nom = ").Append(pNom);
-
-            return Retrieve(query.ToString());
-
+            return RetrieveAll("SELECT * FROM Cartes");
         }
-        /// <summary>
-        /// Fonction qui construit la commande SQL pour la requête par courriel et qui la passe ensuite à Retrieve
-        /// </summary>
-        /// <param name="pCourriel"></param>
-        /// <returns>Retourne l'utilisateur associé au courriel en paramêtre.</returns>
-        public static Utilisateur RetrieveByCourriel(string pCourriel)
+        
+        public static List<Carte> RetrieveAllUserCard(int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT * FROM Visites WHERE courriel = ").Append(pCourriel);
+            query.Append("SELECT E.idCarte, E.quantite FROM Cartes C ")
+                 .Append("INNER JOIN Exemplaires E ON C.idCarte = E.idCarte")
+                 .Append("INNER JOIN Utilisateurs U ON u.idUtilisateur = E.idUtilisateur")
+                 .Append("WHERE E.idUtilisateur =")
+                 .Append(pIdUtilisateur.ToString());
 
-            return Retrieve(query.ToString());
-
-        }*/
+            // TODO: Prend pas en charge les quantité
+            return RetrieveAll(query.ToString());
+        }
     }
 }
