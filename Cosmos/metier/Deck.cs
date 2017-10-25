@@ -23,10 +23,10 @@ namespace Cosmos.metier
         /// <param name="aCopier"></param>
         public Deck(Deck aCopier)
         {
-            foreach (Carte uneCarte in aCopier.CartesDuDeck)
-            {
-               // this.CartesDuDeck.Add(uneCarte.Clone());
-            }
+            //foreach (Carte uneCarte in aCopier.CartesDuDeck)
+            //{
+            //   // this.CartesDuDeck.Add(uneCarte.Clone());
+            //}
         }
         #endregion
 

@@ -25,9 +25,12 @@ namespace Cosmos.view
 
         int phase;
 
-        public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
+        public Partie(MainWindow main)
         {
             InitializeComponent();
+
+            Joueur joueur1 = new Joueur();
+            Joueur joueur2 = new Joueur();
 
             TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
 
@@ -56,9 +59,11 @@ namespace Cosmos.view
             // Initialiser la phase à "phase de ressource"
             phase = laTableDeJeu.Phase;
 
-            // Brasser les deck
-            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
-            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
+            // Récuperer les deck TODO            
+
+            // Brasser les deck            
+            //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
+            //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
 
             // Donner une main à chaque joueurs 
             // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)

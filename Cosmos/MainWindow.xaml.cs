@@ -113,6 +113,8 @@ namespace Cosmos
 
         public void EcranPartie()
         {
+
+
             grdMain.Children.Remove(ContenuEcran);
 
             ContenuEcran = new Partie(this);
