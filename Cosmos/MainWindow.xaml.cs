@@ -36,8 +36,6 @@ namespace Cosmos
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
             
-            Utilisateur LaUtilisateur = MySqlUtilisateurService.RetrieveByNom("Damax");
-            LaUtilisateur.Reinitialiser();
 
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
