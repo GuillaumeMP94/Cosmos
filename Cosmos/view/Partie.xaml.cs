@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cosmos.metier;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,59 +22,75 @@ namespace Cosmos.view
     public partial class Partie : UserControl
     {
         public MainWindow Main { get; set; }
-        // Variables accessibles partout dans la partie
-        int phase = 1;
 
-        public Partie(MainWindow main)
+        int phase;
+
+        public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
         {
             InitializeComponent();
+
+            TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
+
             this.DataContext = this; // TODO changé pour bon binding
-            /*      Example année passé
-            dtgListePersonnes.ItemsSource = LstPersonnes;
-            grdModification.DataContext = LstPersonnes;
-            */
+            grd1.DataContext = this; // TODO
+            grd2.DataContext = this; // TODO
+
             Main = main;
 
+            // Initialiser les points de blindage
+            txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
+            txBlnbBlindageA.Text = joueur2.PointDeBlindage.ToString();
 
-
-            // Initialiser le nombre de points de blindage de chaque joueurs (25)
-            //
-            // nbBlindageJ.Text = joueur.nbBlindage
-            // nbBlindageA.Text = adversaire.nbBlindage
-
-
-            // Initialiser les ressources de chaque joueurs (0)
-            //
-            // nbCharroniteJ = joueur.ressource.charronite
-            // nbBarilsJ = joueur.ressource.baril
-            // nbAlainDollarJ = joueur.ressource.alainDollar
-            // nbCharroniteA = adversaire.ressource.baril
-            // nbBarilsA = adversaire.ressource.baril
-            // nbAlainDollarJ = adversaire.ressource.alainDollar
+            // Initialiser les points de ressources
+            // txBlnbCharroniteJ.Text = joueur1.Active.Charronite
+            // txBlnbBarilJ.Text = joueur1.Active.BarilNucleaire
+            // txBlnbAlainDollarJ.Text = joueur1.Active.AlainDollar
+            // txBlnbCharroniteA.Text = joueur2.Active.Charronite
+            // txBlnbBarilA.Text = joueur2.Active.BarilNucleaire
+            // txBlnbAlainDollarA.Text = joueur2.Active.AlainDollar
 
 
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 
-
             // Initialiser la phase à "phase de ressource"
+            phase = laTableDeJeu.Phase;
 
+            // Brasser les deck
+            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
+            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
 
-            // Déterminer au hasard qui débute la partie
-
-
-            // Donner une main à chaque joueurs ? (Ici ou pas ? )
+            // Donner une main à chaque joueurs 
             // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
+            int compteurNbCarte = 0;
+            while( compteurNbCarte != 6 )
+            {
+                laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
+                compteurNbCarte++;
+            }
 
+            compteurNbCarte = 0;
+            while (compteurNbCarte != 6)
+            {
+                laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
+                compteurNbCarte++;
+            }
 
-            // Initialiser les emplacements d'unités et de bâtiements
+            // Initialiser les emplacements d'unités 
+            // TODO 
 
+            // Initialiser les emplacements de bâtiements
+            //
+
+            // Binding Points de blindage
+            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage; //TODO pas testé
+            txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
 
         }
 
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();
+            changerPhase();            
         }
 
         private void changerPhase()
@@ -82,25 +99,80 @@ namespace Cosmos.view
             {
                 case 1:
                     phase++;
-                    txBlphaseRessource.Background = Brushes.Beige;
-                    txBlphasePrincipale.Background = Brushes.Crimson;
+                    txBlphaseRessource.Background = Brushes.Transparent;
+                    txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
+                    txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
+                    txBlphasePrincipale.Foreground = Brushes.Black;
                     break;
                 case 2:
                     phase++;
-                    txBlphasePrincipale.Background = Brushes.Beige;
-                    txBlphaseAttaque.Background = Brushes.Crimson;
+                    txBlphasePrincipale.Background = Brushes.Transparent;
+                    txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
+                    txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
+                    txBlphaseAttaque.Foreground = Brushes.Black;
                     break;
                 case 3:
                     phase++;
-                    txBlphaseAttaque.Background = Brushes.Beige;
-                    txBlphaseFin.Background = Brushes.Crimson;
+                    txBlphaseAttaque.Background = Brushes.Transparent;
+                    txBlphaseFin.Background = Brushes.DarkGoldenrod;
+                    txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
+                    txBlphaseFin.Foreground = Brushes.Black;
                     break;
                 case 4:
                     phase = 1; // La phase de fin est terminer, nous retournons à la première phase
-                    txBlphaseFin.Background = Brushes.Beige;
-                    txBlphaseRessource.Background = Brushes.Crimson;
+                    txBlphaseFin.Background = Brushes.Transparent;
+                    txBlphaseRessource.Background = Brushes.DarkGoldenrod;
+                    txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
+                    txBlphaseRessource.Foreground = Brushes.Black;
                     break;
             }
+        }
+
+        private void btnAbandonner_Click(object sender, RoutedEventArgs e)
+        {
+            Main.QuitterMain();
+        }
+
+        private void Image_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.QuitterMain();
+
+            
+        }
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            Thickness margin = img.Margin;
+
+            img.Margin = new Thickness(margin.Left, 0, 0, 0);
+        }
+
+        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            Thickness margin = img.Margin;
+            
+            img.Margin = new Thickness(margin.Left, 40, 0, 0);
+        }
+
+        private void InsererCarteMain(String nom, int position)
+        {
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Height = 300;
+            carte.Width = 700;
+            carte.VerticalAlignment = VerticalAlignment.Top;
+            carte.HorizontalAlignment = HorizontalAlignment.Left;
+            carte.Name = "carte" + position;
+            carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
+            carte.SetValue(Panel.ZIndexProperty, position);
+            carte.Cursor = Cursors.Hand;
+            carte.MouseEnter += Image_MouseEnter;
+            carte.MouseLeave += Image_MouseLeave;
+            grdCartesJoueur.Children.Add(carte);            
         }
     }
 }

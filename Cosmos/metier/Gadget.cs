@@ -24,7 +24,10 @@ namespace Cosmos.metier
         /// <returns></returns>
         public override Carte Clone()
         {
-            return new Gadget(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout));
+            if (this.EffetCarte != null)
+                return new Gadget(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout));
+            else
+                return new Gadget(this.IdCarte, this.Nom, null, new Ressource(this.Cout));
         }
     }
 }

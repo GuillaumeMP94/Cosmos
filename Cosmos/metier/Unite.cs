@@ -30,7 +30,11 @@ namespace Cosmos.metier
         /// <returns></returns>
         public override Carte Clone()
         {
-            return new Unite(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Attaque, this.Defense);
+            if (this.EffetCarte != null)
+                return new Unite(this.IdCarte, this.Nom, this.EffetCarte.Clone(), new Ressource(this.Cout), this.Attaque, this.Defense);
+            else
+                return new Unite(this.IdCarte, this.Nom, null, new Ressource(this.Cout), this.Attaque, this.Defense);
+
         }
 	}
 }

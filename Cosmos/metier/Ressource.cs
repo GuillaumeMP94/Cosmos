@@ -57,7 +57,30 @@ namespace Cosmos.metier
 			total.AlainDollars = a.AlainDollars + b.AlainDollars;
 			return total;
 		}
-		public override string ToString()
+        public static Ressource operator -(Ressource a, Ressource b)
+        {
+            Ressource total = new Ressource();
+            total.Charronite = a.Charronite - b.Charronite;
+            total.BarilNucleaire = a.BarilNucleaire - b.BarilNucleaire;
+            total.AlainDollars = a.AlainDollars - b.AlainDollars;
+            return total;
+        }
+
+        public static bool operator <(Ressource a, Ressource b)
+        {
+            if (a.Charronite < b.Charronite && a.BarilNucleaire < b.BarilNucleaire && a.AlainDollars < b.AlainDollars)
+                return true;
+            return false;
+        }
+
+        public static bool operator >(Ressource a, Ressource b)
+        {
+            if (a.Charronite > b.Charronite && a.BarilNucleaire > b.BarilNucleaire && a.AlainDollars > b.AlainDollars)
+                return true;
+            return false;
+        }
+
+        public override string ToString()
 		{
 			StringBuilder ressources = new StringBuilder();
 			ressources.Append(this.Charronite.ToString());
