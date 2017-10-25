@@ -185,10 +185,11 @@ namespace Cosmos.view
             // Lier la carte avec les events Mouse Enter et Leave
             carte.MouseEnter += CarteMain_MouseEnter;
             carte.MouseLeave += CarteMain_MouseLeave;
-            grdCartesJoueur.Children.Add(carte);
 
             // Lier la carte avec l'event Carte Zoom
             carte.PreviewMouseLeftButtonUp += Carte_Zoom;
+
+            grdCartesJoueur.Children.Add(carte);
         }
 
         private void Carte_Zoom(object sender, MouseEventArgs e)

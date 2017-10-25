@@ -79,9 +79,13 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Name="carteJoueur1" BorderThickness="5" BorderBrush="Purple" Grid.Column="0"/>
-            <Border Name="carteJoueur2" BorderThickness="5" BorderBrush="Purple" Grid.Column="1"/>
-            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Purple" Grid.Column="2"/>
+            <Border Name="carteJoueur" BorderThickness="5" BorderBrush="Purple" Grid.Column="0"/>
+            <Border Name="deckJoueur" BorderThickness="5" BorderBrush="Purple" Grid.Column="1">
+                <Image Source="/images/CardBack.png" Grid.Column="1" />
+            </Border>
+            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Purple" Grid.Column="2">
+                <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
+            </Border>
            
             
             <!--<Image Source="/images/cartes/ATX-317.jpg" Height="300" Width="700" Margin="0,40,0,0"
@@ -119,9 +123,26 @@
         </Grid>
 
         <Grid Name="grdCartesAdversaire" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="320,10,0,0"
-              Width="800" Height="200">
+              Width="850" Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="0,0,0,0"/>
+            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="2" Margin="50,0,0,0"/>
+            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="3" Margin="100,0,0,0"/>
+            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="4" Margin="150,0,0,0"/>
+            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="200,0,0,0"/>
+            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="0"/>
 
-            <Border BorderThickness="5" BorderBrush="Red" />
+            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="1">
+                <Image Source="/images/CardBack.png" Grid.Column="1"/>
+            </Border>
+
+            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="2">
+                <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
+            </Border>
 
         </Grid>
 

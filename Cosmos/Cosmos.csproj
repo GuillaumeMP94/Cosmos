@@ -183,7 +183,9 @@
     <Resource Include="images\campagne\planete4.png" />
     <Resource Include="images\campagne\planete5.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\CardBack.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="images\CosmosLogo.PNG" />
   </ItemGroup>
