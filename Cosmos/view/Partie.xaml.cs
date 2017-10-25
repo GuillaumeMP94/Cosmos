@@ -23,6 +23,7 @@ namespace Cosmos.view
     {
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
+        public CarteZoom Zoom { get; set; }
 
         int phase;
 
@@ -37,6 +38,16 @@ namespace Cosmos.view
             grd2.DataContext = this; // TODO
 
             Main = main;
+
+            InsererCarteMain("Nova", 1);
+            InsererCarteMain("Nova", 2);
+            InsererCarteMain("Nova", 3);
+            InsererCarteMain("Nova", 4);
+            InsererCarteMain("Nova", 5);
+            InsererCarteMain("Nova", 6);
+            InsererCarteMain("Nova", 7);
+            InsererCarteMain("Nova", 8);
+
 
             // Initialiser les points de blindage
             txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
@@ -141,7 +152,7 @@ namespace Cosmos.view
             
         }
 
-        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        private void CarteMain_MouseEnter(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
 
@@ -150,7 +161,7 @@ namespace Cosmos.view
             img.Margin = new Thickness(margin.Left, 0, 0, 0);
         }
 
-        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        private void CarteMain_MouseLeave(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
 
@@ -171,9 +182,35 @@ namespace Cosmos.view
             carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
             carte.SetValue(Panel.ZIndexProperty, position);
             carte.Cursor = Cursors.Hand;
-            carte.MouseEnter += Image_MouseEnter;
-            carte.MouseLeave += Image_MouseLeave;
-            grdCartesJoueur.Children.Add(carte);            
+
+            // Lier la carte avec les events Mouse Enter et Leave
+            carte.MouseEnter += CarteMain_MouseEnter;
+            carte.MouseLeave += CarteMain_MouseLeave;
+            grdCartesJoueur.Children.Add(carte);
+
+            // Lier la carte avec l'event Carte Zoom
+            carte.PreviewMouseLeftButtonUp += Carte_Zoom;
+        }
+
+        private void Carte_Zoom(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+            AfficherCarteZoom(img);          
+            
+        }
+
+
+        public void AfficherCarteZoom(Image img)
+        {
+            rectZoom.Visibility = Visibility.Visible;
+            Zoom = new CarteZoom(img, this);
+            grd1.Children.Add(Zoom);
+        }
+
+        public void FermerCarteZoom(Image img)
+        {
+            grd1.Children.Remove(Zoom);
+            rectZoom.Visibility = Visibility.Hidden;
         }
         /*public void EcranRessource()
         {

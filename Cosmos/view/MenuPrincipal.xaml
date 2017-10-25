@@ -10,7 +10,7 @@
 
     <Grid Width="350" Height="auto" HorizontalAlignment="Center" Margin="0,50,0,5">
 
-        <Border Width="auto" Height="auto" Background="Black" Opacity="0.6" Margin="0,15,0,285" CornerRadius="15"/>
+        <Border Width="auto" Height="auto" Background="Black" Opacity="0.6" Margin="0,15,0,15" CornerRadius="15"/>
 
         <Border Width="300" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0">
             <Image Source="/images/CosmosLogo.png" />
@@ -71,8 +71,20 @@
                     </Border>
                 </ControlTemplate>
             </Button.Template>
+        </Button>    
+        <Button Width="300" Name="btnDeconnexion" VerticalAlignment="Top" Margin="0,365,0,0" Height="30" Cursor="Hand" Click="btnDeconnexion_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+				            Deconnexion
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
-        <Button Width="300" Name="btnQuitter" VerticalAlignment="Top" Margin="0,365,0,0" Height="30" Cursor="Hand" Click="btnQuitter_Click">
+
+        <Button Width="300" Name="btnQuitter" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand" Click="btnQuitter_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
