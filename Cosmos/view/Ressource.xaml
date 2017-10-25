@@ -19,7 +19,7 @@
             <Label Width="300" Name="lblRessource" VerticalAlignment="Top" Margin="0,115,0,0" Height="40" FontSize="20" Foreground="Red" HorizontalContentAlignment="Center" Cursor="Hand" Content="Choisissez vos ressource!" >
                 
             </Label>
-        <Grid Margin="0,160,0,0" Height="275">
+        <Grid Margin="0,0,0,0" Height="275">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -35,26 +35,32 @@
             <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0"></Image>
             <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1"></Image>
             <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2"></Image>
-            <Label BorderBrush="DarkGoldenrod" BorderThickness="2" Grid.Row="0" Grid.Column="1" Width="50" Height="50" Padding="0,0,0,20" Content="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DarkGoldenrod" 
-			 FontSize="50" Name="lblCharronite" Background="Black" Opacity="0.6">
-            </Label>
-            <Border Grid.Row="1" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" VerticalAlignment="Center">
-                <Label BorderThickness="0" Foreground="DarkGoldenrod" 
-			 FontSize="50" Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0" Name="lblBaril">
-                    <Label.Background>
+            <Border Grid.Row="0" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="DarkGoldenrod" 
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" Name="txtCharronite">
+                    <TextBlock.Background>
                         <SolidColorBrush Color="Black"
 				 Opacity="0.6" />
-                    </Label.Background>
-                </Label>
+                    </TextBlock.Background>
+                </TextBlock>
             </Border>
-            <Border Grid.Row="2" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" VerticalAlignment="Center">
-                <Label BorderThickness="0" Foreground="DarkGoldenrod" 
-			 FontSize="18" Padding="5,0,0,0" Name="lblAlain">
-                    <Label.Background>
+            <Border Grid.Row="1" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="DarkGoldenrod" 
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" Name="txtBaril">
+                    <TextBlock.Background>
                         <SolidColorBrush Color="Black"
 				 Opacity="0.6" />
-                    </Label.Background>
-                </Label>
+                    </TextBlock.Background>
+                </TextBlock>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="DarkGoldenrod" 
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" Name="txtAlain">
+                    <TextBlock.Background>
+                        <SolidColorBrush Color="Black"
+				 Opacity="0.6" />
+                    </TextBlock.Background>
+                </TextBlock>
             </Border>
             <Button Width="50" Height="50" Grid.Row="0" Grid.Column="2" Name="btnPlusCharronite" Cursor="Hand">
                 <Button.Template>

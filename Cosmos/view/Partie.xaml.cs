@@ -30,7 +30,7 @@ namespace Cosmos.view
         public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
         {
             InitializeComponent();
-
+            EcranRessource();
             TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
 
             this.DataContext = this; // TODO changé pour bon binding
@@ -212,15 +212,13 @@ namespace Cosmos.view
             grd1.Children.Remove(Zoom);
             rectZoom.Visibility = Visibility.Hidden;
         }
-        /*public void EcranRessource()
+        public void EcranRessource()
         {
-            grdMain.Children.Remove(ContenuEcran);
-            ContenuEcran = new Campagne(this);
+            ContenuEcran = new view.Ressource();
+            rectZoom.Visibility = Visibility.Visible;
 
-            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
-
-            grdMain.Children.Add(ContenuEcran);
-        }*/
+            grd1.Children.Add(ContenuEcran);
+        }
     }
 }
 
