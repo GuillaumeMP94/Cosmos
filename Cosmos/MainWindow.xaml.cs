@@ -47,7 +47,7 @@ namespace Cosmos
 
             //TODO: Enlever la prochaine ligne avant remise
             EcranPartie();
-
+            //EcranMenuPrincipal();
 
         }
 

@@ -201,7 +201,7 @@
             </Border>
 
             <Border Name="emplacementCreature5" BorderThickness="5" BorderBrush="Green" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5">
-                <Image Name="imgCarteEnJeu5" Source="/images/cartes/Xenos.jpg" Cursor="Hand" PreviewMouseLeftButtonDown="Image_PreviewMouseLeftButtonDown"/>
+                <Image Name="imgCarteEnJeu5" Source="/images/cartes/Xenos.jpg" Cursor="Hand" PreviewMouseLeftButtonDown="Carte_Zoom"/>
             </Border>
 
             <Border Name="emplacementCreature6" BorderThickness="5" BorderBrush="Green" Grid.Column="2" Grid.Row="1" Padding="5,5,5,5" >
@@ -240,5 +240,8 @@
             </Button.Template>
         </Button>
 
+
+        <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"/>
+        
     </Grid>
 </UserControl>

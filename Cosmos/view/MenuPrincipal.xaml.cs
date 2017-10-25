@@ -30,7 +30,7 @@ namespace Cosmos.view
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranConnexion();
+            Main.QuitterMain();
         }
 
         private void btnRegleTuto_Click(object sender, RoutedEventArgs e)
@@ -40,7 +40,7 @@ namespace Cosmos.view
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranOptionCompte();
+            Main.QuitterMain();
         }
 
         private void btnGestionDecks_Click(object sender, RoutedEventArgs e)
@@ -56,6 +56,11 @@ namespace Cosmos.view
         private void btnCampagne_Click(object sender, RoutedEventArgs e)
         {
             Main.EcranCampagne();
+        }
+
+        private void btnDeconnexion_Click(object sender, RoutedEventArgs e)
+        {
+            Main.EcranConnexion();
         }
     }
 }
