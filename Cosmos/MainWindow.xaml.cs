@@ -30,13 +30,13 @@ namespace Cosmos
         public RecuperationCompte Recuperation { get; set; }
         public OptionCompte OptionCompte { get; set; }
         public Campagne Campagne { get; set; }
+        public Utilisateur UtilisateurConnecte { get; set; }
         public MainWindow()
         {
             InitializeComponent();
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
-            
-            Utilisateur LaUtilisateur = MySqlUtilisateurService.RetrieveByNom("Bob");
+           
 
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
