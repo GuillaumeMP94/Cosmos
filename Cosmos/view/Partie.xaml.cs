@@ -1,4 +1,5 @@
-﻿using Cosmos.metier;
+﻿using Cosmos.accesBD;
+using Cosmos.metier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,19 +25,24 @@ namespace Cosmos.view
         public MainWindow Main { get; set; }
 
         int phase;
+        TableDeJeu laTableDeJeu;
+
 
         public Partie(MainWindow main)
         {
             InitializeComponent();
 
-            Joueur joueur1 = new Joueur();
-            Joueur joueur2 = new Joueur();
+            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
+            Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
+            utilisateur1.Reinitialiser();
+            utilisateur2.Reinitialiser();
 
-            TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
+            Joueur joueur1 = utilisateur1;
+            Joueur joueur2 = utilisateur2;
 
-            this.DataContext = this; // TODO changé pour bon binding
-            grd1.DataContext = this; // TODO
-            grd2.DataContext = this; // TODO
+            laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
+
+            this.DataContext = this; // TODO changé pour bon binding maybe ?
 
             Main = main;
 
@@ -59,25 +65,31 @@ namespace Cosmos.view
             // Initialiser la phase à "phase de ressource"
             phase = laTableDeJeu.Phase;
 
-            // Récuperer les deck TODO            
-
-            // Brasser les deck            
+            // Brasser les deck
             //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
             //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
+            utilisateur1.DeckAJouer.BrasserDeck();
+            utilisateur2.DeckAJouer.BrasserDeck();
 
             // Donner une main à chaque joueurs 
             // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
             int compteurNbCarte = 0;
             while( compteurNbCarte != 6 )
             {
-                laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
+                //laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
+                laTableDeJeu.LstMainJ1.Add(utilisateur1.DeckAJouer.CartesDuDeck[0]);
+                utilisateur1.DeckAJouer.CartesDuDeck.RemoveAt(0) ;
+                //laTableDeJeu.LstMainJ1[50-compteurNbCarte] = utilisateur1.DeckAJouer.PigerCarte();
                 compteurNbCarte++;
             }
 
             compteurNbCarte = 0;
             while (compteurNbCarte != 6)
             {
-                laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
+                //laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
+                //laTableDeJeu.LstMainJ2[compteurNbCarte] = utilisateur2.DeckAJouer.PigerCarte();
+                laTableDeJeu.LstMainJ2.Add(utilisateur2.DeckAJouer.CartesDuDeck[0]);
+                utilisateur2.DeckAJouer.CartesDuDeck.RemoveAt(0);
                 compteurNbCarte++;
             }
 
@@ -92,14 +104,20 @@ namespace Cosmos.view
             txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
 
         }
-
+        /// <summary>
+        /// Ce bouton change la phase pour l'interface et pour la table de jeu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();            
+            changerPhase();
+            laTableDeJeu.AvancerPhase();
         }
 
         private void changerPhase()
         {
+            
             switch (phase)
             {
                 case 1:

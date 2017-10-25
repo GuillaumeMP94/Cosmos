@@ -21,22 +21,22 @@ namespace Cosmos.metier
 
 
         // Deck des joueurs
-        public Deck DeckJ1 { get; set; }
-        public Deck DeckJ2 { get; set; }
+        public List<Carte> DeckJ1 { get; set; }
+        public List<Carte> DeckJ2 { get; set; }
 
         // Mains des joueurs
-        List<Carte> LstMainJ1 { get; set; }
-        List<Carte> LstMainJ2 { get; set; }
+        public List<Carte> LstMainJ1 { get; set; }
+        public List<Carte> LstMainJ2 { get; set; }
 
-        List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
-        List<Batiment> LstBatimentJ2 { get; set; }
+        public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
+        public List<Batiment> LstBatimentJ2 { get; set; }
 
-        List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
-        List<Unite> LstUniteJ2 { get; set; }
+        public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
+        public List<Unite> LstUniteJ2 { get; set; }
 
         // Usine de recyclage des joueurs / Défausse
-        List<Carte> LstUsineRecyclageJ1 { get; set; }
-        List<Carte> LstUsineRecyclageJ2 { get; set; }
+        public List<Carte> LstUsineRecyclageJ1 { get; set; }
+        public List<Carte> LstUsineRecyclageJ2 { get; set; }
 
         public int Phase
         {
@@ -109,10 +109,13 @@ namespace Cosmos.metier
 
         // Constructeur de la table de jeu.
         // Celle-ci à besoin d'avoir les decks des deux joueurs pour mélanger ceux-ci et distribuer les mains de départs.
-        public TableDeJeu( Deck deck1, Deck deck2)
+        public TableDeJeu(List<Carte> deck1, List<Carte> deck2)
         {
-            DeckJ1 = new Deck(deck1);
-            DeckJ2 = new Deck(deck2);
+            DeckJ1 = new List<Carte>(deck1);
+            DeckJ2 = new List<Carte>(deck2);
+
+            LstMainJ1 = new List<Carte>();
+            LstMainJ2 = new List<Carte>();
 
             LstBatimentJ1 = new List<Batiment>();
             LstBatimentJ2 = new List<Batiment>();
@@ -230,12 +233,23 @@ namespace Cosmos.metier
         /// <summary>
         /// Mélange le deck de façon aléatoire. L'algo est médiocre, TODO tester.
         /// </summary>
-        public Deck BrasserDeck(Deck leDeck)
+        public void BrasserDeck(List<Carte> leDeck)
         {
-            Deck aBrasser = new Deck(leDeck);
+            //var rnd = new Random();
+            //leDeck.CartesDuDeck.OrderBy(item => rnd.Next());
+            //return aBrasser;
+
+            int n = leDeck.Count();
             var rnd = new Random();
-            aBrasser.CartesDuDeck.OrderBy(item => rnd.Next());
-            return aBrasser;
+            while( n > 1 )
+            {
+                int k = (rnd.Next(0, n) % n);
+                n--;
+                Carte temp = leDeck[k];
+                leDeck[k] = leDeck[n];
+                leDeck[n] = temp;
+            }
+
             /* Algo alternatif probablement plus efficace
                 int n = list.Count;
                 Random rnd = new Random();
