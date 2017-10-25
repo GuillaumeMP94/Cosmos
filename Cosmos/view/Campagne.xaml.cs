@@ -55,7 +55,7 @@ namespace Cosmos.view
 
         private void btnNiveau1_Click(object sender, RoutedEventArgs e)
         {
-            //Main.EcranPartie(); //EN COURS
+           Main.EcranPartie(); //EN COURS
         }
 
         private void btnMouseEnter(object sender, MouseEventArgs e)
@@ -156,6 +156,6 @@ namespace Cosmos.view
                     brdStory.Margin = new Thickness(btn.Margin.Left, btn.Margin.Top - brdStory.Height - 20, 0, 0);
                 }
             }
-        }
+        }              
     }
 }

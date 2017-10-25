@@ -33,7 +33,7 @@ namespace Cosmos.metier
             CartesDuDeck = new List<Carte>();
             foreach (Carte uneCarte in aCopier.CartesDuDeck)
             {
-                this.CartesDuDeck.Add(uneCarte.Clone());
+               // this.CartesDuDeck.Add(uneCarte.Clone());
             }
             EstChoisi = aCopier.EstChoisi;
         }
