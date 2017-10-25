@@ -39,6 +39,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -96,6 +98,9 @@
     <Compile Include="view\RecuperationCompte.xaml.cs">
       <DependentUpon>RecuperationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\Ressource.xaml.cs">
+      <DependentUpon>Ressource.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\RecuperationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\Ressource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,7 +185,9 @@
     <Resource Include="images\campagne\planete4.png" />
     <Resource Include="images\campagne\planete5.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\ressources\Baril.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="images\CosmosLogo.PNG" />
   </ItemGroup>
@@ -208,6 +219,12 @@
     <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
     <Resource Include="images\cartes\Warthog.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\ressources\Charronite.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\ressources\Alain.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

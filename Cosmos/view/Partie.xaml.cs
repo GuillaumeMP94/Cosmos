@@ -21,6 +21,7 @@ namespace Cosmos.view
     /// </summary>
     public partial class Partie : UserControl
     {
+        public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
 
         int phase;
@@ -174,6 +175,15 @@ namespace Cosmos.view
             carte.MouseLeave += Image_MouseLeave;
             grdCartesJoueur.Children.Add(carte);            
         }
+        /*public void EcranRessource()
+        {
+            grdMain.Children.Remove(ContenuEcran);
+            ContenuEcran = new Campagne(this);
+
+            this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
+
+            grdMain.Children.Add(ContenuEcran);
+        }*/
     }
 }
 
