@@ -21,6 +21,7 @@ namespace Cosmos.view
     /// </summary>
     public partial class Partie : UserControl
     {
+        const int RESSOURCEDEPART = 3;
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
         public CarteZoom Zoom { get; set; }
@@ -30,9 +31,7 @@ namespace Cosmos.view
         public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
         {
             InitializeComponent();
-            EcranRessource();
             TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
-
             this.DataContext = this; // TODO changé pour bon binding
             grd1.DataContext = this; // TODO
             grd2.DataContext = this; // TODO
@@ -72,6 +71,9 @@ namespace Cosmos.view
             laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
             laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
 
+            // Demander à l'utilisateur de distribuer ses ressources.
+            EcranRessource(joueur1,RESSOURCEDEPART,RESSOURCEDEPART,this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
+
             // Donner une main à chaque joueurs 
             // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
             int compteurNbCarte = 0;
@@ -102,7 +104,7 @@ namespace Cosmos.view
 
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();            
+            changerPhase();
         }
 
         private void changerPhase()
@@ -212,12 +214,19 @@ namespace Cosmos.view
             grd1.Children.Remove(Zoom);
             rectZoom.Visibility = Visibility.Hidden;
         }
-        public void EcranRessource()
+        public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
-            ContenuEcran = new view.Ressource();
+            ContenuEcran = new view.Ressource(joueur, points, maxRessourceLevel, partie);
             rectZoom.Visibility = Visibility.Visible;
 
             grd1.Children.Add(ContenuEcran);
+        }
+
+        public void FermerEcranRessource()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            rectZoom.Visibility = Visibility.Hidden;
+            changerPhase();
         }
     }
 }

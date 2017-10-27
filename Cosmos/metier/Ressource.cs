@@ -1,20 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-	public class Ressource
+	public class Ressource : INotifyPropertyChanged
 	{
-		#region Propriétés
-		public int Charronite { get; set; }
-		public int BarilNucleaire { get; set; }
-		public int AlainDollars { get; set; }
-		#endregion
-		#region Constructeurs
-		public Ressource()
+        #region Propriétés
+
+        private int charronite;
+        private int barilNucleaire;
+        private int alainDollars;
+
+        public int Charronite
+        {
+            get { return charronite; }
+            set
+            {
+                charronite = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Charronite"));
+                }
+
+            }
+        }
+        public int BarilNucleaire
+        {
+            get { return barilNucleaire; }
+            set
+            {
+                barilNucleaire = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("BarilNucleaire"));
+                }
+
+            }
+        }
+        public int AlainDollars
+        {
+            get { return alainDollars; }
+            set
+            {
+                alainDollars = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("AlainDollars"));
+                }
+
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+        #region Constructeurs
+        public Ressource()
 		{
 			Charronite = 0;
 			BarilNucleaire = 0;
@@ -106,6 +149,5 @@ namespace Cosmos.metier
 			return ressources.ToString();
 		}
 		#endregion
-		// test 2
 	}
 }

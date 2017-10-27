@@ -228,10 +228,10 @@
     <Resource Include="images\cartes\Xenos.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\ressources\Charronite.PNG" />
+    <Resource Include="images\ressources\Alain.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\ressources\Alain.png" />
+    <Resource Include="images\ressources\Charronite.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,11 +16,12 @@
             </Border>
 
 
-            <Label Width="300" Name="lblRessource" VerticalAlignment="Top" Margin="0,115,0,0" Height="40" FontSize="20" Foreground="Red" HorizontalContentAlignment="Center" Cursor="Hand" Content="Choisissez vos ressource!" >
+            <Label Width="300" Name="lblRessource" VerticalAlignment="Top" Margin="0,115,0,0" Height="40" FontSize="25" Foreground="Red" HorizontalContentAlignment="Center" Cursor="Hand" Content="Choisissez vos ressource!" >
                 
             </Label>
-        <Grid Margin="0,0,0,0" Height="275">
+        <Grid Margin="0,0,0,150" Height="350">
             <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -35,34 +36,53 @@
             <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0"></Image>
             <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1"></Image>
             <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2"></Image>
-            <Border Grid.Row="0" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Grid.Row="0" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" Name="txtCharronite">
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.Charronite}" Name="txtCharronite">
                     <TextBlock.Background>
                         <SolidColorBrush Color="Black"
 				 Opacity="0.6" />
                     </TextBlock.Background>
                 </TextBlock>
             </Border>
-            <Border Grid.Row="1" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Grid.Row="1" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" Name="txtBaril">
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.BarilNucleaire}" Name="txtBaril">
                     <TextBlock.Background>
                         <SolidColorBrush Color="Black"
 				 Opacity="0.6" />
                     </TextBlock.Background>
                 </TextBlock>
             </Border>
-            <Border Grid.Row="2" Grid.Column="1" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Grid.Row="2" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="2" Name="txtAlain">
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.AlainDollars}" VerticalAlignment="Center" Name="txtAlain">
                     <TextBlock.Background>
                         <SolidColorBrush Color="Black"
 				 Opacity="0.6" />
                     </TextBlock.Background>
                 </TextBlock>
             </Border>
-            <Button Width="50" Height="50" Grid.Row="0" Grid.Column="2" Name="btnPlusCharronite" Cursor="Hand">
+            <Border Grid.Row="3" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="DarkGoldenrod" 
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding Path=Points, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Name="txtPoints">
+                    <TextBlock.Background>
+                        <SolidColorBrush Color="Black"
+				 Opacity="0.6" />
+                    </TextBlock.Background>
+                </TextBlock>
+            </Border>
+            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="lblPoints" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="25" Foreground="Red" HorizontalContentAlignment="Center" Cursor="Hand" Content="Points à distribuer:" ></Label>
+            <!--<Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="50" Width="175" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="DarkGoldenrod" 
+			 FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Points à distribuer:" VerticalAlignment="Center">
+                    <TextBlock.Background>
+                        <SolidColorBrush Color="Black"
+				 Opacity="0.6" />
+                    </TextBlock.Background>
+                </TextBlock>
+            </Border> -->
+            <Button Width="50" Height="50" Grid.Row="0" Grid.Column="1" Name="btnPlusCharronite" Cursor="Hand" Click="btnPlusCharronite_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -73,7 +93,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="50" Height="50" Grid.Row="0" Grid.Column="3" x:Name="btnMoinsCharronite" Cursor="Hand">
+            <Button Width="50" Height="50" Grid.Row="0" Grid.Column="2" IsEnabled="False" Opacity="0.25" x:Name="btnMoinsCharronite" Cursor="Hand" Click="btnMoinsCharronite_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -83,7 +103,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="50" Height="50" Grid.Row="1" Grid.Column="2" Name="btnPlusBaril" Cursor="Hand">
+            <Button Width="50" Height="50" Grid.Row="1" Grid.Column="1" Name="btnPlusBaril" Cursor="Hand" Click="btnPlusBaril_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -94,7 +114,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="50" Height="50" Grid.Row="1" Grid.Column="3" x:Name="btnMoinsBaril" Cursor="Hand">
+            <Button Width="50" Height="50" Grid.Row="1" Grid.Column="2" IsEnabled="False" Opacity="0.25" x:Name="btnMoinsBaril" Cursor="Hand" Click="btnMoinsBaril_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -104,7 +124,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="50" Height="50" Grid.Row="2" Grid.Column="2" Name="btnPlusAlain" Cursor="Hand">
+            <Button Width="50" Height="50" Grid.Row="2" Grid.Column="1" Name="btnPlusAlain" Cursor="Hand" Click="btnPlusAlain_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -115,7 +135,18 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="50" Height="50" Grid.Row="2" Grid.Column="3" x:Name="btnMoinsAlain" Cursor="Hand">
+            <Button Width="80" Height="50" Grid.Row="4" Grid.Column="3" Opacity="0.25" IsEnabled="False" Name="btnOk" Cursor="Hand" Click="btnOk_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock Padding="0,0,0,5" FontFamily="Calibri" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="50">
+				            →
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Width="50" Height="50" Grid.Row="2" Grid.Column="2" IsEnabled="False" Opacity="0.25" x:Name="btnMoinsAlain" Cursor="Hand" Click="btnMoinsAlain_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
