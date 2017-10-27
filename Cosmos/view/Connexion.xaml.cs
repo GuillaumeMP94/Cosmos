@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 using Cosmos.accesBD;
 using System.Threading;
 using Cosmos.metier;
@@ -34,7 +33,7 @@ namespace Cosmos.view
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
         {
-            if (ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
+            if (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
             {
                 if (txbPseudo.Text.Length > 0 && passbPassword.Password.Length > 0)
                 {
@@ -87,14 +86,6 @@ namespace Cosmos.view
         private void btnPasswordOublie_Click(object sender, RoutedEventArgs e)
         {
             Main.EcranRecuperation();
-        }
-
-        private string ValiderChampSaisi(string champ)
-        {
-            string pattern = @"([a-zA-Z0-9]*)";
-            Match resultat = Regex.Match(champ, pattern);
-
-            return resultat.ToString();
         }
 
         private void AfficherMessageErreur(string typeErreur)
