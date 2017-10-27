@@ -22,6 +22,8 @@ namespace Cosmos.view
     /// </summary>
     public partial class Partie : UserControl
     {
+    	const int RESSOURCEDEPART = 3;
+        public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
         public CarteZoom Zoom { get; set; }
 
@@ -63,6 +65,9 @@ namespace Cosmos.view
 
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
+	    
+	    // Demander à l'utilisateur de distribuer ses ressources.
+            EcranRessource(joueur1,RESSOURCEDEPART,RESSOURCEDEPART,this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Initialiser la phase à "phase de ressource"            
             phase = laTableDeJeu.Phase;
@@ -320,6 +325,20 @@ namespace Cosmos.view
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
 			JouerCarte( true, laTableDeJeu.LstMainJ1[0] );
+        }
+	public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
+        {
+            ContenuEcran = new view.Ressource(joueur, points, maxRessourceLevel, partie);
+            rectZoom.Visibility = Visibility.Visible;
+
+            grd1.Children.Add(ContenuEcran);
+        }
+
+        public void FermerEcranRessource()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            rectZoom.Visibility = Visibility.Hidden;
+            changerPhase();
         }
     }
 }
