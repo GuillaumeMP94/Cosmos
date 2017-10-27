@@ -15,10 +15,12 @@ namespace Cosmos.metier
         public bool EstChoisi { get; set; }
         #endregion
         #region Constructeurs
+
         public Deck(int idDeck, string nom, bool estChoisi)
         {
             IdDeck = idDeck;
             Nom = nom;
+
             EstChoisi = estChoisi;
         }
 
@@ -28,6 +30,7 @@ namespace Cosmos.metier
         /// <param name="aCopier"></param>
         public Deck(Deck aCopier)
         {
+
             IdDeck = aCopier.IdDeck;
             Nom = aCopier.Nom;
             CartesDuDeck = new List<Carte>();
@@ -36,6 +39,7 @@ namespace Cosmos.metier
                this.CartesDuDeck.Add(uneCarte.Clone());
             }
             EstChoisi = aCopier.EstChoisi;
+
         }
         #endregion
 

@@ -50,7 +50,7 @@ namespace Cosmos
 
             //TODO: Enlever la prochaine ligne avant remise
             EcranPartie();
-
+            //EcranMenuPrincipal();
 
         }
 
@@ -123,7 +123,10 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
 
-            ContenuEcran = new Partie(this);
+            Joueur joueur1 = new Joueur();
+            Joueur joueur2 = new Joueur();
+
+            ContenuEcran = new Partie(this, joueur1, joueur2);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
 

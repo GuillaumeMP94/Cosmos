@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Cosmos"
         mc:Ignorable="d"
         WindowState="Maximized"
+        WindowStyle="None"
         Title="MainWindow" Height="1000" Width="1400">    
 
 

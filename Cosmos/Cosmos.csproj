@@ -82,6 +82,9 @@
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\CarteZoom.xaml.cs">
+      <DependentUpon>CarteZoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\Connexion.xaml.cs">
       <DependentUpon>Connexion.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="view\Campagne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\CarteZoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,7 +194,9 @@
     <Resource Include="images\campagne\planete4.png" />
     <Resource Include="images\campagne\planete5.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\CardBack.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="images\CosmosLogo.PNG" />
   </ItemGroup>
@@ -219,6 +228,11 @@
     <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
     <Resource Include="images\cartes\Warthog.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\ressources\Alain.png" />
+    <Resource Include="images\ressources\Baril.png" />
+    <Resource Include="images\ressources\Charronite.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
