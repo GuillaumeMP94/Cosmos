@@ -43,14 +43,5 @@ namespace Cosmos.view
 
         }
 
-        private void btnFermer_Click(object sender, RoutedEventArgs e)
-        {
-            Partie.FermerCarteZoom(imgZoom);
-        }
-
-        private void btnJouer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
