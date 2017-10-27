@@ -37,11 +37,6 @@ namespace Cosmos.view
             imgZoom.Margin = new Thickness(0, 70, 0, 0);
 
             grdCarteZoom.Children.Add(imgZoom);
-
-
-
         }
-
-
     }
 }

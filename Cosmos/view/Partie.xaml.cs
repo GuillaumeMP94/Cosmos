@@ -193,36 +193,117 @@ namespace Cosmos.view
             carte.Width = 700;
             carte.VerticalAlignment = VerticalAlignment.Top;
             carte.HorizontalAlignment = HorizontalAlignment.Left;
+            carte.Name = "carte" + position;
             carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
             carte.SetValue(Panel.ZIndexProperty, position);
             carte.Cursor = Cursors.Hand;
-            carte.Name = "carte" + position;
+
             // Lier la carte avec les events Mouse Enter et Leave
             carte.MouseEnter += CarteMain_MouseEnter;
             carte.MouseLeave += CarteMain_MouseLeave;
-            //MinHeight = position;
 
             // Lier la carte avec l'event Carte Zoom
             carte.PreviewMouseLeftButtonUp += Carte_Zoom;
 
             grdCartesJoueur.Children.Add(carte);
         }
+		
+		private void InsererCarteCreature(String nom, int position)
+		{
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Name = "emplacementCreature" + position;
+            carte.Cursor = Cursors.Hand;
+            // Lier la carte avec l'event Carte Zoom
+            carte.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Positionner la carte dans la bonne case de jeu
+            switch(position)
+            {
+                case 1:
+                    emplacementCreature1.Child = carte;
+                    break;
+                case 2:
+                    emplacementCreature2.Child = carte;
+                    break;
+                case 3:
+                    emplacementCreature3.Child = carte;
+                    break;
+                case 4:
+                    emplacementCreature4.Child = carte;
+                    break;
+                case 5:
+                    emplacementCreature5.Child = carte;
+                    break;
+                case 6:
+                    emplacementCreature6.Child = carte;
+                    break;
+            }
+        }
+		
+		private void InsererCarteBatiment(String nom, int position)
+        {
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Name = "emplacementBatiment" + position;
+            carte.Cursor = Cursors.Hand;
+            // Lier la carte avec l'event Carte Zoom
+            carte.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Positionner la carte dans la bonne case de jeu
+            switch (position)
+            {
+                case 1:
+                    emplacementBatiment1.Child = carte;
+                    break;
+                case 2:
+                    emplacementBatiment2.Child = carte;
+                    break;
+                case 3:
+                    emplacementBatiment3.Child = carte;
+                    break;
+                case 4:
+                    emplacementBatiment4.Child = carte;
+                    break;
+                case 5:
+                    emplacementBatiment5.Child = carte;
+                    break;
+                case 6:
+                    emplacementBatiment6.Child = carte;
+                    break;
+                case 7:
+                    emplacementBatiment7.Child = carte;
+                    break;
+                case 8:
+                    emplacementBatiment8.Child = carte;
+                    break;
+            }
+        }
 
         private void Carte_Zoom(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
-            AfficherCarteZoom(img);   
+            AfficherCarteZoom(img, true);          
             
         }
+		
+		private void Carte_CarteEnJeu_Zoom(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+            AfficherCarteZoom(img, false);
+        }
 
-
-        public void AfficherCarteZoom(Image img)
+        public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
             Zoom = new CarteZoom(img, this);
             grd1.Children.Add(Zoom);
-            //btnJouer.Visibility = Visibility.Visible;
-            //btnFermerZoom.Visibility = Visibility.Visible;
+
+            if(carteMain)
+            {
+                btnJouer.Visibility = Visibility.Visible;
+            }
+            btnFermerZoom.Visibility = Visibility.Visible;
         }
 
         public void JouerCarte( bool estJoueur1 , Carte laCarte )
@@ -234,8 +315,8 @@ namespace Cosmos.view
         {
             grd1.Children.Remove(Zoom);
             rectZoom.Visibility = Visibility.Hidden;
-            //btnJouer.Visibility = Visibility.Hidden;
-            //btnFermerZoom.Visibility = Visibility.Hidden;
+            btnJouer.Visibility = Visibility.Hidden;
+            btnFermerZoom.Visibility = Visibility.Hidden;
         }
 
         private void btnJouer_Click(object sender, RoutedEventArgs e)
