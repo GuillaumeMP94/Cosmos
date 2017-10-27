@@ -43,22 +43,10 @@ namespace Cosmos.view
 
             laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
 
-            this.DataContext = this; // TODO changé pour bon binding maybe ?
+            this.DataContext = this; // Permet le binding. Le datacontext de la partie est le contenu ici.
             
 
             Main = main;
-
-            InsererCarteCreature("Nova", 4);
-            InsererCarteCreature("Nova", 5);
-            InsererCarteCreature("Nova", 6);
-            InsererCarteCreature("Nova", 1);
-
-            InsererCarteBatiment("Usine de Charronite", 1);
-            InsererCarteBatiment("Usine de Charronite", 3);
-            InsererCarteBatiment("Usine de Charronite", 4);
-            InsererCarteBatiment("Usine de Charronite", 6);
-            InsererCarteBatiment("Usine de Charronite", 8);
-
 
             // Initialiser les points de blindage
             txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
@@ -115,10 +103,6 @@ namespace Cosmos.view
 
             // Initialiser les emplacements de bâtiments
             // TODO or not
-
-            // Binding 
-            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage;
-            txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
 
         }
         /// <summary>
@@ -335,7 +319,7 @@ namespace Cosmos.view
 
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
-
+			JouerCarte( true, laTableDeJeu.LstMainJ1[0] );
         }
     }
 }

@@ -29,6 +29,7 @@
 
                 </Border>
             </Border>
+			
             <TextBlock x:Name="txBltxtPBJ" Text="BLINDAGE" Foreground="DarkGoldenrod"
                        VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,50"
                        FontWeight="Bold" FontSize="30"/>
@@ -119,10 +120,7 @@
                     </Grid>
                 </Border>
 
-            </StackPanel>
-            
-            
-            
+            </StackPanel>      
 
         </Grid>
 
@@ -140,8 +138,7 @@
             </Border>
             <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Purple" Grid.Column="2">
                 <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
-            </Border>         
-            
+            </Border>  
 
         </Grid>
 
@@ -229,7 +226,6 @@
             </Grid.RowDefinitions>
 
             <Border Name="emplacementCreature1" BorderThickness="5" BorderBrush="Violet" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5">
-                <!--<Image Source="/images/cartes/ATX-317.jpg" />-->
             </Border>
 
             <Border Name="emplacementCreature2" BorderThickness="5" BorderBrush="Violet" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5">
@@ -237,21 +233,16 @@
             </Border>
 
             <Border Name="emplacementCreature3" BorderThickness="5" BorderBrush="Violet" Grid.Column="2" Grid.Row="0" Padding="5,5,5,5">
-                <Image Source="/images/cartes/Marine Elite.jpg" />
             </Border>
 
             <Border Name="emplacementCreature4" BorderThickness="5" BorderBrush="Green" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5">
-                <!--<Image Source="/images/cartes/Croiseur de Guerre.jpg" />-->
             </Border>
 
             <Border Name="emplacementCreature5" BorderThickness="5" BorderBrush="Green" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5">
-                <!--<Image Name="imgCarteEnJeu5" Source="/images/cartes/Xenos.jpg" Cursor="Hand" PreviewMouseLeftButtonDown="Carte_Zoom"/>-->
             </Border>
 
             <Border Name="emplacementCreature6" BorderThickness="5" BorderBrush="Green" Grid.Column="2" Grid.Row="1" Padding="5,5,5,5" >
-
             </Border>
-
 
         </Grid>
 
