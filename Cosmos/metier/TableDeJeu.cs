@@ -157,26 +157,31 @@ namespace Cosmos.metier
         {
             // Le coup à déjà été validé rendu ici                  
 
+            // Copie temporaire de la carte à déplacer d'une zone vers une autre
+            Carte temp = carteAJouer.Clone();
+
             // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
             if (joueurActifEst1)
             {
+
                 // On enleve les ressources au joueurs
                 joueur1.RessourceActive -= carteAJouer.Cout;
 
                 if (carteAJouer is Unite)
                 {
+                    
                     LstMainJ1.Remove(carteAJouer);
-                    LstUniteJ1.Add((Unite)carteAJouer);
+                    LstUniteJ1.Add((Unite)temp);
                 }
                 if (carteAJouer is Batiment)
                 {
                     LstMainJ1.Remove(carteAJouer);
-                    LstBatimentJ1.Add((Batiment)carteAJouer);
+                    LstBatimentJ1.Add((Batiment)temp);
                 }
                 if (carteAJouer is Gadget)
                 {
                     LstMainJ1.Remove(carteAJouer);
-                    LstUsineRecyclageJ1.Add(carteAJouer);
+                    LstUsineRecyclageJ1.Add(temp);
                 }
             }
             else
@@ -187,17 +192,17 @@ namespace Cosmos.metier
                 if (carteAJouer is Unite)
                 {
                     LstMainJ2.Remove(carteAJouer);
-                    LstUniteJ2.Add((Unite)carteAJouer);
+                    LstUniteJ2.Add((Unite)temp);
                 }
                 if (carteAJouer is Batiment)
                 {
                     LstMainJ2.Remove(carteAJouer);
-                    LstBatimentJ2.Add((Batiment)carteAJouer);
+                    LstBatimentJ2.Add((Batiment)temp);
                 }
                 if (carteAJouer is Gadget)
                 {
                     LstMainJ2.Remove(carteAJouer);
-                    LstUsineRecyclageJ2.Add(carteAJouer);
+                    LstUsineRecyclageJ2.Add(temp);
                 }
             }                                 
         }

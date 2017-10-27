@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cosmos.metier;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,13 +23,11 @@ namespace Cosmos.view
     {
         public Partie Partie { get; set; }
         public Image imgZoom { get; set; }
-        public CarteZoom(Image imgSource, Partie partie)
+        public CarteZoom(Image imgSource, Partie partie )
         {
             InitializeComponent();
 
             Partie = partie;
-
-            
 
             imgZoom = new Image();
             imgZoom.Source = imgSource.Source;
@@ -43,14 +42,6 @@ namespace Cosmos.view
 
         }
 
-        private void btnFermer_Click(object sender, RoutedEventArgs e)
-        {
-            Partie.FermerCarteZoom(imgZoom);
-        }
 
-        private void btnJouer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

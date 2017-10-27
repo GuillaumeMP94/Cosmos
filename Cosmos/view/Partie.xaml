@@ -106,14 +106,14 @@
                         <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
                         <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
 
-                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30">
-                            5
+                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Path=joueur1.RessourceActive.Charronite}">
                         </TextBlock>
-                        <TextBlock Name="txBlnbBarilJ" Grid.Column="1" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30">
-                            5
+                        <TextBlock Name="txBlnbBarilJ" Grid.Column="1" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Path=joueur1.RessourceActive.BarilNucleaire}">                            
                         </TextBlock>
-                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30">
-                            3
+                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Path=joueur1.RessourceActive.AlainDollars}">                            
                         </TextBlock>
 
                     </Grid>
@@ -325,6 +325,11 @@
 
 
         <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"/>
-        
+        <!--<Button Name="btnJouer" Height="50" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Click="btnJouer_Click" Margin="20,20,0,0" Content="Jouer la carte" Visibility="Hidden"/>
+        <Button Name="btnFermerZoom" Height="50" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Click="btnFermerZoom_Click" Margin="20,20,0,0" Content="Fermer le zoom" Visibility="Hidden"/>-->
+
+
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,55 @@ namespace Cosmos.metier
 {
 	public class Ressource
 	{
-		#region Propriétés
-		public int Charronite { get; set; }
-		public int BarilNucleaire { get; set; }
-		public int AlainDollars { get; set; }
-		#endregion
-		#region Constructeurs
-		public Ressource()
+        public event PropertyChangedEventHandler modifPropriete;
+        #region Propriétés
+        private int charronite;
+        private int barilNucleaire;
+        private int alainDollars;
+        public int AlainDollars
+        {
+            get { return alainDollars; }
+            set
+            {
+                alainDollars = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("alainDollars"));
+                }
+
+            }
+        }
+
+        public int BarilNucleaire
+        {
+            get { return barilNucleaire; }
+            set
+            {
+                barilNucleaire = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("barilNucleaire"));
+                }
+
+            }
+        }
+        public int Charronite
+        {
+            get { return charronite; }
+            set
+            {
+                charronite = value;
+                if (modifPropriete != null)
+                {
+                    modifPropriete(this, new PropertyChangedEventArgs("charronite"));
+                }
+
+            }
+        }
+
+        #endregion
+        #region Constructeurs
+        public Ressource()
 		{
 			Charronite = 0;
 			BarilNucleaire = 0;

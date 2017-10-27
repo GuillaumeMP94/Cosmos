@@ -43,33 +43,22 @@ namespace Cosmos.view
 
             laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
 
-            this.DataContext = this; // TODO changé pour bon binding maybe ?
+            this.DataContext = this; // Permet le binding. Le datacontext de la partie est le contenu ici.
             
 
             Main = main;
-
-            InsererCarteMain("Nova", 1);
-            InsererCarteMain("Nova", 2);
-            InsererCarteMain("Nova", 3);
-            InsererCarteMain("Nova", 4);
-            InsererCarteMain("Nova", 5);
-            InsererCarteMain("Nova", 6);
-            InsererCarteMain("Nova", 7);
-            InsererCarteMain("Nova", 8);
-
 
             // Initialiser les points de blindage
             txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
             txBlnbBlindageA.Text = joueur2.PointDeBlindage.ToString();
 
             //Initialiser les points de ressources
-            txBlnbCharroniteJ.DataContext = joueur1.RessourceActive.Charronite.ToString();
-            txBlnbBarilJ.DataContext = joueur1.RessourceActive.BarilNucleaire.ToString();
-            txBlnbAlainDollarJ.DataContext = joueur1.RessourceActive.AlainDollars.ToString();
-            txBlnbCharroniteA.DataContext = joueur2.RessourceActive.Charronite.ToString();
-            txBlnbBarilA.DataContext = joueur2.RessourceActive.BarilNucleaire.ToString();
-            txBlnbAlainDollarA.DataContext = joueur2.RessourceActive.AlainDollars.ToString();
-
+            txBlnbCharroniteJ.Text = joueur1.RessourceActive.Charronite.ToString();
+            txBlnbBarilJ.Text = joueur1.RessourceActive.BarilNucleaire.ToString();
+            txBlnbAlainDollarJ.Text = joueur1.RessourceActive.AlainDollars.ToString();
+            txBlnbCharroniteA.Text = joueur2.RessourceActive.Charronite.ToString();
+            txBlnbBarilA.Text = joueur2.RessourceActive.BarilNucleaire.ToString();
+            txBlnbAlainDollarA.Text = joueur2.RessourceActive.AlainDollars.ToString();
 
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
@@ -113,12 +102,12 @@ namespace Cosmos.view
 
             // Initialiser les emplacements de bâtiments
             // TODO or not
-
-            // Binding 
-            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage;
-            txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
+          
 
         }
+
+
+
         /// <summary>
         /// Ce bouton change la phase pour l'interface et pour la table de jeu
         /// </summary>
@@ -204,14 +193,14 @@ namespace Cosmos.view
             carte.Width = 700;
             carte.VerticalAlignment = VerticalAlignment.Top;
             carte.HorizontalAlignment = HorizontalAlignment.Left;
-            carte.Name = "carte" + position;
             carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
             carte.SetValue(Panel.ZIndexProperty, position);
             carte.Cursor = Cursors.Hand;
-
+            carte.Name = "carte" + position;
             // Lier la carte avec les events Mouse Enter et Leave
             carte.MouseEnter += CarteMain_MouseEnter;
             carte.MouseLeave += CarteMain_MouseLeave;
+            //MinHeight = position;
 
             // Lier la carte avec l'event Carte Zoom
             carte.PreviewMouseLeftButtonUp += Carte_Zoom;
@@ -222,7 +211,7 @@ namespace Cosmos.view
         private void Carte_Zoom(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
-            AfficherCarteZoom(img);          
+            AfficherCarteZoom(img);   
             
         }
 
@@ -232,19 +221,27 @@ namespace Cosmos.view
             rectZoom.Visibility = Visibility.Visible;
             Zoom = new CarteZoom(img, this);
             grd1.Children.Add(Zoom);
+            //btnJouer.Visibility = Visibility.Visible;
+            //btnFermerZoom.Visibility = Visibility.Visible;
         }
 
-        public void FermerCarteZoom(Image img)
-        {
-            grd1.Children.Remove(Zoom);
-            rectZoom.Visibility = Visibility.Hidden;
-        }
-
-        private void JouerCarte( bool estJoueur1 , Carte laCarte )
+        public void JouerCarte( bool estJoueur1 , Carte laCarte )
         {
                 laTableDeJeu.JouerCarte(laCarte , estJoueur1 );            
         }
 
+        private void btnFermerZoom_Click(object sender, RoutedEventArgs e)
+        {
+            grd1.Children.Remove(Zoom);
+            rectZoom.Visibility = Visibility.Hidden;
+            //btnJouer.Visibility = Visibility.Hidden;
+            //btnFermerZoom.Visibility = Visibility.Hidden;
+        }
+
+        private void btnJouer_Click(object sender, RoutedEventArgs e)
+        {
+            JouerCarte( true, laTableDeJeu.LstMainJ1[0] );
+        }
     }
 }
 
