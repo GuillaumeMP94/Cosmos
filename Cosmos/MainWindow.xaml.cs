@@ -1,4 +1,6 @@
-﻿using Cosmos.metier;
+
+﻿using Cosmos.accesBD;
+using Cosmos.metier;
 using Cosmos.view;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,7 @@ namespace Cosmos
             this.Topmost = true;
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
+            
 
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
@@ -111,6 +114,11 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
         }
 
+        public void EcranReglements()
+        {
+            grdMain.Children.Remove(ContenuEcran);
+            ContenuEcran = new ReglementsTutoriel(this);
+        }
         public void EcranPartie()
         {
             grdMain.Children.Remove(ContenuEcran);
@@ -121,7 +129,6 @@ namespace Cosmos
             ContenuEcran = new Partie(this, joueur1, joueur2);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
-
 
             grdMain.Children.Add(ContenuEcran);
         }

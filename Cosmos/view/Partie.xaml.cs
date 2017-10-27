@@ -1,4 +1,5 @@
-﻿using Cosmos.metier;
+﻿using Cosmos.accesBD;
+using Cosmos.metier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,16 +26,25 @@ namespace Cosmos.view
         public CarteZoom Zoom { get; set; }
 
         int phase;
+        TableDeJeu laTableDeJeu;
 
-        public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
+
+        public Partie(MainWindow main)
         {
             InitializeComponent();
 
-            TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
+            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
+            Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
+            utilisateur1.Reinitialiser();
+            utilisateur2.Reinitialiser();
 
-            this.DataContext = this; // TODO changé pour bon binding
-            grd1.DataContext = this; // TODO
-            grd2.DataContext = this; // TODO
+            Joueur joueur1 = utilisateur1;
+            Joueur joueur2 = utilisateur2;
+
+            laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
+
+            this.DataContext = this; // TODO changé pour bon binding maybe ?
+            
 
             Main = main;
 
@@ -64,48 +74,65 @@ namespace Cosmos.view
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 
-            // Initialiser la phase à "phase de ressource"
+            // Initialiser la phase à "phase de ressource"            
             phase = laTableDeJeu.Phase;
 
             // Brasser les deck
-            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
-            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
+            //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
+            //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
+            utilisateur1.DeckAJouer.BrasserDeck();
+            utilisateur2.DeckAJouer.BrasserDeck();
 
             // Donner une main à chaque joueurs 
-            // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
             int compteurNbCarte = 0;
             while( compteurNbCarte != 6 )
             {
-                laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
-                compteurNbCarte++;
+                laTableDeJeu.LstMainJ1.Add(utilisateur1.DeckAJouer.CartesDuDeck[0]);
+                InsererCarteMain(laTableDeJeu.LstMainJ1[compteurNbCarte].Nom , compteurNbCarte+1 ); 
+                utilisateur1.DeckAJouer.CartesDuDeck.RemoveAt(0) ;
+                compteurNbCarte++;                
             }
 
             compteurNbCarte = 0;
             while (compteurNbCarte != 6)
             {
-                laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
+                laTableDeJeu.LstMainJ2.Add(utilisateur2.DeckAJouer.CartesDuDeck[0]);
+                utilisateur2.DeckAJouer.CartesDuDeck.RemoveAt(0);
                 compteurNbCarte++;
             }
 
+            // Compteur pour afficher le nombre de cartes dans le deck des joueurs
+            // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
+            // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
+            // TODO testé ^
+
+
             // Initialiser les emplacements d'unités 
-            // TODO 
+            // TODO or not
+            // Prob not
 
-            // Initialiser les emplacements de bâtiements
-            //
+            // Initialiser les emplacements de bâtiments
+            // TODO or not
 
-            // Binding Points de blindage
-            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage; //TODO pas testé
+            // Binding 
+            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage;
             txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
 
         }
-
+        /// <summary>
+        /// Ce bouton change la phase pour l'interface et pour la table de jeu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();            
+            changerPhase();
+            laTableDeJeu.AvancerPhase();
         }
 
         private void changerPhase()
         {
+            
             switch (phase)
             {
                 case 1:
@@ -212,6 +239,12 @@ namespace Cosmos.view
             grd1.Children.Remove(Zoom);
             rectZoom.Visibility = Visibility.Hidden;
         }
+
+        private void JouerCarte( bool estJoueur1 , Carte laCarte )
+        {
+                laTableDeJeu.JouerCarte(laCarte , estJoueur1 );            
+        }
+
     }
 }
 
