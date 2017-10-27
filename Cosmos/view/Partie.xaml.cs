@@ -1,4 +1,5 @@
-﻿using Cosmos.metier;
+﻿using Cosmos.accesBD;
+using Cosmos.metier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,18 +23,28 @@ namespace Cosmos.view
     public partial class Partie : UserControl
     {
         public MainWindow Main { get; set; }
+        public CarteZoom Zoom { get; set; }
 
         int phase;
+        TableDeJeu laTableDeJeu;
 
-        public Partie(MainWindow main, Joueur joueur1, Joueur joueur2)
+
+        public Partie(MainWindow main)
         {
             InitializeComponent();
 
-            TableDeJeu laTableDeJeu = new TableDeJeu(joueur1.DeckAJouer , joueur2.DeckAJouer);
+            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
+            Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
+            utilisateur1.Reinitialiser();
+            utilisateur2.Reinitialiser();
 
-            this.DataContext = this; // TODO changé pour bon binding
-            grd1.DataContext = this; // TODO
-            grd2.DataContext = this; // TODO
+            Joueur joueur1 = utilisateur1;
+            Joueur joueur2 = utilisateur2;
+
+            laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
+
+            this.DataContext = this; // Permet le binding. Le datacontext de la partie est le contenu ici.
+            
 
             Main = main;
 
@@ -41,60 +52,73 @@ namespace Cosmos.view
             txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
             txBlnbBlindageA.Text = joueur2.PointDeBlindage.ToString();
 
-            // Initialiser les points de ressources
-            // txBlnbCharroniteJ.Text = joueur1.Active.Charronite
-            // txBlnbBarilJ.Text = joueur1.Active.BarilNucleaire
-            // txBlnbAlainDollarJ.Text = joueur1.Active.AlainDollar
-            // txBlnbCharroniteA.Text = joueur2.Active.Charronite
-            // txBlnbBarilA.Text = joueur2.Active.BarilNucleaire
-            // txBlnbAlainDollarA.Text = joueur2.Active.AlainDollar
+            //Initialiser les points de ressources
+            txBlnbCharroniteJ.DataContext = joueur1.RessourceActive.Charronite.ToString();
+            txBlnbBarilJ.DataContext = joueur1.RessourceActive.BarilNucleaire.ToString();
+            txBlnbAlainDollarJ.DataContext = joueur1.RessourceActive.AlainDollars.ToString();
+            txBlnbCharroniteA.DataContext = joueur2.RessourceActive.Charronite.ToString();
+            txBlnbBarilA.DataContext = joueur2.RessourceActive.BarilNucleaire.ToString();
+            txBlnbAlainDollarA.DataContext = joueur2.RessourceActive.AlainDollars.ToString();
 
 
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 
-            // Initialiser la phase à "phase de ressource"
+            // Initialiser la phase à "phase de ressource"            
             phase = laTableDeJeu.Phase;
 
             // Brasser les deck
-            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
-            laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
+            //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ1);
+            //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
+            utilisateur1.DeckAJouer.BrasserDeck();
+            utilisateur2.DeckAJouer.BrasserDeck();
 
             // Donner une main à chaque joueurs 
-            // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
             int compteurNbCarte = 0;
             while( compteurNbCarte != 6 )
             {
-                laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
-                compteurNbCarte++;
+                laTableDeJeu.LstMainJ1.Add(utilisateur1.DeckAJouer.CartesDuDeck[0]);
+                InsererCarteMain(laTableDeJeu.LstMainJ1[compteurNbCarte].Nom , compteurNbCarte+1 ); 
+                utilisateur1.DeckAJouer.CartesDuDeck.RemoveAt(0) ;
+                compteurNbCarte++;                
             }
 
             compteurNbCarte = 0;
             while (compteurNbCarte != 6)
             {
-                laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
+                laTableDeJeu.LstMainJ2.Add(utilisateur2.DeckAJouer.CartesDuDeck[0]);
+                utilisateur2.DeckAJouer.CartesDuDeck.RemoveAt(0);
                 compteurNbCarte++;
             }
 
+            // Compteur pour afficher le nombre de cartes dans le deck des joueurs
+            // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
+            // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
+            // TODO testé ^
+
+
             // Initialiser les emplacements d'unités 
-            // TODO 
+            // TODO or not
+            // Prob not
 
-            // Initialiser les emplacements de bâtiements
-            //
-
-            // Binding Points de blindage
-            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage; //TODO pas testé
-            txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
+            // Initialiser les emplacements de bâtiments
+            // TODO or not
 
         }
-
+        /// <summary>
+        /// Ce bouton change la phase pour l'interface et pour la table de jeu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();            
+            changerPhase();
+            laTableDeJeu.AvancerPhase();
         }
 
         private void changerPhase()
         {
+            
             switch (phase)
             {
                 case 1:
@@ -140,7 +164,7 @@ namespace Cosmos.view
             
         }
 
-        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        private void CarteMain_MouseEnter(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
 
@@ -149,7 +173,7 @@ namespace Cosmos.view
             img.Margin = new Thickness(margin.Left, 0, 0, 0);
         }
 
-        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        private void CarteMain_MouseLeave(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
 
@@ -170,9 +194,132 @@ namespace Cosmos.view
             carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
             carte.SetValue(Panel.ZIndexProperty, position);
             carte.Cursor = Cursors.Hand;
-            carte.MouseEnter += Image_MouseEnter;
-            carte.MouseLeave += Image_MouseLeave;
-            grdCartesJoueur.Children.Add(carte);            
+
+            // Lier la carte avec les events Mouse Enter et Leave
+            carte.MouseEnter += CarteMain_MouseEnter;
+            carte.MouseLeave += CarteMain_MouseLeave;
+
+            // Lier la carte avec l'event Carte Zoom
+            carte.PreviewMouseLeftButtonUp += Carte_Zoom;
+
+            grdCartesJoueur.Children.Add(carte);
+        }
+
+        private void InsererCarteCreature(String nom, int position)
+        {
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Name = "emplacementCreature" + position;
+            carte.Cursor = Cursors.Hand;
+            // Lier la carte avec l'event Carte Zoom
+            carte.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Positionner la carte dans la bonne case de jeu
+            switch(position)
+            {
+                case 1:
+                    emplacementCreature1.Child = carte;
+                    break;
+                case 2:
+                    emplacementCreature2.Child = carte;
+                    break;
+                case 3:
+                    emplacementCreature3.Child = carte;
+                    break;
+                case 4:
+                    emplacementCreature4.Child = carte;
+                    break;
+                case 5:
+                    emplacementCreature5.Child = carte;
+                    break;
+                case 6:
+                    emplacementCreature6.Child = carte;
+                    break;
+            }
+        }
+
+        private void InsererCarteBatiment(String nom, int position)
+        {
+            Image carte = new Image();
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Name = "emplacementBatiment" + position;
+            carte.Cursor = Cursors.Hand;
+            // Lier la carte avec l'event Carte Zoom
+            carte.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Positionner la carte dans la bonne case de jeu
+            switch (position)
+            {
+                case 1:
+                    emplacementBatiment1.Child = carte;
+                    break;
+                case 2:
+                    emplacementBatiment2.Child = carte;
+                    break;
+                case 3:
+                    emplacementBatiment3.Child = carte;
+                    break;
+                case 4:
+                    emplacementBatiment4.Child = carte;
+                    break;
+                case 5:
+                    emplacementBatiment5.Child = carte;
+                    break;
+                case 6:
+                    emplacementBatiment6.Child = carte;
+                    break;
+                case 7:
+                    emplacementBatiment7.Child = carte;
+                    break;
+                case 8:
+                    emplacementBatiment8.Child = carte;
+                    break;
+            }
+        }
+
+        private void Carte_Zoom(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+            AfficherCarteZoom(img, true);          
+            
+        }
+        
+        private void Carte_CarteEnJeu_Zoom(object sender, MouseEventArgs e)
+        {
+            Image img = (Image)sender;
+            AfficherCarteZoom(img, false);
+        }
+
+
+        public void AfficherCarteZoom(Image img, bool carteMain)
+        {
+            rectZoom.Visibility = Visibility.Visible;
+            Zoom = new CarteZoom(img, this);
+            grd1.Children.Add(Zoom);
+
+            if(carteMain)
+            {
+                btnJouer.Visibility = Visibility.Visible;
+            }
+            btnFermerZoom.Visibility = Visibility.Visible;
+        }
+
+        private void JouerCarte( bool estJoueur1 , Carte laCarte )
+        {
+                laTableDeJeu.JouerCarte(laCarte , estJoueur1 );            
+        }
+
+        private void btnFermerZoom_Click(object sender, RoutedEventArgs e)
+        {
+            grd1.Children.Remove(Zoom);
+            rectZoom.Visibility = Visibility.Hidden;
+            btnJouer.Visibility = Visibility.Hidden;
+            btnFermerZoom.Visibility = Visibility.Hidden;
+        }
+
+        private void btnJouer_Click(object sender, RoutedEventArgs e)
+        {
+			JouerCarte( true, laTableDeJeu.LstMainJ1[0] );
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Cosmos.metier
             Level = new Ressource(1, 1, 1);
         }
 
-        #endregion
+       
 
         public void SetRessource(Ressource neoValeur)
         {

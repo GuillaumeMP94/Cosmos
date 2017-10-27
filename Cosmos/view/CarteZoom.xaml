@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Cosmos.view.CarteZoom"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="750" d:DesignWidth="500" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <Grid Name="grdCarteZoom" Height="750">
+
+        
+
+
+    </Grid>
+</UserControl>
