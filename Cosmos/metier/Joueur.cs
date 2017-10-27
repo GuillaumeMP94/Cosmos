@@ -36,21 +36,22 @@ namespace Cosmos.metier
         public Deck DeckAJouer { get; set;}
         public Ressource RessourceActive { get; set; }
         public Ressource LevelRessource { get; set; }
-        
+
         #endregion
         #region Constructeur
         public Joueur()
         {
-            Reinitialiser();
         }
 
-        public void Reinitialiser()
+        #endregion
+        public virtual void Reinitialiser()
         {
             PointDeBlindage = 25;
             RessourceActive = new Ressource(0, 0, 0);
             LevelRessource = new Ressource(1, 1, 1);
         }
-        #endregion
+
+       
 
         public void SetRessource(Ressource neoValeur)
         {
@@ -72,9 +73,6 @@ namespace Cosmos.metier
                 RessourceActive = RessourceActive - new Ressource(valeur);
             }
         }
-
-
-
 
     }
 }

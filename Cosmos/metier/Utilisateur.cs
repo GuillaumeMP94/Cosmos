@@ -12,6 +12,7 @@ namespace Cosmos.metier
     public class Utilisateur : Joueur
     {
         #region Propriétés
+        public int IdUtilisateur { get; set; }
         public string Nom { get; set; }
         //TODO: Pertinence des champs
         public int NiveauDebloque { get; set; }
@@ -22,30 +23,49 @@ namespace Cosmos.metier
         public List<Carte> CartesUtilisateurs { get; set; }
         #endregion
         #region Constructeur
-        public Utilisateur(string nom)
+        public Utilisateur(int idUtilisateur, string nom)
             :base()
         {
+            IdUtilisateur = idUtilisateur;
             Nom = nom;
-            NiveauDebloque = 1;
         }
-        public Utilisateur(string nom, int niveau)
-            :base()
+        public Utilisateur(int idUtilisateur, string nom, string courriel) : this(idUtilisateur,nom)
 		{
-            Nom = nom;
-            NiveauDebloque = niveau;
-		}
-        public Utilisateur(string nom, int niveau, string courriel): this(nom,niveau)
-        {
             Courriel = courriel;
+            
+		}
+        public Utilisateur(int idUtilisateur,string nom, string courriel, int niveau) : this(idUtilisateur, nom, courriel)
+        {
+            NiveauDebloque = niveau;
         }
-        public Utilisateur(string nom, int niveau, string courriel,string motDePasse) : this(nom, niveau, courriel)
+        public Utilisateur(int idUtilisateur, string nom, string courriel, int niveau, string motDePasse) : this(idUtilisateur, nom, courriel, niveau)
         {
             MotDePasse = motDePasse;
         }
-        public Utilisateur(string nom, int niveau, string courriel, string motDePasse, string salt) : this(nom, niveau, courriel, motDePasse)
+        public Utilisateur(int idUtilisateur, string nom, string courriel, int niveau, string motDePasse, string salt) : this(idUtilisateur, nom, courriel, niveau, motDePasse)
         {
             Salt = salt;
         }
+	public Utilisateur(string nom, string courriel, string motDePasse, string salt) : base()
+        {
+            Nom = nom;
+            Courriel = courriel;
+            MotDePasse = motDePasse;
+            Salt = salt;
+        }
         #endregion
+        public override void Reinitialiser()
+        {
+            PointDeBlindage = 25;
+            RessourceActive = new Ressource(0, 0, 0);
+            Level = new Ressource(1, 1, 1);
+            foreach (Deck unDeck in this.DecksUtilisateurs)
+            {
+                if (unDeck.EstChoisi == true)
+                {
+                    DeckAJouer = new Deck(unDeck);
+                }
+            }
+        }
     }
 }

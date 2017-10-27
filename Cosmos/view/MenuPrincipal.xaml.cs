@@ -35,7 +35,7 @@ namespace Cosmos.view
 
         private void btnRegleTuto_Click(object sender, RoutedEventArgs e)
         {
-
+            Main.EcranReglements();
         }
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
@@ -60,6 +60,7 @@ namespace Cosmos.view
 
         private void btnDeconnexion_Click(object sender, RoutedEventArgs e)
         {
+            Main.UtilisateurConnecte = null;
             Main.EcranConnexion();
         }
     }

@@ -26,9 +26,7 @@ namespace Cosmos.view
         {
             InitializeComponent();
 
-            Partie = partie;
-
-            
+            Partie = partie;            
 
             imgZoom = new Image();
             imgZoom.Source = imgSource.Source;
@@ -38,19 +36,6 @@ namespace Cosmos.view
             imgZoom.Margin = new Thickness(0, 70, 0, 0);
 
             grdCarteZoom.Children.Add(imgZoom);
-
-
-
-        }
-
-        private void btnFermer_Click(object sender, RoutedEventArgs e)
-        {
-            Partie.FermerCarteZoom(imgZoom);
-        }
-
-        private void btnJouer_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

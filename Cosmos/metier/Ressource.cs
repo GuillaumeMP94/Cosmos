@@ -9,6 +9,7 @@ namespace Cosmos.metier
 {
 	public class Ressource : INotifyPropertyChanged
 	{
+
         #region Propriétés
 
         private int charronite;
