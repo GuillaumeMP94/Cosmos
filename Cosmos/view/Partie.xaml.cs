@@ -43,6 +43,7 @@ namespace Cosmos.view
             laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
 
             this.DataContext = this; // TODO changé pour bon binding maybe ?
+            
 
             Main = main;
 
@@ -62,7 +63,7 @@ namespace Cosmos.view
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 
-            // Initialiser la phase à "phase de ressource"
+            // Initialiser la phase à "phase de ressource"            
             phase = laTableDeJeu.Phase;
 
             // Brasser les deck
@@ -72,35 +73,38 @@ namespace Cosmos.view
             utilisateur2.DeckAJouer.BrasserDeck();
 
             // Donner une main à chaque joueurs 
-            // Initialiser le nombre de carte dans chaque paquet pour l'afficher (44)
             int compteurNbCarte = 0;
             while( compteurNbCarte != 6 )
             {
-                //laTableDeJeu.PigerCarte(joueur1.DeckAJouer, true );
                 laTableDeJeu.LstMainJ1.Add(utilisateur1.DeckAJouer.CartesDuDeck[0]);
+                InsererCarteMain(laTableDeJeu.LstMainJ1[compteurNbCarte].Nom , compteurNbCarte+1 ); 
                 utilisateur1.DeckAJouer.CartesDuDeck.RemoveAt(0) ;
-                //laTableDeJeu.LstMainJ1[50-compteurNbCarte] = utilisateur1.DeckAJouer.PigerCarte();
-                compteurNbCarte++;
+                compteurNbCarte++;                
             }
 
             compteurNbCarte = 0;
             while (compteurNbCarte != 6)
             {
-                //laTableDeJeu.PigerCarte(joueur2.DeckAJouer, false);
-                //laTableDeJeu.LstMainJ2[compteurNbCarte] = utilisateur2.DeckAJouer.PigerCarte();
                 laTableDeJeu.LstMainJ2.Add(utilisateur2.DeckAJouer.CartesDuDeck[0]);
                 utilisateur2.DeckAJouer.CartesDuDeck.RemoveAt(0);
                 compteurNbCarte++;
             }
 
+            // Compteur pour afficher le nombre de cartes dans le deck des joueurs
+            // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
+            // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
+            // TODO testé ^
+
+
             // Initialiser les emplacements d'unités 
-            // TODO 
+            // TODO or not
+            // Prob not
 
-            // Initialiser les emplacements de bâtiements
-            //
+            // Initialiser les emplacements de bâtiments
+            // TODO or not
 
-            // Binding Points de blindage
-            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage; //TODO pas testé
+            // Binding 
+            txBlnbBlindageJ.DataContext = joueur1.PointDeBlindage;
             txBlnbBlindageA.DataContext = joueur2.PointDeBlindage;
 
         }
@@ -197,6 +201,12 @@ namespace Cosmos.view
             carte.MouseLeave += Image_MouseLeave;
             grdCartesJoueur.Children.Add(carte);            
         }
+
+        private void JouerCarte( bool estJoueur1 , Carte laCarte )
+        {
+                laTableDeJeu.JouerCarte(laCarte , estJoueur1 );            
+        }
+
     }
 }
 

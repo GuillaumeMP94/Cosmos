@@ -153,16 +153,16 @@ namespace Cosmos.metier
             return false;
         }
 
-        public void JouerCarte(Carte carteAJouer, Joueur leJoueur, bool joueurActifEst1 )
+        public void JouerCarte(Carte carteAJouer,bool joueurActifEst1 )
         {
-            // Le coup à déjà été validé rendu ici
-
-            // On enleve les ressources au joueurs
-            leJoueur.RessourceActive -= carteAJouer.Cout;
+            // Le coup à déjà été validé rendu ici                  
 
             // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
             if (joueurActifEst1)
             {
+                // On enleve les ressources au joueurs
+                joueur1.RessourceActive -= carteAJouer.Cout;
+
                 if (carteAJouer is Unite)
                 {
                     LstMainJ1.Remove(carteAJouer);
@@ -181,6 +181,9 @@ namespace Cosmos.metier
             }
             else
             {
+                // On enleve les ressources au joueurs
+                joueur2.RessourceActive -= carteAJouer.Cout;
+
                 if (carteAJouer is Unite)
                 {
                     LstMainJ2.Remove(carteAJouer);
