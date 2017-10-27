@@ -28,7 +28,6 @@ namespace Cosmos.metier
         {
             IdUtilisateur = idUtilisateur;
             Nom = nom;
-            NiveauDebloque = 1;
         }
         public Utilisateur(int idUtilisateur, string nom, string courriel) : this(idUtilisateur,nom)
 		{
@@ -45,6 +44,13 @@ namespace Cosmos.metier
         }
         public Utilisateur(int idUtilisateur, string nom, string courriel, int niveau, string motDePasse, string salt) : this(idUtilisateur, nom, courriel, niveau, motDePasse)
         {
+            Salt = salt;
+        }
+	public Utilisateur(string nom, string courriel, string motDePasse, string salt) : base()
+        {
+            Nom = nom;
+            Courriel = courriel;
+            MotDePasse = motDePasse;
             Salt = salt;
         }
         #endregion
