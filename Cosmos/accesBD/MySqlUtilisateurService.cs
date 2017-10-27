@@ -116,5 +116,24 @@ namespace Cosmos.accesBD
             return Retrieve(query.ToString());
 
         }
+        
+        /// <summary>
+        /// Fonction qui insert un utilisateur dans la base de données. L'utilisateur reçu en paramètre est valide.
+        /// </summary>
+        /// <param name="utilisateur">Utilisateur qui vient d'être créer</param>
+        public static void Insert(Utilisateur utilisateur)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO Utilisateurs (nom, motDePasse, salt, courriel) VALUES ('")
+                 .Append(utilisateur.Nom).Append("',")
+                 .Append("'").Append(utilisateur.MotDePasse).Append("',")
+                 .Append("'").Append(utilisateur.Salt).Append("',")
+                 .Append("'").Append(utilisateur.Courriel).Append("')");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+
+        }
     }
 }
