@@ -218,5 +218,10 @@
     <Resource Include="images\cartes\Warthog.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\ressources\Alain.png" />
+    <Resource Include="images\ressources\Baril.png" />
+    <Resource Include="images\ressources\Charronite.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

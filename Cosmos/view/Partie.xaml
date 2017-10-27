@@ -16,10 +16,10 @@
             <Border BorderThickness="5" BorderBrush="Pink" />
 
             <TextBlock x:Name="txBlPBA" Text="BLINDAGE&#10;ADVERSE" Foreground="Red"
-                       VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,40,0,0"
+                       VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,30,0,0"
                        FontSize="30" FontWeight="Bold" TextAlignment="Center"/>
 
-            <Border Margin="5,130,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
+            <Border Margin="5,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="Red">
 
                 <Border Margin="5,5,5,5"
@@ -50,6 +50,36 @@
                     <SolidColorBrush Color="Black" Opacity="0.7" />
                 </StackPanel.Background>
 
+                <Border BorderThickness="5" BorderBrush="Red">
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0" Width="25" />
+                        <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
+                        <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
+
+                        <TextBlock Name="txBlnbCharroniteA" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30">
+                            5
+                        </TextBlock>
+                        <TextBlock Name="txBlnbBarilA" Grid.Column="1" Grid.Row="1"  Foreground="DarkGoldenrod" FontSize="30" >
+                            2
+                        </TextBlock>
+                        <TextBlock Name="txBlnbAlainDollarA" Grid.Column="1" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30">
+                            7
+                        </TextBlock>
+
+                    </Grid>
+                </Border>
+                
                 <TextBlock  x:Name="txBlphaseRessource" Text="Phase de ressources" Background="DarkGoldenrod"
                             Margin="10,10,10,0" FontSize="20" TextAlignment="Center" Foreground="Black"/>
                 <TextBlock  x:Name="txBlphasePrincipale" Text="Phase principale" Background="Transparent"
@@ -59,7 +89,39 @@
                 <TextBlock  x:Name="txBlphaseFin" Text="Phase de fin" Background="Transparent"
                            Margin="10,0,10,10" FontSize="20" Foreground="DarkGoldenrod" TextAlignment="Center"/>
 
+                <Border BorderThickness="5" BorderBrush="DarkGoldenrod">
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0" Width="25" />
+                        <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
+                        <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
+
+                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30">
+                            5
+                        </TextBlock>
+                        <TextBlock Name="txBlnbBarilJ" Grid.Column="1" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30">
+                            5
+                        </TextBlock>
+                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30">
+                            3
+                        </TextBlock>
+
+                    </Grid>
+                </Border>
+
             </StackPanel>
+            
+            
             
 
         </Grid>

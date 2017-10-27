@@ -52,13 +52,13 @@ namespace Cosmos.view
             txBlnbBlindageJ.Text = joueur1.PointDeBlindage.ToString();
             txBlnbBlindageA.Text = joueur2.PointDeBlindage.ToString();
 
-            // Initialiser les points de ressources
-            // txBlnbCharroniteJ.Text = joueur1.Active.Charronite
-            // txBlnbBarilJ.Text = joueur1.Active.BarilNucleaire
-            // txBlnbAlainDollarJ.Text = joueur1.Active.AlainDollar
-            // txBlnbCharroniteA.Text = joueur2.Active.Charronite
-            // txBlnbBarilA.Text = joueur2.Active.BarilNucleaire
-            // txBlnbAlainDollarA.Text = joueur2.Active.AlainDollar
+            //Initialiser les points de ressources
+            txBlnbCharroniteJ.DataContext = joueur1.RessourceActive.Charronite.ToString();
+            txBlnbBarilJ.DataContext = joueur1.RessourceActive.BarilNucleaire.ToString();
+            txBlnbAlainDollarJ.DataContext = joueur1.RessourceActive.AlainDollars.ToString();
+            txBlnbCharroniteA.DataContext = joueur2.RessourceActive.Charronite.ToString();
+            txBlnbBarilA.DataContext = joueur2.RessourceActive.BarilNucleaire.ToString();
+            txBlnbAlainDollarA.DataContext = joueur2.RessourceActive.AlainDollars.ToString();
 
 
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
