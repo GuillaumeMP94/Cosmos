@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Cosmos
 {
@@ -46,7 +47,7 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
 
             //TODO: Enlever la prochaine ligne avant remise
-            EcranPartie();
+            //EcranPartie();
             //EcranMenuPrincipal();
 
         }
@@ -128,6 +129,30 @@ namespace Cosmos
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
 
             grdMain.Children.Add(ContenuEcran);
+        }
+        
+        public string ValiderChampSaisi(string champ)
+        {
+            string pattern = @"([a-zA-Z0-9]*)";
+            Match resultat = Regex.Match(champ, pattern);
+
+            return resultat.ToString();
+        }
+
+        public bool estCourrielValide(string courriel)
+        {
+            bool estValide = false;
+            string pattern = "^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
+
+            if (String.IsNullOrEmpty(courriel))
+                return estValide;
+
+            if (Regex.IsMatch(courriel,pattern))
+            {
+                estValide = true;
+            }
+
+            return estValide;
         }
     }
 }
