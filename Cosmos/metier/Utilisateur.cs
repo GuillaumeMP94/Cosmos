@@ -58,7 +58,7 @@ namespace Cosmos.metier
         {
             PointDeBlindage = 25;
             RessourceActive = new Ressource(0, 0, 0);
-            Level = new Ressource(1, 1, 1);
+            LevelRessource = new Ressource(1, 1, 1);
             foreach (Deck unDeck in this.DecksUtilisateurs)
             {
                 if (unDeck.EstChoisi == true)
