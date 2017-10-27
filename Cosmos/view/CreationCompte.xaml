@@ -51,7 +51,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,250,0,0">
             <TextBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-			 FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbCourriel">
+			 FontSize="18" MaxLength="30" Padding="5,0,0,0" Name="txbCourriel">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black"
 				 Opacity="0.8" />
@@ -64,13 +64,16 @@
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-				            Creer
+				            Créer
                         </TextBlock>
                     </Border>
                 </ControlTemplate>
             </Button.Template>
         </Button>
 
+        <TextBlock Width="300" Height="40" Name="txblErreur" VerticalAlignment="Top" Margin="0,335,0,0" Foreground="#D80000" Visibility="Hidden" Text="Test" FontSize="15" FontWeight="Bold" TextWrapping="Wrap"  />
+        
+        
         <Border Width="300" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,250">
             <Image Source="/images/CosmosLogo.png" />
         </Border>

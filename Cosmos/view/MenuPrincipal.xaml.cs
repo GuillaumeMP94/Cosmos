@@ -30,6 +30,7 @@ namespace Cosmos.view
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
         {
+            Main.UtilisateurConnecte = null;
             Main.EcranConnexion();
         }
 

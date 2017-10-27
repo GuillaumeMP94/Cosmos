@@ -89,11 +89,12 @@
             </Button.Style>
         </Button>
 
+        <TextBlock Width="300" Height="40" Name="txblErreur" VerticalAlignment="Top" Margin="0,250,0,0" Foreground="#D80000" Visibility="Hidden" FontSize="15" FontWeight="Bold" TextWrapping="Wrap"  />
+        
         <Border Width="300" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,250">
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
-        <TextBlock Width="300" Height="40" Name="txblErreur" VerticalAlignment="Top" Margin="0,250,0,0" Foreground="#D80000" Visibility="Hidden" FontSize="15" FontWeight="Bold" TextWrapping="Wrap"  />
 
         <Button Width="300" Name="btnQuitter" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,30" Cursor="Hand" Click="btnQuitter_Click">
             <Button.Template>

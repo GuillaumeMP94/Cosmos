@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    class Partie
+    class unePartie
     {
 
         #region Propriétés
@@ -16,7 +16,7 @@ namespace Cosmos.metier
         //public TableDeJeu Table { get; set; }
         #endregion
         #region Constructeur
-        public Partie(Joueur un, Joueur deux)
+        public unePartie(Joueur un, Joueur deux)
         {
             Joueur1 = un;
             Joueur2 = deux;

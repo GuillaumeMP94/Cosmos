@@ -28,7 +28,6 @@ namespace Cosmos.metier
         {
             IdUtilisateur = idUtilisateur;
             Nom = nom;
-            NiveauDebloque = 1;
         }
         public Utilisateur(int idUtilisateur, string nom, string courriel) : this(idUtilisateur,nom)
 		{
@@ -47,11 +46,18 @@ namespace Cosmos.metier
         {
             Salt = salt;
         }
+        public Utilisateur(string nom, string courriel, string motDePasse, string salt) : base()
+        {
+            Nom = nom;
+            Courriel = courriel;
+            MotDePasse = motDePasse;
+            Salt = salt;
+        }
         #endregion
         public override void Reinitialiser()
         {
             PointDeBlindage = 25;
-            Active = new Ressource(0, 0, 0);
+            RessourceActive = new Ressource(0, 0, 0);
             Level = new Ressource(1, 1, 1);
             foreach (Deck unDeck in this.DecksUtilisateurs)
             {
