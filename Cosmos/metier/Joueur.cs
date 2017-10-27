@@ -36,6 +36,7 @@ namespace Cosmos.metier
         public Deck DeckAJouer { get; set;}
         public Ressource RessourceActive { get; set; }
         public Ressource LevelRessource { get; set; }
+
         #endregion
         #region Constructeur
         public Joueur()

@@ -22,7 +22,8 @@ namespace Cosmos.view
     /// </summary>
     public partial class Partie : UserControl
     {
-    	const int RESSOURCEDEPART = 3;
+
+        const int RESSOURCEDEPART = 3;
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
         public CarteZoom Zoom { get; set; }
@@ -42,6 +43,7 @@ namespace Cosmos.view
 
             Joueur joueur1 = utilisateur1;
             Joueur joueur2 = utilisateur2;
+
 
             laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
 
@@ -66,7 +68,7 @@ namespace Cosmos.view
             // Prendre les avatars des deux joueurs et les mettres dans le XAML 
             //
 	    
-	    // Demander à l'utilisateur de distribuer ses ressources.
+	          // Demander à l'utilisateur de distribuer ses ressources.
             EcranRessource(joueur1,RESSOURCEDEPART,RESSOURCEDEPART,this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Initialiser la phase à "phase de ressource"            
@@ -77,6 +79,9 @@ namespace Cosmos.view
             //laTableDeJeu.BrasserDeck(laTableDeJeu.DeckJ2);
             utilisateur1.DeckAJouer.BrasserDeck();
             utilisateur2.DeckAJouer.BrasserDeck();
+
+            // Demander à l'utilisateur de distribuer ses ressources.
+            EcranRessource(joueur1,RESSOURCEDEPART,RESSOURCEDEPART,this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Donner une main à chaque joueurs 
             int compteurNbCarte = 0;
@@ -119,6 +124,7 @@ namespace Cosmos.view
         {
             changerPhase();
             laTableDeJeu.AvancerPhase();
+
         }
 
         private void changerPhase()
@@ -326,7 +332,21 @@ namespace Cosmos.view
         {
 			JouerCarte( true, laTableDeJeu.LstMainJ1[0] );
         }
-	public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
+	  public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
+        {
+            ContenuEcran = new view.Ressource(joueur, points, maxRessourceLevel, partie);
+            rectZoom.Visibility = Visibility.Visible;
+
+            grd1.Children.Add(ContenuEcran);
+        }
+
+        public void FermerEcranRessource()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            rectZoom.Visibility = Visibility.Hidden;
+            changerPhase();
+        }
+        public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
             ContenuEcran = new view.Ressource(joueur, points, maxRessourceLevel, partie);
             rectZoom.Visibility = Visibility.Visible;
