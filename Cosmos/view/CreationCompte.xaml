@@ -14,7 +14,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,70,0,0">
             <TextBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-			 FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbPseudo">
+			 FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbPseudo" TextChanged="txbPseudo_TextChanged">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black"
 				 Opacity="0.6" />
@@ -27,7 +27,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,130,0,0">
             <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbPassword">
+                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbPassword" PasswordChanged="passbPassword_PasswordChanged">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black"
                          Opacity="0.6" />
@@ -39,7 +39,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,190,0,0">
             <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbConfirmPassword">
+                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbConfirmPassword" PasswordChanged="passbConfirmPassword_PasswordChanged">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black"
                          Opacity="0.8" />
@@ -51,7 +51,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,250,0,0">
             <TextBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-			 FontSize="18" MaxLength="30" Padding="5,0,0,0" Name="txbCourriel">
+			 FontSize="18" MaxLength="30" Padding="5,0,0,0" Name="txbCourriel" TextChanged="txbCourriel_TextChanged">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black"
 				 Opacity="0.8" />
@@ -59,7 +59,7 @@
             </TextBox>
         </Border>
 
-        <Button Width="300" Name="btnCreer" VerticalAlignment="Top" Margin="0,295,0,0" Height="30" Cursor="Hand" Click="btnCreer_Click">
+        <Button Width="300" Name="btnCreer" VerticalAlignment="Top" Margin="0,295,0,0" Height="30" Cursor="Hand" Opacity="0.25" IsEnabled="false" Click="btnCreer_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">

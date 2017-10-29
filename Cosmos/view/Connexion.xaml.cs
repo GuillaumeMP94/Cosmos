@@ -112,5 +112,33 @@ namespace Cosmos.view
 
             txblErreur.Visibility = Visibility.Visible;
         }
+
+        #region ActiverBoutonConnexion
+        private void ActiverBoutonConnexion()
+        {
+            if ((txbPseudo.Text != "" || txbPseudo.IsVisible == false ) && (passbPassword.Password != "" || passbPassword.IsVisible == false))
+            {
+                btnConnexion.Opacity = 1;
+                btnConnexion.IsEnabled = true;
+            }
+            else
+            {
+                btnConnexion.Opacity = 0.25;
+                btnConnexion.IsEnabled = false;
+            }
+        }
+
+
+        #endregion
+
+        private void txbPseudo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonConnexion();
+        }
+
+        private void passbPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonConnexion();
+        }
     }
 }

@@ -124,5 +124,41 @@ namespace Cosmos.view
                 return false;
             }
         }
+
+        #region ActiverBoutton
+        private void ActiverBoutonCreer()
+        {
+            if ((txbPseudo.Text != "" || txbPseudo.IsVisible == false) && (txbCourriel.Text != "" || txbCourriel.IsVisible == false) && (passbPassword.Password != "" || passbPassword.IsVisible == false) && (passbConfirmPassword.Password != "" || passbConfirmPassword.IsVisible == false))
+            {
+                btnCreer.IsEnabled = true;
+                btnCreer.Opacity = 1;
+            }
+            else
+            {
+                btnCreer.IsEnabled = false;
+                btnCreer.Opacity = 0.25;
+            }
+        }
+
+        private void txbPseudo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private void txbCourriel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private void passbPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private void passbConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+        #endregion
     }
 }
