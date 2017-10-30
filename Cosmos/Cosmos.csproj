@@ -72,7 +72,7 @@
     <Compile Include="metier\Effet.cs" />
     <Compile Include="metier\Gadget.cs" />
     <Compile Include="metier\Gain.cs" />
-    <Compile Include="Impact.cs" />
+    <Compile Include="metier\Impact.cs" />
     <Compile Include="metier\Joueur.cs" />
     <Compile Include="metier\UnePartie.cs" />
     <Compile Include="metier\Ressource.cs" />

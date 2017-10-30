@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Configuration;
+using System.Windows;
 
 namespace Cosmos.accesBD
 {
@@ -149,6 +150,7 @@ namespace Cosmos.accesBD
             }
             catch (MySqlException)
             {
+                MessageBox.Show("Erreur de connexion à la BD, Vérifier votre connection internet ou la configuration de la BD dans Cosmos.exe.config");
                 throw;
             }
             finally
