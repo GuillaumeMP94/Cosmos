@@ -151,7 +151,6 @@ namespace Cosmos.accesBD
             catch (MySqlException)
             {
                 MessageBox.Show("Erreur de connexion à la BD, Vérifier votre connection internet ou la configuration de la BD dans Cosmos.exe.config");
-                throw;
             }
             finally
             {
@@ -159,8 +158,9 @@ namespace Cosmos.accesBD
                 {
                     Close();
                 }
+                System.Environment.Exit(0);
             }
-
+            return dataset = null;
         }
 
 
