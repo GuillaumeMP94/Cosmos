@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1400">
+             d:DesignHeight="1000" d:DesignWidth="1400"
+             x:Name="Root">
 
     <Grid Margin="15,15,15,15" Name="grd1">
 
@@ -20,11 +21,12 @@
                        FontSize="30" FontWeight="Bold" TextAlignment="Center"/>
 
             <Border Margin="5,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
-                    BorderThickness="3" BorderBrush="Red">
+                    BorderThickness="3" BorderBrush="Red"
+                    DataContext="{Binding Joueur2}">
 
                 <Border Margin="5,5,5,5"
                         BorderThickness="3" BorderBrush="Red">
-                    <TextBlock x:Name="txBlnbBlindageJ" Text="26" FontSize="45" Foreground="Red"
+                    <TextBlock x:Name="txBlnbBlindageJ" Text="{Binding PointDeBlindage}" FontSize="45" Foreground="Red"
                                 Padding="10,10,10,10" FontWeight="Bold"/>
 
                 </Border>
@@ -35,12 +37,13 @@
                        FontWeight="Bold" FontSize="30"/>
 
             <Border Margin="5,0,0,100" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                    BorderThickness="3" BorderBrush="DarkGoldenrod">
+                    BorderThickness="3" BorderBrush="DarkGoldenrod"
+                    DataContext="{Binding Joueur1}">
                 
                 <Border Margin="5,5,5,5"
                         BorderThickness="3" BorderBrush="DarkGoldenrod">
-                
-                    <TextBlock x:Name="txBlnbBlindageA" Text="26" Foreground="DarkGoldenrod" FontSize="45"
+
+                    <TextBlock x:Name="txBlnbBlindageA" Text="{Binding PointDeBlindage}" Foreground="DarkGoldenrod" FontSize="45"
                                Padding="10,10,10,10" FontWeight="Bold" />          
                 
                 </Border>
@@ -92,8 +95,8 @@
 
                 <Border BorderThickness="5" BorderBrush="DarkGoldenrod">
                     
-                    <Grid>
-                        <Grid.ColumnDefinitions>
+                    <Grid Name="grdRessourceJ" DataContext="{Binding Joueur1.RessourceActive}" >                        
+                        <Grid.ColumnDefinitions>                            
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
@@ -107,14 +110,14 @@
                         <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
                         <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
 
-                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30">
-                            5
+                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Charronite}">
                         </TextBlock>
-                        <TextBlock Name="txBlnbBarilJ" Grid.Column="1" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30">
-                            5
+                        <TextBlock Name="txBlnbBarilJ" Grid.Column="1" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding BarilNucleaire}">
                         </TextBlock>
-                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30">
-                            3
+                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30" 
+                            Text="{Binding AlainDollars}">
                         </TextBlock>
 
                     </Grid>

@@ -16,6 +16,8 @@ namespace Cosmos.metier
         private int barilNucleaire;
         private int alainDollars;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int Charronite
         {
             get { return charronite; }
@@ -55,7 +57,7 @@ namespace Cosmos.metier
 
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
         #endregion
         #region Constructeurs
         public Ressource()

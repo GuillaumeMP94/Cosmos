@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    class TableDeJeu
+    class TableDeJeu:INotifyPropertyChanged
     {
         private int phase;
         private bool joueurActifEst1;
-        private Joueur joueurActif;
+//        private Joueur joueurActif;
 
-        public event PropertyChangedEventHandler modifPropriete;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         // Les deux joueurs
         private Joueur joueur1;
@@ -44,9 +44,9 @@ namespace Cosmos.metier
             set
             {
                 phase = value;
-                if (modifPropriete != null)
+                if (PropertyChanged != null)
                 {
-                    modifPropriete(this, new PropertyChangedEventArgs("Phase"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Phase"));
                 }
 
             }
@@ -57,9 +57,9 @@ namespace Cosmos.metier
             set
             {
                 joueurActifEst1 = value;
-                if (modifPropriete != null)
+                if (PropertyChanged != null)
                 {
-                    modifPropriete(this, new PropertyChangedEventArgs("JoueurActifEst1"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("JoueurActifEst1"));
                 }
 
             }
@@ -85,9 +85,9 @@ namespace Cosmos.metier
             set
             {
                 joueur1 = value;
-                if (modifPropriete != null)
+                if (PropertyChanged != null)
                 {
-                    modifPropriete(this, new PropertyChangedEventArgs("Joueur1"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Joueur1"));
                 }
 
             }
@@ -99,9 +99,9 @@ namespace Cosmos.metier
             set
             {
                 joueur2 = value;
-                if (modifPropriete != null)
+                if (PropertyChanged != null)
                 {
-                    modifPropriete(this, new PropertyChangedEventArgs("Joueur2"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Joueur2"));
                 }
 
             }
@@ -141,14 +141,24 @@ namespace Cosmos.metier
         /// <param name="carteAJouer"></param>
         /// <param name="leJoueur"></param>
         /// <returns></returns>
-        public bool validerCoup(Carte carteAJouer, Joueur leJoueur)
+        public bool validerCoup(Carte carteAJouer, bool estJoueur1)
         {
-            Ressource temp = new Ressource(0, 0, 0);
+            Ressource temp = new Ressource(-1, -1, -1);
 
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
-            if ( leJoueur.RessourceActive - carteAJouer.Cout > temp ) 
+            if( estJoueur1 )
+            {                
+                if (joueur1.RessourceActive - carteAJouer.Cout > temp)
+                {
+                    return true;
+                }          
+            }
+            else
             {
-                return true;
+                if (joueur2.RessourceActive - carteAJouer.Cout > temp)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -157,49 +167,49 @@ namespace Cosmos.metier
         {
             // Le coup à déjà été validé rendu ici                  
 
+            var temp = carteAJouer.Clone();
+
+
             // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
             if (joueurActifEst1)
             {
                 // On enleve les ressources au joueurs
-                joueur1.RessourceActive -= carteAJouer.Cout;
+                Joueur1.RessourceActive -= carteAJouer.Cout;
 
                 if (carteAJouer is Unite)
-                {
-                    LstMainJ1.Remove(carteAJouer);
-                    LstUniteJ1.Add((Unite)carteAJouer);
+                {                    
+                    LstUniteJ1.Add((Unite)temp);
                 }
                 if (carteAJouer is Batiment)
                 {
-                    LstMainJ1.Remove(carteAJouer);
-                    LstBatimentJ1.Add((Batiment)carteAJouer);
+                    LstBatimentJ1.Add((Batiment)temp);
                 }
                 if (carteAJouer is Gadget)
                 {
-                    LstMainJ1.Remove(carteAJouer);
-                    LstUsineRecyclageJ1.Add(carteAJouer);
+                    LstUsineRecyclageJ1.Add(temp);
                 }
             }
             else
             {
                 // On enleve les ressources au joueurs
-                joueur2.RessourceActive -= carteAJouer.Cout;
+                Joueur2.RessourceActive -= carteAJouer.Cout;
 
                 if (carteAJouer is Unite)
                 {
-                    LstMainJ2.Remove(carteAJouer);
-                    LstUniteJ2.Add((Unite)carteAJouer);
+                    LstUniteJ2.Add((Unite)temp);
                 }
                 if (carteAJouer is Batiment)
                 {
-                    LstMainJ2.Remove(carteAJouer);
-                    LstBatimentJ2.Add((Batiment)carteAJouer);
+                    LstBatimentJ2.Add((Batiment)temp);
                 }
                 if (carteAJouer is Gadget)
                 {
-                    LstMainJ2.Remove(carteAJouer);
-                    LstUsineRecyclageJ2.Add(carteAJouer);
+                    LstUsineRecyclageJ2.Add(temp);
                 }
-            }                                 
+            }
+
+            // On enleve la carte de la main
+            LstMainJ1.Remove(carteAJouer);
         }
 
         /// <summary>

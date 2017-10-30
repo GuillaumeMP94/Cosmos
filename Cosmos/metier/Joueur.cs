@@ -10,11 +10,12 @@ namespace Cosmos.metier
     /// <summary>
     /// Classe pour les informations du joueur
     /// </summary>
-    public class Joueur
+    public class Joueur : INotifyPropertyChanged
     {
         private int pointDeBlindage;
+        private Ressource ressourceActive;
 
-        public event PropertyChangedEventHandler modifPropriete;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #region Propriétés
         //TODO: Avatar path? ou Image?
@@ -25,16 +26,28 @@ namespace Cosmos.metier
             set
             {
                 pointDeBlindage = value;
-                if (modifPropriete != null)
+                if (PropertyChanged != null)
                 {
-                    modifPropriete(this, new PropertyChangedEventArgs("PointDeBlindage"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("PointDeBlindage"));
                 }
 
             }
         }
         public string NomJoueur { get; set; }
         public Deck DeckAJouer { get; set;}
-        public Ressource RessourceActive { get; set; }
+        public Ressource RessourceActive
+        {
+            get { return ressourceActive; }
+            set
+            {
+                ressourceActive = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("RessourceActive"));
+                }
+
+            }
+        }
         public Ressource LevelRessource { get; set; }
 
         #endregion
@@ -47,7 +60,7 @@ namespace Cosmos.metier
         public virtual void Reinitialiser()
         {
             PointDeBlindage = 25;
-            RessourceActive = new Ressource(0, 0, 0);
+            RessourceActive = new Ressource(0, 2, 1);
             LevelRessource = new Ressource(1, 1, 1);
         }
 

@@ -47,7 +47,7 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
 
             //TODO: Enlever la prochaine ligne avant remise
-            //EcranPartie();
+            // EcranPartie();
             //EcranMenuPrincipal();
 
         }
@@ -116,7 +116,6 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
             ContenuEcran = new ReglementsTutoriel(this);
-            grdMain.Children.Add(ContenuEcran);
         }
         public void EcranPartie()
         {

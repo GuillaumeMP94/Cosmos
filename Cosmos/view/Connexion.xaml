@@ -15,7 +15,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,70,0,0">
             <TextBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbPseudo" TextChanged="txbPseudo_TextChanged">
+                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbPseudo">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black"
                          Opacity="0.6" />
@@ -27,7 +27,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,130,0,0">
             <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbPassword" PasswordChanged="passbPassword_PasswordChanged">
+                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbPassword">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black"
                          Opacity="0.6" />
@@ -56,7 +56,7 @@
             </Button.Style>
         </Button>
 
-        <Button Width="300" Name="btnConnexion" VerticalAlignment="Top" Margin="0,190,0,0" Height="30" Cursor="Hand" Click="btnConnexion_Click" Opacity="0.25" IsEnabled="False">
+        <Button Width="300" Name="btnConnexion" VerticalAlignment="Top" Margin="0,190,0,0" Height="30" Cursor="Hand" Click="btnConnexion_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
