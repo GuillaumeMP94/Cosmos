@@ -11,19 +11,13 @@ namespace Cosmos.metier
     {
         private int phase;
         private bool joueurActifEst1;
-//        private Joueur joueurActif;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Les deux joueurs
         private Joueur joueur1;
         private Joueur joueur2;
-
-
-        // Deck des joueurs
-        public List<Carte> DeckJ1 { get; set; }
-        public List<Carte> DeckJ2 { get; set; }
-
+        #region Propriétés
         // Mains des joueurs
         public List<Carte> LstMainJ1 { get; set; }
         public List<Carte> LstMainJ2 { get; set; }
@@ -64,20 +58,6 @@ namespace Cosmos.metier
 
             }
         }
-        /*
-        public Joueur JoueurActif
-        {
-            get { return joueurActif; }
-            set
-            {
-                joueurActif = value;
-                if (modifPropriete != null)
-                {
-                    modifPropriete(this, new PropertyChangedEventArgs("JoueurActif"));
-                }
-
-            }
-        }*/
 
         public Joueur Joueur1
         {
@@ -91,6 +71,12 @@ namespace Cosmos.metier
                 }
 
             }
+        }
+        public void PigerCartes()
+        {
+                LstMainJ1.Add(Joueur1.PigerCarte());
+                LstMainJ2.Add(Joueur2.PigerCarte());
+
         }
 
         public Joueur Joueur2
@@ -106,13 +92,14 @@ namespace Cosmos.metier
 
             }
         }
-
+        #endregion
+        #region Constructeurs
         // Constructeur de la table de jeu.
         // Celle-ci à besoin d'avoir les decks des deux joueurs pour mélanger ceux-ci et distribuer les mains de départs.
-        public TableDeJeu(List<Carte> deck1, List<Carte> deck2)
+        public TableDeJeu(Joueur joueurUn, Joueur joueurDeux)
         {
-            DeckJ1 = new List<Carte>(deck1);
-            DeckJ2 = new List<Carte>(deck2);
+            Joueur1 = joueurUn;
+            Joueur2 = joueurDeux;
 
             LstMainJ1 = new List<Carte>();
             LstMainJ2 = new List<Carte>();
@@ -128,13 +115,56 @@ namespace Cosmos.metier
 
             Phase = 1; // La partie commence en phase "1", c'est à dire la phase de ressource. Il n'y a pas de phase 0.
 
-            //TODO use only 1
+
             JoueurActifEst1 = true; // Il y a deux joueur : Joueur 1 et joueur 2. Lorsque ce bool est vrai, c'est au joueur 1 et vice-versa.
-            //joueurActif = joueur1;
 
+            // Brasser les deck
+            BrasserDecks();
 
+            // Donner une main à chaque joueurs 
+            int compteurNbCarte = 0;
+            while (compteurNbCarte != 6)
+            {
+                PigerCartes();
+
+                compteurNbCarte++;
+            }
 
         }
+        #endregion
+        /// <summary>
+        /// Fonction qui attribu les ressources par rapport au niveau des ressources du joueur
+        /// </summary>
+        /// <param name="joueurUn"></param>
+        public void AttribuerRessourceLevel()
+        {
+            if (JoueurActifEst1)
+            {
+                Joueur1.ModifierRessource(true, Joueur1.LevelRessource);
+            }
+            else
+            {
+                Joueur2.ModifierRessource(true, Joueur2.LevelRessource);
+            }
+        }
+        /// <summary>
+        /// Fonction qui modifie les ressources
+        /// </summary>
+        /// <param name="joueurUn">Est-ce le joueur1?</param>
+        /// <param name="addition">Est-ce une addition?</param>
+        /// <param name="valeurs">Valeurs qui modifie les ressources</param>
+        public void ModifierRessource(bool joueurUn, bool addition, Ressource valeurs)
+        {
+            if (joueurUn)
+            {
+                Joueur1.ModifierRessource(addition, valeurs);
+            }
+            else
+            {
+                Joueur2.ModifierRessource(addition, valeurs);
+            }
+        }
+
         /// <summary>
         /// Retourne vrai si le coup est valide
         /// </summary>
@@ -163,7 +193,7 @@ namespace Cosmos.metier
             return false;
         }
 
-        public void JouerCarte(Carte carteAJouer,bool joueurActifEst1 )
+        public void JouerCarte(Carte carteAJouer, bool joueurActifEst1 )
         {
             // Le coup à déjà été validé rendu ici                  
 
@@ -210,25 +240,6 @@ namespace Cosmos.metier
 
             // On enleve la carte de la main
             LstMainJ1.Remove(carteAJouer);
-        }
-
-        /// <summary>
-        /// Pige une carte dans le deck spécifié pour l'ajouter à la main du joueur propriétaire du deck
-        /// </summary>
-        /// <param name="leDeck"></param>
-        /// <param name="estJoueur1"></param>
-        public void PigerCarte(Deck leDeck, bool estJoueur1)
-        {
-            if (estJoueur1)
-            {
-                //LstMainJ1.Add(leDeck.CartesDuDeck[0]);
-                //leDeck.CartesDuDeck.RemoveAt(0);
-            }
-            else
-            {
-                //LstMainJ2.Add(leDeck.CartesDuDeck[0]);
-                //leDeck.CartesDuDeck.RemoveAt(0);
-            }
         }
 
         public void AvancerPhase()
@@ -315,7 +326,54 @@ namespace Cosmos.metier
                 LstUniteJ2.Remove(unite2);
             }
         }
-
+        /// <summary>
+        /// Brasse LES decks des joueurs
+        /// </summary>
+        public void BrasserDecks()
+        {
+            Joueur1.BrasserDeck();
+            Joueur2.BrasserDeck();
+        }
+        /// <summary>
+        /// Brasse le deck du joueur selon le tour
+        /// </summary>
+        public void BrasserDeck()
+        {
+            if (JoueurActifEst1)
+            {
+                Joueur1.BrasserDeck();
+            }
+            else
+            {
+                Joueur2.BrasserDeck();
+            }
+        }
+        /// <summary>
+        /// Brasse le deck du joueur choisi
+        /// </summary>
+        /// <param name="joueurUn"></param>
+        public void BrasserDeck(bool joueurUn)
+        {
+            if (joueurUn)
+            {
+                Joueur1.BrasserDeck();
+            }
+            else
+            {
+                Joueur2.BrasserDeck();
+            }
+        }
+        public void PigerCarte(bool joueurUn)
+        {
+            if (joueurUn)
+            {
+                LstMainJ1.Add(Joueur1.PigerCarte());
+            }
+            else
+            {
+                LstMainJ2.Add(Joueur2.PigerCarte());
+            }
+        }
 
     }
 }

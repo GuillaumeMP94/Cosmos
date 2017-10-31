@@ -64,12 +64,18 @@ namespace Cosmos.metier
             LevelRessource = new Ressource(1, 1, 1);
         }
 
-       
-
         public void SetRessource(Ressource neoValeur)
         {
             RessourceActive = new Ressource(neoValeur);
         }
+        /// <summary>
+        /// Brasse le deck du joueur
+        /// </summary>
+        public void BrasserDeck()
+        {
+            DeckAJouer.BrasserDeck();
+        }
+
         /// <summary>
         /// Permet l'addition ou la soustraction de ressource à celle du joueur. 
         /// </summary>
@@ -79,13 +85,20 @@ namespace Cosmos.metier
         {
             if (addition)
             {
-                RessourceActive = RessourceActive + new Ressource(valeur);
+                RessourceActive = RessourceActive + valeur;
             }
             else
             {
-                RessourceActive = RessourceActive - new Ressource(valeur);
+                RessourceActive = RessourceActive - valeur;
             }
         }
-
+        /// <summary>
+        /// Pige une carte dans le deck du joueur.
+        /// </summary>
+        /// <returns></returns>
+        public Carte PigerCarte()
+        {
+            return DeckAJouer.PigerCarte();
+        }
     }
 }

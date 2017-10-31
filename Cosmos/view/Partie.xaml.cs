@@ -35,19 +35,16 @@ namespace Cosmos.view
         public Partie(MainWindow main)
         {
             InitializeComponent();
-
-            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
+            Main = main;
+            Utilisateur utilisateur1 = Main.UtilisateurConnecte;
             Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
+            // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
             utilisateur2.Reinitialiser();
 
-            Joueur joueur1 = utilisateur1;
-            Joueur joueur2 = utilisateur2;
+            laTableDeJeu = new TableDeJeu(utilisateur1, utilisateur2);
 
-            laTableDeJeu = new TableDeJeu(utilisateur1.DeckAJouer.CartesDuDeck, utilisateur2.DeckAJouer.CartesDuDeck);
 
-            laTableDeJeu.Joueur1 = joueur1;
-            laTableDeJeu.Joueur2 = joueur2;
 
             // Demander à l'utilisateur de distribuer ses ressources.
             EcranRessource( laTableDeJeu.Joueur1 , RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
@@ -65,25 +62,6 @@ namespace Cosmos.view
 
             // Initialiser la phase à "phase de ressource"            
             phase = laTableDeJeu.Phase;
-
-            // Brasser les deck
-            utilisateur1.DeckAJouer.BrasserDeck();
-            utilisateur2.DeckAJouer.BrasserDeck();            
-
-            // Donner une main à chaque joueurs 
-            int compteurNbCarte = 0;
-            while( compteurNbCarte != 6 )
-            {
-                // Joueur 1
-                laTableDeJeu.LstMainJ1.Add(utilisateur1.DeckAJouer.CartesDuDeck[0]);
-                //InsererCarteMain(laTableDeJeu.LstMainJ1[compteurNbCarte].Nom , compteurNbCarte+1 );                 
-                utilisateur1.DeckAJouer.CartesDuDeck.RemoveAt(0) ;
-                // Joueur2
-                laTableDeJeu.LstMainJ2.Add(utilisateur2.DeckAJouer.CartesDuDeck[0]);
-                utilisateur2.DeckAJouer.CartesDuDeck.RemoveAt(0);
-
-                compteurNbCarte++;                
-            }
 
             // Afficher la main
             ImgMainJoueur = new List<Image>();            
@@ -115,15 +93,8 @@ namespace Cosmos.view
             {
                 case 1:
                     phase++;
+                    laTableDeJeu.AttribuerRessourceLevel();
                     // on ajoute les ressources au joueur actif
-                    if ( laTableDeJeu.JoueurActifEst1 )
-                    {
-                        laTableDeJeu.Joueur1.ModifierRessource( true, laTableDeJeu.Joueur1.LevelRessource );
-                    }
-                    else
-                    {
-                        laTableDeJeu.Joueur2.ModifierRessource(true, laTableDeJeu.Joueur2.LevelRessource);
-                    }
 
                     txBlphaseRessource.Background = Brushes.Transparent;
                     txBlphasePrincipale.Background = Brushes.DarkGoldenrod;

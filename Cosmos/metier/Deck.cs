@@ -46,7 +46,7 @@ namespace Cosmos.metier
         public Carte PigerCarte()
         {
 
-            var temp = CartesDuDeck[0].Clone();
+            Carte temp = CartesDuDeck[0];
             CartesDuDeck.RemoveAt(0);
 
             return temp;
