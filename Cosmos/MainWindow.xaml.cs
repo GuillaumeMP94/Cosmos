@@ -42,7 +42,7 @@ namespace Cosmos
             this.Topmost = true;
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
-
+            
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
 
