@@ -25,7 +25,6 @@ namespace Cosmos.view
         const int RESSOURCEDEPART = 3;
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
-        public CarteZoom Zoom { get; set; }
         public Image imgZoom { get; set; }
         public List<Image> ImgMainJoueur { get; set; }
 
@@ -36,7 +35,9 @@ namespace Cosmos.view
         {
             InitializeComponent();
             Main = main;
-            Utilisateur utilisateur1 = Main.UtilisateurConnecte;
+            //TODO: Effacer la prochaine logne et enlever les commentaires sur la suivante
+            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
+            //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
             Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
@@ -310,14 +311,9 @@ namespace Cosmos.view
         public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
-            Zoom = new CarteZoom(img, this);
-            grd1.Children.Add(Zoom);
+            imgZoomCarte.Source = img.Source;
+            imgZoomCarte.Visibility = Visibility.Visible;
 
-            if(carteMain)
-            {
-                btnJouer.Visibility = Visibility.Visible;
-            }
-            btnFermerZoom.Visibility = Visibility.Visible;
         }
 
         public void JouerCarte( bool estJoueur1 , Carte laCarte )
@@ -326,28 +322,9 @@ namespace Cosmos.view
             {
                 laTableDeJeu.JouerCarte(laCarte, estJoueur1);
                 InsererCarteCreature(laCarte.Nom, 4);
-                grdCartesJoueur.Children.Remove(imgZoom);              
             }
-            grd1.Children.Remove(Zoom);
             rectZoom.Visibility = Visibility.Hidden;
-            btnJouer.Visibility = Visibility.Hidden;
-            btnFermerZoom.Visibility = Visibility.Hidden;
-        }
-
-        private void btnFermerZoom_Click(object sender, RoutedEventArgs e)
-        {
-            grd1.Children.Remove(Zoom);
-            rectZoom.Visibility = Visibility.Hidden;
-            btnJouer.Visibility = Visibility.Hidden;
-            btnFermerZoom.Visibility = Visibility.Hidden;
-        }
-
-        private void btnJouer_Click(object sender, RoutedEventArgs e)
-        {
-            // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
-            // Si on joue plusieurs carte, ça ne fonctionne pas.
-            // Il faudrait ré-organiser la mian après le 0,5
-			JouerCarte( true, laTableDeJeu.LstMainJ1[ int.Parse( imgZoom.Uid ) - 1 ] );
+            imgZoomCarte.Visibility = Visibility.Hidden;
         }
 
         public void FermerEcranRessource()
@@ -364,6 +341,19 @@ namespace Cosmos.view
             grd1.Children.Add(ContenuEcran);
         }
 
+        private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
+            // Si on joue plusieurs carte, ça ne fonctionne pas.
+            // Il faudrait ré-organiser la mian après le 0,5
+            //JouerCarte(true, laTableDeJeu.LstMainJ1[int.Parse(imgZoom.Uid) - 1]);
+        }
+
+        private void rectZoom_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            rectZoom.Visibility = Visibility.Hidden;
+            imgZoomCarte.Visibility = Visibility.Hidden;
+        }
     }
 }
 
