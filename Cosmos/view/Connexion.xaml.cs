@@ -33,43 +33,11 @@ namespace Cosmos.view
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
         {
-            if (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
+            if (ValiderInformationSaisies())
             {
-                if (txbPseudo.Text.Length > 0 && passbPassword.Password.Length > 0)
-                {
-                    if (txbPseudo.Text.Length >= 3 && passbPassword.Password.Length >=5 )
-                    {
-                        Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
-                        if (unUtilsateur != null)
-                        {
-                            if (unUtilsateur.MotDePasse == passbPassword.Password)
-                            {
-                                Main.UtilisateurConnecte = unUtilsateur;
-                                Main.EcranMenuPrincipal();
-                            }
-                            else
-                            {
-                                AfficherMessageErreur("infoInvalide");
-                            }
-                        }
-                        else
-                        {
-                            AfficherMessageErreur("infoInvalide");
-                        }
-                    }
-                    else
-                    {
-                        AfficherMessageErreur("tropCourt");
-                    }
-                }
-                else
-                {
-                    AfficherMessageErreur("aucuneSaisie");
-                }
-            }
-            else
-            {
-                AfficherMessageErreur("charInvalide");
+                Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
+                Main.UtilisateurConnecte = unUtilsateur;
+                Main.EcranMenuPrincipal();
             }
         }
 
@@ -111,6 +79,44 @@ namespace Cosmos.view
             }
 
             txblErreur.Visibility = Visibility.Visible;
+        }
+
+        private bool ValiderInformationSaisies()
+        {
+            if ((Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text || Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password))
+            {
+                if (txbPseudo.Text.Length >= 3 && passbPassword.Password.Length >= 5)
+                {
+                    Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
+                    if (unUtilsateur != null)
+                    {
+                        if (unUtilsateur.MotDePasse == passbPassword.Password)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            AfficherMessageErreur("infoInvalide");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        AfficherMessageErreur("infoInvalide");
+                        return false;
+                    }
+                }
+                else
+                {
+                    AfficherMessageErreur("tropCourt");
+                    return false;
+                }
+            }
+            else
+            {
+                AfficherMessageErreur("infoInvalide");
+                return false;
+            }   
         }
     }
 }

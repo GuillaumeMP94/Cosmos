@@ -116,6 +116,8 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
             ContenuEcran = new ReglementsTutoriel(this);
+
+            grdMain.Children.Add(ContenuEcran);
         }
         public void EcranPartie()
         {

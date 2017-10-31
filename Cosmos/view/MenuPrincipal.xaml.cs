@@ -26,6 +26,11 @@ namespace Cosmos.view
             InitializeComponent();
 
             Main = main;
+            // a enlever quand ajout carte fonctionne.
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count > 0)
+            {
+                MessageBox.Show(Main.UtilisateurConnecte.DecksUtilisateurs[0].Nom);
+            }
         }
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)

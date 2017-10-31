@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cosmos.accesBD;
 
 namespace Cosmos.view
 {
@@ -26,11 +27,12 @@ namespace Cosmos.view
             InitializeComponent();
 
             Main = main;
+ 
         }
 
         private void btnTutoriel_Click(object sender, RoutedEventArgs e)
         {
-            
+            MySqlCarteService.InsertNewJoueurCard();  
         }
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)

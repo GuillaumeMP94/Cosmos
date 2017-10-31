@@ -46,7 +46,7 @@ namespace Cosmos.metier
         {
             Salt = salt;
         }
-	public Utilisateur(string nom, string courriel, string motDePasse, string salt) : base()
+	    public Utilisateur(string nom, string courriel, string motDePasse, string salt) : base()
         {
             Nom = nom;
             Courriel = courriel;

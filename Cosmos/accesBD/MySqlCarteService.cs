@@ -227,5 +227,24 @@ namespace Cosmos.accesBD
             return RetrieveAllExemplaire(query.ToString());
         }
 
+        public static List<Carte> RetrieveNewUtilisateurCard()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, d.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("INNER JOIN DecksExemplaires d ON d.idExemplaire = e.idExemplaire ")
+                 .Append("WHERE d.nom = defaut " +
+                         "AND d.idUtilisateur IS NULL");
+
+            return RetrieveAllExemplaire(query.ToString());
+        }
+
+        public static void InsertNewJoueurCard()
+        {
+            List<Carte> lstCarteAAjouter = RetrieveNewUtilisateurCard();
+            
+            // Faire le insert ici selon chaque carte dans la liste.
+        }
+
     }
 }
