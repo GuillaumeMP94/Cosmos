@@ -27,6 +27,7 @@ namespace Cosmos.view
         public MainWindow Main { get; set; }
         public CarteZoom Zoom { get; set; }
         public Image imgZoom { get; set; }
+        public List<Image> ImgMainJoueur { get; set; }
 
         int phase;
         TableDeJeu laTableDeJeu;                
@@ -75,7 +76,7 @@ namespace Cosmos.view
             {
                 // Joueur 1
                 laTableDeJeu.LstMainJ1.Add(utilisateur1.DeckAJouer.CartesDuDeck[0]);
-                InsererCarteMain(laTableDeJeu.LstMainJ1[compteurNbCarte].Nom , compteurNbCarte+1 ); 
+                //InsererCarteMain(laTableDeJeu.LstMainJ1[compteurNbCarte].Nom , compteurNbCarte+1 );                 
                 utilisateur1.DeckAJouer.CartesDuDeck.RemoveAt(0) ;
                 // Joueur2
                 laTableDeJeu.LstMainJ2.Add(utilisateur2.DeckAJouer.CartesDuDeck[0]);
@@ -83,6 +84,12 @@ namespace Cosmos.view
 
                 compteurNbCarte++;                
             }
+
+            // Afficher la main
+            ImgMainJoueur = new List<Image>();            
+            AfficherMain(ImgMainJoueur);
+
+
 
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
@@ -177,7 +184,26 @@ namespace Cosmos.view
             img.Margin = new Thickness(margin.Left, 40, 0, 0);
         }
 
-        private void InsererCarteMain(String nom, int position)
+        private void PeuplerImgMainJoueur(List<Carte> lstMain)
+        {
+            int i = 1;
+            foreach(Carte element in lstMain)
+            {
+                ImgMainJoueur.Add(CreerImageCarte(element.Nom, i));
+                i++;
+            }
+        }
+
+        private void AfficherMain(List<Image> imgMain)
+        {
+            PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
+            foreach (Image element in imgMain)
+            {
+                grdCartesJoueur.Children.Add(element);
+            }
+        }
+
+        private Image CreerImageCarte(String nom, int position)
         {
             Image carte = new Image();
             carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
@@ -185,12 +211,9 @@ namespace Cosmos.view
             carte.Width = 700;
             carte.VerticalAlignment = VerticalAlignment.Top;
             carte.HorizontalAlignment = HorizontalAlignment.Left;
-            carte.Name = "carte" + position;
             carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
             carte.SetValue(Panel.ZIndexProperty, position);
             carte.Cursor = Cursors.Hand;
-            carte.Uid = position.ToString();
-            carte.Tag = position;
 
             // Lier la carte avec les events Mouse Enter et Leave
             carte.MouseEnter += CarteMain_MouseEnter;
@@ -199,8 +222,33 @@ namespace Cosmos.view
             // Lier la carte avec l'event Carte Zoom
             carte.PreviewMouseLeftButtonUp += Carte_Zoom;
 
-            grdCartesJoueur.Children.Add(carte);
+            return carte;
         }
+
+        //private void InsererCarteMain(String nom, int position)
+        //{
+        //    Image carte = new Image();
+        //    carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+        //    carte.Height = 300;
+        //    carte.Width = 700;
+        //    carte.VerticalAlignment = VerticalAlignment.Top;
+        //    carte.HorizontalAlignment = HorizontalAlignment.Left;
+        //    carte.Name = "carte" + position;
+        //    carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
+        //    carte.SetValue(Panel.ZIndexProperty, position);
+        //    carte.Cursor = Cursors.Hand;
+        //    carte.Uid = position.ToString();
+        //    carte.Tag = position;
+
+        //    // Lier la carte avec les events Mouse Enter et Leave
+        //    carte.MouseEnter += CarteMain_MouseEnter;
+        //    carte.MouseLeave += CarteMain_MouseLeave;
+
+        //    // Lier la carte avec l'event Carte Zoom
+        //    carte.PreviewMouseLeftButtonUp += Carte_Zoom;
+
+        //    grdCartesJoueur.Children.Add(carte);
+        //}
 
         private void InsererCarteCreature(String nom, int position)
         {
@@ -273,8 +321,6 @@ namespace Cosmos.view
                     break;
             }
         }
-
-
 
         private void Carte_Zoom(object sender, MouseEventArgs e)
         {
