@@ -284,6 +284,8 @@
                 Click="btnJouer_Click" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button Name="btnFermerZoom" Height="50" Width="200" Content="Fermer le zoom" Margin="20,80,0,0"
                 Click="btnFermerZoom_Click" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        
+        
 
     </Grid>
 </UserControl>
