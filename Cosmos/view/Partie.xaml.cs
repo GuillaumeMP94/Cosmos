@@ -27,6 +27,7 @@ namespace Cosmos.view
         public MainWindow Main { get; set; }
         public Image imgZoom { get; set; }
         public List<Image> ImgMainJoueur { get; set; }
+        public int IndexCarteZoomer { get; set; }
 
         int phase;
         TableDeJeu laTableDeJeu;                
@@ -65,7 +66,7 @@ namespace Cosmos.view
             phase = laTableDeJeu.Phase;
 
             // Afficher la main
-                        
+            ImgMainJoueur = new List<Image>();
             AfficherMain();
 
 
@@ -168,7 +169,11 @@ namespace Cosmos.view
 
         private void AfficherMain()
         {
-            ImgMainJoueur = new List<Image>();
+            foreach (Image element in ImgMainJoueur)
+            {
+                grdCartesJoueur.Children.Remove(element);
+            }
+            ImgMainJoueur.Clear();
             PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
             foreach (Image element in ImgMainJoueur)
             {
@@ -312,6 +317,7 @@ namespace Cosmos.view
         public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
+            IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
 
@@ -319,11 +325,11 @@ namespace Cosmos.view
 
         public void JouerCarte( bool estJoueur1 , Carte laCarte )
         {
-            if ( laTableDeJeu.validerCoup( laCarte , estJoueur1) )
-            {
+            //if ( laTableDeJeu.validerCoup( laCarte , estJoueur1) )
+            //{
                 laTableDeJeu.JouerCarte(laCarte, estJoueur1);
                 InsererCarteCreature(laCarte.Nom, 4);
-            }
+            //}
             rectZoom.Visibility = Visibility.Hidden;
             imgZoomCarte.Visibility = Visibility.Hidden;
         }
@@ -347,7 +353,8 @@ namespace Cosmos.view
             // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
             // Si on joue plusieurs carte, ça ne fonctionne pas.
             // Il faudrait ré-organiser la mian après le 0,5
-            //JouerCarte(true, laTableDeJeu.LstMainJ1[int.Parse(imgZoom.Uid) - 1]);
+            JouerCarte(true, laTableDeJeu.LstMainJ1[IndexCarteZoomer]);
+            AfficherMain();
         }
 
         private void rectZoom_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
