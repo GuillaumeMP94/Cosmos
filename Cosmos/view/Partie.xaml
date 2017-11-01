@@ -278,6 +278,8 @@
             </Button.Template>
         </Button>
 
+        <Rectangle Name="recRessource" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
+                   />
 
         <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
                    PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp"/>

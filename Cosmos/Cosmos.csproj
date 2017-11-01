@@ -68,6 +68,8 @@
     <Compile Include="accesBD\MySqlUtilisateurService.cs" />
     <Compile Include="metier\Batiment.cs" />
     <Compile Include="metier\Carte.cs" />
+    <Compile Include="metier\ChampBatailleBatiments.cs" />
+    <Compile Include="metier\ChampBatailleUnites.cs" />
     <Compile Include="metier\Deck.cs" />
     <Compile Include="metier\Effet.cs" />
     <Compile Include="metier\Gadget.cs" />

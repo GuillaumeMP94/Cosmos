@@ -22,11 +22,17 @@ namespace Cosmos.metier
         public List<Carte> LstMainJ1 { get; set; }
         public List<Carte> LstMainJ2 { get; set; }
 
-        public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
-        public List<Batiment> LstBatimentJ2 { get; set; }
+        //public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
+        //public List<Batiment> LstBatimentJ2 { get; set; }
+        public ChampBatailleBatiments ChampBatailleBatimentsJ1 { get; set; }
+        public ChampBatailleBatiments ChampBatailleBatimentsJ2 { get; set; }
 
-        public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
-        public List<Unite> LstUniteJ2 { get; set; }
+        //public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
+        //public List<Unite> LstUniteJ2 { get; set; }
+        public ChampBatailleUnites ChampBatailleUnitesJ1 { get; set; }
+        public ChampBatailleUnites ChampBatailleUnitesJ2 { get; set; }
+
+
 
         // Usine de recyclage des joueurs / Défausse
         public List<Carte> LstUsineRecyclageJ1 { get; set; }
@@ -104,11 +110,11 @@ namespace Cosmos.metier
             LstMainJ1 = new List<Carte>();
             LstMainJ2 = new List<Carte>();
 
-            LstBatimentJ1 = new List<Batiment>();
-            LstBatimentJ2 = new List<Batiment>();
+            ChampBatailleBatimentsJ1 = new ChampBatailleBatiments();
+            ChampBatailleBatimentsJ2 = new ChampBatailleBatiments();
 
-            LstUniteJ1 = new List<Unite>();
-            LstUniteJ2 = new List<Unite>();
+            ChampBatailleUnitesJ1 = new ChampBatailleUnites();
+            ChampBatailleUnitesJ2 = new ChampBatailleUnites();
 
             LstUsineRecyclageJ1 = new List<Carte>();
             LstUsineRecyclageJ1 = new List<Carte>();
@@ -173,7 +179,7 @@ namespace Cosmos.metier
         /// <returns></returns>
         public bool validerCoup(Carte carteAJouer, bool estJoueur1)
         {
-            Ressource temp = new Ressource(-1, -1, -1);
+            Ressource temp = new Ressource(-1, -1, -1);     
 
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
             if( estJoueur1 )
@@ -199,7 +205,6 @@ namespace Cosmos.metier
 
             var temp = carteAJouer.Clone();
 
-
             // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
             if (joueurActifEst1)
             {
@@ -208,11 +213,11 @@ namespace Cosmos.metier
 
                 if (carteAJouer is Unite)
                 {                    
-                    LstUniteJ1.Add((Unite)temp);
+                    //LstUniteJ1.Add((Unite)temp);
                 }
                 if (carteAJouer is Batiment)
                 {
-                    LstBatimentJ1.Add((Batiment)temp);
+                    //LstBatimentJ1.Add((Batiment)temp);
                 }
                 if (carteAJouer is Gadget)
                 {
@@ -226,11 +231,11 @@ namespace Cosmos.metier
 
                 if (carteAJouer is Unite)
                 {
-                    LstUniteJ2.Add((Unite)temp);
+                    //LstUniteJ2.Add((Unite)temp);
                 }
                 if (carteAJouer is Batiment)
                 {
-                    LstBatimentJ2.Add((Batiment)temp);
+                    //LstBatimentJ2.Add((Batiment)temp);
                 }
                 if (carteAJouer is Gadget)
                 {
@@ -318,12 +323,12 @@ namespace Cosmos.metier
             // Si la defense de l'unité est a zero ou moins elle est détruite.
             if( unite1.Defense < 1)
             {
-                LstUniteJ1.Remove(unite1);
+                //LstUniteJ1.Remove(unite1);
             }
 
             if (unite2.Defense < 1)
             {
-                LstUniteJ2.Remove(unite2);
+                //LstUniteJ2.Remove(unite2);
             }
         }
         /// <summary>
