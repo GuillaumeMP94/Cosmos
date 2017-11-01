@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500">
-    
     <Grid Width="350" Height="auto" HorizontalAlignment="Center" Margin="0,50,0,5">
+        <Border Width="350" Height="515" BorderBrush="DarkGoldenrod" Opacity="1" Margin="0,15,0,285" BorderThickness="3" CornerRadius="15" Panel.ZIndex="99"/>
 
             <Border Width="auto" Height="auto" Background="Black" Opacity="0.6" Margin="0,15,0,285" CornerRadius="15"/>
 
@@ -135,7 +135,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="80" Height="50" Grid.Row="4" Grid.Column="3" Opacity="0.25" IsEnabled="False" Name="btnOk" Cursor="Hand" Click="btnOk_Click">
+            <Button Width="70" Height="50" Grid.Row="4" Grid.Column="3" Opacity="0.25" IsEnabled="False" Name="btnOk" Cursor="Hand" Click="btnOk_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
