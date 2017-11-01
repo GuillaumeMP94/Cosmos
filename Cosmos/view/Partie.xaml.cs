@@ -327,8 +327,8 @@ namespace Cosmos.view
         {
             //if ( laTableDeJeu.validerCoup( laCarte , estJoueur1) )
             //{
-                laTableDeJeu.JouerCarte(laCarte, estJoueur1);
-                InsererCarteCreature(laCarte.Nom, 4);
+                //laTableDeJeu.JouerCarte(laCarte, estJoueur1);
+                //InsererCarteCreature(laCarte.Nom, 4);
             //}
             rectZoom.Visibility = Visibility.Hidden;
             imgZoomCarte.Visibility = Visibility.Hidden;
@@ -352,8 +352,15 @@ namespace Cosmos.view
         {
             // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
             // Si on joue plusieurs carte, ça ne fonctionne pas.
-            // Il faudrait ré-organiser la mian après le 0,5
-            JouerCarte(true, laTableDeJeu.LstMainJ1[IndexCarteZoomer]);
+            // Il faudrait ré-organiser la main après le 0,5
+            if (laTableDeJeu.validerCoup(IndexCarteZoomer))
+            {
+                // Choisir l'emplacement.
+                InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+                laTableDeJeu.JouerCarte(IndexCarteZoomer);
+            }
+            rectZoom.Visibility = Visibility.Hidden;
+            imgZoomCarte.Visibility = Visibility.Hidden;
             AfficherMain();
         }
 
