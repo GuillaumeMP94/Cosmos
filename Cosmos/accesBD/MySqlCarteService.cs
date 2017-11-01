@@ -227,6 +227,7 @@ namespace Cosmos.accesBD
             return RetrieveAllExemplaire(query.ToString());
         }
 
+        #region NeoUtilisateur
         public static List<Carte> RetrieveNewUtilisateurCard()
         {
             StringBuilder query = new StringBuilder();
@@ -285,7 +286,7 @@ namespace Cosmos.accesBD
             return lesCartes.Count > 0;
         }
 
-        public static List<Carte> RetrieveExemplaire(Utilisateur utilisateur, Carte carte)
+        private static List<Carte> RetrieveExemplaire(Utilisateur utilisateur, Carte carte)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT c.*, e.quantite FROM Cartes c ")
@@ -295,6 +296,6 @@ namespace Cosmos.accesBD
 
             return RetrieveAllExemplaire(query.ToString());
         }
-
+        #endregion
     }
 }

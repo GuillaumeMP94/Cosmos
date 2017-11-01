@@ -32,44 +32,12 @@ namespace Cosmos.view
 
         private void btnCreer_Click(object sender, RoutedEventArgs e)
         {
-            if (txbPseudo.Text.Length > 0 && passbPassword.Password.Length > 0 && passbConfirmPassword.Password.Length > 0 && txbCourriel.Text.Length > 0)
+            if (estInformationValide())
             {
-                if (ValiderInformations())
-                {
-                    if (txbPseudo.Text.Length >=3 && passbPassword.Password.Length >= 5)
-                    {
-                        if (MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text) == null && MySqlUtilisateurService.RetrieveByCourriel(txbCourriel.Text) == null)
-                        {
-                            if (passbPassword.Password == passbConfirmPassword.Password)
-                            {
-                                Utilisateur neoUtilisateur = new Utilisateur(txbPseudo.Text, txbCourriel.Text, passbPassword.Password, "qwerty");
-                                MySqlUtilisateurService.Insert(neoUtilisateur);
-                                Main.UtilisateurConnecte = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
-                                Main.EcranMenuPrincipal();
-                            }
-                            else
-                            {
-                                AfficherMessageErreur("motsPasseDifferents");
-                            }
-                        }
-                        else
-                        {
-                            AfficherMessageErreur("infoExistante");
-                        }
-                    }
-                    else
-                    {
-                        AfficherMessageErreur("tropCourt");
-                    }    
-                }
-                else
-                {
-                    AfficherMessageErreur("infoInvalide");
-                }
-            }
-            else
-            {
-                AfficherMessageErreur("aucuneSaisie");
+                Utilisateur neoUtilisateur = new Utilisateur(txbPseudo.Text, txbCourriel.Text, passbPassword.Password, "qwerty");
+                MySqlUtilisateurService.Insert(neoUtilisateur);
+                Main.UtilisateurConnecte = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
+                Main.EcranMenuPrincipal();
             }
         }
 
@@ -77,7 +45,8 @@ namespace Cosmos.view
         {
             Main.EcranConnexion();
         }
-        
+
+        #region ValiderInfoSaisies
         private void AfficherMessageErreur(string typeErreur)
         {
             txbPseudo.Text = "";
@@ -90,14 +59,8 @@ namespace Cosmos.view
                 case "infoInvalide":
                     txblErreur.Text = "Le nom d'utilisateur, le mot de passe ou le courriel est invalide.";
                     break;
-                case "charInvalide":
-                    txblErreur.Text = "Le nom d'utilisateur, le mot de passe ou le courriel contient des caractères invalides.";
-                    break;
                 case "tropCourt":
                     txblErreur.Text = "Le nom d'utilisateur ou le mot de passe est trop court.";
-                    break;
-                case "aucuneSaisie":
-                    txblErreur.Text = "Veuillez saisir toutes les informations.";
                     break;
                 case "infoExistante":
                     txblErreur.Text = "Le nom d'utilisateur ou le courriel est déjà utilisé.";
@@ -112,17 +75,123 @@ namespace Cosmos.view
 
         private bool ValiderInformations()
         {
-            if (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text 
-                && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password 
+            return (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text
+                && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password
                 && Main.ValiderChampSaisi(passbConfirmPassword.Password) == passbConfirmPassword.Password
-                && Main.estCourrielValide(txbCourriel.Text))
+                && Main.estCourrielValide(txbCourriel.Text));
+        }
+
+        private bool estInformationValide()
+        {
+            if (ValiderInformations())
             {
-                return true;
+                if (txbPseudo.Text.Length >= 3 && passbPassword.Password.Length >= 5)
+                {
+                    if (MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text) == null && MySqlUtilisateurService.RetrieveByCourriel(txbCourriel.Text) == null)
+                    {
+                        if (passbPassword.Password == passbConfirmPassword.Password)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            AfficherMessageErreur("motsPasseDifferents");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        AfficherMessageErreur("infoExistante");
+                        return false;
+                    }
+                }
+                else
+                {
+                    AfficherMessageErreur("tropCourt");
+                    return false;
+                }
             }
             else
             {
+                AfficherMessageErreur("infoInvalide");
                 return false;
             }
         }
+        #endregion
+
+        #region ActiverBoutonCreer
+        private void ActiverBoutonCreer()
+        {
+            if (estBoutonActif())
+            {
+                btnCreer.IsEnabled = true;
+                btnCreer.Opacity = 1;
+            }
+            else
+            {
+                btnCreer.IsEnabled = false;
+                btnCreer.Opacity = 0.25;
+            }
+        }
+
+        private void txbPseudo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private void txbCourriel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private void passbPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private void passbConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonCreer();
+        }
+
+        private bool estBoutonActif()
+        {
+            return ((txbPseudo.Text != "" || txbPseudo.IsVisible == false) && (txbCourriel.Text != "" || txbCourriel.IsVisible == false) && (passbPassword.Password != "" || passbPassword.IsVisible == false) && (passbConfirmPassword.Password != "" || passbConfirmPassword.IsVisible == false));
+        }
+        #endregion
+
+        #region BindingEnter
+        private void txbPseudo_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnCreer_Click(sender, e);
+            }
+        }
+
+        private void passbPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnCreer_Click(sender, e);
+            }
+        }
+
+        private void passbConfirmPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnCreer_Click(sender, e);
+            }
+        }
+
+        private void txbCourriel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnCreer_Click(sender, e);
+            }
+        }
+        #endregion
     }
 }

@@ -33,7 +33,7 @@ namespace Cosmos.view
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
         {
-            if (ValiderInformationSaisies())
+            if (estInformationValide())
             {
                 Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
                 Main.UtilisateurConnecte = unUtilsateur;
@@ -56,6 +56,7 @@ namespace Cosmos.view
             Main.EcranRecuperation();
         }
 
+        #region ValidationInfoUtilisateur
         private void AfficherMessageErreur(string typeErreur)
         {
             txbPseudo.Text = "";
@@ -81,9 +82,9 @@ namespace Cosmos.view
             txblErreur.Visibility = Visibility.Visible;
         }
 
-        private bool ValiderInformationSaisies()
+        private bool estInformationValide()
         {
-            if ((Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text || Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password))
+            if (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
             {
                 if (txbPseudo.Text.Length >= 3 && passbPassword.Password.Length >= 5)
                 {
@@ -116,7 +117,58 @@ namespace Cosmos.view
             {
                 AfficherMessageErreur("infoInvalide");
                 return false;
-            }   
+            }
+            
         }
+        #endregion
+
+        #region ActiverBoutonConnexion
+        private void ActiverBoutonConnexion()
+        {
+            if (estBoutonActif())
+            {
+                btnConnexion.Opacity = 1;
+                btnConnexion.IsEnabled = true;
+            }
+            else
+            {
+                btnConnexion.Opacity = 0.25;
+                btnConnexion.IsEnabled = false;
+            }
+        }
+
+        private void txbPseudo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonConnexion();
+        }
+
+        private void passbPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonConnexion();
+        }
+
+        private bool estBoutonActif()
+        {
+            return (txbPseudo.Text != "" || txbPseudo.IsVisible == false) && (passbPassword.Password != "" || passbPassword.IsVisible == false);
+        }
+        #endregion
+
+        #region BindingEnterBouton
+        private void passbPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnConnexion_Click(sender, e);
+            }
+        }
+
+        private void txbPseudo_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnConnexion_Click(sender, e);
+            }
+        }
+        #endregion
     }
 }
