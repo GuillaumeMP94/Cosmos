@@ -65,8 +65,8 @@ namespace Cosmos.view
             phase = laTableDeJeu.Phase;
 
             // Afficher la main
-            ImgMainJoueur = new List<Image>();            
-            AfficherMain(ImgMainJoueur);
+                        
+            AfficherMain();
 
 
 
@@ -166,10 +166,11 @@ namespace Cosmos.view
             }
         }
 
-        private void AfficherMain(List<Image> imgMain)
+        private void AfficherMain()
         {
+            ImgMainJoueur = new List<Image>();
             PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
-            foreach (Image element in imgMain)
+            foreach (Image element in ImgMainJoueur)
             {
                 grdCartesJoueur.Children.Add(element);
             }
