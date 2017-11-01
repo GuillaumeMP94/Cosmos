@@ -279,13 +279,12 @@
         </Button>
 
 
-        <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"/>
-        <Button Name="btnJouer" Height="50" Width="200" Content="Jouer la carte" Margin="20,20,0,0"
-                Click="btnJouer_Click" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Button Name="btnFermerZoom" Height="50" Width="200" Content="Fermer le zoom" Margin="20,80,0,0"
-                Click="btnFermerZoom_Click" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        
-        
+        <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
+                   PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp"/>
+
+        <Image Name="imgZoomCarte" Source="/images/cartes/Gronar.jpg" Height="500" VerticalAlignment="Top"
+               HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden" Cursor="Hand" 
+               PreviewMouseLeftButtonUp="imgZoomCarte_PreviewMouseLeftButtonUp"/>
 
     </Grid>
 </UserControl>
