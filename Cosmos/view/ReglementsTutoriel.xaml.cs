@@ -32,7 +32,16 @@ namespace Cosmos.view
 
         private void btnTutoriel_Click(object sender, RoutedEventArgs e)
         {
-            MySqlCarteService.InsertNewJoueurCard();  
+            if (MySqlCarteService.RetrieveAllUserCard(Main.UtilisateurConnecte.IdUtilisateur).Count == 0)
+            {
+                MySqlCarteService.InsertNewJoueurCard(Main.UtilisateurConnecte);
+                MessageBox.Show("Félicitation pour avoir compléter le tutoriel! Vous venez de débloquer vos cartes!");
+            }
+            else
+            {
+                MessageBox.Show("Vous avez déjà complété le tutoriel.");
+            }
+
         }
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
