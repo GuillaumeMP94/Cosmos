@@ -20,10 +20,10 @@ namespace Cosmos.view
     /// <summary>
     /// Logique d'interaction pour Ressource.xaml
     /// </summary>
-    public partial class Ressource : UserControl, INotifyPropertyChanged
+    public partial class ChoixRessources : UserControl, INotifyPropertyChanged
     {
         public Partie Partie { get; set; }
-        private int points=0;
+        private int points = 0;
         public metier.Ressource RessourceInitial { get; set; }
         public int MaxRessourceLevel { get; set; }
         public int Points
@@ -42,7 +42,7 @@ namespace Cosmos.view
         public event PropertyChangedEventHandler PropertyChanged;
         public int PointsInitial { get; set; }
         public Joueur Joueur { get; set; }
-        public Ressource(Joueur joueur, int nbPoints, int maxRessourceLevel, Partie partie)
+        public ChoixRessources(Joueur joueur, int nbPoints, int maxRessourceLevel, Partie partie)
         {
             InitializeComponent();
             Partie = partie;
@@ -53,7 +53,7 @@ namespace Cosmos.view
             RessourceInitial = new metier.Ressource(joueur.LevelRessource.Charronite, joueur.LevelRessource.BarilNucleaire, joueur.LevelRessource.AlainDollars);
             // Pour binder les texts box
             this.DataContext = this;
-            
+
 
         }
 

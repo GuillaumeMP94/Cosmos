@@ -69,8 +69,8 @@
     <Compile Include="metier\AI.cs" />
     <Compile Include="metier\Batiment.cs" />
     <Compile Include="metier\Carte.cs" />
-    <Compile Include="metier\ChampBatailleBatiments.cs" />
     <Compile Include="metier\ChampBatailleUnites.cs" />
+    <Compile Include="metier\ChampConstructions.cs" />
     <Compile Include="metier\Deck.cs" />
     <Compile Include="metier\Effet.cs" />
     <Compile Include="metier\Gadget.cs" />
@@ -83,6 +83,9 @@
     <Compile Include="metier\Utilisateur.cs" />
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ChoixRessources.xaml.cs">
+      <DependentUpon>ChoixRessources.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\Connexion.xaml.cs">
       <DependentUpon>Connexion.xaml</DependentUpon>
@@ -105,9 +108,6 @@
     <Compile Include="view\ReglementsTutoriel.xaml.cs">
       <DependentUpon>ReglementsTutoriel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\Ressource.xaml.cs">
-      <DependentUpon>Ressource.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,6 +121,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="view\Campagne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ChoixRessources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,10 +155,6 @@
     <Page Include="view\ReglementsTutoriel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\Ressource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

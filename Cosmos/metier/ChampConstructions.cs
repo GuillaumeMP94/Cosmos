@@ -9,7 +9,7 @@ namespace Cosmos.metier
     /// <summary>
     /// Classe qui contient les cartes batiments en jeu pendant la partie
     /// </summary>
-    public class ChampBatailleBatiments
+    public class ChampConstructions
     {
         #region Propriétés
         public Carte Champ1 { get; set; }
@@ -19,7 +19,7 @@ namespace Cosmos.metier
         #endregion
 
         #region Constructeurs
-        public ChampBatailleBatiments()
+        public ChampConstructions()
         {
             Champ1 = null;
             Champ2 = null;
@@ -40,13 +40,17 @@ namespace Cosmos.metier
         {
             switch (emplacement)
             {
-                case 1: Champ1 = carteAjouter;
+                case 1:
+                    Champ1 = carteAjouter;
                     break;
-                case 2: Champ2 = carteAjouter;
+                case 2:
+                    Champ2 = carteAjouter;
                     break;
-                case 3: Champ3 = carteAjouter;
+                case 3:
+                    Champ3 = carteAjouter;
                     break;
-                case 4: Champ4 = carteAjouter;
+                case 4:
+                    Champ4 = carteAjouter;
                     break;
             }
         }

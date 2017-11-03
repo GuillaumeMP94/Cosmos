@@ -72,8 +72,8 @@ namespace Cosmos.metier
 
         //public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
         //public List<Batiment> LstBatimentJ2 { get; set; }
-        public ChampBatailleBatiments ChampBatailleBatimentsJ1 { get; set; }
-        public ChampBatailleBatiments ChampBatailleBatimentsJ2 { get; set; }
+        public ChampConstructions ChampBatailleBatimentsJ1 { get; set; }
+        public ChampConstructions ChampBatailleBatimentsJ2 { get; set; }
 
         //public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
         //public List<Unite> LstUniteJ2 { get; set; }
@@ -161,8 +161,8 @@ namespace Cosmos.metier
             LstMainJ2 = new List<Carte>();
 
 
-            ChampBatailleBatimentsJ1 = new ChampBatailleBatiments();
-            ChampBatailleBatimentsJ2 = new ChampBatailleBatiments();
+            ChampBatailleBatimentsJ1 = new ChampConstructions();
+            ChampBatailleBatimentsJ2 = new ChampConstructions();
 
             ChampBatailleUnitesJ1 = new ChampBatailleUnites();
             ChampBatailleUnitesJ2 = new ChampBatailleUnites();

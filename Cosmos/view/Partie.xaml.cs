@@ -347,7 +347,7 @@ namespace Cosmos.view
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
-            ContenuEcran = new view.Ressource(joueur, points, maxRessourceLevel, partie);
+            ContenuEcran = new ChoixRessources(joueur, points, maxRessourceLevel, partie);
             recRessource.Visibility = Visibility.Visible;
 
 
