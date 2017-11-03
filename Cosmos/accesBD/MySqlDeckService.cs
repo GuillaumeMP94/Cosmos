@@ -40,7 +40,6 @@ namespace Cosmos.accesBD
             //On va chercher ses cartes avec le id.
             resultat.CartesDuDeck = MySqlCarteService.RetrieveAllDeckCard((int)drResultat["idDeck"]);
 
-
             return resultat;
         }
         private static List<Deck> RetrieveAllDeck(string query)

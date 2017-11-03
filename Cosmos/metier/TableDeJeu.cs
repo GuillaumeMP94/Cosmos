@@ -22,6 +22,7 @@ namespace Cosmos.metier
         public List<Carte> LstMainJ1 { get; set; }
         public List<Carte> LstMainJ2 { get; set; }
 
+
         //public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
         //public List<Batiment> LstBatimentJ2 { get; set; }
         public ChampBatailleBatiments ChampBatailleBatimentsJ1 { get; set; }
@@ -31,7 +32,6 @@ namespace Cosmos.metier
         //public List<Unite> LstUniteJ2 { get; set; }
         public ChampBatailleUnites ChampBatailleUnitesJ1 { get; set; }
         public ChampBatailleUnites ChampBatailleUnitesJ2 { get; set; }
-
 
 
         // Usine de recyclage des joueurs / Défausse
@@ -110,11 +110,13 @@ namespace Cosmos.metier
             LstMainJ1 = new List<Carte>();
             LstMainJ2 = new List<Carte>();
 
+
             ChampBatailleBatimentsJ1 = new ChampBatailleBatiments();
             ChampBatailleBatimentsJ2 = new ChampBatailleBatiments();
 
             ChampBatailleUnitesJ1 = new ChampBatailleUnites();
             ChampBatailleUnitesJ2 = new ChampBatailleUnites();
+
 
             LstUsineRecyclageJ1 = new List<Carte>();
             LstUsineRecyclageJ1 = new List<Carte>();
@@ -177,21 +179,24 @@ namespace Cosmos.metier
         /// <param name="carteAJouer"></param>
         /// <param name="leJoueur"></param>
         /// <returns></returns>
-        public bool validerCoup(Carte carteAJouer, bool estJoueur1)
+        public bool validerCoup(int index)
         {
-            Ressource temp = new Ressource(-1, -1, -1);     
+            Ressource temp = new Ressource(-1, -1, -1);                 
+            Carte aJouer;
 
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
-            if( estJoueur1 )
-            {                
-                if (joueur1.RessourceActive - carteAJouer.Cout > temp)
+            if( JoueurActifEst1 )
+            {
+                aJouer = LstMainJ1[index];
+                if (joueur1.RessourceActive - aJouer.Cout > temp)
                 {
                     return true;
                 }          
             }
             else
             {
-                if (joueur2.RessourceActive - carteAJouer.Cout > temp)
+                aJouer = LstMainJ2[index];
+                if (joueur2.RessourceActive - aJouer.Cout > temp)
                 {
                     return true;
                 }
@@ -199,52 +204,60 @@ namespace Cosmos.metier
             return false;
         }
 
-        public void JouerCarte(Carte carteAJouer, bool joueurActifEst1 )
+        public void JouerCarte(int index)
         {
-            // Le coup à déjà été validé rendu ici                  
-
-            var temp = carteAJouer.Clone();
+            // Le coup à pas été validé                 
+            Carte aJouer;
 
             // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
             if (joueurActifEst1)
             {
-                // On enleve les ressources au joueurs
-                Joueur1.RessourceActive -= carteAJouer.Cout;
-
-                if (carteAJouer is Unite)
-                {                    
-                    //LstUniteJ1.Add((Unite)temp);
-                }
-                if (carteAJouer is Batiment)
-                {
-                    //LstBatimentJ1.Add((Batiment)temp);
-                }
-                if (carteAJouer is Gadget)
-                {
-                    LstUsineRecyclageJ1.Add(temp);
-                }
+                aJouer = LstMainJ1[index];
+                //if (validerCoup(LstMainJ1[index]))
+                //{
+                    Joueur1.RessourceActive -= aJouer.Cout;
+                    if (aJouer is Unite)
+                    {                    
+                        LstUniteJ1.Add((Unite)aJouer);
+                    }
+                    if (aJouer is Batiment)
+                    {
+                        LstBatimentJ1.Add((Batiment)aJouer);
+                    }
+                    if (aJouer is Gadget)
+                    {
+                        LstUsineRecyclageJ1.Add(aJouer);
+                    }
+                    // On enleve la carte de la main
+                    LstMainJ1.Remove(aJouer);
+                //}
             }
             else
             {
-                // On enleve les ressources au joueurs
-                Joueur2.RessourceActive -= carteAJouer.Cout;
+                aJouer = LstMainJ2[index];
+                //if (validerCoup(LstMainJ2[index]))
+                //{
+                    // On enleve les ressources au joueurs
+                    Joueur2.RessourceActive -= aJouer.Cout;
 
-                if (carteAJouer is Unite)
-                {
-                    //LstUniteJ2.Add((Unite)temp);
-                }
-                if (carteAJouer is Batiment)
-                {
-                    //LstBatimentJ2.Add((Batiment)temp);
-                }
-                if (carteAJouer is Gadget)
-                {
-                    LstUsineRecyclageJ2.Add(temp);
-                }
+                    if (aJouer is Unite)
+                    {
+                        LstUniteJ2.Add((Unite)aJouer);
+                    }
+                    if (aJouer is Batiment)
+                    {
+                        LstBatimentJ2.Add((Batiment)aJouer);
+                    }
+                    if (aJouer is Gadget)
+                    {
+                        LstUsineRecyclageJ2.Add(aJouer);
+                    }
+                    // On enleve la carte de la main
+                    LstMainJ2.Remove(aJouer);
+                //}
             }
 
-            // On enleve la carte de la main
-            LstMainJ1.Remove(carteAJouer);
+            
         }
 
         public void AvancerPhase()
