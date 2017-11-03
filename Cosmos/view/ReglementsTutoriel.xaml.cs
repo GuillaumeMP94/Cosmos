@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cosmos.accesBD;
 
 namespace Cosmos.view
 {
@@ -26,11 +27,21 @@ namespace Cosmos.view
             InitializeComponent();
 
             Main = main;
+ 
         }
 
         private void btnTutoriel_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (MySqlCarteService.RetrieveAllUserCard(Main.UtilisateurConnecte.IdUtilisateur).Count == 0)
+            {
+                MySqlCarteService.InsertNewJoueurCard(Main.UtilisateurConnecte);
+                MessageBox.Show("Félicitation pour avoir complété le tutoriel! Vous venez de débloquer vos cartes!");
+            }
+            else
+            {
+                MessageBox.Show("Vous avez déjà complété le tutoriel.");
+            }
+
         }
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)

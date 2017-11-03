@@ -33,43 +33,11 @@ namespace Cosmos.view
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
         {
-            if (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
+            if (estInformationValide())
             {
-                if (txbPseudo.Text.Length > 0 && passbPassword.Password.Length > 0)
-                {
-                    if (txbPseudo.Text.Length >= 3 && passbPassword.Password.Length >=5 )
-                    {
-                        Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
-                        if (unUtilsateur != null)
-                        {
-                            if (unUtilsateur.MotDePasse == passbPassword.Password)
-                            {
-                                Main.UtilisateurConnecte = unUtilsateur;
-                                Main.EcranMenuPrincipal();
-                            }
-                            else
-                            {
-                                AfficherMessageErreur("infoInvalide");
-                            }
-                        }
-                        else
-                        {
-                            AfficherMessageErreur("infoInvalide");
-                        }
-                    }
-                    else
-                    {
-                        AfficherMessageErreur("tropCourt");
-                    }
-                }
-                else
-                {
-                    AfficherMessageErreur("aucuneSaisie");
-                }
-            }
-            else
-            {
-                AfficherMessageErreur("charInvalide");
+                Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
+                Main.UtilisateurConnecte = unUtilsateur;
+                Main.EcranMenuPrincipal();
             }
         }
 
@@ -88,6 +56,7 @@ namespace Cosmos.view
             Main.EcranRecuperation();
         }
 
+        #region ValidationInfoUtilisateur
         private void AfficherMessageErreur(string typeErreur)
         {
             txbPseudo.Text = "";
@@ -112,5 +81,94 @@ namespace Cosmos.view
 
             txblErreur.Visibility = Visibility.Visible;
         }
+
+        private bool estInformationValide()
+        {
+            if (Main.ValiderChampSaisi(txbPseudo.Text) == txbPseudo.Text && Main.ValiderChampSaisi(passbPassword.Password) == passbPassword.Password)
+            {
+                if (txbPseudo.Text.Length >= 3 && passbPassword.Password.Length >= 5)
+                {
+                    Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
+                    if (unUtilsateur != null)
+                    {
+                        if (unUtilsateur.MotDePasse == passbPassword.Password)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            AfficherMessageErreur("infoInvalide");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        AfficherMessageErreur("infoInvalide");
+                        return false;
+                    }
+                }
+                else
+                {
+                    AfficherMessageErreur("tropCourt");
+                    return false;
+                }
+            }
+            else
+            {
+                AfficherMessageErreur("infoInvalide");
+                return false;
+            }
+            
+        }
+        #endregion
+
+        #region ActiverBoutonConnexion
+        private void ActiverBoutonConnexion()
+        {
+            if (estBoutonActif())
+            {
+                btnConnexion.Opacity = 1;
+                btnConnexion.IsEnabled = true;
+            }
+            else
+            {
+                btnConnexion.Opacity = 0.25;
+                btnConnexion.IsEnabled = false;
+            }
+        }
+
+        private void txbPseudo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ActiverBoutonConnexion();
+        }
+
+        private void passbPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            ActiverBoutonConnexion();
+        }
+
+        private bool estBoutonActif()
+        {
+            return (txbPseudo.Text != "" || txbPseudo.IsVisible == false) && (passbPassword.Password != "" || passbPassword.IsVisible == false);
+        }
+        #endregion
+
+        #region BindingEnterBouton
+        private void passbPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnConnexion_Click(sender, e);
+            }
+        }
+
+        private void txbPseudo_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (estBoutonActif() && e.Key.ToString() == "Return")
+            {
+                btnConnexion_Click(sender, e);
+            }
+        }
+        #endregion
     }
 }

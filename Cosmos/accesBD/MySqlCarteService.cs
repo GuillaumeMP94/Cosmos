@@ -227,5 +227,75 @@ namespace Cosmos.accesBD
             return RetrieveAllExemplaire(query.ToString());
         }
 
+        #region NeoUtilisateur
+        public static List<Carte> RetrieveNewUtilisateurCard()
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, dE.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("INNER JOIN DecksExemplaires dE ON dE.idExemplaire = e.idExemplaire ")
+                 .Append("INNER JOIN Decks d ON d.idDeck = dE.idDeck ")
+                 .Append("WHERE d.nom = 'defaut' AND d.idUtilisateur IS NULL");
+
+            return RetrieveAllExemplaire(query.ToString());
+        }
+
+        public static void InsertNewJoueurCard(Utilisateur utilisateur)
+        {
+            List<Carte> lstCarteAAjouter = RetrieveNewUtilisateurCard();
+
+            // Faire le insert ici selon chaque carte dans la liste.
+            foreach (Carte c in lstCarteAAjouter)
+            {
+                if (ExemplaireExist(utilisateur, c))
+                    UpdateExemplaire(c, utilisateur);
+                else
+                    InsertExemplaire(c, utilisateur);
+                
+            }
+        }
+
+        public static void InsertExemplaire(Carte carte, Utilisateur utilisateur)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO Exemplaires (idCarte, idUtilisateur, quantite) VALUES ('")
+                .Append(carte.IdCarte).Append("',")
+                .Append("'").Append(utilisateur.IdUtilisateur).Append("',")
+                .Append(" 1 )");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void UpdateExemplaire(Carte carte, Utilisateur utilisateur)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE Exemplaires SET quantite = quantite + 1")
+                .Append(" WHERE idCarte = ").Append(carte.IdCarte)
+                .Append(" AND idUtilisateur = ").Append(utilisateur.IdUtilisateur);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        private static bool ExemplaireExist(Utilisateur utilisateur, Carte carte)
+        {
+            List<Carte> lesCartes = RetrieveExemplaire(utilisateur, carte);
+            return lesCartes.Count > 0;
+        }
+
+        private static List<Carte> RetrieveExemplaire(Utilisateur utilisateur, Carte carte)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, e.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("WHERE e.idCarte = ").Append(carte.IdCarte)
+                 .Append(" AND e.idUtilisateur = ").Append(utilisateur.IdUtilisateur);
+
+            return RetrieveAllExemplaire(query.ToString());
+        }
+        #endregion
     }
 }

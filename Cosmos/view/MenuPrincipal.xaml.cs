@@ -40,7 +40,7 @@ namespace Cosmos.view
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
         {
-            Main.QuitterMain();
+            MessageBox.Show("En construction");
         }
 
         private void btnGestionDecks_Click(object sender, RoutedEventArgs e)
