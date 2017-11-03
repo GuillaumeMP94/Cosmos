@@ -22,11 +22,6 @@ namespace Cosmos.metier
         public List<Carte> LstMainJ1 { get; set; }
         public List<Carte> LstMainJ2 { get; set; }
 
-        public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
-        public List<Batiment> LstBatimentJ2 { get; set; }
-
-        public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
-        public List<Unite> LstUniteJ2 { get; set; }
 
         // Usine de recyclage des joueurs / Défausse
         public List<Carte> LstUsineRecyclageJ1 { get; set; }
@@ -104,11 +99,7 @@ namespace Cosmos.metier
             LstMainJ1 = new List<Carte>();
             LstMainJ2 = new List<Carte>();
 
-            LstBatimentJ1 = new List<Batiment>();
-            LstBatimentJ2 = new List<Batiment>();
 
-            LstUniteJ1 = new List<Unite>();
-            LstUniteJ2 = new List<Unite>();
 
             LstUsineRecyclageJ1 = new List<Carte>();
             LstUsineRecyclageJ1 = new List<Carte>();
@@ -173,7 +164,7 @@ namespace Cosmos.metier
         /// <returns></returns>
         public bool validerCoup(int index)
         {
-            Ressource temp = new Ressource(-1, -1, -1);
+            
             Carte aJouer;
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
             if( JoueurActifEst1 )
