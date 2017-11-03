@@ -9,14 +9,15 @@
     <Grid Width="350" Height="auto" HorizontalAlignment="Center" Margin="0,50,0,5">
         <Border Width="350" Height="515" BorderBrush="DarkGoldenrod" Opacity="1" Margin="0,15,0,285" BorderThickness="3" CornerRadius="15" Panel.ZIndex="99"/>
 
-        <Border Width="auto" Height="auto" Background="Black" Opacity="0.6" Margin="0,15,0,285" CornerRadius="15"/>
+        <Border Width="auto" Height="auto" Background="#4E3D28" Opacity="0.8" Margin="0,15,0,285" CornerRadius="15"/>
 
         <Border Width="300" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0">
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
 
-        <Label Width="300" Name="lblRessource" VerticalAlignment="Top" Margin="0,115,0,0" Height="40" FontSize="25" Foreground="Red" HorizontalContentAlignment="Center" Cursor="Hand" Content="Choisissez vos ressource!" >
+        <Label  Name="lblRessource" VerticalAlignment="Top" Margin="0,115,0,0" Height="40" FontSize="25" Foreground="DarkGoldenrod"
+               HorizontalContentAlignment="Center" Cursor="Hand" Content="Choisissez vos ressources!" FontWeight="Bold" >
 
         </Label>
         <Grid Margin="0,0,0,150" Height="350">
@@ -36,43 +37,43 @@
             <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0"></Image>
             <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1"></Image>
             <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2"></Image>
-            <Border Grid.Row="0" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Grid.Row="0" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Border.Background>
                 <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.Charronite}" Name="txtCharronite">
-                    <TextBlock.Background>
-                        <SolidColorBrush Color="Black"
-				 Opacity="0.6" />
-                    </TextBlock.Background>
-                </TextBlock>
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           Text="{Binding Path=Joueur.LevelRessource.Charronite}" Name="txtCharronite"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Grid.Row="1" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Border.Background>
+                <TextBlock Foreground="DarkGoldenrod" FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.BarilNucleaire}" Name="txtBaril"/>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Border.Background>
                 <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.BarilNucleaire}" Name="txtBaril">
-                    <TextBlock.Background>
-                        <SolidColorBrush Color="Black"
-				 Opacity="0.6" />
-                    </TextBlock.Background>
-                </TextBlock>
+			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.AlainDollars}"
+                           VerticalAlignment="Center" Name="txtAlain"/>
             </Border>
-            <Border Grid.Row="2" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding Path=Joueur.LevelRessource.AlainDollars}" VerticalAlignment="Center" Name="txtAlain">
-                    <TextBlock.Background>
-                        <SolidColorBrush Color="Black"
-				 Opacity="0.6" />
-                    </TextBlock.Background>
-                </TextBlock>
+            <Border Grid.Row="3" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Border.Background>
+                <TextBlock Foreground="DarkGoldenrod" FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" 
+                           Text="{Binding Path=Points, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" 
+                           Name="txtPoints"/>
             </Border>
-            <Border Grid.Row="3" Grid.Column="3" Height="50" Width="50" BorderBrush="DarkGoldenrod" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Foreground="DarkGoldenrod" 
-			 FontSize="50" TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding Path=Points, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Name="txtPoints">
-                    <TextBlock.Background>
-                        <SolidColorBrush Color="Black"
-				 Opacity="0.6" />
-                    </TextBlock.Background>
-                </TextBlock>
-            </Border>
-            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="lblPoints" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="25" Foreground="Red" HorizontalContentAlignment="Center" Cursor="Hand" Content="Points à distribuer:" ></Label>
+            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="lblPoints" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="25" Foreground="DarkGoldenrod" 
+                   HorizontalContentAlignment="Center" Cursor="Hand" Content="Points à distribuer:" FontWeight="Bold" ></Label>
 
             <Button Width="50" Height="50" Grid.Row="0" Grid.Column="1" Name="btnPlusCharronite" Cursor="Hand" Click="btnPlusCharronite_Click">
                 <Button.Template>
