@@ -59,6 +59,7 @@ namespace Cosmos.view
             // FIN CODE TEMPORAIRE
 
             // Demander à l'utilisateur de distribuer ses ressources.
+            //TODO: Enlever les slash pour afficher EcranRessource
             EcranRessource( laTableDeJeu.Joueur1 , RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Permet le binding. Le datacontext est la table de jeu puisque c'est elle qui contient les data qui seront modifiées.
@@ -77,7 +78,11 @@ namespace Cosmos.view
 
             // Afficher la main
             ImgMainJoueur = new List<Image>();
-            AfficherMain();
+            AfficherMain();            
+
+            // Afficher les cartes sur le champ de bataille, les unités et les batiement
+            AfficherChampUnites();
+            AfficherChampBatiments();
 
 
 
@@ -208,6 +213,114 @@ namespace Cosmos.view
             }
         }
 
+        private void AfficherChampBatiments()
+        {
+            // Insérer les img des cartes Batiments en jeu du joueur 2 s'il y en a
+            if(laTableDeJeu.ChampBatailleBatimentsJ2.Champ1 != null)
+            {
+                imgBatiment1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ1.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment1J2.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleBatimentsJ2.Champ2 != null)
+            {
+                imgBatiment2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ2.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment2J2.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleBatimentsJ2.Champ3 != null)
+            {
+                imgBatiment3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ3.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment3J2.Source = null;
+            }
+            // Insérer les img des cartes Batiments en jeu du joueur 1 s'il y en a
+            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ1 != null)
+            {
+                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ3.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment1J1.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ2 != null)
+            {
+                imgBatiment2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ2.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment2J1.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ3 != null)
+            {
+                imgBatiment3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ3.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment3J1.Source = null;
+            }
+        }
+
+        private void AfficherChampUnites()
+        {
+            // Insérer les img des cartes Unités en jeu du joueur 2 s'il y en a
+            if(laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
+            {
+                imgUnite1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ1.Nom + ".jpg"));
+            }
+            else
+            {
+                imgUnite1J2.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null)
+            {
+                imgUnite2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ2.Nom + ".jpg"));
+            }
+            else
+            {
+                imgUnite2J2.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null)
+            {
+                imgUnite3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ3.Nom + ".jpg"));
+            }
+            else
+            {
+                imgUnite3J2.Source = null;
+            }
+            // Insérer les img des cartes Unités en jeu du joueur 1 s'il y en a
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
+            {
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+            }
+            else
+            {
+                imgUnite1J1.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
+            {
+                imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
+            }
+            else
+            {
+                imgUnite2J1.Source = null;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
+            {
+                imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+            }
+            else
+            {
+                imgUnite3J1.Source = null;
+            }
+        }
+
         private Image CreerImageCarte(String nom, int position)
         {
             Image carte = new Image();
@@ -225,106 +338,10 @@ namespace Cosmos.view
             carte.MouseLeave += CarteMain_MouseLeave;
 
             // Lier la carte avec l'event Carte Zoom
-            carte.PreviewMouseLeftButtonUp += Carte_Zoom;
+            carte.PreviewMouseLeftButtonUp += Carte_Zoom;           
+            
 
             return carte;
-        }
-
-        //private void InsererCarteMain(String nom, int position)
-        //{
-        //    Image carte = new Image();
-        //    carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
-        //    carte.Height = 300;
-        //    carte.Width = 700;
-        //    carte.VerticalAlignment = VerticalAlignment.Top;
-        //    carte.HorizontalAlignment = HorizontalAlignment.Left;
-        //    carte.Name = "carte" + position;
-        //    carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
-        //    carte.SetValue(Panel.ZIndexProperty, position);
-        //    carte.Cursor = Cursors.Hand;
-        //    carte.Uid = position.ToString();
-        //    carte.Tag = position;
-
-        //    // Lier la carte avec les events Mouse Enter et Leave
-        //    carte.MouseEnter += CarteMain_MouseEnter;
-        //    carte.MouseLeave += CarteMain_MouseLeave;
-
-        //    // Lier la carte avec l'event Carte Zoom
-        //    carte.PreviewMouseLeftButtonUp += Carte_Zoom;
-
-        //    grdCartesJoueur.Children.Add(carte);
-        //}
-
-        private void InsererCarteCreature(String nom, int position)
-        {
-            Image carte = new Image();
-            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
-            carte.Name = "emplacementCreature" + position;
-            carte.Cursor = Cursors.Hand;
-            // Lier la carte avec l'event Carte Zoom
-            carte.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-
-            // Positionner la carte dans la bonne case de jeu
-            switch(position)
-            {
-                case 1:
-                    emplacementCreature1.Child = carte;
-                    break;
-                case 2:
-                    emplacementCreature2.Child = carte;
-                    break;
-                case 3:
-                    emplacementCreature3.Child = carte;
-                    break;
-                case 4:
-                    emplacementCreature4.Child = carte;
-                    break;
-                case 5:
-                    emplacementCreature5.Child = carte;
-                    break;
-                case 6:
-                    emplacementCreature6.Child = carte;
-                    break;
-            }
-        }
-
-        private void InsererCarteBatiment(String nom, int position)
-        {
-            Image carte = new Image();
-            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
-            carte.Name = "emplacementBatiment" + position;
-            carte.Cursor = Cursors.Hand;
-            // Lier la carte avec l'event Carte Zoom
-            carte.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-
-            // Positionner la carte dans la bonne case de jeu
-            switch (position)
-            {
-                case 1:
-                    emplacementBatiment1.Child = carte;
-                    break;
-                case 2:
-                    emplacementBatiment2.Child = carte;
-                    break;
-                case 3:
-                    emplacementBatiment3.Child = carte;
-                    break;
-                case 4:
-                    emplacementBatiment4.Child = carte;
-                    break;
-                case 5:
-                    emplacementBatiment5.Child = carte;
-                    break;
-                case 6:
-                    emplacementBatiment6.Child = carte;
-                    break;
-                case 7:
-                    emplacementBatiment7.Child = carte;
-                    break;
-                case 8:
-                    emplacementBatiment8.Child = carte;
-                    break;
-            }
         }
 
         private void Carte_Zoom(object sender, MouseEventArgs e)
@@ -371,6 +388,7 @@ namespace Cosmos.view
             // On peut jouer une carte seulement dans la phase 2
             if (phase == 2 && laTableDeJeu.JoueurActifEst1)
             {
+
                 // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
                 // Si on joue plusieurs carte, ça ne fonctionne pas.
                 // Il faudrait ré-organiser la main après le 0,5
@@ -384,6 +402,7 @@ namespace Cosmos.view
                 rectZoom.Visibility = Visibility.Hidden;
                 imgZoomCarte.Visibility = Visibility.Hidden;
                 AfficherMain();
+
             }
         }
 
