@@ -337,13 +337,13 @@ namespace Cosmos.view
         public void FermerEcranRessource()
         {
             grd1.Children.Remove(ContenuEcran);
-            rectZoom.Visibility = Visibility.Hidden;
+            
             changerPhase();
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
             ContenuEcran = new view.Ressource(joueur, points, maxRessourceLevel, partie);
-            rectZoom.Visibility = Visibility.Visible;
+            
 
             grd1.Children.Add(ContenuEcran);
         }
