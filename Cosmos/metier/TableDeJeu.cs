@@ -7,8 +7,55 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    class TableDeJeu:INotifyPropertyChanged
+    public class TableDeJeu:INotifyPropertyChanged
     {
+        #region Code relié au IObserver
+
+        List<IObserver<TableDeJeu>> observers;
+
+        // TODO commentaire
+        private class Unsubscriber : IDisposable
+        {
+            private List<IObserver<TableDeJeu>> _observers;
+            private IObserver<TableDeJeu> _observer;
+
+            public Unsubscriber(List<IObserver<TableDeJeu>> observers, IObserver<TableDeJeu> observer)
+            {
+                this._observers = observers;
+                this._observer = observer;
+            }
+
+            public void Dispose()
+            {
+                if (!(_observer == null)) _observers.Remove(_observer);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="observer"></param>
+        /// <returns></returns>
+        public IDisposable Subscribe(IObserver<TableDeJeu> observer)
+        {
+            if (!observers.Contains(observer))
+                observers.Add(observer);
+
+            return new Unsubscriber(observers, observer);
+        }
+
+        /// <summary>
+        /// Permet de détecter les évènements et permettre au programme de continuer
+        /// </summary>
+        private void Notify()
+        {
+            foreach (IObserver<TableDeJeu> ob in observers)
+            {
+                ob.OnNext(this);
+            }
+        }
+        #endregion
+
         private int phase;
         private bool joueurActifEst1;
 
@@ -98,6 +145,9 @@ namespace Cosmos.metier
         // Celle-ci à besoin d'avoir les decks des deux joueurs pour mélanger ceux-ci et distribuer les mains de départs.
         public TableDeJeu(Joueur joueurUn, Joueur joueurDeux)
         {
+            // Initialise la liste d'observateurs.
+            observers = new List<IObserver<TableDeJeu>>();
+
             Joueur1 = joueurUn;
             Joueur2 = joueurDeux;
 
@@ -262,6 +312,16 @@ namespace Cosmos.metier
             else
             {
                 Phase = 1;
+                
+                if (JoueurActifEst1)
+                {
+                    joueurActifEst1 = false;
+                    Notify(); // Permet de dire au AI que c'est à son tour.
+                }
+                else
+                {
+                    joueurActifEst1 = true;
+                }
             }
         }
 
@@ -385,6 +445,27 @@ namespace Cosmos.metier
                 LstMainJ2.Add(Joueur2.PigerCarte());
             }
         }
+        /// <summary>
+        /// Permet de générer une liste de coup valide
+        /// </summary>
+        /// <returns>Liste des index des coup valide</returns>
+        public List<int> listeCoupValideAI()
+        {
+            List<int> listeCoupPermis = new List<int>();
+
+            int compteur = 0;
+
+            foreach (Carte uneCarte in LstMainJ2 )
+            {
+                if (validerCoup(compteur))
+                {
+                    listeCoupPermis.Add(compteur);
+                }
+                compteur++;
+            }
+            return listeCoupPermis;
+        }
+
 
     }
 }

@@ -66,6 +66,7 @@
     <Compile Include="accesBD\MySqlDeckService.cs" />
     <Compile Include="accesBD\MySqlEffetService.cs" />
     <Compile Include="accesBD\MySqlUtilisateurService.cs" />
+    <Compile Include="metier\AI.cs" />
     <Compile Include="metier\Batiment.cs" />
     <Compile Include="metier\Carte.cs" />
     <Compile Include="metier\Deck.cs" />
