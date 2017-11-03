@@ -36,5 +36,9 @@ namespace Cosmos.metier
                 return new Unite(this.IdCarte, this.Nom, null, new Ressource(this.Cout), this.Attaque, this.Defense);
 
         }
-	}
+        public override int getAttaque()
+        {
+            return this.Attaque;
+        }
+    }
 }

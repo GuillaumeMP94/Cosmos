@@ -12,9 +12,9 @@ namespace Cosmos.metier
     public class ChampBatailleUnites
     {
         #region Propriétés
-        public Carte Champ1 { get; set; }
-        public Carte Champ2 { get; set; }
-        public Carte Champ3 { get; set; }
+        public Unite Champ1 { get; set; }
+        public Unite Champ2 { get; set; }
+        public Unite Champ3 { get; set; }
         #endregion
 
         #region Constructeurs
@@ -38,11 +38,11 @@ namespace Cosmos.metier
         {
             switch (emplacement)
             {
-                case 1: Champ1 = carteAjouter;
+                case 1: Champ1 = (Unite)carteAjouter;
                     break;
-                case 2: Champ2 = carteAjouter;
+                case 2: Champ2 = (Unite)carteAjouter;
                     break;
-                case 3: Champ3 = carteAjouter;
+                case 3: Champ3 = (Unite)carteAjouter;
                     break;
             }
         }
