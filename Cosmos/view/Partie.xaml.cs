@@ -2,8 +2,10 @@
 using Cosmos.metier;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Cosmos.view
 {
@@ -30,15 +33,18 @@ namespace Cosmos.view
         public int IndexCarteZoomer { get; set; }
 
         int phase;
-        TableDeJeu laTableDeJeu;        
+        TableDeJeu laTableDeJeu;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Partie(MainWindow main)
         {
             InitializeComponent();
             Main = main;
-            //TODO: Effacer la prochaine logne et enlever les commentaires sur la suivante
+            //TODO: Utilisateur Connecter
             Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
+            // TODO: AI
             Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
@@ -94,23 +100,24 @@ namespace Cosmos.view
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
             changerPhase();
-            laTableDeJeu.AvancerPhase();
         }
 
         private void changerPhase()
         {
-            
+            laTableDeJeu.AvancerPhase();
+            RefreshAll();
             switch (phase)
             {
                 case 1:
                     phase++;
-                    laTableDeJeu.AttribuerRessourceLevel();
                     // on ajoute les ressources au joueur actif
+                    laTableDeJeu.AttribuerRessourceLevel();
 
                     txBlphaseRessource.Background = Brushes.Transparent;
                     txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.Black;
+                    System.Threading.Thread.Sleep(500);
                     break;
                 case 2:
                     phase++;
@@ -121,10 +128,14 @@ namespace Cosmos.view
                     break;
                 case 3:
                     phase++;
+                    laTableDeJeu.ExecuterAttaque(true,true,true);
                     txBlphaseAttaque.Background = Brushes.Transparent;
                     txBlphaseFin.Background = Brushes.DarkGoldenrod;
                     txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseFin.Foreground = Brushes.Black;
+                    RefreshAll();
+                    System.Threading.Thread.Sleep(500);
+                    changerPhase();
                     break;
                 case 4:
                     phase = 1; // La phase de fin est terminer, nous retournons à la première phase
@@ -132,8 +143,20 @@ namespace Cosmos.view
                     txBlphaseRessource.Background = Brushes.DarkGoldenrod;
                     txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.Black;
+                    RefreshAll();
+                    System.Threading.Thread.Sleep(500);
+                    changerPhase();
                     break;
             }
+            RefreshAll();
+        }
+
+        private void RefreshAll()
+        {
+            txBlphaseRessource.Refresh();
+            txBlphasePrincipale.Refresh();
+            txBlphaseAttaque.Refresh();
+            txBlphaseFin.Refresh();
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
@@ -344,17 +367,6 @@ namespace Cosmos.view
 
         }
 
-        public void JouerCarte( bool estJoueur1 , Carte laCarte )
-        {
-            //if ( laTableDeJeu.validerCoup( laCarte , estJoueur1) )
-            //{
-                //laTableDeJeu.JouerCarte(laCarte, estJoueur1);
-                //InsererCarteCreature(laCarte.Nom, 4);
-            //}
-            rectZoom.Visibility = Visibility.Hidden;
-            imgZoomCarte.Visibility = Visibility.Hidden;
-        }
-
         public void FermerEcranRessource()
         {
             grd1.Children.Remove(ContenuEcran);
@@ -373,24 +385,43 @@ namespace Cosmos.view
 
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
-            // Si on joue plusieurs carte, ça ne fonctionne pas.
-            // Il faudrait ré-organiser la main après le 0,5
-            if (laTableDeJeu.validerCoup(IndexCarteZoomer))
+            // On peut jouer une carte seulement dans la phase 2
+            if (phase == 2 && laTableDeJeu.JoueurActifEst1)
             {
-                // Choisir l'emplacement.
-                //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
-                laTableDeJeu.JouerCarte(IndexCarteZoomer);
+
+                // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
+                // Si on joue plusieurs carte, ça ne fonctionne pas.
+                // Il faudrait ré-organiser la main après le 0,5
+                if (laTableDeJeu.validerCoup(IndexCarteZoomer))
+                {
+                    // Choisir l'emplacement.
+                    // TODO: Enlever le Inserer Carte Creature
+                    InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+                    laTableDeJeu.JouerCarte(IndexCarteZoomer);
+                }
+                rectZoom.Visibility = Visibility.Hidden;
+                imgZoomCarte.Visibility = Visibility.Hidden;
+                AfficherMain();
+
             }
-            rectZoom.Visibility = Visibility.Hidden;
-            imgZoomCarte.Visibility = Visibility.Hidden;
-            AfficherMain();
         }
 
         private void rectZoom_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             rectZoom.Visibility = Visibility.Hidden;
             imgZoomCarte.Visibility = Visibility.Hidden;
+        }
+    }
+    /// <summary>
+    /// Fonction pour refresh l'affichage des labels. Source: https://social.msdn.microsoft.com/Forums/vstudio/en-US/878ea631-c76e-49e8-9e25-81e76a3c4fe3/refresh-the-gui-in-a-wpf-application?forum=wpf
+    /// </summary>
+    public static class ExtensionMethods
+    {
+        private static Action EmptyDelegate = delegate () { };
+
+        public static void Refresh(this UIElement uiElement)
+        {
+            uiElement.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
         }
     }
 }

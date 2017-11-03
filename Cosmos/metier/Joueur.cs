@@ -60,7 +60,7 @@ namespace Cosmos.metier
         public virtual void Reinitialiser()
         {
             PointDeBlindage = 25;
-            RessourceActive = new Ressource(0, 2, 1);
+            RessourceActive = new Ressource(0, 0, 0);
             LevelRessource = new Ressource(1, 1, 1);
         }
 

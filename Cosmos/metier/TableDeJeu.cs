@@ -72,8 +72,8 @@ namespace Cosmos.metier
 
         //public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
         //public List<Batiment> LstBatimentJ2 { get; set; }
-        public ChampConstructions ChampBatailleBatimentsJ1 { get; set; }
-        public ChampConstructions ChampBatailleBatimentsJ2 { get; set; }
+        public ChampConstructions ChampConstructionsJ1 { get; set; }
+        public ChampConstructions ChampConstructionsJ2 { get; set; }
 
         //public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
         //public List<Unite> LstUniteJ2 { get; set; }
@@ -145,6 +145,22 @@ namespace Cosmos.metier
 
             }
         }
+
+        public void ExecuterAttaque(bool champ1, bool champ2, bool champ3)
+        {
+            if (champ1 && ChampBatailleUnitesJ1.Champ1 != null)
+            {
+                if (ChampBatailleUnitesJ2.Champ1 != null)
+                {
+                    ChampBatailleUnitesJ1.Champ1 = ChampBatailleUnitesJ1.Champ1 - ChampBatailleUnitesJ2.Champ1;
+                    ChampBatailleUnitesJ2.Champ2 = ChampBatailleUnitesJ2.Champ1 - ChampBatailleUnitesJ1.Champ1;
+                }
+                else
+                {
+                    Joueur2.PointDeBlindage = Joueur2.PointDeBlindage - ChampBatailleUnitesJ1.Champ1.Attaque;
+                }
+            }
+        }
         #endregion
         #region Constructeurs
         // Constructeur de la table de jeu.
@@ -161,8 +177,8 @@ namespace Cosmos.metier
             LstMainJ2 = new List<Carte>();
 
 
-            ChampBatailleBatimentsJ1 = new ChampConstructions();
-            ChampBatailleBatimentsJ2 = new ChampConstructions();
+            ChampConstructionsJ1 = new ChampConstructions();
+            ChampConstructionsJ2 = new ChampConstructions();
 
             ChampBatailleUnitesJ1 = new ChampBatailleUnites();
             ChampBatailleUnitesJ2 = new ChampBatailleUnites();
@@ -263,30 +279,28 @@ namespace Cosmos.metier
             if (joueurActifEst1)
             {
                 aJouer = LstMainJ1[index];
-                //if (validerCoup(LstMainJ1[index]))
-                //{
+
                     Joueur1.RessourceActive -= aJouer.Cout;
                     if (aJouer is Unite)
                     {
                         ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
                     }
-                    if (aJouer is Batiment)
+                    else if (aJouer is Batiment)
                     {
-                        ChampBatailleBatimentsJ1.AjouterAuChamp(aJouer, 1);
+                        ChampConstructionsJ1.AjouterAuChamp(aJouer);
                     }
-                    if (aJouer is Gadget)
+                    else if (aJouer is Gadget)
                     {
                         LstUsineRecyclageJ1.Add(aJouer);
                     }
                     // On enleve la carte de la main
                     LstMainJ1.Remove(aJouer);
-                //}
+
             }
             else
             {
                 aJouer = LstMainJ2[index];
-                //if (validerCoup(LstMainJ2[index]))
-                //{
+
                     // On enleve les ressources au joueurs
                     Joueur2.RessourceActive -= aJouer.Cout;
 
@@ -296,7 +310,7 @@ namespace Cosmos.metier
                     }
                     if (aJouer is Batiment)
                     {
-                        ChampBatailleBatimentsJ1.AjouterAuChamp(aJouer, 1);
+                        ChampConstructionsJ1.AjouterAuChamp(aJouer);
                     }
                     if (aJouer is Gadget)
                     {
@@ -304,7 +318,7 @@ namespace Cosmos.metier
                     }
                     // On enleve la carte de la main
                     LstMainJ2.Remove(aJouer);
-                //}
+
             }
 
             

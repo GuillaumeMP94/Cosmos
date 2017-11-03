@@ -27,7 +27,7 @@ namespace Cosmos.metier
             Champ4 = null;
         }
         #endregion
-        public bool EspaceDisponible()
+        private bool EspaceDisponible()
         {
             if (Champ1 == null || Champ2 == null || Champ3 == null || Champ4 == null)
             {
@@ -35,24 +35,40 @@ namespace Cosmos.metier
             }
             return false;
         }
-
-        public void AjouterAuChamp(Carte carteAjouter, int emplacement)
+        private int EmplacementDisponible()
         {
-            switch (emplacement)
+            // Retourne le numéro du champs disponible
+            if (Champ1 == null)
+                return 1;
+            if (Champ2 == null)
+                return 2;
+            if (Champ3 == null)
+                return 3;
+            if (Champ4 == null)
+                return 4;
+            return 0; // Ici c'est une erreur.
+        }
+        public void AjouterAuChamp(Carte carteAjouter)
+        {
+            if (EspaceDisponible())
             {
-                case 1:
-                    Champ1 = carteAjouter;
-                    break;
-                case 2:
-                    Champ2 = carteAjouter;
-                    break;
-                case 3:
-                    Champ3 = carteAjouter;
-                    break;
-                case 4:
-                    Champ4 = carteAjouter;
-                    break;
+                switch (EmplacementDisponible())
+                {
+                    case 1:
+                        Champ1 = carteAjouter;
+                        break;
+                    case 2:
+                        Champ2 = carteAjouter;
+                        break;
+                    case 3:
+                        Champ3 = carteAjouter;
+                        break;
+                    case 4:
+                        Champ4 = carteAjouter;
+                        break;
+                }
             }
+            
         }
     }
 }

@@ -55,8 +55,8 @@
                 </StackPanel.Background>
 
                 <Border BorderThickness="5" BorderBrush="Red">
-                    
-                    <Grid>
+
+                    <Grid DataContext="{Binding Joueur2.RessourceActive}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -71,19 +71,16 @@
                         <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
                         <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
 
-                        <TextBlock Name="txBlnbCharroniteA" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30">
-                            5
+                        <TextBlock Name="txBlnbCharroniteA" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30" Text="{Binding Charronite}">
                         </TextBlock>
-                        <TextBlock Name="txBlnbBarilA" Grid.Column="1" Grid.Row="1"  Foreground="DarkGoldenrod" FontSize="30" >
-                            2
+                        <TextBlock Name="txBlnbBarilA" Grid.Column="1" Grid.Row="1"  Foreground="DarkGoldenrod" FontSize="30" Text="{Binding BarilNucleaire}">
                         </TextBlock>
-                        <TextBlock Name="txBlnbAlainDollarA" Grid.Column="1" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30">
-                            7
+                        <TextBlock Name="txBlnbAlainDollarA" Grid.Column="1" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30" Text="{Binding AlainDollars}">
                         </TextBlock>
 
                     </Grid>
                 </Border>
-                
+
                 <TextBlock  x:Name="txBlphaseRessource" Text="Phase de ressources" Background="DarkGoldenrod"
                             Margin="10,10,10,0" FontSize="20" TextAlignment="Center" Foreground="Black"/>
                 <TextBlock  x:Name="txBlphasePrincipale" Text="Phase principale" Background="Transparent"
