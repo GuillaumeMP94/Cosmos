@@ -267,12 +267,12 @@ namespace Cosmos.metier
                 //{
                     Joueur1.RessourceActive -= aJouer.Cout;
                     if (aJouer is Unite)
-                    {                    
-                        LstUniteJ1.Add((Unite)aJouer);
+                    {
+                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
                     }
                     if (aJouer is Batiment)
                     {
-                        LstBatimentJ1.Add((Batiment)aJouer);
+                        ChampBatailleBatimentsJ1.AjouterAuChamp(aJouer, 1);
                     }
                     if (aJouer is Gadget)
                     {
@@ -292,11 +292,11 @@ namespace Cosmos.metier
 
                     if (aJouer is Unite)
                     {
-                        LstUniteJ2.Add((Unite)aJouer);
+                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
                     }
                     if (aJouer is Batiment)
                     {
-                        LstBatimentJ2.Add((Batiment)aJouer);
+                        ChampBatailleBatimentsJ1.AjouterAuChamp(aJouer, 1);
                     }
                     if (aJouer is Gadget)
                     {

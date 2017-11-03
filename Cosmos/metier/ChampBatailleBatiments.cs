@@ -36,9 +36,19 @@ namespace Cosmos.metier
             return false;
         }
 
-        public void AjouterAuChamp(Carte carteAjouter, int Emplacement)
+        public void AjouterAuChamp(Carte carteAjouter, int emplacement)
         {
-
+            switch (emplacement)
+            {
+                case 1: Champ1 = carteAjouter;
+                    break;
+                case 2: Champ2 = carteAjouter;
+                    break;
+                case 3: Champ3 = carteAjouter;
+                    break;
+                case 4: Champ4 = carteAjouter;
+                    break;
+            }
         }
     }
 }
