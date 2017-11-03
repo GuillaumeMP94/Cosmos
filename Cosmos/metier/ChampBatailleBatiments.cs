@@ -35,5 +35,10 @@ namespace Cosmos.metier
             }
             return false;
         }
+
+        public void AjouterAuChamp(Carte carteAjouter, int Emplacement)
+        {
+
+        }
     }
 }
