@@ -30,7 +30,7 @@ namespace Cosmos.view
         public int IndexCarteZoomer { get; set; }
 
         int phase;
-        TableDeJeu laTableDeJeu;                
+        TableDeJeu laTableDeJeu;        
 
         public Partie(MainWindow main)
         {
@@ -46,7 +46,11 @@ namespace Cosmos.view
 
             laTableDeJeu = new TableDeJeu(utilisateur1, utilisateur2);
 
-
+            // CODE TEMPORAIRE POUR TESTER
+            AI ordinateur;
+            var ressourceAI = new metier.Ressource(2, 2, 2);
+            ordinateur = new AI( "Temporaire", 1, ressourceAI, utilisateur2.DeckAJouer, laTableDeJeu);
+            // FIN CODE TEMPORAIRE
 
             // Demander à l'utilisateur de distribuer ses ressources.
             EcranRessource( laTableDeJeu.Joueur1 , RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
