@@ -30,6 +30,7 @@ namespace Cosmos.view
         public MainWindow Main { get; set; }
         public Image imgZoom { get; set; }
         public List<Image> ImgMainJoueur { get; set; }
+        public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
 
         int phase;
@@ -77,8 +78,8 @@ namespace Cosmos.view
             phase = laTableDeJeu.Phase;
 
             // Afficher la main
+            ListBorderImgMainJoueur = new List<Border>();
             ImgMainJoueur = new List<Image>();
-            AfficherMain();            
 
             // Afficher les cartes sur le champ de bataille, les unités et les batiement
             AfficherChampUnites();
@@ -118,6 +119,7 @@ namespace Cosmos.view
                     txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.Black;
                     System.Threading.Thread.Sleep(500);
+                    AfficherMain();
                     break;
                 case 2:
                     phase++;
@@ -125,6 +127,7 @@ namespace Cosmos.view
                     txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseAttaque.Foreground = Brushes.Black;
+                    AfficherMain();
                     break;
                 case 3:
                     phase++;
@@ -174,19 +177,21 @@ namespace Cosmos.view
         private void CarteMain_MouseEnter(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
+            Border border = (Border)img.Parent;
 
-            Thickness margin = img.Margin;
+            Thickness margin = border.Margin;
 
-            img.Margin = new Thickness(margin.Left, 0, 0, 0);
+            border.Margin = new Thickness(margin.Left, 0, 0, 0);
         }
 
         private void CarteMain_MouseLeave(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
+            Border border = (Border)img.Parent;
 
-            Thickness margin = img.Margin;
-            
-            img.Margin = new Thickness(margin.Left, 40, 0, 0);
+            Thickness margin = border.Margin;
+
+            border.Margin = new Thickness(margin.Left, 40, 0, 0);
         }
 
         private void PeuplerImgMainJoueur(List<Carte> lstMain)
@@ -199,15 +204,57 @@ namespace Cosmos.view
             }
         }
 
-        private void AfficherMain()
+        private void PeulperListBorderMainJoueur()
         {
             foreach (Image element in ImgMainJoueur)
             {
+                CreerBorderDansList(element, ImgMainJoueur.IndexOf(element));
+            }
+        }
+
+        private void CreerBorderDansList(Image img, int position)
+        {
+            Border border = new Border();
+            border.Height = 300;
+            border.Width = 200;
+            border.VerticalAlignment = VerticalAlignment.Top;
+            border.HorizontalAlignment = HorizontalAlignment.Left;
+            border.Margin = new Thickness((position + 1) * 50 - 50, 40, 0, 0);
+            border.SetValue(Panel.ZIndexProperty, position);
+
+            BrushConverter converter = new BrushConverter();
+            border.BorderBrush = converter.ConvertFromString("#e1ff00") as Brush;
+
+            // Si la carte peut être jouer, elle sera entouré d'une bordure de couleur
+            if (laTableDeJeu.validerCoup(position) && phase == 2)
+            {
+                border.BorderThickness = new Thickness(5);
+                
+            }
+            // Sinon pas de bordure
+            else
+            {
+                border.BorderThickness = new Thickness(0);
+            }            
+            // Insérer l'image de la carte dans le Border
+            border.Child = img;
+
+            // Insérer la Border dans la ListBorderImgMainJoueur
+            ListBorderImgMainJoueur.Add(border);
+        }
+
+        private void AfficherMain()
+        {
+            ImgMainJoueur.Clear();
+            foreach (Border element in ListBorderImgMainJoueur)
+            {
                 grdCartesJoueur.Children.Remove(element);
             }
-            ImgMainJoueur.Clear();
+            ListBorderImgMainJoueur.Clear();
             PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
-            foreach (Image element in ImgMainJoueur)
+            PeulperListBorderMainJoueur();
+            // Insérer les Borders de la liste dans le XAML
+            foreach(Border element in ListBorderImgMainJoueur)
             {
                 grdCartesJoueur.Children.Add(element);
             }
@@ -216,50 +263,50 @@ namespace Cosmos.view
         private void AfficherChampBatiments()
         {
             // Insérer les img des cartes Batiments en jeu du joueur 2 s'il y en a
-            if(laTableDeJeu.ChampBatailleBatimentsJ2.Champ1 != null)
+            if(laTableDeJeu.ChampConstructionsJ2.Champ1 != null)
             {
-                imgBatiment1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ1.Nom + ".jpg"));
+                imgBatiment1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ1.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment1J2.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ2.Champ2 != null)
+            if (laTableDeJeu.ChampConstructionsJ2.Champ2 != null)
             {
-                imgBatiment2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ2.Nom + ".jpg"));
+                imgBatiment2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ2.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment2J2.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ2.Champ3 != null)
+            if (laTableDeJeu.ChampConstructionsJ2.Champ3 != null)
             {
-                imgBatiment3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ3.Nom + ".jpg"));
+                imgBatiment3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ3.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment3J2.Source = null;
             }
             // Insérer les img des cartes Batiments en jeu du joueur 1 s'il y en a
-            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ1 != null)
+            if (laTableDeJeu.ChampConstructionsJ1.Champ1 != null)
             {
-                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ3.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment1J1.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ2 != null)
+            if (laTableDeJeu.ChampConstructionsJ1.Champ2 != null)
             {
-                imgBatiment2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ2.Nom + ".jpg"));
+                imgBatiment2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ2.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment2J1.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ3 != null)
+            if (laTableDeJeu.ChampConstructionsJ1.Champ3 != null)
             {
-                imgBatiment3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ3.Nom + ".jpg"));
             }
             else
             {
@@ -325,13 +372,14 @@ namespace Cosmos.view
         {
             Image carte = new Image();
             carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
-            carte.Height = 300;
-            carte.Width = 700;
-            carte.VerticalAlignment = VerticalAlignment.Top;
-            carte.HorizontalAlignment = HorizontalAlignment.Left;
-            carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
-            carte.SetValue(Panel.ZIndexProperty, position);
+            //carte.Height = 300;
+            //carte.Width = 700;
+            //carte.VerticalAlignment = VerticalAlignment.Top;
+            //carte.HorizontalAlignment = HorizontalAlignment.Left;
+            //carte.Margin = new Thickness(position * 50 - 50, 40, 0, 0);
+            //carte.SetValue(Panel.ZIndexProperty, position);
             carte.Cursor = Cursors.Hand;
+            carte.Stretch = Stretch.Fill;
 
             // Lier la carte avec les events Mouse Enter et Leave
             carte.MouseEnter += CarteMain_MouseEnter;
@@ -373,12 +421,12 @@ namespace Cosmos.view
             recRessource.Visibility = Visibility.Hidden;
 
             changerPhase();
+            AfficherMain();
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
             ContenuEcran = new ChoixRessources(joueur, points, maxRessourceLevel, partie);
             recRessource.Visibility = Visibility.Visible;
-
 
             grd1.Children.Add(ContenuEcran);
         }
@@ -396,7 +444,7 @@ namespace Cosmos.view
                 {
                     // Choisir l'emplacement.
                     // TODO: Enlever le Inserer Carte Creature
-                    InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+                    //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
                     laTableDeJeu.JouerCarte(IndexCarteZoomer);
                 }
                 rectZoom.Visibility = Visibility.Hidden;
