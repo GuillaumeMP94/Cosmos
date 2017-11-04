@@ -12,10 +12,10 @@ namespace Cosmos.metier
     public class ChampConstructions
     {
         #region Propriétés
-        public Carte Champ1 { get; set; }
-        public Carte Champ2 { get; set; }
-        public Carte Champ3 { get; set; }
-        public Carte Champ4 { get; set; }
+        public Batiment Champ1 { get; set; }
+        public Batiment Champ2 { get; set; }
+        public Batiment Champ3 { get; set; }
+        public Batiment Champ4 { get; set; }
         #endregion
 
         #region Constructeurs
@@ -55,16 +55,16 @@ namespace Cosmos.metier
                 switch (EmplacementDisponible())
                 {
                     case 1:
-                        Champ1 = carteAjouter;
+                        Champ1 = (Batiment)carteAjouter;
                         break;
                     case 2:
-                        Champ2 = carteAjouter;
+                        Champ2 = (Batiment)carteAjouter;
                         break;
                     case 3:
-                        Champ3 = carteAjouter;
+                        Champ3 = (Batiment)carteAjouter;
                         break;
                     case 4:
-                        Champ4 = carteAjouter;
+                        Champ4 = (Batiment)carteAjouter;
                         break;
                 }
             }
