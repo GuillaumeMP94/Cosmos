@@ -16,7 +16,7 @@
         <Border BorderThickness="7" BorderBrush="White" />
         <Border BorderThickness="7" BorderBrush="White" CornerRadius="20" />
         <Border BorderThickness="7" BorderBrush="White" CornerRadius="30" />
-
+        <Rectangle Name="recListe" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"/>
         <!--<Border BorderThickness="15" BorderBrush="White" CornerRadius="30" />
         <Border BorderThickness="7" BorderBrush="DarkGoldenrod" />
         <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="20" />

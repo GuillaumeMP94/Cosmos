@@ -6,8 +6,12 @@
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Height="auto" Width="300">
-        <Rectangle Fill="Blue"/>
-        <Rectangle Name="recListe" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"/>
-    </Grid>
+
+    <Grid Height="auto" Width="400" HorizontalAlignment="Right" Name="grdListeAmis">
+
+            <Rectangle Name="laListe" Fill="Blue"/>
+            <StackPanel></StackPanel>
+     </Grid>
+
+    
 </UserControl>
