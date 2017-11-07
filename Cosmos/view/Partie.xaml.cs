@@ -79,11 +79,7 @@ namespace Cosmos.view
 
             // Afficher la main
             ListBorderImgMainJoueur = new List<Border>();
-            ImgMainJoueur = new List<Image>();
-
-            // Afficher les cartes sur le champ de bataille, les unités et les batiement
-            AfficherChampUnites();
-            AfficherChampBatiments();
+            ImgMainJoueur = new List<Image>();         
 
 
 
@@ -119,7 +115,7 @@ namespace Cosmos.view
                     txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.Black;
                     System.Threading.Thread.Sleep(500);
-                    AfficherMain();
+                    RefreshAll();
                     break;
                 case 2:
                     phase++;
@@ -127,7 +123,7 @@ namespace Cosmos.view
                     txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseAttaque.Foreground = Brushes.Black;
-                    AfficherMain();
+                    RefreshAll();
                     break;
                 case 3:
                     phase++;
@@ -154,12 +150,18 @@ namespace Cosmos.view
             RefreshAll();
         }
 
+
+
         private void RefreshAll()
         {
             txBlphaseRessource.Refresh();
             txBlphasePrincipale.Refresh();
             txBlphaseAttaque.Refresh();
             txBlphaseFin.Refresh();
+            // Afficher les cartes sur le champ de bataille, les unités et les batiement
+            AfficherChampUnites();
+            AfficherChampBatiments();
+            AfficherMain();
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
@@ -287,10 +289,18 @@ namespace Cosmos.view
             {
                 imgBatiment3J2.Source = null;
             }
+            if (laTableDeJeu.ChampConstructionsJ2.Champ4 != null)
+            {
+                imgBatiment4J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ4.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment4J2.Source = null;
+            }
             // Insérer les img des cartes Batiments en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampConstructionsJ1.Champ1 != null)
             {
-                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ1.Nom + ".jpg"));
             }
             else
             {
@@ -311,6 +321,14 @@ namespace Cosmos.view
             else
             {
                 imgBatiment3J1.Source = null;
+            }
+            if (laTableDeJeu.ChampConstructionsJ1.Champ4 != null)
+            {
+                imgBatiment4J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ4.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment4J1.Source = null;
             }
         }
 
@@ -344,7 +362,7 @@ namespace Cosmos.view
             // Insérer les img des cartes Unités en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
-                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
             }
             else
             {
@@ -449,7 +467,7 @@ namespace Cosmos.view
                 }
                 rectZoom.Visibility = Visibility.Hidden;
                 imgZoomCarte.Visibility = Visibility.Hidden;
-                AfficherMain();
+                RefreshAll();
 
             }
         }
