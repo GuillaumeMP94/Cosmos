@@ -93,6 +93,9 @@
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ListeAmis.xaml.cs">
+      <DependentUpon>ListeAmis.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\MenuPrincipal.xaml.cs">
       <DependentUpon>MenuPrincipal.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\CreationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ListeAmis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

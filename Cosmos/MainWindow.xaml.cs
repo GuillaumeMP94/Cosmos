@@ -46,8 +46,9 @@ namespace Cosmos
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
 
+            EcranListeAmis();
             //TODO: Enlever la prochaine ligne avant remise
-            EcranPartie();
+            //EcranPartie();
             //EcranMenuPrincipal();
 
         }
@@ -119,6 +120,15 @@ namespace Cosmos
 
             grdMain.Children.Add(ContenuEcran);
         }
+
+        public void EcranListeAmis()
+        {
+            ContenuEcran = new ListeAmis(this);
+            //ContenuEcran.recListe.Visibility = Visibility.Visible;
+
+            grdMain.Children.Add(ContenuEcran);
+        }
+
         public void EcranPartie()
         {
             grdMain.Children.Remove(ContenuEcran);
@@ -132,7 +142,8 @@ namespace Cosmos
 
             grdMain.Children.Add(ContenuEcran);
         }
-        
+
+        #region ValidationChamps
         public string ValiderChampSaisi(string champ)
         {
             string pattern = @"([a-zA-Z0-9]*)";
@@ -156,5 +167,6 @@ namespace Cosmos
 
             return estValide;
         }
+        #endregion
     }
 }
