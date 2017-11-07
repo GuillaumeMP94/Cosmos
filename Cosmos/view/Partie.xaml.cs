@@ -35,8 +35,6 @@ namespace Cosmos.view
         int phase;
         TableDeJeu laTableDeJeu;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public Partie(MainWindow main)
         {
             InitializeComponent();
@@ -99,7 +97,9 @@ namespace Cosmos.view
         /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();
+            //TODO Enlever le commentaire
+            //if (laTableDeJeu.JoueurActifEst1)
+                changerPhase();
         }
 
         private void changerPhase()
@@ -117,6 +117,7 @@ namespace Cosmos.view
                     txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.Black;
+                    imgFinTour.Visibility = Visibility.Hidden;
                     System.Threading.Thread.Sleep(500);
                     break;
                 case 2:
@@ -133,6 +134,8 @@ namespace Cosmos.view
                     txBlphaseFin.Background = Brushes.DarkGoldenrod;
                     txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseFin.Foreground = Brushes.Black;
+                    if (!laTableDeJeu.JoueurActifEst1)
+                        imgFinTour.Visibility = Visibility.Visible;
                     RefreshAll();
                     System.Threading.Thread.Sleep(500);
                     changerPhase();
@@ -143,6 +146,7 @@ namespace Cosmos.view
                     txBlphaseRessource.Background = Brushes.DarkGoldenrod;
                     txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.Black;
+                    
                     RefreshAll();
                     System.Threading.Thread.Sleep(500);
                     changerPhase();
@@ -157,6 +161,9 @@ namespace Cosmos.view
             txBlphasePrincipale.Refresh();
             txBlphaseAttaque.Refresh();
             txBlphaseFin.Refresh();
+            AfficherChampBatiments();
+            AfficherChampUnites();
+            AfficherMain();
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
@@ -216,50 +223,50 @@ namespace Cosmos.view
         private void AfficherChampBatiments()
         {
             // Insérer les img des cartes Batiments en jeu du joueur 2 s'il y en a
-            if(laTableDeJeu.ChampBatailleBatimentsJ2.Champ1 != null)
+            if(laTableDeJeu.ChampConstructionsJ2.Champ1 != null)
             {
-                imgBatiment1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ1.Nom + ".jpg"));
+                imgBatiment1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ1.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment1J2.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ2.Champ2 != null)
+            if (laTableDeJeu.ChampConstructionsJ2.Champ2 != null)
             {
-                imgBatiment2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ2.Nom + ".jpg"));
+                imgBatiment2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ2.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment2J2.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ2.Champ3 != null)
+            if (laTableDeJeu.ChampConstructionsJ2.Champ3 != null)
             {
-                imgBatiment3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ2.Champ3.Nom + ".jpg"));
+                imgBatiment3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ3.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment3J2.Source = null;
             }
             // Insérer les img des cartes Batiments en jeu du joueur 1 s'il y en a
-            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ1 != null)
+            if (laTableDeJeu.ChampConstructionsJ1.Champ1 != null)
             {
-                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ1.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment1J1.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ2 != null)
+            if (laTableDeJeu.ChampConstructionsJ1.Champ2 != null)
             {
-                imgBatiment2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ2.Nom + ".jpg"));
+                imgBatiment2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ2.Nom + ".jpg"));
             }
             else
             {
                 imgBatiment2J1.Source = null;
             }
-            if (laTableDeJeu.ChampBatailleBatimentsJ1.Champ3 != null)
+            if (laTableDeJeu.ChampConstructionsJ1.Champ3 != null)
             {
-                imgBatiment3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleBatimentsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ3.Nom + ".jpg"));
             }
             else
             {
@@ -297,7 +304,7 @@ namespace Cosmos.view
             // Insérer les img des cartes Unités en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
-                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
             }
             else
             {
@@ -396,12 +403,12 @@ namespace Cosmos.view
                 {
                     // Choisir l'emplacement.
                     // TODO: Enlever le Inserer Carte Creature
-                    InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+                    //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
                     laTableDeJeu.JouerCarte(IndexCarteZoomer);
                 }
                 rectZoom.Visibility = Visibility.Hidden;
                 imgZoomCarte.Visibility = Visibility.Hidden;
-                AfficherMain();
+                RefreshAll();
 
             }
         }
