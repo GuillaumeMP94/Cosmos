@@ -102,21 +102,21 @@ namespace Cosmos.view
         private void changerPhase()
         {
             laTableDeJeu.AvancerPhase();
-            RefreshAll();
+
             switch (phase)
             {
                 case 1:
                     phase++;
                     // on ajoute les ressources au joueur actif
                     laTableDeJeu.AttribuerRessourceLevel();
-
+                    laTableDeJeu.PigerCarte();
                     txBlphaseRessource.Background = Brushes.Transparent;
                     txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.Black;
                     imgFinTour.Visibility = Visibility.Hidden;
-                    System.Threading.Thread.Sleep(500);
                     RefreshAll();
+                    System.Threading.Thread.Sleep(500);
                     break;
                 case 2:
                     phase++;
@@ -151,7 +151,6 @@ namespace Cosmos.view
                     changerPhase();
                     break;
             }
-            RefreshAll();
         }
 
 
@@ -162,6 +161,7 @@ namespace Cosmos.view
             txBlphasePrincipale.Refresh();
             txBlphaseAttaque.Refresh();
             txBlphaseFin.Refresh();
+            imgFinTour.Refresh();
             // Afficher les cartes sur le champ de bataille, les unités et les batiement
             AfficherChampUnites();
             AfficherChampBatiments();
@@ -210,7 +210,7 @@ namespace Cosmos.view
             }
         }
 
-        private void PeulperListBorderMainJoueur()
+        private void PeuplerListBorderMainJoueur()
         {
             foreach (Image element in ImgMainJoueur)
             {
@@ -232,7 +232,7 @@ namespace Cosmos.view
             border.BorderBrush = converter.ConvertFromString("#e1ff00") as Brush;
 
             // Si la carte peut être jouer, elle sera entouré d'une bordure de couleur
-            if (laTableDeJeu.validerCoup(position) && phase == 2)
+            if (laTableDeJeu.JoueurActifEst1  && phase == 2 && laTableDeJeu.validerCoup(position))
             {
                 border.BorderThickness = new Thickness(5);
                 
@@ -258,7 +258,7 @@ namespace Cosmos.view
             }
             ListBorderImgMainJoueur.Clear();
             PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
-            PeulperListBorderMainJoueur();
+            PeuplerListBorderMainJoueur();
             // Insérer les Borders de la liste dans le XAML
             foreach(Border element in ListBorderImgMainJoueur)
             {

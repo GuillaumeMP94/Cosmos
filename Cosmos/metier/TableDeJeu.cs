@@ -57,6 +57,7 @@ namespace Cosmos.metier
         #endregion
 
         private int phase;
+        private int nbTour;
         private bool joueurActifEst1;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -94,6 +95,19 @@ namespace Cosmos.metier
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("Phase"));
+                }
+
+            }
+        }
+        public int NbTour
+        {
+            get { return nbTour; }
+            set
+            {
+                nbTour = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("NbTour"));
                 }
 
             }
@@ -464,6 +478,19 @@ namespace Cosmos.metier
             else
             {
                 LstMainJ2.Add(Joueur2.PigerCarte());
+            }
+        }
+        public void PigerCarte()
+        {
+            if (JoueurActifEst1)
+            {
+                if (LstMainJ1.Count < 8)
+                    LstMainJ1.Add(Joueur1.PigerCarte());
+            }
+            else
+            {
+                if (LstMainJ2.Count < 8)
+                    LstMainJ2.Add(Joueur2.PigerCarte());
             }
         }
         /// <summary>
