@@ -64,6 +64,8 @@ namespace Cosmos.metier
         public bool AttaqueChamp1 { get; set; }
         public bool AttaqueChamp2 { get; set; }
         public bool AttaqueChamp3 { get; set; }
+        // Plus le strategie est haute, plus le AI est aggressif
+        public int Strategie { get; set; } 
 
 
         #region Propriétés
@@ -356,28 +358,11 @@ namespace Cosmos.metier
                     {
                         if (ListeCoupsPermis.Count != 0)
                         {
-                            // Le AI va maintenant implémenter une stratégie tour par tour
-                            switch( jeu.NbTourComplet)
-                            {
-                                case 1:
-                                    // Au premier tour, les bâtiments ou les unité à faible coût sont priorisé
-                                    ListeCoupEvaluer = evaluerListeCoup(ListeCoupsPermis, jeu);
+                            ListeCoupEvaluer = evaluerListeCoup(ListeCoupsPermis, jeu);
 
 
-                                    break;
-                                case 2:
-                                    break;
-                                case 3:
-                                    break;
-                                case 4:
-                                    break;
-                                case 5:
-                                    break;
-                                default:
-                                    break;
 
-
-                            }
+                            //jeu.JouerCarteAI(  ,  );
 
                         }
                     }
@@ -634,6 +619,9 @@ namespace Cosmos.metier
                     #region
                     if (jeu.LstMainJ2[index] is Batiment)
                     {
+
+                        // Revenir ici lorsque le choix de deck serait fait TODO
+
                         if (jeu.NbTourComplet > 4)
                         {
                             score = int.MinValue;
@@ -644,11 +632,11 @@ namespace Cosmos.metier
                         }
                         else if (jeu.ChampConstructionsJ1.Champ1 == null && jeu.ChampConstructionsJ1.Champ2 == null)
                         {
-                            score = 500 - (jeu.NbTourComplet * 100);
+                            score += 500 - (jeu.NbTourComplet * 100);
                         }
                         else
                         {
-                            score = 450 - (jeu.NbTourComplet * 100);
+                            score += 450 - (jeu.NbTourComplet * 100);
                         }
                     }
                     #endregion
@@ -672,7 +660,7 @@ namespace Cosmos.metier
                             // Chaque tour implique une approche différente pour le score des unités
                             case 0:
                                 #region
-                                if (jeu.ChampBatailleUnitesJ1.Champ1 != null || jeu.ChampBatailleUnitesJ1.Champ2 != null || jeu.ChampBatailleUnitesJ1.Champ3 != null)
+                                if (jeu.ChampBatailleUnitesJ1.Champ1 == null && jeu.ChampBatailleUnitesJ1.Champ2 == null && jeu.ChampBatailleUnitesJ1.Champ3 == null)
                                 {
                                     score += 551; // Le score doit allé plus haut qu'un gadget
                                 }
@@ -822,6 +810,109 @@ namespace Cosmos.metier
 
             return false;
         }
+        /// <summary>
+        /// Modifier le int "Strategie" pour définir comment le AI veut jouer. 
+        /// </summary>
+        public void EvaluerConditionVictoire(TableDeJeu jeu)
+        {
+            // On augmente le score pour des conditions propice à l'offense
+            // On descent le score pour des conditions propice à la défense
+            int score = 0;
+            int pointHPavance = 0;
+
+            // Si nous sommes menacé de défaite, nous allons arrêter ici et se mettre en full defense
+            if (PossibiliteDefaiteUnite(jeu))
+            {
+                Strategie = 1;
+                return;
+            }
+
+            // Comparaison des points de blindages
+
+            pointHPavance = jeu.Joueur2.PointDeBlindage - jeu.Joueur1.PointDeBlindage;
+
+            if (pointHPavance > 20) // 21+
+            {
+                score += 5;
+            }
+            else if (pointHPavance > 15) // 16-20
+            {
+                score += 4;
+            }
+            else if (pointHPavance > 10) // 11-15
+            {
+                score += 2;
+            }
+            else if (pointHPavance > 5) // 6-10
+            {
+                score += 1;
+            }
+            else if (pointHPavance > -5) // -5 a 5
+            {
+            }
+            else if (pointHPavance > -10) // -10 a -6
+            {
+                score -= 1;
+            }
+            else if (pointHPavance > -15) // -15 a -11
+            {
+                score -= 2;
+            }
+            else if (pointHPavance > -20) // -20 a -16
+            {
+                score -= 4;
+            }
+            else // -21 et moins
+            {
+                score -= 5;
+            }
+
+            // On vérifie quel joueur à le plus de puissante de faire des dégâts
+            int totalAttAI = 0;
+            int totalAttJ = 0;
+
+            totalAttJ += jeu.ChampBatailleUnitesJ1.Champ1.getAttaque();
+            totalAttJ += jeu.ChampBatailleUnitesJ1.Champ2.getAttaque();
+            totalAttJ += jeu.ChampBatailleUnitesJ1.Champ2.getAttaque();
+
+            totalAttAI += jeu.ChampBatailleUnitesJ2.Champ1.getAttaque();
+            totalAttAI += jeu.ChampBatailleUnitesJ2.Champ2.getAttaque();
+            totalAttAI += jeu.ChampBatailleUnitesJ2.Champ3.getAttaque();
+
+            if ( totalAttAI < totalAttJ )
+            {
+                score -= 1;
+            }
+            else
+            {
+                score += 1;
+            }
+
+
+
+            // Selon le score on attribue un strategie
+            if ( score > 2 )
+            {
+                Strategie = 5;
+            }
+            if ( score == 1 )
+            {
+                Strategie = 4;
+            }
+            if (score == 0)
+            {
+                Strategie = 3;
+            }
+            if (score == -1)
+            {
+                Strategie = 2;
+            }
+            if (score < 2)
+            {
+                Strategie = 1;
+            }
+        }
+
 
     }
 }
