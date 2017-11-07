@@ -155,7 +155,6 @@ namespace Cosmos.view
         }
 
 
-
         private void RefreshAll()
         {
             txBlphaseRessource.Refresh();
@@ -166,6 +165,8 @@ namespace Cosmos.view
             AfficherChampUnites();
             AfficherChampBatiments();
             AfficherMain();
+            //TODO: test
+            //AfficherCoupPoosible();
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
@@ -210,7 +211,7 @@ namespace Cosmos.view
             }
         }
 
-        private void PeulperListBorderMainJoueur()
+        private void PeuplerListBorderMainJoueur()
         {
             foreach (Image element in ImgMainJoueur)
             {
@@ -232,7 +233,7 @@ namespace Cosmos.view
             border.BorderBrush = converter.ConvertFromString("#e1ff00") as Brush;
 
             // Si la carte peut être jouer, elle sera entouré d'une bordure de couleur
-            if (laTableDeJeu.validerCoup(position) && phase == 2)
+            if (phase == 2 && laTableDeJeu.validerCoup(position))
             {
                 border.BorderThickness = new Thickness(5);
                 
@@ -258,7 +259,7 @@ namespace Cosmos.view
             }
             ListBorderImgMainJoueur.Clear();
             PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
-            PeulperListBorderMainJoueur();
+            PeuplerListBorderMainJoueur();
             // Insérer les Borders de la liste dans le XAML
             foreach(Border element in ListBorderImgMainJoueur)
             {
@@ -393,7 +394,7 @@ namespace Cosmos.view
         private Image CreerImageCarte(String nom, int position)
         {
             Image carte = new Image();
-            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            git carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
             //carte.Height = 300;
             //carte.Width = 700;
             //carte.VerticalAlignment = VerticalAlignment.Top;
@@ -453,6 +454,36 @@ namespace Cosmos.view
             grd1.Children.Add(ContenuEcran);
         }
 
+        private void AfficherCoupPoosible()
+        {
+            if(laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
+            {
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite1J1.Cursor = Cursors.Hand;
+                imgUnite1J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 is null)
+            {
+                imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite2J1.Cursor = Cursors.Hand;
+                imgUnite2J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 is null)
+            {
+                imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite3J1.Cursor = Cursors.Hand;
+                imgUnite3J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+        }
+
+        private void ChoisirEmplacementUnite(object sender, MouseButtonEventArgs e)
+        {
+            // TODO: Enlever le Inserer Carte Creature
+            //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+            laTableDeJeu.JouerCarte(IndexCarteZoomer);
+            RefreshAll();
+        }
+
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // On peut jouer une carte seulement dans la phase 2
@@ -465,13 +496,12 @@ namespace Cosmos.view
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
                     // Choisir l'emplacement.
-                    // TODO: Enlever le Inserer Carte Creature
-                    //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
-                    laTableDeJeu.JouerCarte(IndexCarteZoomer);
+                    AfficherCoupPoosible();
+                    
                 }
                 rectZoom.Visibility = Visibility.Hidden;
                 imgZoomCarte.Visibility = Visibility.Hidden;
-                RefreshAll();
+                
 
             }
         }
