@@ -36,8 +36,6 @@ namespace Cosmos.view
         int phase;
         TableDeJeu laTableDeJeu;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public Partie(MainWindow main)
         {
             InitializeComponent();
@@ -96,7 +94,9 @@ namespace Cosmos.view
         /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();
+            //TODO Enlever le commentaire
+            //if (laTableDeJeu.JoueurActifEst1)
+                changerPhase();
         }
 
         private void changerPhase()
@@ -114,6 +114,7 @@ namespace Cosmos.view
                     txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
                     txBlphasePrincipale.Foreground = Brushes.Black;
+                    imgFinTour.Visibility = Visibility.Hidden;
                     System.Threading.Thread.Sleep(500);
                     RefreshAll();
                     break;
@@ -132,6 +133,8 @@ namespace Cosmos.view
                     txBlphaseFin.Background = Brushes.DarkGoldenrod;
                     txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseFin.Foreground = Brushes.Black;
+                    if (!laTableDeJeu.JoueurActifEst1)
+                        imgFinTour.Visibility = Visibility.Visible;
                     RefreshAll();
                     System.Threading.Thread.Sleep(500);
                     changerPhase();
@@ -142,6 +145,7 @@ namespace Cosmos.view
                     txBlphaseRessource.Background = Brushes.DarkGoldenrod;
                     txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
                     txBlphaseRessource.Foreground = Brushes.Black;
+                    
                     RefreshAll();
                     System.Threading.Thread.Sleep(500);
                     changerPhase();
