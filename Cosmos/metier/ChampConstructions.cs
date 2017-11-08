@@ -70,5 +70,33 @@ namespace Cosmos.metier
             }
             
         }
+
+        public List<Batiment> DetruireBatiments()
+        {
+            List<Batiment> temp = new List<Batiment>();
+
+            if (Champ1 != null && Champ1.Defense <= 0)
+            {
+                temp.Add(Champ1);
+                Champ1 = null;
+            }
+            if (Champ2 != null && Champ2.Defense <= 0)
+            {
+                temp.Add(Champ2);
+                Champ2 = null;
+            }
+            if (Champ3 != null && Champ3.Defense <= 0)
+            {
+                temp.Add(Champ3);
+                Champ3 = null;
+            }
+            if (Champ4 != null && Champ4.Defense <= 0)
+            {
+                temp.Add(Champ4);
+                Champ4 = null;
+            }
+            
+            return temp;
+        }
     }
 }
