@@ -133,7 +133,28 @@ namespace Cosmos.accesBD
                  .Append("'").Append(utilisateur.Courriel).Append("')");
 
             ConnectionBD.NonQuery(nonquery.ToString());
+        }
 
+        public static List<Utilisateur> RetrieveAmis(int pIdUtilisateur)
+        {
+            List<Utilisateur> lstResultat = new List<Utilisateur>();
+            DataSet dsResultat;
+            DataTable dtResultat;
+
+            ConnectionBD = new MySqlConnexion();
+
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT idUtilisateurAmi FROM Amis WHERE idUtilisateurProprietaire = '").Append(pIdUtilisateur).Append("'");
+
+            dsResultat = ConnectionBD.Query(query.ToString());
+            dtResultat = dsResultat.Tables[0];
+
+            foreach (DataRow dr in dtResultat.Rows)
+            {
+                lstResultat.Add(RetrieveById((int)dr["idUtilisateurAmi"]));
+            }
+
+            return lstResultat;
         }
     }
 }

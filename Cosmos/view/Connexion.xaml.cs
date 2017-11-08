@@ -37,6 +37,7 @@ namespace Cosmos.view
             {
                 Utilisateur unUtilsateur = MySqlUtilisateurService.RetrieveByNom(txbPseudo.Text);
                 Main.UtilisateurConnecte = unUtilsateur;
+                Main.LstAmis = MySqlUtilisateurService.RetrieveAmis(Main.UtilisateurConnecte.IdUtilisateur);
                 Main.EcranMenuPrincipal();
             }
         }

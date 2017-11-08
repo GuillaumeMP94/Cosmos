@@ -26,6 +26,7 @@ namespace Cosmos
     public partial class MainWindow : Window
     {
         public UserControl ContenuEcran { get; set; }
+        public UserControl ContenuListeAmi { get; set; }
         private Connexion Connexion { get; set; }
         private MenuPrincipal MenuPrincipal { get; set; }
         public CreationCompte Creation { get; set; }
@@ -34,7 +35,8 @@ namespace Cosmos
         public Campagne Campagne { get; set; }
         public Utilisateur UtilisateurConnecte { get; set; }
         public Partie Partie { get; set; }
-        
+        public List<Utilisateur> LstAmis { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,7 +48,6 @@ namespace Cosmos
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
 
-            EcranListeAmis();
             //TODO: Enlever la prochaine ligne avant remise
             //EcranPartie();
             //EcranMenuPrincipal();
@@ -123,10 +124,9 @@ namespace Cosmos
 
         public void EcranListeAmis()
         {
-            ContenuEcran = new ListeAmis(this);
-            //ContenuEcran.recListe.Visibility = Visibility.Visible;
+            ContenuListeAmi = new ListeAmis(this);
 
-            grdMain.Children.Add(ContenuEcran);
+            grdMain.Children.Add(ContenuListeAmi);
         }
 
         public void EcranPartie()

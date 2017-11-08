@@ -5,13 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="350">
 
-    <Grid Height="auto" Width="400" HorizontalAlignment="Right" Name="grdListeAmis">
-
-            <Rectangle Name="laListe" Fill="Blue"/>
-            <StackPanel></StackPanel>
+    <Grid Height="auto" Width="350" HorizontalAlignment="Right" Name="grdListeAmis" Margin="0,50,25,6">
+        <Border Width="auto" Height="auto" Background="Black" Opacity="1" Margin="0,15,0,15" CornerRadius="15"/>
+        <StackPanel Name="stpListeAmis">
+            <Label Foreground="DarkGoldenrod" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" Margin="0,30" Name="lblTitre">Liste d'amis</Label>
+            <TextBlock Padding="10,5" Name="txb1" Foreground="White" Text="TEST" ></TextBlock>
+            <TextBlock Padding="10,5" Name="txb2" Foreground="White">TEST</TextBlock>
+        </StackPanel>
+        <Button Name="btnFermer" Width="100" Height="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,30" Cursor="Hand" Click="btnFermer_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">
+				                Fermer
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name="btnAjouter" Width="100" Height="45" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,30" Cursor="Hand" Click="btnAjouter_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">
+				                Ajouter
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name="btnSupprimer" Width="100" Height="45" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,5,30" Cursor="Hand" Click="btnSupprimer_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">
+				                Supprimer
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
      </Grid>
 
-    
+      
 </UserControl>
