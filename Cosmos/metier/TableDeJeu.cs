@@ -522,7 +522,7 @@ namespace Cosmos.metier
         }
 
 
-        public void JouerCarteAI(int index, int Cible)
+        public void JouerCarteAI(int index)
         {
             Carte aJouer;
 
@@ -532,7 +532,8 @@ namespace Cosmos.metier
 
             if (aJouer is Unite)
             {
-                ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, Cible);
+                // TODO Décider ou jouer une carte via le flag du AI
+                ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, -15 /*TODO ai.ChoixChampUnite */);
             }
             else if (aJouer is Batiment)
             {
