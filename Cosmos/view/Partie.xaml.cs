@@ -368,36 +368,39 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
-                imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-                imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
-                imgUnite1J1.PreviewMouseLeftButtonUp -= imgZoomCarte_PreviewMouseLeftButtonUp;
+                //imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                
             }
             else
             {
                 imgUnite1J1.Source = null;
+                imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;                
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
-                imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-                imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
-                imgUnite2J1.PreviewMouseLeftButtonUp -= imgZoomCarte_PreviewMouseLeftButtonUp;
+                //imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                
             }
             else
             {
                 imgUnite2J1.Source = null;
+                imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
-                imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-                imgUnite3J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
-                imgUnite3J1.PreviewMouseLeftButtonUp -= imgZoomCarte_PreviewMouseLeftButtonUp;
+                //imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                
             }
             else
             {
-                imgUnite3J1.Source = null;
+                imgUnite3J1.Source = null;                
+                imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
+            imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+            imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+            imgUnite3J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
         }
 
         private Image CreerImageCarte(String nom, int position)
@@ -500,6 +503,9 @@ namespace Cosmos.view
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
             rectZoom.Visibility = Visibility.Hidden;
             img.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Enlever les évènement
+
             RefreshAll();
         }
 
