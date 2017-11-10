@@ -361,11 +361,13 @@ namespace Cosmos.metier
                                                                                                     NIVEAU 4
                     ------------------------------------------------------------------------------------------------------------------------------------------------------ */
                     #region
+                    // TODO
+                    // En ce moment, le AI peut seulement jouer une carte par tour
                     if (jeu.JoueurActifEst1 == false)
                     {
                         if (ListeCoupsPermis.Count != 0)
                         {                           
-                            if ( !(AIPeutGagnerJouerCarte(ListeCoupsPermis, jeu)))
+                            if ( !(AIPeutGagnerJouerCarte(ListeCoupsPermis, jeu))) // AiPeutGagnerJouerCarte va jouer la carte si vrai
                             {
                                 ListeCoupEvaluer = EvaluerListeCoup(ListeCoupsPermis, jeu);
 
@@ -379,13 +381,10 @@ namespace Cosmos.metier
                                     {
                                         indexAJouer = i;
                                     }
-
                                     c++;
                                 }
                                 jeu.JouerCarteAI( indexAJouer);
-
-                            }                           
-
+                            }  
                         }
                     }
                     break;
@@ -547,7 +546,11 @@ namespace Cosmos.metier
                     // Pour le plaisir de la chose, un peu de RNG est encore présent, mais pas beaucoup    
                     // L'effet radiation avantage à ne pas attaquer. Les cartes avec cette effet n'attaque que si il n'y a pas de bloqueur   
                     // De plus, si l'unité adverse a plus de defense et d'attaque le AI n'attaque pas. 
-                    if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
+                    if (PeutOblitererCombatTableJeu(jeu, 1))
+                    {
+                        AttaqueChamp1 = true;
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
                         || ( jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque 
                         && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense) )
                      {
@@ -558,7 +561,12 @@ namespace Cosmos.metier
                             AttaqueChamp1 = true;
                         }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
+                    // --------------------------- CHAMP 2 ----------------------------------------------------------
+                    if (PeutOblitererCombatTableJeu(jeu, 2))
+                    {
+                        AttaqueChamp2 = true;
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
                         || (jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
                         && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
                     {
@@ -569,7 +577,12 @@ namespace Cosmos.metier
                             AttaqueChamp2 = true;
                         }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
+                    // --------------------------- CHAMP 3 ----------------------------------------------------------
+                    if (PeutOblitererCombatTableJeu(jeu, 3))
+                    {
+                        AttaqueChamp3 = true;
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
                         || (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
                         && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
                     {
@@ -590,157 +603,104 @@ namespace Cosmos.metier
                 case 4:
                     #region
                     // Plus la strategie a une valeur haute, plus le AI est aggressif
-                    switch(Strategie){
+                   
+                    // Section de code applicable peu importe la stratégie
+                    // Si un flag d'attaque est mit a true, plus tard nous allons sauté par dessus de grande section de code
+                    if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
+                        || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
+                        || jeu.ChampBatailleUnitesJ1.Champ1 == null
+                        || PeutOblitererCombatTableJeu(jeu, 1))
+                    {
+                        AttaqueChamp1 = true;
+                    }
+                    if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
+                        || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
+                        || jeu.ChampBatailleUnitesJ1.Champ2 == null
+                        || PeutOblitererCombatTableJeu(jeu, 2))
+                    {
+                        AttaqueChamp2 = true;
+                    }
+                    if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
+                        || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
+                        || jeu.ChampBatailleUnitesJ1.Champ3 == null
+                        || PeutOblitererCombatTableJeu(jeu, 3))
+                    {
+                        AttaqueChamp3 = true;
+                    }
+
+                    // Section de choix d'attaque adaptatif à la stratégie
+                    switch (Strategie){
                         case 1:
-                        #region
-                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                                || jeu.ChampBatailleUnitesJ1.Champ1 == null
-                                || rnd.Next(1, 4) != 1)
-                            {
-                                AttaqueChamp1 = true;
-                            }
-                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                                || jeu.ChampBatailleUnitesJ1.Champ2 == null
-                                || rnd.Next(1, 4) != 2)
-                            {
-                                AttaqueChamp2 = true;
-                            }
-                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                                || jeu.ChampBatailleUnitesJ1.Champ3 == null
-                                || rnd.Next(1, 4) != 3)
-                            {
-                                AttaqueChamp3 = true;
-                            }
+                            #region
+                            // Pour l'instant rien
                             break;
                         #endregion
                         case 2:
                             #region
-                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
-                              || (jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque
-                              && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense))
-                            {
-                                if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                                    || jeu.ChampBatailleUnitesJ1.Champ1 == null)
-                                {
-                                    AttaqueChamp1 = true;
-                                }
-                            }
-                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
-                            {
-                                if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                                   || jeu.ChampBatailleUnitesJ1.Champ2 == null)
-                                {
-                                    AttaqueChamp2 = true;
-                                }
-                            }
-                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
-                            {
-                                if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                                   || jeu.ChampBatailleUnitesJ1.Champ3 == null)
-                                {
-                                    AttaqueChamp3 = true;
-                                }
-                            }
-                            #endregion
+                            // Pour l'instant rien
                             break;
+                        #endregion
                         case 3:
                             #region
-                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense))
+                            if ( !AttaqueChamp1
+                                && jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation" &&
+                                CombatEstProfitable( jeu, 1 ))
                             {
-                                if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                                    || jeu.ChampBatailleUnitesJ1.Champ1 == null)
-                                {
-                                    AttaqueChamp1 = true;
-                                }
+                                AttaqueChamp1 = true;
                             }
-                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
+                            // ---------------------------- Champ 2 --------------------------------------
+                            if (!AttaqueChamp2
+                                && jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation" &&
+                                CombatEstProfitable(jeu, 2))
                             {
-                                if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                                   || jeu.ChampBatailleUnitesJ1.Champ2 == null)
-                                {
-                                    AttaqueChamp2 = true;
-                                }
+                                AttaqueChamp2 = true;
                             }
-                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
+                            // ---------------------------- Champ 3 --------------------------------------
+                            if (!AttaqueChamp3
+                                && jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation" &&
+                                CombatEstProfitable(jeu, 3))
                             {
-                                if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                                   || jeu.ChampBatailleUnitesJ1.Champ3 == null)
-                                {
-                                    AttaqueChamp3 = true;
-                                }
+                                AttaqueChamp3 = true;
                             }
                             break;
                             #endregion
                         case 4:
                             #region
-                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
-                              || (jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque
-                              && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense))
+                            if (!AttaqueChamp1
+                                && jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation" &&
+                                CombatEstProfitable(jeu, 1))
                             {
-                                if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                                    || jeu.ChampBatailleUnitesJ1.Champ1 == null)
-                                {
-                                    AttaqueChamp1 = true;
-                                }
+                                AttaqueChamp1 = true;
                             }
-                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
+                            // ---------------------------- Champ 2 --------------------------------------
+                            if (!AttaqueChamp2
+                                && jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation" &&
+                                CombatEstProfitable(jeu, 2))
                             {
-                                if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                                   || jeu.ChampBatailleUnitesJ1.Champ2 == null)
-                                {
-                                    AttaqueChamp2 = true;
-                                }
+                                AttaqueChamp2 = true;
                             }
-                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
-                                || (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
-                                && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
+                            // ---------------------------- Champ 3 --------------------------------------
+                            if (!AttaqueChamp3
+                                && jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation" &&
+                                CombatEstProfitable(jeu, 3))
                             {
-                                if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
-                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                                   || jeu.ChampBatailleUnitesJ1.Champ3 == null)
-                                {
-                                    AttaqueChamp3 = true;
-                                }
+                                AttaqueChamp3 = true;
                             }
                             #endregion
                             break;
                         case 5: // PRESS THE ATTACK AT ALL COST
+                            #region
                             AttaqueChamp1 = true;
                             AttaqueChamp2 = true;
                             AttaqueChamp3 = true;
                             break;
+                        #endregion
                         default: // Si jamais un bug survient, on attaque avec tout.
-                            AttaqueChamp1  = true;
+                            AttaqueChamp1 = true;
                             AttaqueChamp2 = true;
                             AttaqueChamp3 = true;
                             break;
-
                     }
-
-
                     break;
                 #endregion
                 /* ---------------------------------------------------------------------------------------------- 
@@ -757,9 +717,57 @@ namespace Cosmos.metier
 
         }
         /// <summary>
+        /// Permet de déterminer si un combat est profitable à long terme dans des conditions non dramatique
+        /// </summary>
+        /// <param name="jeu"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private bool CombatEstProfitable(TableDeJeu jeu, int position)
+        {
+            // Je vérifie si je peut soit faire un échange ou faire un échange/oblitération sur deux tour
+            if (position == 1)
+            {
+                if (jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque)
+                {
+                    return true;
+                }
+                else if ( (jeu.ChampBatailleUnitesJ2.Champ1.Attaque * 2) > jeu.ChampBatailleUnitesJ1.Champ1.Defense
+                    && jeu.ChampBatailleUnitesJ1.Champ1.Attaque <= jeu.ChampBatailleUnitesJ2.Champ1.Defense)
+                {
+                    return true; 
+                }                
+            }
+            else if (position == 2)
+            {
+                if (jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.ChampBatailleUnitesJ2.Champ2.Attaque)
+                {
+                    return true;
+                }
+                else if ((jeu.ChampBatailleUnitesJ2.Champ2.Attaque * 2) > jeu.ChampBatailleUnitesJ1.Champ2.Defense
+                    && jeu.ChampBatailleUnitesJ1.Champ2.Attaque <= jeu.ChampBatailleUnitesJ2.Champ2.Defense)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.ChampBatailleUnitesJ2.Champ3.Attaque)
+                {
+                    return true;
+                }
+                else if ((jeu.ChampBatailleUnitesJ2.Champ3.Attaque * 2) > jeu.ChampBatailleUnitesJ1.Champ3.Defense
+                    && jeu.ChampBatailleUnitesJ1.Champ3.Attaque <= jeu.ChampBatailleUnitesJ2.Champ3.Defense)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// De base, le AI n'attaque pas et l'algo decide de changer pour l'offense si nécessaire
         /// </summary>
-        public void ReinitialiserChampAttaque()
+        private void ReinitialiserChampAttaque()
         {
             AttaqueChamp1 = false;
             AttaqueChamp2 = false;
@@ -923,7 +931,7 @@ namespace Cosmos.metier
         /// </summary>
         /// <param name="jeu"></param>
         /// <returns></returns>
-        public bool ExisteChampUniteVideEnemi(TableDeJeu jeu)
+        private bool ExisteChampUniteVideEnemi(TableDeJeu jeu)
         {
             if (jeu.ChampBatailleUnitesJ1.Champ1 == null)
             {
@@ -946,7 +954,7 @@ namespace Cosmos.metier
         /// <param name="jeu"></param>
         /// <returns>Retourne -1 si aucun champ permet de completement gagner une "lane"
         /// Sinon retourne la "lane" ou un tel combat peut-être gagné </returns>
-        public int PeutOblitererCombat(TableDeJeu jeu, int index)
+        private int PeutOblitererCombat(TableDeJeu jeu, int index)
         {
             // Je vérifie ici si lors d'un combat mon unité va non seulement détruire l'enemi, mais en plus survivre
             if ( jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.LstMainJ2[index].getAttaque() 
@@ -967,12 +975,40 @@ namespace Cosmos.metier
 
             return -1;
         }
-    
+        /// <summary>
+        /// Permet de déterminer si un combat peut être gagner sans perte
+        /// </summary>
+        /// <param name="jeu"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private bool PeutOblitererCombatTableJeu(TableDeJeu jeu, int position)
+        {
+            // Je vérifie ici si lors d'un combat mon unité va non seulement détruire l'enemi, mais en plus survivre
+            if ( position == 1 
+                && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque )
+            {
+                return true;
+            }
+            else if(position == 2
+                && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque)
+            {
+                return true;
+            }
+            else if (jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Je vérifie si une unité peut amener le AI a la défaite
         /// </summary>
         /// <returns></returns>
-        public bool PossibiliteDefaiteUnite( TableDeJeu jeu )
+        private bool PossibiliteDefaiteUnite( TableDeJeu jeu )
         {
             int totalDMG = 0;
 
@@ -1000,7 +1036,7 @@ namespace Cosmos.metier
         /// <summary>
         /// Modifier le int "Strategie" pour définir comment le AI veut jouer. 
         /// </summary>
-        public void EvaluerConditionVictoire(TableDeJeu jeu)
+        private void EvaluerConditionVictoire(TableDeJeu jeu)
         {
             // On augmente le score pour des conditions propice à l'offense
             // On descent le score pour des conditions propice à la défense
