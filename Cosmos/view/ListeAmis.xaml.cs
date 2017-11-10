@@ -22,6 +22,7 @@ namespace Cosmos.view
     public partial class ListeAmis : UserControl
     {
         public MainWindow Main { get; set; }
+        public MenuPrincipal MenuPrincipal { get; set; }
         public UserControl ContenuEcran { get; set; }
         
         public ListeAmis(MainWindow main)
@@ -37,19 +38,30 @@ namespace Cosmos.view
         {
             foreach (Utilisateur ami in Main.LstAmis)
             {
-
                 TextBlock txbAmi = new TextBlock();
                 txbAmi.Padding = new Thickness(10, 5, 0, 0);
                 txbAmi.Foreground = Brushes.White;
                 txbAmi.Text = ami.Nom;
-                txbAmi.MouseLeftButtonUp += txbAmi_ClickLeftMouseButton; 
+                txbAmi.Name = "txb" + ami.Nom; 
+                txbAmi.MouseLeftButtonUp += txbAmi_ClickLeftMouseButton;
 
+                stpListeAmis.Children.Add(txbAmi);
             }
         }
 
         private void txbAmi_ClickLeftMouseButton(object sender, MouseButtonEventArgs e)
         {
+            RafraichirListeAmis();
             
+            TextBlock txbAmi = (TextBlock)sender;
+            txbAmi.Background = Brushes.DarkGoldenrod;
+
+            btnModifier.IsEnabled = true;
+            btnModifier.Opacity = 1;
+
+            btnSupprimer.IsEnabled = true;
+            btnSupprimer.Opacity = 1;
+
         }
 
         private void btnFermer_Click(object sender, RoutedEventArgs e)
@@ -64,6 +76,24 @@ namespace Cosmos.view
 
         private void btnSupprimer_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void RafraichirListeAmis()
+        {
+            foreach (object ami in stpListeAmis.Children)
+            {
+                if (ami is TextBlock)
+                {
+                    TextBlock txbUnAmi = (TextBlock)ami;
+                    txbUnAmi.Background = Brushes.Black;
+                }
+            }
+        }
+
+        private void btnModifier_Click(object sender, RoutedEventArgs e)
+        {
+            Main.EcranModifierAmi();
 
         }
     }

@@ -68,5 +68,7 @@ namespace Cosmos.view
         {
             Main.EcranListeAmis();
         }
+
+        
     }
 }

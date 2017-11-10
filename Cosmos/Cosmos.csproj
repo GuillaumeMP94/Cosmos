@@ -99,6 +99,9 @@
     <Compile Include="view\MenuPrincipal.xaml.cs">
       <DependentUpon>MenuPrincipal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ModifierAmi.xaml.cs">
+      <DependentUpon>ModifierAmi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\OptionCompte.xaml.cs">
       <DependentUpon>OptionCompte.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\MenuPrincipal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ModifierAmi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

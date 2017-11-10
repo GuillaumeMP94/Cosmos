@@ -72,6 +72,7 @@ namespace Cosmos
         public void EcranCreerCompte()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new CreationCompte(this);
 
 
@@ -81,6 +82,7 @@ namespace Cosmos
         public void EcranConnexion()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new Connexion(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
@@ -91,6 +93,7 @@ namespace Cosmos
         public void EcranRecuperation()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new RecuperationCompte(this);
 
             grdMain.Children.Add(ContenuEcran);
@@ -99,6 +102,7 @@ namespace Cosmos
         public void EcranOptionCompte()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new OptionCompte(this);
 
             grdMain.Children.Add(ContenuEcran);
@@ -107,6 +111,7 @@ namespace Cosmos
         public void EcranCampagne()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
@@ -117,6 +122,7 @@ namespace Cosmos
         public void EcranReglements()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new ReglementsTutoriel(this);
 
             grdMain.Children.Add(ContenuEcran);
@@ -132,6 +138,7 @@ namespace Cosmos
         public void EcranPartie()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
 
             Joueur joueur1 = new Joueur();
             Joueur joueur2 = new Joueur();
@@ -140,6 +147,12 @@ namespace Cosmos
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
 
+            grdMain.Children.Add(ContenuEcran);
+        }
+
+        public void EcranModifierAmi()
+        {
+            ContenuEcran = new ModifierAmi(this);
             grdMain.Children.Add(ContenuEcran);
         }
 

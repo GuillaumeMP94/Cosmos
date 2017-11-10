@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Cosmos.view.ModifierAmi"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="450">
+    <Grid Name="grdModificationAmi">
+        <Rectangle Name="recRessource" Fill="Black" Opacity="0.6" Height="auto" Width="auto" Visibility="Visible"/>
+        <Grid Width="450" Height="300" Background="White"></Grid>
+        <Button Name="btnFermer" Width="50" Height="50" Click="btnFermer_Click" Margin="349,240,50,10">Fermer</Button>
+        
+    </Grid>
+</UserControl>
