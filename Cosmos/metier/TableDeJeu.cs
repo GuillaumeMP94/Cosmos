@@ -270,7 +270,7 @@ namespace Cosmos.metier
             return false;
         }
 
-        public void JouerCarte(int index)
+        public void JouerCarte(int index, int position)
         {
             // Le coup à pas été validé                 
             Carte aJouer;
@@ -283,7 +283,7 @@ namespace Cosmos.metier
                     Joueur1.RessourceActive -= aJouer.Cout;
                     if (aJouer is Unite)
                     {
-                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
+                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
                     }
                     else if (aJouer is Batiment)
                     {
@@ -306,7 +306,7 @@ namespace Cosmos.metier
 
                     if (aJouer is Unite)
                     {
-                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
+                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
                     }
                     if (aJouer is Batiment)
                     {

@@ -368,6 +368,9 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
+                imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+                imgUnite1J1.PreviewMouseLeftButtonUp -= imgZoomCarte_PreviewMouseLeftButtonUp;
             }
             else
             {
@@ -376,6 +379,9 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
+                imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+                imgUnite2J1.PreviewMouseLeftButtonUp -= imgZoomCarte_PreviewMouseLeftButtonUp;
             }
             else
             {
@@ -384,6 +390,9 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+                imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                imgUnite3J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+                imgUnite3J1.PreviewMouseLeftButtonUp -= imgZoomCarte_PreviewMouseLeftButtonUp;
             }
             else
             {
@@ -394,7 +403,7 @@ namespace Cosmos.view
         private Image CreerImageCarte(String nom, int position)
         {
             Image carte = new Image();
-            git carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
+            carte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + nom + ".jpg"));
             //carte.Height = 300;
             //carte.Width = 700;
             //carte.VerticalAlignment = VerticalAlignment.Top;
@@ -432,7 +441,11 @@ namespace Cosmos.view
         public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
-            IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+
+            if(carteMain)
+            {
+                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+            }            
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
 
@@ -456,7 +469,8 @@ namespace Cosmos.view
 
         private void AfficherCoupPoosible()
         {
-            if(laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite1J1.Cursor = Cursors.Hand;
@@ -478,9 +492,14 @@ namespace Cosmos.view
 
         private void ChoisirEmplacementUnite(object sender, MouseButtonEventArgs e)
         {
+            Image img = (Image)sender;
             // TODO: Enlever le Inserer Carte Creature
             //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
-            laTableDeJeu.JouerCarte(IndexCarteZoomer);
+            laTableDeJeu.JouerCarte(IndexCarteZoomer, Convert.ToInt32(img.Name.Substring(8, 1)));
+
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
+            rectZoom.Visibility = Visibility.Hidden;
+            img.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             RefreshAll();
         }
 
@@ -496,10 +515,12 @@ namespace Cosmos.view
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
                     // Choisir l'emplacement.
-                    AfficherCoupPoosible();
-                    
+                    AfficherCoupPoosible();                    
                 }
-                rectZoom.Visibility = Visibility.Hidden;
+                else
+                {
+                    rectZoom.Visibility = Visibility.Hidden;
+                }
                 imgZoomCarte.Visibility = Visibility.Hidden;
                 
 
