@@ -113,37 +113,37 @@ namespace Cosmos.metier
                                     && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite = rnd.Next(1, 3);
-                                    jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                    jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)],ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null)
                                 {
                                     ChoixChampUnite = rnd.Next(1, 2);
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ2 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite =rnd.Next(2, 3);
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite =((rnd.Next(1, 2) * 2) - 1);
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ1 == null)
                                 {
                                     ChoixChampUnite = 1;
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ2 == null)
                                 {
                                     ChoixChampUnite = 2;
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite = 3;
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                             }
                         }
@@ -163,7 +163,7 @@ namespace Cosmos.metier
                                         || jeu.ChampConstructionsJ2.Champ3 == null
                                         || jeu.ChampConstructionsJ2.Champ4 == null)
                                     {
-                                        jeu.JouerCarteAI(index);
+                                        jeu.JouerCarte(index, ChoixChampUnite);
                                     }
                                 }
                                 else if (jeu.LstMainJ2[index] is Gadget)
