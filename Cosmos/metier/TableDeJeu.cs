@@ -89,7 +89,7 @@ namespace Cosmos.metier
 
         public int NbTourComplet
         {
-            get { return phase; }
+            get { return nbTourComplet; }
             set
             {
                 nbTourComplet = value;
