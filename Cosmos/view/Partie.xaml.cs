@@ -33,6 +33,9 @@ namespace Cosmos.view
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
         public DispatcherTimer Temps { get; set; }
+        public bool Unite1J1Attack { get; set; }
+        public bool Unite2J1Attack { get; set; }
+        public bool Unite3J1Attack { get; set; }
 
         int phase;
         TableDeJeu laTableDeJeu;
@@ -175,7 +178,7 @@ namespace Cosmos.view
             if (!laTableDeJeu.JoueurActifEst1)
                 imgFinTour.Visibility = Visibility.Visible;
             RefreshAll();
-            laTableDeJeu.ExecuterAttaque(true, true, true);
+            laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
             Temps.Start();
         }
         private void PhaseFin()
@@ -187,6 +190,12 @@ namespace Cosmos.view
             txBlphaseRessource.Background = Brushes.DarkGoldenrod;
             txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
             txBlphaseRessource.Foreground = Brushes.Black;
+
+            // On remet les trois Bools pour l'attaque a False
+            Unite1J1Attack = false;
+            Unite2J1Attack = false;
+            Unite3J1Attack = false;
+
             RefreshAll();
         }
 
@@ -457,9 +466,14 @@ namespace Cosmos.view
                 imgUnite3J1.Source = null;                
                 imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
-            imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+            imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;            
             imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
             imgUnite3J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+
+            emplacementUnite1J1.BorderBrush = Brushes.Transparent;
+            emplacementUnite2J1.BorderBrush = Brushes.Transparent;
+            emplacementUnite3J1.BorderBrush = Brushes.Transparent;
+
         }
 
         private Image CreerImageCarte(String nom, int position)
@@ -496,7 +510,55 @@ namespace Cosmos.view
         private void Carte_CarteEnJeu_Zoom(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
-            AfficherCarteZoom(img, false);
+
+            if(phase == 3 && img.Opacity == 1)
+            {
+                switch(img.Name.Substring(8, 1))
+                {
+                    case "1":
+                        Unite1J1Attack = ChangerBoolAttaque(Unite1J1Attack);
+                        ChangerBorderAttaque(emplacementUnite1J1, Unite1J1Attack);
+                        break;
+                    case "2":
+                        Unite2J1Attack = ChangerBoolAttaque(Unite2J1Attack);
+                        ChangerBorderAttaque(emplacementUnite2J1, Unite2J1Attack);
+                        break;
+                    case "3":
+                        Unite3J1Attack = ChangerBoolAttaque(Unite3J1Attack);
+                        ChangerBorderAttaque(emplacementUnite3J1, Unite3J1Attack);
+                        break;
+                }
+            }
+            else
+            {
+                AfficherCarteZoom(img, false);
+            }
+        }
+
+        private bool ChangerBoolAttaque(bool attaque)
+        {
+            if(attaque)
+            {
+                attaque = false;
+            }
+            else
+            {
+                attaque = true;
+            }
+            return attaque;
+        }
+
+        private void ChangerBorderAttaque(Border border, bool attaque)
+        {
+            if (attaque)
+            {
+                border.BorderBrush = Brushes.Yellow;
+            }
+            else
+            {
+                attaque = true;
+                border.BorderBrush = Brushes.Transparent;
+            }
         }
 
 
