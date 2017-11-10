@@ -13,8 +13,8 @@
         <Border BorderThickness="5" BorderBrush="Transparent" />
 
         <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
-            
-            <Border BorderThickness="5" BorderBrush="Pink" />
+
+            <Border BorderThickness="5" BorderBrush="Transparent" />
 
             <TextBlock x:Name="txBlPBA" Text="BLINDAGE&#10;ADVERSE" Foreground="Red"
                        VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,30,0,0"
