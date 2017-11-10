@@ -217,7 +217,7 @@ namespace Cosmos.metier
             if (champ2)
                 Tirer(attaquant2, defenseur2, joueurDefense);
             if (champ3)
-                Tirer(attaquant3, defenseur2, joueurDefense);
+                Tirer(attaquant3, defenseur3, joueurDefense);
 
         }
 
