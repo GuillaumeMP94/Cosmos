@@ -32,14 +32,19 @@ namespace Cosmos.view
         public List<Image> ImgMainJoueur { get; set; }
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
+        public DispatcherTimer Temps { get; set; }
 
         int phase;
         TableDeJeu laTableDeJeu;
-
+        
         public Partie(MainWindow main)
         {
             InitializeComponent();
             Main = main;
+            //Timer pour refresh
+            Temps = new DispatcherTimer();
+            Temps.Interval = TimeSpan.FromMilliseconds(1000);
+            Temps.Tick += timer_Tick;
             //TODO: Utilisateur Connecter
             Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
@@ -77,8 +82,7 @@ namespace Cosmos.view
 
             // Afficher la main
             ListBorderImgMainJoueur = new List<Border>();
-            ImgMainJoueur = new List<Image>();         
-
+            ImgMainJoueur = new List<Image>();
 
 
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
@@ -87,6 +91,13 @@ namespace Cosmos.view
             // TODO testé ^
 
         }
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if (phase == 4 || phase == 1)
+            {
+                changerPhase();
+            }
+        }
         /// <summary>
         /// Ce bouton change la phase pour l'interface et pour la table de jeu
         /// </summary>
@@ -94,66 +105,90 @@ namespace Cosmos.view
         /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Enlever le commentaire
-            //if (laTableDeJeu.JoueurActifEst1)
+            if (phase == 2 || phase == 3)
+            {
                 changerPhase();
+            }
         }
 
         private void changerPhase()
         {
             laTableDeJeu.AvancerPhase();
-            RefreshAll();
+
             switch (phase)
             {
                 case 1:
                     phase++;
-                    // on ajoute les ressources au joueur actif
-                    laTableDeJeu.AttribuerRessourceLevel();
-
-                    txBlphaseRessource.Background = Brushes.Transparent;
-                    txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
-                    txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
-                    txBlphasePrincipale.Foreground = Brushes.Black;
-                    imgFinTour.Visibility = Visibility.Hidden;
-                    System.Threading.Thread.Sleep(500);
-                    RefreshAll();
+                    PhaseRessource();
                     break;
                 case 2:
                     phase++;
-                    txBlphasePrincipale.Background = Brushes.Transparent;
-                    txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
-                    txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
-                    txBlphaseAttaque.Foreground = Brushes.Black;
+                    PhasePrincipale();
                     RefreshAll();
                     break;
                 case 3:
                     phase++;
-                    laTableDeJeu.ExecuterAttaque(true,true,true);
-                    txBlphaseAttaque.Background = Brushes.Transparent;
-                    txBlphaseFin.Background = Brushes.DarkGoldenrod;
-                    txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
-                    txBlphaseFin.Foreground = Brushes.Black;
-                    if (!laTableDeJeu.JoueurActifEst1)
-                        imgFinTour.Visibility = Visibility.Visible;
-                    RefreshAll();
-                    System.Threading.Thread.Sleep(500);
-                    changerPhase();
+                    PhaseAttaque();
                     break;
                 case 4:
                     phase = 1; // La phase de fin est terminer, nous retournons à la première phase
-                    txBlphaseFin.Background = Brushes.Transparent;
-                    txBlphaseRessource.Background = Brushes.DarkGoldenrod;
-                    txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
-                    txBlphaseRessource.Foreground = Brushes.Black;
-                    
-                    RefreshAll();
-                    System.Threading.Thread.Sleep(500);
-                    changerPhase();
+                    PhaseFin();
                     break;
             }
+        }
+
+        private void PhasePrincipale()
+        {
+            txBlphasePrincipale.Background = Brushes.Transparent;
+            txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
+            txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseAttaque.Foreground = Brushes.Black;
+        }
+
+        private void PhaseFin()
+        {
+            laTableDeJeu.PreparerTroupes();
+            laTableDeJeu.DetruireUnite();
+            laTableDeJeu.DetruireBatiment();
+            txBlphaseFin.Background = Brushes.Transparent;
+            txBlphaseRessource.Background = Brushes.DarkGoldenrod;
+            txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.Black;
             RefreshAll();
         }
 
+        private void PhaseAttaque()
+        {
+            btnTerminerPhase.IsEnabled = false;
+            btnTerminerPhase.Visibility = Visibility.Hidden;
+            btnTerminerPhase.Refresh();
+            txBlphaseAttaque.Background = Brushes.Transparent;
+            txBlphaseFin.Background = Brushes.DarkGoldenrod;
+            txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseFin.Foreground = Brushes.Black;
+            if (!laTableDeJeu.JoueurActifEst1)
+                imgFinTour.Visibility = Visibility.Visible;
+            RefreshAll();
+            laTableDeJeu.ExecuterAttaque(true, true, true);
+        }
+
+        /// <summary>
+        /// Actions qui se produit lors de la phase de ressource
+        /// </summary>
+        private void PhaseRessource()
+        {
+            // on ajoute les ressources au joueur actif
+            laTableDeJeu.AttribuerRessourceLevel();
+            laTableDeJeu.PigerCarte();
+            txBlphaseRessource.Background = Brushes.Transparent;
+            txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
+            txBlphasePrincipale.Foreground = Brushes.Black;
+            imgFinTour.Visibility = Visibility.Hidden;
+            RefreshAll();
+            btnTerminerPhase.IsEnabled = true;
+            btnTerminerPhase.Visibility = Visibility.Visible;
+        }
 
         private void RefreshAll()
         {
@@ -161,6 +196,7 @@ namespace Cosmos.view
             txBlphasePrincipale.Refresh();
             txBlphaseAttaque.Refresh();
             txBlphaseFin.Refresh();
+            imgFinTour.Refresh();
             // Afficher les cartes sur le champ de bataille, les unités et les batiement
             AfficherChampUnites();
             AfficherChampBatiments();
@@ -233,7 +269,7 @@ namespace Cosmos.view
             border.BorderBrush = converter.ConvertFromString("#e1ff00") as Brush;
 
             // Si la carte peut être jouer, elle sera entouré d'une bordure de couleur
-            if (phase == 2 && laTableDeJeu.validerCoup(position))
+            if (laTableDeJeu.JoueurActifEst1  && phase == 2 && laTableDeJeu.validerCoup(position))
             {
                 border.BorderThickness = new Thickness(5);
                 
@@ -343,6 +379,10 @@ namespace Cosmos.view
             if(laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
             {
                 imgUnite1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ1.Nom + ".jpg"));
+                if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp1)
+                    imgUnite1J2.Opacity = 0.5;
+                else
+                    imgUnite1J2.Opacity = 1;
             }
             else
             {
@@ -351,6 +391,10 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null)
             {
                 imgUnite2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ2.Nom + ".jpg"));
+                if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp2)
+                    imgUnite2J2.Opacity = 0.5;
+                else
+                    imgUnite2J2.Opacity = 1;
             }
             else
             {
@@ -359,6 +403,10 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null)
             {
                 imgUnite3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ3.Nom + ".jpg"));
+                if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp3)
+                    imgUnite3J2.Opacity = 0.5;
+                else
+                    imgUnite3J2.Opacity = 1;
             }
             else
             {
@@ -369,7 +417,10 @@ namespace Cosmos.view
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
                 //imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-                
+                if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1)
+                    imgUnite1J1.Opacity = 0.5;
+                else
+                    imgUnite1J1.Opacity = 1;
             }
             else
             {
@@ -380,7 +431,10 @@ namespace Cosmos.view
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
                 //imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-                
+                if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
+                    imgUnite2J1.Opacity = 0.5;
+                else
+                    imgUnite2J1.Opacity = 1;
             }
             else
             {
@@ -391,7 +445,10 @@ namespace Cosmos.view
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
                 //imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
-                
+                if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3)
+                    imgUnite3J1.Opacity = 0.5;
+                else
+                    imgUnite3J1.Opacity = 1;
             }
             else
             {
@@ -458,8 +515,8 @@ namespace Cosmos.view
         {
             grd1.Children.Remove(ContenuEcran);
             recRessource.Visibility = Visibility.Hidden;
-
             changerPhase();
+            Temps.Start();
             AfficherMain();
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)

@@ -215,7 +215,6 @@
     <Resource Include="images\cartes\ATX-317.jpg" />
     <Resource Include="images\cartes\Croiseur de Guerre.jpg" />
     <Resource Include="images\cartes\Elite.jpg" />
-    <Resource Include="images\cartes\Explorateur de l%27Aliance.jpg" />
     <Resource Include="images\cartes\Exploreur Taligari.jpg" />
     <Resource Include="images\cartes\Exterminateur.jpg" />
     <Resource Include="images\cartes\Gronar.jpg" />
@@ -245,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\partie\jouer.jpg" />
+    <Resource Include="images\cartes\Explorateur de l%27Alliance.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
