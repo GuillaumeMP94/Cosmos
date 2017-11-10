@@ -519,7 +519,7 @@ namespace Cosmos.view
         {
             Image img = (Image)sender;
 
-            if(phase == 3 && img.Opacity == 1)
+            if(Phase == 3 && img.Opacity == 1)
             {
                 switch(img.Name.Substring(8, 1))
                 {
