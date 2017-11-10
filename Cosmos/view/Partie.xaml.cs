@@ -137,24 +137,30 @@ namespace Cosmos.view
             }
         }
 
+        /// <summary>
+        /// Actions qui se produit lors de la phase de ressource
+        /// </summary>
+        private void PhaseRessource()
+        {
+            // on ajoute les ressources au joueur actif
+            laTableDeJeu.AttribuerRessourceLevel();
+            laTableDeJeu.PigerCarte();
+            txBlphaseRessource.Background = Brushes.Transparent;
+            txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
+            txBlphasePrincipale.Foreground = Brushes.Black;
+            imgFinTour.Visibility = Visibility.Hidden;
+            RefreshAll();
+            Temps.Stop();
+            btnTerminerPhase.IsEnabled = true;
+            btnTerminerPhase.Visibility = Visibility.Visible;
+        }
         private void PhasePrincipale()
         {
             txBlphasePrincipale.Background = Brushes.Transparent;
             txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
             txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
             txBlphaseAttaque.Foreground = Brushes.Black;
-        }
-
-        private void PhaseFin()
-        {
-            laTableDeJeu.PreparerTroupes();
-            laTableDeJeu.DetruireUnite();
-            laTableDeJeu.DetruireBatiment();
-            txBlphaseFin.Background = Brushes.Transparent;
-            txBlphaseRessource.Background = Brushes.DarkGoldenrod;
-            txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
-            txBlphaseRessource.Foreground = Brushes.Black;
-            RefreshAll();
         }
 
         private void PhaseAttaque()
@@ -170,25 +176,21 @@ namespace Cosmos.view
                 imgFinTour.Visibility = Visibility.Visible;
             RefreshAll();
             laTableDeJeu.ExecuterAttaque(true, true, true);
+            Temps.Start();
+        }
+        private void PhaseFin()
+        {
+            laTableDeJeu.PreparerTroupes();
+            laTableDeJeu.DetruireUnite();
+            laTableDeJeu.DetruireBatiment();
+            txBlphaseFin.Background = Brushes.Transparent;
+            txBlphaseRessource.Background = Brushes.DarkGoldenrod;
+            txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.Black;
+            RefreshAll();
         }
 
-        /// <summary>
-        /// Actions qui se produit lors de la phase de ressource
-        /// </summary>
-        private void PhaseRessource()
-        {
-            // on ajoute les ressources au joueur actif
-            laTableDeJeu.AttribuerRessourceLevel();
-            laTableDeJeu.PigerCarte();
-            txBlphaseRessource.Background = Brushes.Transparent;
-            txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
-            txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
-            txBlphasePrincipale.Foreground = Brushes.Black;
-            imgFinTour.Visibility = Visibility.Hidden;
-            RefreshAll();
-            btnTerminerPhase.IsEnabled = true;
-            btnTerminerPhase.Visibility = Visibility.Visible;
-        }
+
 
         private void RefreshAll()
         {
@@ -505,7 +507,11 @@ namespace Cosmos.view
             if(carteMain)
             {
                 IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
-            }            
+            }
+            else
+            {
+                IndexCarteZoomer = 99; // On met l'index à 99 pour détecter qu'il a clicker sur une carte en jeu.
+            }
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
 
@@ -516,7 +522,6 @@ namespace Cosmos.view
             grd1.Children.Remove(ContenuEcran);
             recRessource.Visibility = Visibility.Hidden;
             changerPhase();
-            Temps.Start();
             AfficherMain();
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
@@ -569,7 +574,7 @@ namespace Cosmos.view
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // On peut jouer une carte seulement dans la phase 2
-            if (phase == 2 && laTableDeJeu.JoueurActifEst1)
+            if (phase == 2 && laTableDeJeu.JoueurActifEst1 && IndexCarteZoomer != 99) // Si l'index est à 99 c'est qu'il a cliquer une carte en jeu.
             {
 
                 // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
@@ -577,15 +582,23 @@ namespace Cosmos.view
                 // Il faudrait ré-organiser la main après le 0,5
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
-                    // Choisir l'emplacement.
-                    AfficherCoupPoosible();                    
+                    if (laTableDeJeu.CarteAJouerEstUnite(IndexCarteZoomer))
+                    {
+                        // Choisir l'emplacement.
+                        AfficherCoupPoosible();                    
+                    }
+                    else
+                    {
+                        laTableDeJeu.JouerCarte(IndexCarteZoomer, 0); // La position n'est pas nécessaire.
+                        rectZoom.Visibility = Visibility.Hidden;
+                        RefreshAll();
+                    }
                 }
                 else
                 {
                     rectZoom.Visibility = Visibility.Hidden;
                 }
                 imgZoomCarte.Visibility = Visibility.Hidden;
-                
 
             }
         }
@@ -594,6 +607,8 @@ namespace Cosmos.view
         {
             rectZoom.Visibility = Visibility.Hidden;
             imgZoomCarte.Visibility = Visibility.Hidden;
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
+            RefreshAll();
         }
     }
     /// <summary>

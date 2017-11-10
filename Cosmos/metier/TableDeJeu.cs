@@ -662,5 +662,23 @@ namespace Cosmos.metier
 
 
         }
+
+        public bool CarteAJouerEstUnite(int indexCarteZoomer)
+        {
+            if (JoueurActifEst1)
+            {
+                if (LstMainJ1[indexCarteZoomer] is Unite)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                if (LstMainJ2[indexCarteZoomer] is Unite)
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }

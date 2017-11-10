@@ -26,13 +26,13 @@ namespace Cosmos.metier
         public void OnCompleted()
         {
             // Implémentation obligatoire, might use, might not      
-            Console.WriteLine("Le tour du AI est terminé");  // TEST 
+            MessageBox.Show("Le tour du AI est terminé");
         }
 
         public void OnError(Exception error)
         {
             // Implémentation obligatoire, might use, might not
-            Console.WriteLine("Oops, une erreur est arrivée avec votre adversaire!");
+            MessageBox.Show("Oops, une erreur est arrivée avec votre adversaire!");
         }
 
         public void OnNext(TableDeJeu jeu)
@@ -274,7 +274,7 @@ namespace Cosmos.metier
                                 {
                                     if(jeu.LstMainJ2[coup] is Batiment)
                                     {
-                                        jeu.JouerCarte(coup);
+                                        jeu.JouerCarte(coup,0);
                                         // Rafraichir la liste des coup permis suite à un coup
                                         ListeCoupsPermis = jeu.listeCoupValideAI();
                                     } 
