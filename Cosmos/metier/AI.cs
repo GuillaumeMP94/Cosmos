@@ -59,7 +59,7 @@ namespace Cosmos.metier
         public string Nom { get; set; }
         #endregion
         #region Constructeur
-        public AI( string nom, int diff, Ressource debutLevelRessource, Deck deckAI, TableDeJeu laTableDeJeu)
+        public AI( string nom, int diff, Ressource debutLevelRessource, Deck deckAI)
             :base()
         {
             Nom = nom;
@@ -75,9 +75,6 @@ namespace Cosmos.metier
             AttaqueChamp2 = true;
             AttaqueChamp3 = true;
 
-
-            // Permet de lier l'AI avec la table de jeu
-            laTableDeJeu.Subscribe(this);
         }
         #endregion
 
