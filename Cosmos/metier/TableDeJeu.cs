@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Cosmos.metier.TrousseGlobale;
 
 namespace Cosmos.metier
 {
@@ -89,7 +90,7 @@ namespace Cosmos.metier
 
         public int NbTourComplet
         {
-            get { return phase; }
+            get { return nbTourComplet; }
             set
             {
                 nbTourComplet = value;
@@ -100,7 +101,6 @@ namespace Cosmos.metier
 
             }
         }
-
         public int Phase
         {
             get { return phase; }
@@ -462,6 +462,9 @@ namespace Cosmos.metier
                     joueurActifEst1 = true;
                 }
             }
+            PhaseChangeEventArgs p = new PhaseChangeEventArgs(1);
+            TrousseGlobale TG = new TrousseGlobale();
+            TG.OnPhaseChange(p);
         }
 
         /// <summary>

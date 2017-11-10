@@ -79,6 +79,7 @@
     <Compile Include="metier\Joueur.cs" />
     <Compile Include="metier\Ressource.cs" />
     <Compile Include="metier\TableDeJeu.cs" />
+    <Compile Include="metier\TrousseGlobale.cs" />
     <Compile Include="metier\Unite.cs" />
     <Compile Include="metier\Utilisateur.cs" />
     <Compile Include="view\Campagne.xaml.cs">
