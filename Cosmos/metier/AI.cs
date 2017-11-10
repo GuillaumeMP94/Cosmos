@@ -97,7 +97,7 @@ namespace Cosmos.metier
                     if (ListeCoupsPermis.Count != 0)
                     {
                         //jeu.AIPassePhase = false;
-                        jeu.JouerCarte(ListeCoupsPermis[rnd.Next(0, ListeCoupsPermis.Count)]);
+                        jeu.JouerCarte(ListeCoupsPermis[rnd.Next(0, ListeCoupsPermis.Count)], 1);
                         jeu.AvancerPhase();
                     }
                     else

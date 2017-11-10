@@ -201,6 +201,8 @@ namespace Cosmos.view
             AfficherChampUnites();
             AfficherChampBatiments();
             AfficherMain();
+            //TODO: test
+            //AfficherCoupPoosible();
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
@@ -414,6 +416,7 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
+                //imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
                 if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1)
                     imgUnite1J1.Opacity = 0.5;
                 else
@@ -422,10 +425,12 @@ namespace Cosmos.view
             else
             {
                 imgUnite1J1.Source = null;
+                imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;                
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
+                //imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
                 if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
                     imgUnite2J1.Opacity = 0.5;
                 else
@@ -434,10 +439,12 @@ namespace Cosmos.view
             else
             {
                 imgUnite2J1.Source = null;
+                imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+                //imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
                 if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3)
                     imgUnite3J1.Opacity = 0.5;
                 else
@@ -445,8 +452,12 @@ namespace Cosmos.view
             }
             else
             {
-                imgUnite3J1.Source = null;
+                imgUnite3J1.Source = null;                
+                imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
+            imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+            imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+            imgUnite3J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
         }
 
         private Image CreerImageCarte(String nom, int position)
@@ -490,7 +501,11 @@ namespace Cosmos.view
         public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
-            IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+
+            if(carteMain)
+            {
+                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+            }            
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
 
@@ -512,6 +527,45 @@ namespace Cosmos.view
             grd1.Children.Add(ContenuEcran);
         }
 
+        private void AfficherCoupPoosible()
+        {
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
+            {
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite1J1.Cursor = Cursors.Hand;
+                imgUnite1J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 is null)
+            {
+                imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite2J1.Cursor = Cursors.Hand;
+                imgUnite2J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 is null)
+            {
+                imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite3J1.Cursor = Cursors.Hand;
+                imgUnite3J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+        }
+
+        private void ChoisirEmplacementUnite(object sender, MouseButtonEventArgs e)
+        {
+            Image img = (Image)sender;
+            // TODO: Enlever le Inserer Carte Creature
+            //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+            laTableDeJeu.JouerCarte(IndexCarteZoomer, Convert.ToInt32(img.Name.Substring(8, 1)));
+
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
+            rectZoom.Visibility = Visibility.Hidden;
+            img.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Enlever les évènement
+
+            RefreshAll();
+        }
+
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // On peut jouer une carte seulement dans la phase 2
@@ -524,13 +578,14 @@ namespace Cosmos.view
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
                     // Choisir l'emplacement.
-                    // TODO: Enlever le Inserer Carte Creature
-                    //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
-                    laTableDeJeu.JouerCarte(IndexCarteZoomer);
+                    AfficherCoupPoosible();                    
                 }
-                rectZoom.Visibility = Visibility.Hidden;
+                else
+                {
+                    rectZoom.Visibility = Visibility.Hidden;
+                }
                 imgZoomCarte.Visibility = Visibility.Hidden;
-                RefreshAll();
+                
 
             }
         }

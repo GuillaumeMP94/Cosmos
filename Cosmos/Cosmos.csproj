@@ -243,6 +243,7 @@
     <Resource Include="images\Turn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\partie\jouer.jpg" />
     <Resource Include="images\cartes\Explorateur de l%27Alliance.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
