@@ -57,6 +57,7 @@ namespace Cosmos.metier
         #endregion
 
         private int phase;
+        private int nbTour;
         private bool joueurActifEst1;
         private int nbTourComplet;
 
@@ -113,6 +114,19 @@ namespace Cosmos.metier
 
             }
         }
+        public int NbTour
+        {
+            get { return nbTour; }
+            set
+            {
+                nbTour = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("NbTour"));
+                }
+
+            }
+        }
         public bool JoueurActifEst1
         {
             get { return joueurActifEst1; }
@@ -163,16 +177,106 @@ namespace Cosmos.metier
 
         public void ExecuterAttaque(bool champ1, bool champ2, bool champ3)
         {
-            if (champ1 && ChampBatailleUnitesJ1.Champ1 != null)
+            Unite attaquant1, attaquant2, attaquant3;
+            Unite defenseur1, defenseur2, defenseur3;
+            Joueur joueurDefense;
+            if (JoueurActifEst1)
             {
-                if (ChampBatailleUnitesJ2.Champ1 != null)
+                attaquant1 = ChampBatailleUnitesJ1.Champ1;
+                attaquant2 = ChampBatailleUnitesJ1.Champ2;
+                attaquant3 = ChampBatailleUnitesJ1.Champ3;
+                defenseur1 = ChampBatailleUnitesJ2.Champ1;
+                defenseur2 = ChampBatailleUnitesJ2.Champ2;
+                defenseur3 = ChampBatailleUnitesJ2.Champ3;
+                joueurDefense = Joueur2;
+                if (ChampBatailleUnitesJ1.EstEnPreparationChamp1)
+                    champ1 = false;
+                if (ChampBatailleUnitesJ1.EstEnPreparationChamp2)
+                    champ2 = false;
+                if (ChampBatailleUnitesJ1.EstEnPreparationChamp3)
+                    champ3 = false;
+            }
+            else
+            {
+                attaquant1 = ChampBatailleUnitesJ2.Champ1;
+                attaquant2 = ChampBatailleUnitesJ2.Champ2;
+                attaquant3 = ChampBatailleUnitesJ2.Champ3;
+                defenseur1 = ChampBatailleUnitesJ1.Champ1;
+                defenseur2 = ChampBatailleUnitesJ1.Champ2;
+                defenseur3 = ChampBatailleUnitesJ1.Champ3;
+                joueurDefense = Joueur1;
+                if (ChampBatailleUnitesJ2.EstEnPreparationChamp1)
+                    champ1 = false;
+                if (ChampBatailleUnitesJ2.EstEnPreparationChamp2)
+                    champ2 = false;
+                if (ChampBatailleUnitesJ2.EstEnPreparationChamp3)
+                    champ3 = false;
+            }
+            if (champ1)
+                Tirer(attaquant1, defenseur1, joueurDefense);
+            if (champ2)
+                Tirer(attaquant2, defenseur2, joueurDefense);
+            if (champ3)
+                Tirer(attaquant3, defenseur2, joueurDefense);
+
+        }
+
+        public void DetruireBatiment()
+        {
+            List<Batiment> DetruitJoueur1;
+            List<Batiment> DetruitJoueur2;
+            DetruitJoueur1 = ChampConstructionsJ1.DetruireBatiments();
+            DetruitJoueur2 = ChampConstructionsJ2.DetruireBatiments();
+            foreach (Batiment unBatiment in DetruitJoueur1)
+            {
+                LstUsineRecyclageJ1.Add(unBatiment);
+            }
+            foreach (Batiment unBatiment in DetruitJoueur2)
+            {
+                LstUsineRecyclageJ2.Add(unBatiment);
+            }
+        }
+
+        public void DetruireUnite()
+        {
+            List<Unite> DetruiteJoueur1;
+            List<Unite> DetruiteJoueur2;
+            DetruiteJoueur1 = ChampBatailleUnitesJ1.DetruireUnite();
+            DetruiteJoueur2 = ChampBatailleUnitesJ2.DetruireUnite();
+            foreach (Unite unUnite in DetruiteJoueur1)
+            {
+                LstUsineRecyclageJ1.Add(unUnite);
+            }
+            foreach (Unite unUnite in DetruiteJoueur2)
+            {
+                LstUsineRecyclageJ2.Add(unUnite);
+            }
+        }
+
+        public void PreparerTroupes()
+        {
+            if (!joueurActifEst1)
+            {
+                ChampBatailleUnitesJ1.Preparer();
+            }
+            else
+            {
+                ChampBatailleUnitesJ2.Preparer();
+            }
+        }
+
+        private void Tirer(Unite attaquant, Unite defenseur, Joueur joueurDefense)
+        {
+            if (attaquant != null)
+            {
+                if (defenseur != null)
                 {
-                    ChampBatailleUnitesJ1.Champ1 = ChampBatailleUnitesJ1.Champ1 - ChampBatailleUnitesJ2.Champ1;
-                    ChampBatailleUnitesJ2.Champ2 = ChampBatailleUnitesJ2.Champ1 - ChampBatailleUnitesJ1.Champ1;
+                    attaquant = attaquant - defenseur;
+                    defenseur = defenseur - attaquant;
                 }
                 else
                 {
-                    Joueur2.PointDeBlindage = Joueur2.PointDeBlindage - ChampBatailleUnitesJ1.Champ1.Attaque;
+                    joueurDefense.PointDeBlindage -= attaquant.Attaque;
                 }
             }
         }
@@ -287,7 +391,7 @@ namespace Cosmos.metier
             return false;
         }
 
-        public void JouerCarte(int index)
+        public void JouerCarte(int index, int position)
         {
             // Le coup à pas été validé                 
             Carte aJouer;
@@ -297,21 +401,21 @@ namespace Cosmos.metier
             {
                 aJouer = LstMainJ1[index];
 
-                Joueur1.RessourceActive -= aJouer.Cout;
-                if (aJouer is Unite)
-                {
-                    ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
-                }
-                else if (aJouer is Batiment)
-                {
-                    ChampConstructionsJ1.AjouterAuChamp(aJouer);
-                }
-                else if (aJouer is Gadget)
-                {
-                    LstUsineRecyclageJ1.Add(aJouer);
-                }
-                // On enleve la carte de la main
-                LstMainJ1.Remove(aJouer);
+                    Joueur1.RessourceActive -= aJouer.Cout;
+                    if (aJouer is Unite)
+                    {
+                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
+                    }
+                    else if (aJouer is Batiment)
+                    {
+                        ChampConstructionsJ1.AjouterAuChamp(aJouer);
+                    }
+                    else if (aJouer is Gadget)
+                    {
+                        LstUsineRecyclageJ1.Add(aJouer);
+                    }
+                    // On enleve la carte de la main
+                    LstMainJ1.Remove(aJouer);
 
             }
             else
@@ -320,25 +424,22 @@ namespace Cosmos.metier
 
                 // On enleve les ressources au joueurs
                 Joueur2.RessourceActive -= aJouer.Cout;
-
-                if (aJouer is Unite)
-                {
-                    ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, 1);
-                }
-                if (aJouer is Batiment)
-                {
-                    ChampConstructionsJ1.AjouterAuChamp(aJouer);
-                }
-                if (aJouer is Gadget)
-                {
-                    LstUsineRecyclageJ2.Add(aJouer);
-                }
-                // On enleve la carte de la main
-                LstMainJ2.Remove(aJouer);
-
+                
+                    if (aJouer is Unite)
+                    {
+                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
+                    }
+                    if (aJouer is Batiment)
+                    {
+                        ChampConstructionsJ1.AjouterAuChamp(aJouer);
+                    }
+                    if (aJouer is Gadget)
+                    {
+                        LstUsineRecyclageJ2.Add(aJouer);
+                    }
+                    // On enleve la carte de la main
+                    LstMainJ2.Remove(aJouer);
             }
-
-
         }
 
         public void AvancerPhase()
@@ -481,6 +582,19 @@ namespace Cosmos.metier
             else
             {
                 LstMainJ2.Add(Joueur2.PigerCarte());
+            }
+        }
+        public void PigerCarte()
+        {
+            if (JoueurActifEst1)
+            {
+                if (LstMainJ1.Count < 8)
+                    LstMainJ1.Add(Joueur1.PigerCarte());
+            }
+            else
+            {
+                if (LstMainJ2.Count < 8)
+                    LstMainJ2.Add(Joueur2.PigerCarte());
             }
         }
         /// <summary>
