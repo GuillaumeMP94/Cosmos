@@ -304,7 +304,7 @@ namespace Cosmos.metier
 
 
             LstUsineRecyclageJ1 = new List<Carte>();
-            LstUsineRecyclageJ1 = new List<Carte>();
+            LstUsineRecyclageJ2 = new List<Carte>();
 
             Phase = 1; // La partie commence en phase "1", c'est à dire la phase de ressource. Il n'y a pas de phase 0.
 
@@ -427,11 +427,11 @@ namespace Cosmos.metier
                 
                     if (aJouer is Unite)
                     {
-                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
+                        ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, position);
                     }
                     if (aJouer is Batiment)
                     {
-                        ChampConstructionsJ1.AjouterAuChamp(aJouer);
+                        ChampConstructionsJ2.AjouterAuChamp(aJouer);
                     }
                     if (aJouer is Gadget)
                     {
@@ -455,7 +455,6 @@ namespace Cosmos.metier
                 if (JoueurActifEst1)
                 {
                     joueurActifEst1 = false;
-                    Notify(); // Permet de dire au AI que c'est à son tour.
                 }
                 else
                 {
@@ -465,6 +464,10 @@ namespace Cosmos.metier
             PhaseChangeEventArgs p = new PhaseChangeEventArgs(1);
             TrousseGlobale TG = new TrousseGlobale();
             TG.OnPhaseChange(p);
+            if (Phase == 2 && !joueurActifEst1)
+            {
+                Notify(); // Permet de dire au AI que c'est à son tour.
+            }
         }
 
         /// <summary>
@@ -650,7 +653,7 @@ namespace Cosmos.metier
             if (aJouer is Unite)
             {
                 // TODO Décider ou jouer une carte via le flag du AI
-                ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, -15 /*TODO ai.ChoixChampUnite */);
+                ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, 1);
             }
             else if (aJouer is Batiment)
             {
