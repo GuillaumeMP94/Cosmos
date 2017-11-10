@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    public class TableDeJeu:INotifyPropertyChanged
+    public class TableDeJeu : INotifyPropertyChanged
     {
         #region Code relié au IObserver
 
@@ -59,6 +59,7 @@ namespace Cosmos.metier
         private int phase;
         private int nbTour;
         private bool joueurActifEst1;
+        private int nbTourComplet;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -85,6 +86,20 @@ namespace Cosmos.metier
         // Usine de recyclage des joueurs / Défausse
         public List<Carte> LstUsineRecyclageJ1 { get; set; }
         public List<Carte> LstUsineRecyclageJ2 { get; set; }
+
+        public int NbTourComplet
+        {
+            get { return phase; }
+            set
+            {
+                nbTourComplet = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("NbTourComplet"));
+                }
+
+            }
+        }
 
         public int Phase
         {
@@ -141,8 +156,8 @@ namespace Cosmos.metier
         }
         public void PigerCartes()
         {
-                LstMainJ1.Add(Joueur1.PigerCarte());
-                LstMainJ2.Add(Joueur2.PigerCarte());
+            LstMainJ1.Add(Joueur1.PigerCarte());
+            LstMainJ2.Add(Joueur2.PigerCarte());
 
         }
 
@@ -293,6 +308,8 @@ namespace Cosmos.metier
 
             Phase = 1; // La partie commence en phase "1", c'est à dire la phase de ressource. Il n'y a pas de phase 0.
 
+            // Aucun tour ont été completé au début de la partie
+            NbTourComplet = 0;
 
             JoueurActifEst1 = true; // Il y a deux joueur : Joueur 1 et joueur 2. Lorsque ce bool est vrai, c'est au joueur 1 et vice-versa.
 
@@ -351,17 +368,17 @@ namespace Cosmos.metier
         /// <returns></returns>
         public bool validerCoup(int index)
         {
-            Ressource temp = new Ressource(-1, -1, -1);                 
+            Ressource temp = new Ressource(-1, -1, -1);
             Carte aJouer;
 
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
-            if( JoueurActifEst1 )
+            if (JoueurActifEst1)
             {
                 aJouer = LstMainJ1[index];
                 if (joueur1.RessourceActive - aJouer.Cout > temp)
                 {
                     return true;
-                }          
+                }
             }
             else
             {
@@ -405,9 +422,9 @@ namespace Cosmos.metier
             {
                 aJouer = LstMainJ2[index];
 
-                    // On enleve les ressources au joueurs
-                    Joueur2.RessourceActive -= aJouer.Cout;
-
+                // On enleve les ressources au joueurs
+                Joueur2.RessourceActive -= aJouer.Cout;
+                
                     if (aJouer is Unite)
                     {
                         ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
@@ -422,22 +439,19 @@ namespace Cosmos.metier
                     }
                     // On enleve la carte de la main
                     LstMainJ2.Remove(aJouer);
-
             }
-
-            
         }
 
         public void AvancerPhase()
         {
-            if(Phase != 4)
+            if (Phase != 4)
             {
                 Phase++;
             }
             else
             {
                 Phase = 1;
-                
+
                 if (JoueurActifEst1)
                 {
                     joueurActifEst1 = false;
@@ -462,7 +476,7 @@ namespace Cosmos.metier
             int n = leDeck.Count();
             var rnd = new Random();
 
-            while( n > 1 )
+            while (n > 1)
             {
                 int k = (rnd.Next(0, n) % n);
                 n--;
@@ -488,9 +502,9 @@ namespace Cosmos.metier
         /// </summary>
         /// <param name="carteADeffausser"></param>
         /// <param name="estJoueur1"></param>
-        public void DeffausserCarte( Carte carteADeffausser, bool estJoueur1 )
+        public void DeffausserCarte(Carte carteADeffausser, bool estJoueur1)
         {
-            if(estJoueur1)
+            if (estJoueur1)
             {
                 LstMainJ1.Remove(carteADeffausser);
                 LstUsineRecyclageJ1.Add(carteADeffausser);
@@ -512,7 +526,7 @@ namespace Cosmos.metier
             unite2.Defense -= unite1.Attaque;
 
             // Si la defense de l'unité est a zero ou moins elle est détruite.
-            if( unite1.Defense < 1)
+            if (unite1.Defense < 1)
             {
                 //LstUniteJ1.Remove(unite1);
             }
@@ -593,7 +607,7 @@ namespace Cosmos.metier
 
             int compteur = 0;
 
-            foreach (Carte uneCarte in LstMainJ2 )
+            foreach (Carte uneCarte in LstMainJ2)
             {
                 if (validerCoup(compteur))
                 {
@@ -604,6 +618,49 @@ namespace Cosmos.metier
             return listeCoupPermis;
         }
 
+        public List<int> listeCoupValideUniteAI()
+        {
+            List<int> listeCoupPermis = new List<int>();
 
+            int compteur = 0;
+
+            foreach (Carte uneCarte in LstMainJ2)
+            {
+                if (validerCoup(compteur) && uneCarte is Unite)
+                {
+                    listeCoupPermis.Add(compteur);
+                }
+                compteur++;
+            }
+            return listeCoupPermis;
+        }
+
+
+        public void JouerCarteAI(int index)
+        {
+            Carte aJouer;
+
+            aJouer = LstMainJ2[index];
+
+            Joueur2.RessourceActive -= aJouer.Cout;
+
+            if (aJouer is Unite)
+            {
+                // TODO Décider ou jouer une carte via le flag du AI
+                ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, -15 /*TODO ai.ChoixChampUnite */);
+            }
+            else if (aJouer is Batiment)
+            {
+                ChampConstructionsJ2.AjouterAuChamp(aJouer);
+            }
+            else if (aJouer is Gadget)
+            {
+                LstUsineRecyclageJ2.Add(aJouer);
+            }
+            // On enleve la carte de la main
+            LstMainJ2.Remove(aJouer);
+
+
+        }
     }
 }
