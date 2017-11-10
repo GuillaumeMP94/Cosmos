@@ -931,6 +931,7 @@ namespace Cosmos.metier
             //bool peutPerdre = true;
             int nbBloque = 0;
             List<int> lstCoupEvaluer = new List<int>();
+            List<int> lstCoupAJouer = new List<int>();
             List<int> lstDMG = new List<int>();
 
             if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
@@ -1002,6 +1003,17 @@ namespace Cosmos.metier
                     }
                     break;
                 case 2:
+                    // Il faut que je trouve une combinaison de deux cartes jouable
+
+                    // Fonctionnera pas, me faut les index
+                    lstCoupAJouer = trouverLstUniteJouable(jeu, lstCoupEvaluer, 2);
+
+
+                    // Nous avons deux cartes, on va essayer de pas faire n'importe quoi avec
+                    if (PeutOblitererCombat(jeu, )  )
+                    {
+
+                    }
 
                     break;
                 case 3:
@@ -1011,6 +1023,58 @@ namespace Cosmos.metier
                     return;
                     // Pas supposé venir ici, si jamais on arrive ici je vais simplement terminé la fonction             
             }            
+        }
+        /// <summary>
+        /// Retourne une liste de la première combinaison de carte jouable trouvé
+        /// </summary>
+        /// <param name="jeu"></param>
+        /// <param name="lstCoupEvaluer"></param>
+        /// <param name="nbCarteAJouer"></param>
+        /// <returns></returns>
+        private List<int> trouverLstUniteJouable(TableDeJeu jeu, List<int> lstCoupEvaluer, int nbCarteAJouer)
+        {
+            List<int> lstAJouer = new List<int>();
+
+            if ( nbCarteAJouer == 2)
+            {
+                foreach ( int indexX in lstCoupEvaluer )
+                {
+                    foreach (int indexY in lstCoupEvaluer)
+                    {
+                        if ( indexX != indexY 
+                            && (jeu.LstMainJ2[indexX].Cout + jeu.LstMainJ2[indexY].Cout) > new Ressource(-1,-1,-1) )
+                        {
+                            lstAJouer.Add(indexX);
+                            lstAJouer.Add(indexY);
+
+                            return lstAJouer;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (int indexX in lstCoupEvaluer)
+                {
+                    foreach (int indexY in lstCoupEvaluer)
+                    {
+                        foreach (int indexZ in lstCoupEvaluer)
+                        {
+                            if (indexX != indexY && indexX != indexZ && indexY != indexZ 
+                                && (jeu.LstMainJ2[indexX].Cout + jeu.LstMainJ2[indexY].Cout + jeu.LstMainJ2[indexZ].Cout) > new Ressource(-1, -1, -1))
+                            {
+                                lstAJouer.Add(indexX);
+                                lstAJouer.Add(indexY);
+                                lstAJouer.Add(indexZ);
+
+                                return lstAJouer;
+                            }
+                        }
+
+                    }
+                }
+            }
+            return lstAJouer;
         }
 
         /// <summary>
