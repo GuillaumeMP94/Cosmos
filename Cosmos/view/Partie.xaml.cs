@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static Cosmos.metier.TrousseGlobale;
 
 namespace Cosmos.view
 {
@@ -26,6 +27,7 @@ namespace Cosmos.view
     public partial class Partie : UserControl
     {
         const int RESSOURCEDEPART = 3;
+        TableDeJeu laTableDeJeu;
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
         public Image imgZoom { get; set; }
@@ -37,9 +39,16 @@ namespace Cosmos.view
         public bool Unite2J1Attack { get; set; }
         public bool Unite3J1Attack { get; set; }
 
-        int phase;
-        TableDeJeu laTableDeJeu;
-        
+        public int Phase
+        {
+            get { return laTableDeJeu.Phase; }
+            set
+            {
+                laTableDeJeu.Phase = value;
+            }
+        }
+        //int phase;
+
         public Partie(MainWindow main)
         {
             InitializeComponent();
@@ -52,13 +61,14 @@ namespace Cosmos.view
             Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
             // TODO: AI
-            Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
+            //Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
-            utilisateur2.Reinitialiser();
-
-            laTableDeJeu = new TableDeJeu(utilisateur1, utilisateur2);
-
+            AI Robot = new AI("Robot Turenne", 1, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+            //utilisateur2.Reinitialiser();
+            laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
+            // Permet de lier l'AI avec la table de jeu
+            laTableDeJeu.Subscribe(Robot);
             // CODE TEMPORAIRE POUR TESTER
             /*AI ordinateur;
             var ressourceAI = new metier.Ressource(2, 2, 2);
@@ -67,13 +77,13 @@ namespace Cosmos.view
 
             // Demander à l'utilisateur de distribuer ses ressources.
             //TODO: Enlever les slash pour afficher EcranRessource
-            EcranRessource( laTableDeJeu.Joueur1 , RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
+            EcranRessource(laTableDeJeu.Joueur1, RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Permet le binding. Le datacontext est la table de jeu puisque c'est elle qui contient les data qui seront modifiées.
             this.DataContext = laTableDeJeu;
             // Les propriétés bindées en ce moment :
-                // Ressources des joueurs 
-                // Points de blindages
+            // Ressources des joueurs 
+            // Points de blindages
 
             Main = main;
 
@@ -81,7 +91,7 @@ namespace Cosmos.view
             //
 
             // Initialiser la phase à "phase de ressource"            
-            phase = laTableDeJeu.Phase;
+
 
             // Afficher la main
             ListBorderImgMainJoueur = new List<Border>();
@@ -92,13 +102,15 @@ namespace Cosmos.view
             // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
             // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
             // TODO testé ^
+            TrousseGlobale.PhaseChange += changerPhase;
 
         }
+
         void timer_Tick(object sender, EventArgs e)
         {
-            if (phase == 4 || phase == 1)
+            if (Phase == 4 || Phase == 1)
             {
-                changerPhase();
+                laTableDeJeu.AvancerPhase();
             }
         }
         /// <summary>
@@ -108,36 +120,32 @@ namespace Cosmos.view
         /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            if (phase == 2 || phase == 3)
+            if (Phase == 2 || Phase == 3)
             {
-                changerPhase();
+                laTableDeJeu.AvancerPhase();
             }
         }
 
-        private void changerPhase()
+        private void changerPhase(object sender, PhaseChangeEventArgs e)
         {
-            laTableDeJeu.AvancerPhase();
+            //laTableDeJeu.AvancerPhase();
 
-            switch (phase)
+            switch (Phase)
             {
-                case 1:
-                    phase++;
+                case 2:
                     PhaseRessource();
                     break;
-                case 2:
-                    phase++;
-                    PhasePrincipale();
-                    RefreshAll();
-                    break;
                 case 3:
-                    phase++;
-                    PhaseAttaque();
+                    PhasePrincipale();
                     break;
                 case 4:
-                    phase = 1; // La phase de fin est terminer, nous retournons à la première phase
+                    PhaseAttaque();
+                    break;
+                case 1:
                     PhaseFin();
                     break;
             }
+            RefreshAll();
         }
 
         /// <summary>
@@ -280,7 +288,7 @@ namespace Cosmos.view
             border.BorderBrush = converter.ConvertFromString("#e1ff00") as Brush;
 
             // Si la carte peut être jouer, elle sera entouré d'une bordure de couleur
-            if (laTableDeJeu.JoueurActifEst1  && phase == 2 && laTableDeJeu.validerCoup(position))
+            if (laTableDeJeu.JoueurActifEst1  && Phase == 2 && laTableDeJeu.validerCoup(position))
             {
                 border.BorderThickness = new Thickness(5);
                 
@@ -583,7 +591,7 @@ namespace Cosmos.view
         {
             grd1.Children.Remove(ContenuEcran);
             recRessource.Visibility = Visibility.Hidden;
-            changerPhase();
+            laTableDeJeu.AvancerPhase();
             AfficherMain();
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
@@ -636,7 +644,7 @@ namespace Cosmos.view
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // On peut jouer une carte seulement dans la phase 2
-            if (phase == 2 && laTableDeJeu.JoueurActifEst1 && IndexCarteZoomer != 99) // Si l'index est à 99 c'est qu'il a cliquer une carte en jeu.
+            if (Phase == 2 && laTableDeJeu.JoueurActifEst1 && IndexCarteZoomer != 99) // Si l'index est à 99 c'est qu'il a cliquer une carte en jeu.
             {
 
                 // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
