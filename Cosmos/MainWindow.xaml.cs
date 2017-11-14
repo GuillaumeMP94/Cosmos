@@ -48,7 +48,7 @@ namespace Cosmos
 
             //TODO: Enlever la prochaine ligne avant remise
             //EcranPartie();
-            //EcranMenuPrincipal();
+            EcranMenuPrincipal();
 
         }
 
@@ -123,8 +123,6 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
 
-            Joueur joueur1 = new Joueur();
-            Joueur joueur2 = new Joueur();
 
             ContenuEcran = new Partie(this);
 

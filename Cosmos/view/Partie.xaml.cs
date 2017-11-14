@@ -30,6 +30,7 @@ namespace Cosmos.view
         TableDeJeu laTableDeJeu;
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
+        public AI Robot { get; set; }
         public Image imgZoom { get; set; }
         public List<Image> ImgMainJoueur { get; set; }
         public List<Border> ListBorderImgMainJoueur { get; set; }
@@ -64,7 +65,7 @@ namespace Cosmos.view
             //Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
-            AI Robot = new AI("Robot Turenne", 1, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+            Robot = new AI("Robot Turenne", 1, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
             //utilisateur2.Reinitialiser();
             laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
             // Permet de lier l'AI avec la table de jeu
@@ -186,7 +187,10 @@ namespace Cosmos.view
             if (!laTableDeJeu.JoueurActifEst1)
                 imgFinTour.Visibility = Visibility.Visible;
             RefreshAll();
-            laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
+            if (laTableDeJeu.JoueurActifEst1)
+                laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
+            else
+                laTableDeJeu.ExecuterAttaque(Robot.AttaqueChamp1, Robot.AttaqueChamp2, Robot.AttaqueChamp3);
             Temps.Start();
         }
         private void PhaseFin()
@@ -198,7 +202,8 @@ namespace Cosmos.view
             txBlphaseRessource.Background = Brushes.DarkGoldenrod;
             txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
             txBlphaseRessource.Foreground = Brushes.Black;
-
+            VerifierVictoire();
+            
             // On remet les trois Bools pour l'attaque a False
             Unite1J1Attack = false;
             Unite2J1Attack = false;
@@ -207,7 +212,25 @@ namespace Cosmos.view
             RefreshAll();
         }
 
-
+        private void VerifierVictoire()
+        {
+            if (laTableDeJeu.Joueur2.PointDeBlindage <= 0)
+            {
+                // Victoire
+                TrousseGlobale.PhaseChange -= changerPhase;
+                Temps.Stop();
+                MessageBox.Show("Vous avez gagné!","Victoire",MessageBoxButton.OK);
+                Main.EcranMenuPrincipal();
+            }
+            if (laTableDeJeu.Joueur1.PointDeBlindage <= 0)
+            {
+                // Défaite
+                TrousseGlobale.PhaseChange -= changerPhase;
+                Temps.Stop();
+                MessageBox.Show("Vous avez perdu!", "Défaite", MessageBoxButton.OK);
+                Main.EcranMenuPrincipal();
+            }
+        }
 
         private void RefreshAll()
         {

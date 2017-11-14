@@ -164,6 +164,7 @@ namespace Cosmos.metier
                                         || jeu.ChampConstructionsJ2.Champ4 == null)
                                     {
                                         jeu.JouerCarte(index, ChoixChampUnite);
+                                        break;
                                     }
                                 }
                                 else if (jeu.LstMainJ2[index] is Gadget)
@@ -495,7 +496,7 @@ namespace Cosmos.metier
                     #region
                     // YOLO. L'AI attaque toujours avec toutes ses unités
                     AttaqueChamp1 = true;
-                    AttaqueChamp1 = true;
+                    AttaqueChamp2 = true;
                     AttaqueChamp3 = true;
                     break;
 
