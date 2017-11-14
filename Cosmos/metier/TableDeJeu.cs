@@ -154,11 +154,10 @@ namespace Cosmos.metier
 
             }
         }
-        public void PigerCartes()
-        {
+        public void PigerCartes()        {
             LstMainJ1.Add(Joueur1.PigerCarte());
             LstMainJ2.Add(Joueur2.PigerCarte());
-
+            
         }
 
         public Joueur Joueur2
