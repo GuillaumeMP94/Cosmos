@@ -123,7 +123,6 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
 
-
             ContenuEcran = new Partie(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
