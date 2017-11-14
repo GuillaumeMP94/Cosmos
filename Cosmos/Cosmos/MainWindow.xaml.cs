@@ -123,9 +123,6 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
 
-            Joueur joueur1 = new Joueur();
-            Joueur joueur2 = new Joueur();
-
             ContenuEcran = new Partie(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
