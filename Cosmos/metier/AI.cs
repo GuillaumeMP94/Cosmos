@@ -1010,10 +1010,10 @@ namespace Cosmos.metier
 
 
                     // Nous avons deux cartes, on va essayer de pas faire n'importe quoi avec
-                    if (PeutOblitererCombat(jeu, )  )
-                    {
+                    //if (PeutOblitererCombat(jeu, )  )
+                    //{
 
-                    }
+                    //}
 
                     break;
                 case 3:
