@@ -48,10 +48,10 @@ namespace Cosmos.metier
                     EstEnPreparationChamp1 = true;
                     break;
                 case 2: Champ2 = (Unite)carteAjouter;
-                    EstEnPreparationChamp1 = true;
+                    EstEnPreparationChamp2 = true;
                     break;
                 case 3: Champ3 = (Unite)carteAjouter;
-                    EstEnPreparationChamp1 = true;
+                    EstEnPreparationChamp3 = true;
                     break;
             }
         }

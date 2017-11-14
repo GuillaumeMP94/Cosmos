@@ -26,13 +26,13 @@ namespace Cosmos.metier
         public void OnCompleted()
         {
             // Implémentation obligatoire, might use, might not      
-            Console.WriteLine("Le tour du AI est terminé");  // TEST 
+            MessageBox.Show("Le tour du AI est terminé");
         }
 
         public void OnError(Exception error)
         {
             // Implémentation obligatoire, might use, might not
-            Console.WriteLine("Oops, une erreur est arrivée avec votre adversaire!");
+            MessageBox.Show("Oops, une erreur est arrivée avec votre adversaire!");
         }
 
         public void OnNext(TableDeJeu jeu)
@@ -59,7 +59,7 @@ namespace Cosmos.metier
         public string Nom { get; set; }
         #endregion
         #region Constructeur
-        public AI( string nom, int diff, Ressource debutLevelRessource, Deck deckAI, TableDeJeu laTableDeJeu)
+        public AI( string nom, int diff, Ressource debutLevelRessource, Deck deckAI)
             :base()
         {
             Nom = nom;
@@ -75,9 +75,6 @@ namespace Cosmos.metier
             AttaqueChamp2 = true;
             AttaqueChamp3 = true;
 
-
-            // Permet de lier l'AI avec la table de jeu
-            laTableDeJeu.Subscribe(this);
         }
         #endregion
 
@@ -116,37 +113,37 @@ namespace Cosmos.metier
                                     && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite = rnd.Next(1, 3);
-                                    jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                    jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)],ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null)
                                 {
                                     ChoixChampUnite = rnd.Next(1, 2);
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ2 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite =rnd.Next(2, 3);
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite =((rnd.Next(1, 2) * 2) - 1);
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ1 == null)
                                 {
                                     ChoixChampUnite = 1;
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ2 == null)
                                 {
                                     ChoixChampUnite = 2;
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                                 else if (jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
                                     ChoixChampUnite = 3;
-                                   jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                   jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
                                 }
                             }
                         }
@@ -166,7 +163,7 @@ namespace Cosmos.metier
                                         || jeu.ChampConstructionsJ2.Champ3 == null
                                         || jeu.ChampConstructionsJ2.Champ4 == null)
                                     {
-                                        jeu.JouerCarteAI(index);
+                                        jeu.JouerCarte(index, ChoixChampUnite);
                                     }
                                 }
                                 else if (jeu.LstMainJ2[index] is Gadget)
@@ -274,7 +271,7 @@ namespace Cosmos.metier
                                 {
                                     if(jeu.LstMainJ2[coup] is Batiment)
                                     {
-                                        jeu.JouerCarteAI(coup);
+                                        jeu.JouerCarte(coup,0);
                                         // Rafraichir la liste des coup permis suite à un coup
                                         ListeCoupsPermis = jeu.listeCoupValideAI();
                                     } 
