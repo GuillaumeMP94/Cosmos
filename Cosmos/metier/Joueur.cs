@@ -54,7 +54,6 @@ namespace Cosmos.metier
         #region Constructeur
         public Joueur()
         {
-            PointDeBlindage = 25;
         }
 
         #endregion
