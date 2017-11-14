@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.10.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.6.10.4\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -79,6 +79,7 @@
     <Compile Include="metier\Joueur.cs" />
     <Compile Include="metier\Ressource.cs" />
     <Compile Include="metier\TableDeJeu.cs" />
+    <Compile Include="metier\TrousseGlobale.cs" />
     <Compile Include="metier\Unite.cs" />
     <Compile Include="metier\Utilisateur.cs" />
     <Compile Include="view\Campagne.xaml.cs">
@@ -215,7 +216,6 @@
     <Resource Include="images\cartes\ATX-317.jpg" />
     <Resource Include="images\cartes\Croiseur de Guerre.jpg" />
     <Resource Include="images\cartes\Elite.jpg" />
-    <Resource Include="images\cartes\Explorateur de l%27Aliance.jpg" />
     <Resource Include="images\cartes\Exploreur Taligari.jpg" />
     <Resource Include="images\cartes\Exterminateur.jpg" />
     <Resource Include="images\cartes\Gronar.jpg" />
@@ -239,6 +239,46 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\ressources\Charronite.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Turn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\partie\jouer.jpg" />
+    <Resource Include="images\cartes\Explorateur de l%27Alliance.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlTransaction.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlParameterCollection.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlParameter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlHelper.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlException.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlDataReader.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlDataAdapter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlConnectionStringBuilder.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlConnection.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlCommandBuilder.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlCommand.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

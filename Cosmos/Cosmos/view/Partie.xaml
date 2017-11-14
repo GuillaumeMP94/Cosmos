@@ -9,12 +9,12 @@
              x:Name="Root">
 
     <Grid Margin="15,15,15,15" Name="grd1">
-
-        <Border BorderThickness="5" BorderBrush="Yellow" />
+        <Image Name="imgFinTour" Height="600" Source="/images/Turn.png" Visibility="Hidden" Panel.ZIndex="99"/>
+        <Border BorderThickness="5" BorderBrush="Transparent" />
 
         <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
-            
-            <Border BorderThickness="5" BorderBrush="Pink" />
+
+            <Border BorderThickness="5" BorderBrush="Transparent" />
 
             <TextBlock x:Name="txBlPBA" Text="BLINDAGE&#10;ADVERSE" Foreground="Red"
                        VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,30,0,0"
@@ -132,11 +132,11 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Name="carteJoueur" BorderThickness="5" BorderBrush="Purple" Grid.Column="0"/>
-            <Border Name="deckJoueur" BorderThickness="5" BorderBrush="Purple" Grid.Column="1">
+            <Border Name="carteJoueur" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0"/>
+            <Border Name="deckJoueur" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1">
                 <Image Source="/images/CardBack.png" Grid.Column="1" />
             </Border>
-            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Purple" Grid.Column="2">
+            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2">
                 <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
             </Border>  
 
@@ -154,13 +154,13 @@
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="3" Margin="100,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="4" Margin="150,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="200,0,0,0"/>
-            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="0"/>
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0"/>
 
-            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="1">
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1">
                 <Image Source="/images/CardBack.png" Grid.Column="1"/>
             </Border>
 
-            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="2">
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="2">
                 <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
             </Border>
 
@@ -179,36 +179,36 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5"
                     Name="emplacementBatiment1">
                 <Image Name="imgBatiment1J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5"
                     Name="emplacementBatiment2">
                 <Image Name="imgBatiment2J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5"
                     Name="emplacementBatiment3">
                 <Image Name="imgBatiment3J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5"
                     Name="emplacementBatiment4">
                 <Image Name="imgBatiment4J2"/>
             </Border>
-            
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5"
+
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5"
                     Name="emplacementBatiment5">
                 <Image Name="imgBatiment1J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5"
                     Name="emplacementBatiment6">
                 <Image Name="imgBatiment2J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5"
                     Name="emplacementBatiment7">
                 <Image Name="imgBatiment3J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5"
                     Name="emplacementBatiment8">
                 <Image Name="imgBatiment4J1"/>
             </Border>
@@ -227,26 +227,26 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Border Name="emplacementUnite1J2" BorderThickness="5" BorderBrush="Violet" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5">
-                <Image Name="imgUnite1J2"/>
+            <Border Name="emplacementUnite1J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5">
+                <Image Name="imgUnite1J2" Stretch="Fill"/>
             </Border>
-            <Border Name="emplacementUnite2J2" BorderThickness="5" BorderBrush="Violet" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5">
-                <Image Name="imgUnite2J2"/>
+            <Border Name="emplacementUnite2J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
+                <Image Name="imgUnite2J2" Stretch="Fill"/>
             </Border>
-            <Border Name="emplacementUnite3J2" BorderThickness="5" BorderBrush="Violet" Grid.Column="2" Grid.Row="0" Padding="5,5,5,5">
-                <Image Name="imgUnite3J2"/>
-            </Border>
-
-            <Border Name="emplacementUnite1J1" BorderThickness="5" BorderBrush="Green" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5">
-                <Image Name="imgUnite1J1"/>
-            </Border>
-            <Border Name="emplacementUnite2J1" BorderThickness="5" BorderBrush="Green" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5">
-                <Image Name="imgUnite2J1"/>
-            </Border>
-            <Border Name="emplacementUnite3J1" BorderThickness="5" BorderBrush="Green" Grid.Column="2" Grid.Row="1" Padding="5,5,5,5" >
-                <Image Name="imgUnite3J1"/>
+            <Border Name="emplacementUnite3J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2" Grid.Row="0" Margin="5,5,5,5">
+                <Image Name="imgUnite3J2" Stretch="Fill"/>
             </Border>
 
+            <Border Name="emplacementUnite1J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
+                <Image Name="imgUnite1J1" Stretch="Fill"/>
+            </Border>
+            <Border Name="emplacementUnite2J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5">
+                <Image Name="imgUnite2J1" Stretch="Fill"/>
+            </Border>
+            <Border Name="emplacementUnite3J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2" Grid.Row="1" Margin="5,5,5,5">
+                <Image Name="imgUnite3J1" Stretch="Fill"/>
+            </Border>
+           
         </Grid>
 
             <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"

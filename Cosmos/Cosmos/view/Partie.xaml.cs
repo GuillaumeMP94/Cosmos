@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static Cosmos.metier.TrousseGlobale;
 
 namespace Cosmos.view
 {
@@ -26,33 +27,48 @@ namespace Cosmos.view
     public partial class Partie : UserControl
     {
         const int RESSOURCEDEPART = 3;
+        TableDeJeu laTableDeJeu;
         public UserControl ContenuEcran { get; set; }
         public MainWindow Main { get; set; }
         public Image imgZoom { get; set; }
         public List<Image> ImgMainJoueur { get; set; }
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
+        public DispatcherTimer Temps { get; set; }
+        public bool Unite1J1Attack { get; set; }
+        public bool Unite2J1Attack { get; set; }
+        public bool Unite3J1Attack { get; set; }
 
-        int phase;
-        TableDeJeu laTableDeJeu;
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public int Phase
+        {
+            get { return laTableDeJeu.Phase; }
+            set
+            {
+                laTableDeJeu.Phase = value;
+            }
+        }
+        //int phase;
 
         public Partie(MainWindow main)
         {
             InitializeComponent();
             Main = main;
+            //Timer pour refresh
+            Temps = new DispatcherTimer();
+            Temps.Interval = TimeSpan.FromMilliseconds(1000);
+            Temps.Tick += timer_Tick;
             //TODO: Utilisateur Connecter
             Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
             // TODO: AI
-            Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
+            //Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
-            utilisateur2.Reinitialiser();
-
-            laTableDeJeu = new TableDeJeu(utilisateur1, utilisateur2);
-
+            AI Robot = new AI("Robot Turenne", 3, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+            //utilisateur2.Reinitialiser();
+            laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
+            // Permet de lier l'AI avec la table de jeu
+            laTableDeJeu.Subscribe(Robot);
             // CODE TEMPORAIRE POUR TESTER
             /*AI ordinateur;
             var ressourceAI = new metier.Ressource(2, 2, 2);
@@ -61,13 +77,13 @@ namespace Cosmos.view
 
             // Demander à l'utilisateur de distribuer ses ressources.
             //TODO: Enlever les slash pour afficher EcranRessource
-            EcranRessource( laTableDeJeu.Joueur1 , RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
+            EcranRessource(laTableDeJeu.Joueur1, RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Permet le binding. Le datacontext est la table de jeu puisque c'est elle qui contient les data qui seront modifiées.
             this.DataContext = laTableDeJeu;
             // Les propriétés bindées en ce moment :
-                // Ressources des joueurs 
-                // Points de blindages
+            // Ressources des joueurs 
+            // Points de blindages
 
             Main = main;
 
@@ -75,23 +91,27 @@ namespace Cosmos.view
             //
 
             // Initialiser la phase à "phase de ressource"            
-            phase = laTableDeJeu.Phase;
+
 
             // Afficher la main
             ListBorderImgMainJoueur = new List<Border>();
             ImgMainJoueur = new List<Image>();
-
-            // Afficher les cartes sur le champ de bataille, les unités et les batiement
-            AfficherChampUnites();
-            AfficherChampBatiments();
-
 
 
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
             // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
             // TODO testé ^
+            TrousseGlobale.PhaseChange += changerPhase;
 
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if (Phase == 4 || Phase == 1)
+            {
+                laTableDeJeu.AvancerPhase();
+            }
         }
         /// <summary>
         /// Ce bouton change la phase pour l'interface et pour la table de jeu
@@ -100,59 +120,94 @@ namespace Cosmos.view
         /// <param name="e"></param>
         private void btnTerminerPhase_Click(object sender, RoutedEventArgs e)
         {
-            changerPhase();
+            if (Phase == 2 || Phase == 3)
+            {
+                laTableDeJeu.AvancerPhase();
+            }
         }
 
-        private void changerPhase()
+        private void changerPhase(object sender, PhaseChangeEventArgs e)
         {
-            laTableDeJeu.AvancerPhase();
-            RefreshAll();
-            switch (phase)
-            {
-                case 1:
-                    phase++;
-                    // on ajoute les ressources au joueur actif
-                    laTableDeJeu.AttribuerRessourceLevel();
+            //laTableDeJeu.AvancerPhase();
 
-                    txBlphaseRessource.Background = Brushes.Transparent;
-                    txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
-                    txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
-                    txBlphasePrincipale.Foreground = Brushes.Black;
-                    System.Threading.Thread.Sleep(500);
-                    AfficherMain();
-                    break;
+            switch (Phase)
+            {
                 case 2:
-                    phase++;
-                    txBlphasePrincipale.Background = Brushes.Transparent;
-                    txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
-                    txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
-                    txBlphaseAttaque.Foreground = Brushes.Black;
-                    AfficherMain();
+                    PhaseRessource();
                     break;
                 case 3:
-                    phase++;
-                    laTableDeJeu.ExecuterAttaque(true,true,true);
-                    txBlphaseAttaque.Background = Brushes.Transparent;
-                    txBlphaseFin.Background = Brushes.DarkGoldenrod;
-                    txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
-                    txBlphaseFin.Foreground = Brushes.Black;
-                    RefreshAll();
-                    System.Threading.Thread.Sleep(500);
-                    changerPhase();
+                    PhasePrincipale();
                     break;
                 case 4:
-                    phase = 1; // La phase de fin est terminer, nous retournons à la première phase
-                    txBlphaseFin.Background = Brushes.Transparent;
-                    txBlphaseRessource.Background = Brushes.DarkGoldenrod;
-                    txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
-                    txBlphaseRessource.Foreground = Brushes.Black;
-                    RefreshAll();
-                    System.Threading.Thread.Sleep(500);
-                    changerPhase();
+                    PhaseAttaque();
+                    break;
+                case 1:
+                    PhaseFin();
                     break;
             }
             RefreshAll();
         }
+
+        /// <summary>
+        /// Actions qui se produit lors de la phase de ressource
+        /// </summary>
+        private void PhaseRessource()
+        {
+            // on ajoute les ressources au joueur actif
+            laTableDeJeu.AttribuerRessourceLevel();
+            laTableDeJeu.PigerCarte();
+            txBlphaseRessource.Background = Brushes.Transparent;
+            txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
+            txBlphasePrincipale.Foreground = Brushes.Black;
+            imgFinTour.Visibility = Visibility.Hidden;
+            RefreshAll();
+            Temps.Stop();
+            btnTerminerPhase.IsEnabled = true;
+            btnTerminerPhase.Visibility = Visibility.Visible;
+        }
+        private void PhasePrincipale()
+        {
+            txBlphasePrincipale.Background = Brushes.Transparent;
+            txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
+            txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseAttaque.Foreground = Brushes.Black;
+        }
+
+        private void PhaseAttaque()
+        {
+            btnTerminerPhase.IsEnabled = false;
+            btnTerminerPhase.Visibility = Visibility.Hidden;
+            btnTerminerPhase.Refresh();
+            txBlphaseAttaque.Background = Brushes.Transparent;
+            txBlphaseFin.Background = Brushes.DarkGoldenrod;
+            txBlphaseAttaque.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseFin.Foreground = Brushes.Black;
+            if (!laTableDeJeu.JoueurActifEst1)
+                imgFinTour.Visibility = Visibility.Visible;
+            RefreshAll();
+            laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
+            Temps.Start();
+        }
+        private void PhaseFin()
+        {
+            laTableDeJeu.PreparerTroupes();
+            laTableDeJeu.DetruireUnite();
+            laTableDeJeu.DetruireBatiment();
+            txBlphaseFin.Background = Brushes.Transparent;
+            txBlphaseRessource.Background = Brushes.DarkGoldenrod;
+            txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.Black;
+
+            // On remet les trois Bools pour l'attaque a False
+            Unite1J1Attack = false;
+            Unite2J1Attack = false;
+            Unite3J1Attack = false;
+
+            RefreshAll();
+        }
+
+
 
         private void RefreshAll()
         {
@@ -160,6 +215,13 @@ namespace Cosmos.view
             txBlphasePrincipale.Refresh();
             txBlphaseAttaque.Refresh();
             txBlphaseFin.Refresh();
+            imgFinTour.Refresh();
+            // Afficher les cartes sur le champ de bataille, les unités et les batiement
+            AfficherChampUnites();
+            AfficherChampBatiments();
+            AfficherMain();
+            //TODO: test
+            //AfficherCoupPoosible();
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
@@ -204,7 +266,7 @@ namespace Cosmos.view
             }
         }
 
-        private void PeulperListBorderMainJoueur()
+        private void PeuplerListBorderMainJoueur()
         {
             foreach (Image element in ImgMainJoueur)
             {
@@ -226,7 +288,7 @@ namespace Cosmos.view
             border.BorderBrush = converter.ConvertFromString("#e1ff00") as Brush;
 
             // Si la carte peut être jouer, elle sera entouré d'une bordure de couleur
-            if (laTableDeJeu.validerCoup(position) && phase == 2)
+            if (laTableDeJeu.JoueurActifEst1  && Phase == 2 && laTableDeJeu.validerCoup(position))
             {
                 border.BorderThickness = new Thickness(5);
                 
@@ -252,7 +314,7 @@ namespace Cosmos.view
             }
             ListBorderImgMainJoueur.Clear();
             PeuplerImgMainJoueur(laTableDeJeu.LstMainJ1);
-            PeulperListBorderMainJoueur();
+            PeuplerListBorderMainJoueur();
             // Insérer les Borders de la liste dans le XAML
             foreach(Border element in ListBorderImgMainJoueur)
             {
@@ -287,10 +349,18 @@ namespace Cosmos.view
             {
                 imgBatiment3J2.Source = null;
             }
+            if (laTableDeJeu.ChampConstructionsJ2.Champ4 != null)
+            {
+                imgBatiment4J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ4.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment4J2.Source = null;
+            }
             // Insérer les img des cartes Batiments en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampConstructionsJ1.Champ1 != null)
             {
-                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ1.Nom + ".jpg"));
             }
             else
             {
@@ -312,6 +382,14 @@ namespace Cosmos.view
             {
                 imgBatiment3J1.Source = null;
             }
+            if (laTableDeJeu.ChampConstructionsJ1.Champ4 != null)
+            {
+                imgBatiment4J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ4.Nom + ".jpg"));
+            }
+            else
+            {
+                imgBatiment4J1.Source = null;
+            }
         }
 
         private void AfficherChampUnites()
@@ -320,6 +398,10 @@ namespace Cosmos.view
             if(laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
             {
                 imgUnite1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ1.Nom + ".jpg"));
+                if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp1)
+                    imgUnite1J2.Opacity = 0.5;
+                else
+                    imgUnite1J2.Opacity = 1;
             }
             else
             {
@@ -328,6 +410,10 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null)
             {
                 imgUnite2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ2.Nom + ".jpg"));
+                if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp2)
+                    imgUnite2J2.Opacity = 0.5;
+                else
+                    imgUnite2J2.Opacity = 1;
             }
             else
             {
@@ -336,6 +422,10 @@ namespace Cosmos.view
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null)
             {
                 imgUnite3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ3.Nom + ".jpg"));
+                if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp3)
+                    imgUnite3J2.Opacity = 0.5;
+                else
+                    imgUnite3J2.Opacity = 1;
             }
             else
             {
@@ -344,28 +434,54 @@ namespace Cosmos.view
             // Insérer les img des cartes Unités en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
-                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
+                //imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1)
+                    imgUnite1J1.Opacity = 0.5;
+                else
+                    imgUnite1J1.Opacity = 1;
             }
             else
             {
                 imgUnite1J1.Source = null;
+                imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;                
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
+                //imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
+                    imgUnite2J1.Opacity = 0.5;
+                else
+                    imgUnite2J1.Opacity = 1;
             }
             else
             {
                 imgUnite2J1.Source = null;
+                imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
+                //imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+                if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3)
+                    imgUnite3J1.Opacity = 0.5;
+                else
+                    imgUnite3J1.Opacity = 1;
             }
             else
             {
-                imgUnite3J1.Source = null;
+                imgUnite3J1.Source = null;                
+                imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
+            imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;            
+            imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+            imgUnite3J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
+
+            emplacementUnite1J1.BorderBrush = Brushes.Transparent;
+            emplacementUnite2J1.BorderBrush = Brushes.Transparent;
+            emplacementUnite3J1.BorderBrush = Brushes.Transparent;
+
         }
 
         private Image CreerImageCarte(String nom, int position)
@@ -402,14 +518,70 @@ namespace Cosmos.view
         private void Carte_CarteEnJeu_Zoom(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
-            AfficherCarteZoom(img, false);
+
+            if(Phase == 3 && img.Opacity == 1)
+            {
+                switch(img.Name.Substring(8, 1))
+                {
+                    case "1":
+                        Unite1J1Attack = ChangerBoolAttaque(Unite1J1Attack);
+                        ChangerBorderAttaque(emplacementUnite1J1, Unite1J1Attack);
+                        break;
+                    case "2":
+                        Unite2J1Attack = ChangerBoolAttaque(Unite2J1Attack);
+                        ChangerBorderAttaque(emplacementUnite2J1, Unite2J1Attack);
+                        break;
+                    case "3":
+                        Unite3J1Attack = ChangerBoolAttaque(Unite3J1Attack);
+                        ChangerBorderAttaque(emplacementUnite3J1, Unite3J1Attack);
+                        break;
+                }
+            }
+            else
+            {
+                AfficherCarteZoom(img, false);
+            }
+        }
+
+        private bool ChangerBoolAttaque(bool attaque)
+        {
+            if(attaque)
+            {
+                attaque = false;
+            }
+            else
+            {
+                attaque = true;
+            }
+            return attaque;
+        }
+
+        private void ChangerBorderAttaque(Border border, bool attaque)
+        {
+            if (attaque)
+            {
+                border.BorderBrush = Brushes.Yellow;
+            }
+            else
+            {
+                attaque = true;
+                border.BorderBrush = Brushes.Transparent;
+            }
         }
 
 
         public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
-            IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+
+            if(carteMain)
+            {
+                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+            }
+            else
+            {
+                IndexCarteZoomer = 99; // On met l'index à 99 pour détecter qu'il a clicker sur une carte en jeu.
+            }
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
 
@@ -419,8 +591,7 @@ namespace Cosmos.view
         {
             grd1.Children.Remove(ContenuEcran);
             recRessource.Visibility = Visibility.Hidden;
-
-            changerPhase();
+            laTableDeJeu.AvancerPhase();
             AfficherMain();
         }
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
@@ -431,10 +602,49 @@ namespace Cosmos.view
             grd1.Children.Add(ContenuEcran);
         }
 
+        private void AfficherCoupPoosible()
+        {
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
+            {
+                imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite1J1.Cursor = Cursors.Hand;
+                imgUnite1J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 is null)
+            {
+                imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite2J1.Cursor = Cursors.Hand;
+                imgUnite2J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 is null)
+            {
+                imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
+                imgUnite3J1.Cursor = Cursors.Hand;
+                imgUnite3J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
+            }
+        }
+
+        private void ChoisirEmplacementUnite(object sender, MouseButtonEventArgs e)
+        {
+            Image img = (Image)sender;
+            // TODO: Enlever le Inserer Carte Creature
+            //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
+            laTableDeJeu.JouerCarte(IndexCarteZoomer, Convert.ToInt32(img.Name.Substring(8, 1)));
+
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
+            rectZoom.Visibility = Visibility.Hidden;
+            img.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+
+            // Enlever les évènement
+
+            RefreshAll();
+        }
+
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // On peut jouer une carte seulement dans la phase 2
-            if (phase == 2 && laTableDeJeu.JoueurActifEst1)
+            if (Phase == 2 && laTableDeJeu.JoueurActifEst1 && IndexCarteZoomer != 99) // Si l'index est à 99 c'est qu'il a cliquer une carte en jeu.
             {
 
                 // Fonctionne partiellement. Pour la première carte, c'est toujours bon.
@@ -442,14 +652,23 @@ namespace Cosmos.view
                 // Il faudrait ré-organiser la main après le 0,5
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
-                    // Choisir l'emplacement.
-                    // TODO: Enlever le Inserer Carte Creature
-                    //InsererCarteCreature(laTableDeJeu.LstMainJ1[IndexCarteZoomer].Nom, 4);
-                    laTableDeJeu.JouerCarte(IndexCarteZoomer);
+                    if (laTableDeJeu.CarteAJouerEstUnite(IndexCarteZoomer))
+                    {
+                        // Choisir l'emplacement.
+                        AfficherCoupPoosible();                    
+                    }
+                    else
+                    {
+                        laTableDeJeu.JouerCarte(IndexCarteZoomer, 0); // La position n'est pas nécessaire.
+                        rectZoom.Visibility = Visibility.Hidden;
+                        RefreshAll();
+                    }
                 }
-                rectZoom.Visibility = Visibility.Hidden;
+                else
+                {
+                    rectZoom.Visibility = Visibility.Hidden;
+                }
                 imgZoomCarte.Visibility = Visibility.Hidden;
-                AfficherMain();
 
             }
         }
@@ -458,6 +677,8 @@ namespace Cosmos.view
         {
             rectZoom.Visibility = Visibility.Hidden;
             imgZoomCarte.Visibility = Visibility.Hidden;
+            grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
+            RefreshAll();
         }
     }
     /// <summary>

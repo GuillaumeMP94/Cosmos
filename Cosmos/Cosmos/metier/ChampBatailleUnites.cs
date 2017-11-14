@@ -13,8 +13,11 @@ namespace Cosmos.metier
     {
         #region Propriétés
         public Unite Champ1 { get; set; }
+        public bool EstEnPreparationChamp1; // Pour savoir si l'unité est en preparation et donc ne peut pas attaquer.
         public Unite Champ2 { get; set; }
+        public bool EstEnPreparationChamp2;
         public Unite Champ3 { get; set; }
+        public bool EstEnPreparationChamp3;
         #endregion
 
         #region Constructeurs
@@ -23,6 +26,9 @@ namespace Cosmos.metier
             Champ1 = null;
             Champ2 = null;
             Champ3 = null;
+            EstEnPreparationChamp1 = false;
+            EstEnPreparationChamp2 = false;
+            EstEnPreparationChamp3 = false;
         }
         #endregion
         public bool EspaceDisponible()
@@ -39,12 +45,44 @@ namespace Cosmos.metier
             switch (emplacement)
             {
                 case 1: Champ1 = (Unite)carteAjouter;
+                    EstEnPreparationChamp1 = true;
                     break;
                 case 2: Champ2 = (Unite)carteAjouter;
+                    EstEnPreparationChamp2 = true;
                     break;
                 case 3: Champ3 = (Unite)carteAjouter;
+                    EstEnPreparationChamp3 = true;
                     break;
             }
+        }
+
+        public void Preparer()
+        {
+            EstEnPreparationChamp1 = false;
+            EstEnPreparationChamp2 = false;
+            EstEnPreparationChamp3 = false;
+        }
+
+        public List<Unite> DetruireUnite()
+        {
+            List<Unite> temp = new List<Unite>();
+            
+            if (Champ1 != null && Champ1.Defense <= 0)
+            {
+                temp.Add(Champ1);
+                Champ1 = null;
+            }
+            if (Champ2 != null && Champ2.Defense <= 0)
+            {
+                temp.Add(Champ2);
+                Champ2 = null;
+            }
+            if (Champ3 != null && Champ3.Defense <= 0)
+            {
+                temp.Add(Champ3);
+                Champ3 = null;
+            }
+            return temp;
         }
     }
 }
