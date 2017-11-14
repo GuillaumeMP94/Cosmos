@@ -1,4 +1,3 @@
-
 ﻿using Cosmos.accesBD;
 using Cosmos.metier;
 using Cosmos.view;
