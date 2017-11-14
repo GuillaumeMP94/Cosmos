@@ -164,7 +164,10 @@ namespace Cosmos.metier
                                         || jeu.ChampConstructionsJ2.Champ4 == null)
                                     {
                                         jeu.JouerCarte(index, ChoixChampUnite);
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
                                         break;
+=======
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
                                     }
                                 }
                                 else if (jeu.LstMainJ2[index] is Gadget)
@@ -573,10 +576,24 @@ namespace Cosmos.metier
                     #region
                     // Pour le plaisir de la chose, un peu de RNG est encore présent, mais pas beaucoup      
                     // De plus, si l'unité adverse a plus de defense et d'attaque le AI n'attaque pas. 
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
                     // Avant toute chose je vérifie
                     if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
                     {
                         if (PeutOblitererCombatTableJeu(jeu, 1))
+=======
+                    if (PeutOblitererCombatTableJeu(jeu, 1))
+                    {
+                        AttaqueChamp1 = true;
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
+                        || ( jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque 
+                        && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense) )
+                     {
+                        if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
+                            || jeu.ChampBatailleUnitesJ1.Champ1 == null
+                            || rnd.Next(1, 10) != 1)
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
                         {
                             AttaqueChamp1 = true;
                         }
@@ -599,7 +616,17 @@ namespace Cosmos.metier
                         }
                     }
                     // --------------------------- CHAMP 2 ----------------------------------------------------------
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
                     if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
+=======
+                    if (PeutOblitererCombatTableJeu(jeu, 2))
+                    {
+                        AttaqueChamp2 = true;
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
+                        || (jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
+                        && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
                     {
                         if (PeutOblitererCombatTableJeu(jeu, 2))
                         {
@@ -624,7 +651,17 @@ namespace Cosmos.metier
                         }
                     }
                     // --------------------------- CHAMP 3 ----------------------------------------------------------
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
                     if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
+=======
+                    if (PeutOblitererCombatTableJeu(jeu, 3))
+                    {
+                        AttaqueChamp3 = true;
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
+                        || (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
+                        && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
                     {
                         if (PeutOblitererCombatTableJeu(jeu, 3))
                         {
@@ -790,6 +827,7 @@ namespace Cosmos.metier
                 {
                     return true; 
                 }                
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
             }
             else if (position == 2)
             {
@@ -803,6 +841,21 @@ namespace Cosmos.metier
                     return true;
                 }
             }
+=======
+            }
+            else if (position == 2)
+            {
+                if (jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.ChampBatailleUnitesJ2.Champ2.Attaque)
+                {
+                    return true;
+                }
+                else if ((jeu.ChampBatailleUnitesJ2.Champ2.Attaque * 2) > jeu.ChampBatailleUnitesJ1.Champ2.Defense
+                    && jeu.ChampBatailleUnitesJ1.Champ2.Attaque <= jeu.ChampBatailleUnitesJ2.Champ2.Defense)
+                {
+                    return true;
+                }
+            }
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
             else
             {
                 if (jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.ChampBatailleUnitesJ2.Champ3.Attaque)
@@ -1189,14 +1242,19 @@ namespace Cosmos.metier
         private bool PeutOblitererCombatTableJeu(TableDeJeu jeu, int position)
         {
             // Je vérifie ici si lors d'un combat mon unité va non seulement détruire l'enemi, mais en plus survivre
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
             if (jeu.ChampBatailleUnitesJ1.Champ1 != null
                 && position == 1 
+=======
+            if ( position == 1 
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
                 && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque )
             {
                 return true;
             }
             else if(position == 2
+<<<<<<< HEAD:Cosmos/Cosmos/metier/AI.cs
                 && jeu.ChampBatailleUnitesJ1.Champ2 != null
                 && jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.ChampBatailleUnitesJ2.Champ2.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ2.Defense > jeu.ChampBatailleUnitesJ1.Champ2.Attaque)
@@ -1206,6 +1264,15 @@ namespace Cosmos.metier
             else if (jeu.ChampBatailleUnitesJ1.Champ3 != null
                 && jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.ChampBatailleUnitesJ2.Champ3.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ3.Defense > jeu.ChampBatailleUnitesJ1.Champ3.Attaque)
+=======
+                && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque)
+            {
+                return true;
+            }
+            else if (jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque)
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/metier/AI.cs
             {
                 return true;
             }

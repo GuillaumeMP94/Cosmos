@@ -64,7 +64,11 @@ namespace Cosmos.view
             //Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
+<<<<<<< HEAD:Cosmos/Cosmos/view/Partie.xaml.cs
             AI Robot = new AI("Robot Turenne", 3, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+=======
+            AI Robot = new AI("Robot Turenne", 1, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+>>>>>>> f085383ed8db7cbf0548b95d650183c611a1ecf7:Cosmos/view/Partie.xaml.cs
             //utilisateur2.Reinitialiser();
             laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
             // Permet de lier l'AI avec la table de jeu
