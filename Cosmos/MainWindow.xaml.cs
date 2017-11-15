@@ -26,6 +26,7 @@ namespace Cosmos
     {
         public UserControl ContenuEcran { get; set; }
         public UserControl ContenuListeAmi { get; set; }
+        public UserControl ContenuAddModifAmi { get; set; }
         private Connexion Connexion { get; set; }
         private MenuPrincipal MenuPrincipal { get; set; }
         public CreationCompte Creation { get; set; }
@@ -148,8 +149,8 @@ namespace Cosmos
 
         public void EcranModifierAmi()
         {
-            ContenuEcran = new ModifierAmi(this);
-            grdMain.Children.Add(ContenuEcran);
+            ContenuAddModifAmi = new ModifierAmi(this);
+            grdMain.Children.Add(ContenuAddModifAmi);
         }
 
         #region ValidationChamps
