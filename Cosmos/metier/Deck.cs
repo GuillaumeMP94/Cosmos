@@ -84,5 +84,10 @@ namespace Cosmos.metier
             }
         }
 
+        public void AjouterCarteRecyclage(List<Carte> lstUsineRecyclage)
+        {
+            CartesDuDeck.AddRange(lstUsineRecyclage);
+            lstUsineRecyclage.Clear();
+        }
     }
 }

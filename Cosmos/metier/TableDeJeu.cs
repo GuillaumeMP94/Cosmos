@@ -176,17 +176,13 @@ namespace Cosmos.metier
 
         public void ExecuterAttaque(bool champ1, bool champ2, bool champ3)
         {
-            Unite attaquant1, attaquant2, attaquant3;
-            Unite defenseur1, defenseur2, defenseur3;
+            ChampBatailleUnites attaquant;
+            ChampBatailleUnites defenseur;
             Joueur joueurDefense;
             if (JoueurActifEst1)
             {
-                attaquant1 = ChampBatailleUnitesJ1.Champ1;
-                attaquant2 = ChampBatailleUnitesJ1.Champ2;
-                attaquant3 = ChampBatailleUnitesJ1.Champ3;
-                defenseur1 = ChampBatailleUnitesJ2.Champ1;
-                defenseur2 = ChampBatailleUnitesJ2.Champ2;
-                defenseur3 = ChampBatailleUnitesJ2.Champ3;
+                attaquant = ChampBatailleUnitesJ1;
+                defenseur = ChampBatailleUnitesJ2;
                 joueurDefense = Joueur2;
                 if (ChampBatailleUnitesJ1.EstEnPreparationChamp1)
                     champ1 = false;
@@ -197,12 +193,8 @@ namespace Cosmos.metier
             }
             else
             {
-                attaquant1 = ChampBatailleUnitesJ2.Champ1;
-                attaquant2 = ChampBatailleUnitesJ2.Champ2;
-                attaquant3 = ChampBatailleUnitesJ2.Champ3;
-                defenseur1 = ChampBatailleUnitesJ1.Champ1;
-                defenseur2 = ChampBatailleUnitesJ1.Champ2;
-                defenseur3 = ChampBatailleUnitesJ1.Champ3;
+                attaquant = ChampBatailleUnitesJ2;
+                defenseur = ChampBatailleUnitesJ1;
                 joueurDefense = Joueur1;
                 if (ChampBatailleUnitesJ2.EstEnPreparationChamp1)
                     champ1 = false;
@@ -211,12 +203,7 @@ namespace Cosmos.metier
                 if (ChampBatailleUnitesJ2.EstEnPreparationChamp3)
                     champ3 = false;
             }
-            if (champ1)
-                Tirer(attaquant1, defenseur1, joueurDefense);
-            if (champ2)
-                Tirer(attaquant2, defenseur2, joueurDefense);
-            if (champ3)
-                Tirer(attaquant3, defenseur3, joueurDefense);
+                Tirer(attaquant, defenseur, joueurDefense, champ1, champ2, champ3);
 
         }
 
@@ -235,7 +222,9 @@ namespace Cosmos.metier
                 LstUsineRecyclageJ2.Add(unBatiment);
             }
         }
-
+        /// <summary>
+        /// Fonction qui détruit un unité
+        /// </summary>
         public void DetruireUnite()
         {
             List<Unite> DetruiteJoueur1;
@@ -251,7 +240,9 @@ namespace Cosmos.metier
                 LstUsineRecyclageJ2.Add(unUnite);
             }
         }
-
+        /// <summary>
+        /// Fonction qui rend les unités prêt à attaquer.
+        /// </summary>
         public void PreparerTroupes()
         {
             if (!joueurActifEst1)
@@ -263,20 +254,46 @@ namespace Cosmos.metier
                 ChampBatailleUnitesJ2.Preparer();
             }
         }
-
-        private void Tirer(Unite attaquant, Unite defenseur, Joueur joueurDefense)
+        /// <summary>
+        /// Mets à jour les points de vie des unités sur le champs de bataille.
+        /// </summary>
+        /// <param name="attaquant">Le champs de bataille de l'attaquant</param>
+        /// <param name="defenseur">Le champs de bataille du défenseur</param>
+        /// <param name="joueurDefense">Le joueur qui reçoit l'attaque</param>
+        /// <param name="champ1">Si on attaque ou pas sur le champs 1</param>
+        /// <param name="champ2">Si on attaque ou pas sur le champs 2</param>
+        /// <param name="champ3">Si on attaque ou pas sur le champs 3</param>
+        private void Tirer(ChampBatailleUnites attaquant, ChampBatailleUnites defenseur, Joueur joueurDefense, bool champ1, bool champ2, bool champ3)
         {
-            if (attaquant != null)
+            if (champ1 && attaquant.Champ1 != null)
             {
-                if (defenseur != null)
+                if (defenseur.Champ1 != null)
                 {
-                    attaquant = attaquant - defenseur;
-                    defenseur = defenseur - attaquant;
+                    attaquant.VieChamp1 -= defenseur.AttChamp1;
+                    defenseur.VieChamp1 -= attaquant.AttChamp1;
                 }
                 else
+                    joueurDefense.PointDeBlindage -= attaquant.AttChamp1;
+            }
+            if (champ2 && attaquant.Champ2 != null)
+            {
+                if (defenseur.Champ2 != null)
                 {
-                    joueurDefense.PointDeBlindage -= attaquant.Attaque;
+                    attaquant.VieChamp2 -= defenseur.AttChamp2;
+                    defenseur.VieChamp2 -= attaquant.AttChamp2;
                 }
+                else
+                    joueurDefense.PointDeBlindage -= attaquant.AttChamp2;
+            }
+            if (champ3 && attaquant.Champ1 != null)
+            {
+                if (defenseur.Champ3 != null)
+                {
+                    attaquant.VieChamp3 -= defenseur.AttChamp3;
+                    defenseur.VieChamp3 -= attaquant.AttChamp3;
+                }
+                else
+                    joueurDefense.PointDeBlindage -= attaquant.AttChamp3;
             }
         }
         #endregion
@@ -593,11 +610,15 @@ namespace Cosmos.metier
         {
             if (JoueurActifEst1)
             {
+                if (Joueur1.DeckAJouer.NbCarteDeck == 0 )
+                    Joueur1.UtiliserRecyclage(LstUsineRecyclageJ1);
                 if (LstMainJ1.Count < 8)
                     LstMainJ1.Add(Joueur1.PigerCarte());
             }
             else
             {
+                if (Joueur2.DeckAJouer.NbCarteDeck == 0)
+                    Joueur2.UtiliserRecyclage(LstUsineRecyclageJ2);
                 if (LstMainJ2.Count < 8)
                     LstMainJ2.Add(Joueur2.PigerCarte());
             }
