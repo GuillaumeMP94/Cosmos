@@ -94,8 +94,14 @@
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ListeAmis.xaml.cs">
+      <DependentUpon>ListeAmis.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\MenuPrincipal.xaml.cs">
       <DependentUpon>MenuPrincipal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ModifierAmi.xaml.cs">
+      <DependentUpon>ModifierAmi.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\OptionCompte.xaml.cs">
       <DependentUpon>OptionCompte.xaml</DependentUpon>
@@ -137,7 +143,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\ListeAmis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\MenuPrincipal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ModifierAmi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,6 +258,7 @@
     <Resource Include="images\Turn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\iconeAmis.png" />
     <Resource Include="images\partie\jouer.jpg" />
     <Resource Include="images\cartes\Explorateur de l%27Alliance.jpg" />
   </ItemGroup>

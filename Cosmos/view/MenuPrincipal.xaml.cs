@@ -45,12 +45,12 @@ namespace Cosmos.view
 
         private void btnGestionDecks_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("En construction");
         }
 
         private void btnMultijoueur_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("En construction");
         }
 
         private void btnCampagne_Click(object sender, RoutedEventArgs e)
@@ -63,5 +63,12 @@ namespace Cosmos.view
             Main.UtilisateurConnecte = null;
             Main.EcranConnexion();
         }
+
+        private void btnListeAmis_Click(object sender, RoutedEventArgs e)
+        {
+            Main.EcranListeAmis();
+        }
+
+        
     }
 }

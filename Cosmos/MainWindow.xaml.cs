@@ -25,6 +25,7 @@ namespace Cosmos
     public partial class MainWindow : Window
     {
         public UserControl ContenuEcran { get; set; }
+        public UserControl ContenuListeAmi { get; set; }
         private Connexion Connexion { get; set; }
         private MenuPrincipal MenuPrincipal { get; set; }
         public CreationCompte Creation { get; set; }
@@ -33,7 +34,8 @@ namespace Cosmos
         public Campagne Campagne { get; set; }
         public Utilisateur UtilisateurConnecte { get; set; }
         public Partie Partie { get; set; }
-        
+        public List<Utilisateur> LstAmis { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,7 +48,7 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
 
             //TODO: Enlever la prochaine ligne avant remise
-            EcranPartie();
+            //EcranPartie();
             //EcranMenuPrincipal();
 
         }
@@ -69,6 +71,7 @@ namespace Cosmos
         public void EcranCreerCompte()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new CreationCompte(this);
 
 
@@ -78,6 +81,7 @@ namespace Cosmos
         public void EcranConnexion()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new Connexion(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
@@ -88,6 +92,7 @@ namespace Cosmos
         public void EcranRecuperation()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new RecuperationCompte(this);
 
             grdMain.Children.Add(ContenuEcran);
@@ -96,6 +101,7 @@ namespace Cosmos
         public void EcranOptionCompte()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new OptionCompte(this);
 
             grdMain.Children.Add(ContenuEcran);
@@ -104,6 +110,7 @@ namespace Cosmos
         public void EcranCampagne()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
@@ -114,13 +121,23 @@ namespace Cosmos
         public void EcranReglements()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
             ContenuEcran = new ReglementsTutoriel(this);
 
             grdMain.Children.Add(ContenuEcran);
         }
+
+        public void EcranListeAmis()
+        {
+            ContenuListeAmi = new ListeAmis(this);
+
+            grdMain.Children.Add(ContenuListeAmi);
+        }
+
         public void EcranPartie()
         {
             grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
 
             ContenuEcran = new Partie(this);
 
@@ -128,7 +145,14 @@ namespace Cosmos
 
             grdMain.Children.Add(ContenuEcran);
         }
-        
+
+        public void EcranModifierAmi()
+        {
+            ContenuEcran = new ModifierAmi(this);
+            grdMain.Children.Add(ContenuEcran);
+        }
+
+        #region ValidationChamps
         public string ValiderChampSaisi(string champ)
         {
             string pattern = @"([a-zA-Z0-9]*)";
@@ -152,5 +176,6 @@ namespace Cosmos
 
             return estValide;
         }
+        #endregion
     }
 }
