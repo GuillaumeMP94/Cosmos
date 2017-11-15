@@ -172,6 +172,7 @@ namespace Cosmos.view
         {
             // on ajoute les ressources au joueur actif
             laTableDeJeu.AttribuerRessourceLevel();
+            laTableDeJeu.EffetBatiments();
             laTableDeJeu.PigerCarte();
             txBlphaseRessource.Background = Brushes.Transparent;
             txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
@@ -235,7 +236,7 @@ namespace Cosmos.view
                 // Victoire
                 TrousseGlobale.PhaseChange -= changerPhase;
                 Temps.Stop();
-                MessageBox.Show("Vous avez gagné!","Victoire",MessageBoxButton.OK);
+                MessageBox.Show("Vous avez gagné!","Victoire", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
             if (laTableDeJeu.Joueur1.PointDeBlindage <= 0)

@@ -35,5 +35,13 @@ namespace Cosmos.metier
 		{
 		    return new Gain(this.Type,new Ressource(this.RessourceJoueur),new Ressource(this.RessourceAdversaire));
 		}
-	}
+        public override Ressource GetRessourceJoueur()
+        {
+            return RessourceJoueur;
+        }
+        public override Ressource GetRessourceAdversaire()
+        {
+            return RessourceAdversaire;
+        }
+    }
 }
