@@ -155,25 +155,34 @@ namespace Cosmos.metier
             EstEnPreparationChamp2 = false;
             EstEnPreparationChamp3 = false;
         }
-
+        /// <summary>
+        /// Détruit les unités si elles sont présentes et que leur vie est sous 0
+        /// </summary>
+        /// <returns>Une liste d'unité détruite.</returns>
         public List<Unite> DetruireUnite()
         {
             List<Unite> temp = new List<Unite>();
             
-            if (Champ1 != null && Champ1.Defense <= 0)
+            if (Champ1 != null && VieChamp1 <= 0)
             {
                 temp.Add(Champ1);
                 Champ1 = null;
+                VieChamp1 = 0;
+                AttChamp1 = 0;
             }
-            if (Champ2 != null && Champ2.Defense <= 0)
+            if (Champ2 != null && VieChamp2 <= 0)
             {
                 temp.Add(Champ2);
                 Champ2 = null;
+                VieChamp2 = 0;
+                AttChamp2 = 0;
             }
-            if (Champ3 != null && Champ3.Defense <= 0)
+            if (Champ3 != null && VieChamp3 <= 0)
             {
                 temp.Add(Champ3);
                 Champ3 = null;
+                VieChamp3 = 0;
+                AttChamp3 = 0;
             }
             return temp;
         }

@@ -100,5 +100,10 @@ namespace Cosmos.metier
         {
             return DeckAJouer.PigerCarte();
         }
+
+        public void UtiliserRecyclage(List<Carte> lstUsineRecyclage)
+        {
+            DeckAJouer.AjouterCarteRecyclage(lstUsineRecyclage);
+        }
     }
 }

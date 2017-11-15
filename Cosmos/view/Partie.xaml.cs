@@ -436,6 +436,9 @@ namespace Cosmos.view
             // Insérer les img des cartes Unités en jeu du joueur 2 s'il y en a
             if(laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
             {
+                txblSlash1J2.Visibility = Visibility.Visible;
+                txblEmplacementUnite1J2Attaque.Visibility = Visibility.Visible;
+                txblEmplacementUnite1J2Vie.Visibility = Visibility.Visible;
                 imgUnite1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ1.Nom + ".jpg"));
                 if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp1)
                     imgUnite1J2.Opacity = 0.5;
@@ -444,10 +447,16 @@ namespace Cosmos.view
             }
             else
             {
+                txblSlash1J2.Visibility = Visibility.Hidden;
+                txblEmplacementUnite1J2Attaque.Visibility = Visibility.Hidden;
+                txblEmplacementUnite1J2Vie.Visibility = Visibility.Hidden;
                 imgUnite1J2.Source = null;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null)
             {
+                txblSlash2J2.Visibility = Visibility.Visible;
+                txblEmplacementUnite2J2Attaque.Visibility = Visibility.Visible;
+                txblEmplacementUnite2J2Vie.Visibility = Visibility.Visible;
                 imgUnite2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ2.Nom + ".jpg"));
                 if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp2)
                     imgUnite2J2.Opacity = 0.5;
@@ -456,10 +465,16 @@ namespace Cosmos.view
             }
             else
             {
+                txblSlash2J2.Visibility = Visibility.Hidden;
+                txblEmplacementUnite2J2Attaque.Visibility = Visibility.Hidden;
+                txblEmplacementUnite2J2Vie.Visibility = Visibility.Hidden;
                 imgUnite2J2.Source = null;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null)
             {
+                txblSlash3J2.Visibility = Visibility.Visible;
+                txblEmplacementUnite3J2Attaque.Visibility = Visibility.Visible;
+                txblEmplacementUnite3J2Vie.Visibility = Visibility.Visible;
                 imgUnite3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ2.Champ3.Nom + ".jpg"));
                 if (laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp3)
                     imgUnite3J2.Opacity = 0.5;
@@ -468,11 +483,17 @@ namespace Cosmos.view
             }
             else
             {
+                txblSlash3J2.Visibility = Visibility.Hidden;
+                txblEmplacementUnite3J2Attaque.Visibility = Visibility.Hidden;
+                txblEmplacementUnite3J2Vie.Visibility = Visibility.Hidden;
                 imgUnite3J2.Source = null;
             }
             // Insérer les img des cartes Unités en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
             {
+                txblSlash1J1.Visibility = Visibility.Visible;
+                txblEmplacementUnite1J1Attaque.Visibility = Visibility.Visible;
+                txblEmplacementUnite1J1Vie.Visibility = Visibility.Visible;
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ1.Nom + ".jpg"));
                 //imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
                 if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1)
@@ -482,11 +503,17 @@ namespace Cosmos.view
             }
             else
             {
+                txblSlash1J1.Visibility = Visibility.Hidden;
+                txblEmplacementUnite1J1Attaque.Visibility = Visibility.Hidden;
+                txblEmplacementUnite1J1Vie.Visibility = Visibility.Hidden;
                 imgUnite1J1.Source = null;
                 imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;                
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
             {
+                txblSlash2J1.Visibility = Visibility.Visible;
+                txblEmplacementUnite2J1Attaque.Visibility = Visibility.Visible;
+                txblEmplacementUnite2J1Vie.Visibility = Visibility.Visible;
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ2.Nom + ".jpg"));
                 //imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
                 if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
@@ -496,11 +523,17 @@ namespace Cosmos.view
             }
             else
             {
+                txblSlash2J1.Visibility = Visibility.Hidden;
+                txblEmplacementUnite2J1Attaque.Visibility = Visibility.Hidden;
+                txblEmplacementUnite2J1Vie.Visibility = Visibility.Hidden;
                 imgUnite2J1.Source = null;
                 imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
             {
+                txblSlash3J1.Visibility = Visibility.Visible;
+                txblEmplacementUnite3J1Attaque.Visibility = Visibility.Visible;
+                txblEmplacementUnite3J1Vie.Visibility = Visibility.Visible;
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampBatailleUnitesJ1.Champ3.Nom + ".jpg"));
                 //imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
                 if (laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3)
@@ -510,6 +543,9 @@ namespace Cosmos.view
             }
             else
             {
+                txblSlash3J1.Visibility = Visibility.Hidden;
+                txblEmplacementUnite3J1Attaque.Visibility = Visibility.Hidden;
+                txblEmplacementUnite3J1Vie.Visibility = Visibility.Hidden;
                 imgUnite3J1.Source = null;                
                 imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
