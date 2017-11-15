@@ -222,6 +222,39 @@ namespace Cosmos.metier
                 LstUsineRecyclageJ2.Add(unBatiment);
             }
         }
+
+        public void EffetBatiments()
+        {
+            List<Effet> lstEffet = new List<Effet>();
+            Joueur Actif;
+            Joueur Passif;
+            if (JoueurActifEst1)
+            {
+                Actif = Joueur1;
+                Passif = Joueur2;
+                lstEffet = ChampConstructionsJ1.RetournerEffets();
+            }
+            else
+            {
+                Actif = Joueur2;
+                Passif = Joueur1;
+                lstEffet = ChampConstructionsJ2.RetournerEffets();
+            }
+            ExecuterEffets(Actif, Passif, lstEffet);
+        }
+
+        private void ExecuterEffets(Joueur actif, Joueur passif, List<Effet> lstEffet)
+        {
+            foreach (Effet unEffet in lstEffet)
+            {
+                if (unEffet.Type == "gainParTour")
+                {
+                    actif.RessourceActive += unEffet.GetRessourceJoueur();
+                    passif.RessourceActive += unEffet.GetRessourceAdversaire();
+                }
+            }
+        }
+
         /// <summary>
         /// Fonction qui détruit un unité
         /// </summary>

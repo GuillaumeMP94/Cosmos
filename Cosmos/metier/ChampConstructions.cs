@@ -98,5 +98,27 @@ namespace Cosmos.metier
             
             return temp;
         }
+
+        public List<Effet> RetournerEffets()
+        {
+            List<Effet> lstResultat = new List<Effet>();
+            if (Champ1 != null && Champ1.EffetCarte != null)
+            {
+                lstResultat.Add(Champ1.EffetCarte);
+            }
+            if (Champ2 != null && Champ2.EffetCarte != null)
+            {
+                lstResultat.Add(Champ2.EffetCarte);
+            }
+            if (Champ3 != null && Champ3.EffetCarte != null)
+            {
+                lstResultat.Add(Champ3.EffetCarte);
+            }
+            if (Champ4 != null && Champ4.EffetCarte != null)
+            {
+                lstResultat.Add(Champ4.EffetCarte);
+            }
+            return lstResultat;
+        }
     }
 }

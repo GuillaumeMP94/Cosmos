@@ -25,5 +25,13 @@ namespace Cosmos.metier
 		{
 		    return new Effet(this.Type);
 		}
-	}
+        public virtual Ressource GetRessourceJoueur()
+        {
+            return new Ressource(0, 0, 0);
+        }
+        public virtual Ressource GetRessourceAdversaire()
+        {
+            return new Ressource(0, 0, 0);
+        }
+    }
 }
