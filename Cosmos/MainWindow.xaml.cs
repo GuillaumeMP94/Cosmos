@@ -1,4 +1,3 @@
-
 ﻿using Cosmos.accesBD;
 using Cosmos.metier;
 using Cosmos.view;
@@ -139,9 +138,6 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
             grdMain.Children.Remove(ContenuListeAmi);
-
-            Joueur joueur1 = new Joueur();
-            Joueur joueur2 = new Joueur();
 
             ContenuEcran = new Partie(this);
 

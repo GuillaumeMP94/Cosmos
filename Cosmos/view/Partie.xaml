@@ -10,11 +10,11 @@
 
     <Grid Margin="15,15,15,15" Name="grd1">
         <Image Name="imgFinTour" Height="600" Source="/images/Turn.png" Visibility="Hidden" Panel.ZIndex="99"/>
-        <Border BorderThickness="5" BorderBrush="Yellow" />
+        <Border BorderThickness="5" BorderBrush="Transparent" />
 
         <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
-            
-            <Border BorderThickness="5" BorderBrush="Pink" />
+
+            <Border BorderThickness="5" BorderBrush="Transparent" />
 
             <TextBlock x:Name="txBlPBA" Text="BLINDAGE&#10;ADVERSE" Foreground="Red"
                        VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,30,0,0"
@@ -31,7 +31,7 @@
 
                 </Border>
             </Border>
-			
+
             <TextBlock x:Name="txBltxtPBJ" Text="BLINDAGE" Foreground="DarkGoldenrod"
                        VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,50"
                        FontWeight="Bold" FontSize="30"/>
@@ -39,16 +39,16 @@
             <Border Margin="5,0,0,100" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="DarkGoldenrod"
                     DataContext="{Binding Joueur1}">
-                
+
                 <Border Margin="5,5,5,5"
                         BorderThickness="3" BorderBrush="DarkGoldenrod">
 
                     <TextBlock x:Name="txBlnbBlindageA" Text="{Binding PointDeBlindage}" Foreground="DarkGoldenrod" FontSize="45"
-                               Padding="10,10,10,10" FontWeight="Bold" />          
-                
+                               Padding="10,10,10,10" FontWeight="Bold" />
+
                 </Border>
             </Border>
-            
+
             <StackPanel Name="spPanelPhases" Margin="10,10,10,10" Height="auto" VerticalAlignment="Center">
                 <StackPanel.Background>
                     <SolidColorBrush Color="Black" Opacity="0.7" />
@@ -91,9 +91,9 @@
                            Margin="10,0,10,10" FontSize="20" Foreground="DarkGoldenrod" TextAlignment="Center"/>
 
                 <Border BorderThickness="5" BorderBrush="DarkGoldenrod">
-                    
-                    <Grid Name="grdRessourceJ" DataContext="{Binding Joueur1.RessourceActive}" >                        
-                        <Grid.ColumnDefinitions>                            
+
+                    <Grid Name="grdRessourceJ" DataContext="{Binding Joueur1.RessourceActive}" >
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
@@ -114,13 +114,13 @@
                                    Text="{Binding BarilNucleaire}">
                         </TextBlock>
                         <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30" 
-                            Text="{Binding AlainDollars}">
+                            Text="{Binding AlainDollars}" Height="40" VerticalAlignment="Top">
                         </TextBlock>
 
                     </Grid>
                 </Border>
 
-            </StackPanel>      
+            </StackPanel>
 
         </Grid>
 
@@ -132,13 +132,16 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Name="carteJoueur" BorderThickness="5" BorderBrush="Purple" Grid.Column="0"/>
-            <Border Name="deckJoueur" BorderThickness="5" BorderBrush="Purple" Grid.Column="1">
-                <Image Source="/images/CardBack.png" Grid.Column="1" />
+            <Border Name="carteJoueur" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0"/>
+            <Border Name="deckJoueur" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1">
+                <Image Source="/images/CardBack.png" Grid.Column="1" RenderTransformOrigin="0.528,0.5" />
             </Border>
-            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Purple" Grid.Column="2">
+            <TextBlock Name="txBLnbCarteJ1" Grid.Column="1" Text="{Binding NbCarteDeck}" Margin="25,15,0,0" 
+                       Panel.ZIndex="1" FontSize="25" Foreground="AntiqueWhite"/>
+
+            <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2">
                 <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
-            </Border>  
+            </Border>
 
         </Grid>
 
@@ -154,13 +157,15 @@
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="3" Margin="100,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="4" Margin="150,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="200,0,0,0"/>
-            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="0"/>
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0"/>
 
-            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="1">
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1">
                 <Image Source="/images/CardBack.png" Grid.Column="1"/>
             </Border>
+            <TextBlock Name="txBLnbCarteJ2" Grid.Column="1"  Text="{Binding NbCarteDeck}" Margin="25,15,0,0" 
+                       Panel.ZIndex="1" FontSize="25" Foreground="AntiqueWhite"/>
 
-            <Border BorderThickness="5" BorderBrush="Red" Grid.Column="2">
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="2">
                 <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
             </Border>
 
@@ -179,36 +184,36 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5"
                     Name="emplacementBatiment1">
                 <Image Name="imgBatiment1J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5"
                     Name="emplacementBatiment2">
                 <Image Name="imgBatiment2J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5"
                     Name="emplacementBatiment3">
                 <Image Name="imgBatiment3J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5"
                     Name="emplacementBatiment4">
                 <Image Name="imgBatiment4J2"/>
             </Border>
-            
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5"
+
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5"
                     Name="emplacementBatiment5">
                 <Image Name="imgBatiment1J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5"
                     Name="emplacementBatiment6">
                 <Image Name="imgBatiment2J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5"
                     Name="emplacementBatiment7">
                 <Image Name="imgBatiment3J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5"
                     Name="emplacementBatiment8">
                 <Image Name="imgBatiment4J1"/>
             </Border>
@@ -227,29 +232,117 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Border Name="emplacementUnite1J2" BorderThickness="5" BorderBrush="Violet" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5">
-                <Image Name="imgUnite1J2"/>
+            <Border Name="emplacementUnite1J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5">
+                <Image Name="imgUnite1J2" Stretch="Fill"/>
             </Border>
-            <Border Name="emplacementUnite2J2" BorderThickness="5" BorderBrush="Violet" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5">
-                <Image Name="imgUnite2J2"/>
-            </Border>
-            <Border Name="emplacementUnite3J2" BorderThickness="5" BorderBrush="Violet" Grid.Column="2" Grid.Row="0" Padding="5,5,5,5">
-                <Image Name="imgUnite3J2"/>
-            </Border>
+            <Grid Name="grdEmplacementUnite1J2" Height="50" Width="50" Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="txblEmplacementUnite1J2Attaque" Grid.Column="0" Margin="5,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding AttChamp1}" VerticalAlignment="Top"/>
+                <TextBlock Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                       Text="/" VerticalAlignment="Center"/>
+                <TextBlock Name="txblEmplacementUnite1J2Vie" Grid.Column="2" Margin="0,12,0,0" Foreground="Black" FontSize="25"
+                       Text="{Binding VieChamp1}" VerticalAlignment="Top"/>
+            </Grid>
 
-            <Border Name="emplacementUnite1J1" BorderThickness="5" BorderBrush="Green" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5">
-                <Image Name="imgUnite1J1"/>
+            <Border Name="emplacementUnite2J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
+                <Image Name="imgUnite2J2" Stretch="Fill"/>
             </Border>
-            <Border Name="emplacementUnite2J1" BorderThickness="5" BorderBrush="Green" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5">
-                <Image Name="imgUnite2J1"/>
+            <Grid Name="grdEmplacementUnite2J2" Height="50" Width="50" Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="txblEmplacementUnite2J2Attaque" Grid.Column="0" Margin="5,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding AttChamp2}" VerticalAlignment="Top"/>
+                <TextBlock Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                       Text="/" VerticalAlignment="Center"/>
+                <TextBlock Name="txblEmplacementUnite2J2Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding VieChamp2}" VerticalAlignment="Bottom"/>
+            </Grid>
+
+            <Border Name="emplacementUnite3J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2" Grid.Row="0" Margin="5,5,5,5">
+                <Image Name="imgUnite3J2" Stretch="Fill"/>
             </Border>
-            <Border Name="emplacementUnite3J1" BorderThickness="5" BorderBrush="Green" Grid.Column="2" Grid.Row="1" Padding="5,5,5,5" >
-                <Image Name="imgUnite3J1"/>
+            <Grid Name="grdEmplacementUnite3J2" Height="50" Width="50" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="txblEmplacementUnite3J2Attaque" Grid.Column="0" Margin="5,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding AttChamp3}" VerticalAlignment="Top"/>
+                <TextBlock Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                       Text="/" VerticalAlignment="Center"/>
+                <TextBlock Name="txblEmplacementUnite3J2Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding VieChamp3}" VerticalAlignment="Bottom"/>
+            </Grid>
+
+            <Border Name="emplacementUnite1J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
+                <Image Name="imgUnite1J1" Stretch="Fill"/>
             </Border>
+            <Grid Name="grdEmplacementUnite1J1" Height="50" Width="50" Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="txblEmplacementUnite1J1Attaque" Grid.Column="0" Margin="5,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding AttChamp1}" VerticalAlignment="Top"/>
+                <TextBlock Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                       Text="/" VerticalAlignment="Center"/>
+                <TextBlock Name="txblEmplacementUnite1J1Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding VieChamp1}" VerticalAlignment="Bottom"/>
+            </Grid>
+
+            <Border Name="emplacementUnite2J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5">
+                <Image Name="imgUnite2J1" Stretch="Fill"/>
+            </Border>
+            <Grid Name="grdEmplacementUnite2J1" Height="50" Width="50" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="txblEmplacementUnite2J1Attaque" Grid.Column="0" Margin="5,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding AttChamp2}" VerticalAlignment="Top"/>
+                <TextBlock Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                       Text="/" VerticalAlignment="Center"/>
+                <TextBlock Name="txblEmplacementUnite2J1Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding VieChamp2}" VerticalAlignment="Bottom"/>
+            </Grid>
+
+            <Border Name="emplacementUnite3J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2" Grid.Row="1" Margin="5,5,5,5">
+                <Image Name="imgUnite3J1" Stretch="Fill"/>
+            </Border>
+            <Grid Name="grdEmplacementUnite3J1" Height="50" Width="50" Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="txblEmplacementUnite3J1Attaque" Grid.Column="0" Margin="5,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding AttChamp3}" VerticalAlignment="Top"/>
+                <TextBlock Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                       Text="/" VerticalAlignment="Center"/>
+                <TextBlock Name="txblEmplacementUnite3J1Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
+                       Text="{Binding VieChamp3}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="17"/>
+            </Grid>
 
         </Grid>
 
-            <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
+        <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
                 Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand"
                  Click="btnTerminerPhase_Click" >
             <Button.Template>
