@@ -7,9 +7,43 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="450">
     <Grid Name="grdModificationAmi">
+
         <Rectangle Name="recRessource" Fill="Black" Opacity="0.6" Height="auto" Width="auto" Visibility="Visible"/>
-        <Grid Width="450" Height="300" Background="White"></Grid>
-        <Button Name="btnFermer" Width="50" Height="50" Click="btnFermer_Click" Margin="349,240,50,10">Fermer</Button>
-        
+        <Grid Width="450" Height="300" >
+            <Border Width="auto" Height="auto" Background="Black" Margin="0,15,0,15" CornerRadius="15"/>
+
+            <Label Name="lblTitre" Height="40" Width="150" Content="Modifications" Foreground="DarkGoldenrod" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="150,15,150,0" />
+
+            <Label Name="lblAmi" Height="40" Width="150" HorizontalContentAlignment="Center" Foreground="DarkGoldenrod" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="150,55,166,0" />
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Width="375" Height="100" HorizontalScrollBarVisibility="Disabled">
+                <TextBox Width="375" Height="100" Foreground="DarkGoldenrod" Name="txbNote" TextWrapping="Wrap" Padding="5,5,19,5" TextAlignment="Justify" FontSize="14" />
+            </ScrollViewer>
+
+            <Button Name="btnAnnuler" Width="75" Height="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,30" Cursor="Hand" Click="btnAnnuler_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15">
+				                    Annuler
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Name="btnModifier" Width="75" Height="45" HorizontalAlignment="center" VerticalAlignment="Bottom" Margin="117,0,258,30" Cursor="Hand" Click="btnModifier_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15">
+				                    Modifier
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+
     </Grid>
 </UserControl>

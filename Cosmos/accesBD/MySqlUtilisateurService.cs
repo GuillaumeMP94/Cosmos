@@ -144,7 +144,7 @@ namespace Cosmos.accesBD
             ConnectionBD = new MySqlConnexion();
 
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT idUtilisateurAmi FROM Amis WHERE idUtilisateurProprietaire = '").Append(pIdUtilisateur).Append("'");
+            query.Append("SELECT idUtilisateurAmi FROM Amis WHERE idUtilisateurProprietaire = ").Append(pIdUtilisateur);
 
             dsResultat = ConnectionBD.Query(query.ToString());
             dtResultat = dsResultat.Tables[0];
@@ -156,5 +156,31 @@ namespace Cosmos.accesBD
 
             return lstResultat;
         }
+
+        public static string RetrieveNoteAmiByID(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi)
+        {
+            string resultat = "";
+            DataSet dsResultat;
+            DataTable dtResultat;
+            DataRow drResultat;
+
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT note FROM Amis WHERE idUtilisateurProprietaire = ").Append(pIdUtilisateurProprietaire)
+                 .Append(" AND idUtilisateurAmi = ").Append(pIdUtilisateurAmi);
+
+            dsResultat = ConnectionBD.Query(query.ToString());
+            dtResultat = dsResultat.Tables[0];
+
+            if (dtResultat.Rows.Count > 0)
+            {
+                drResultat = dtResultat.Rows[0];
+
+                if (!drResultat.IsNull(0) )
+                    resultat = (string)drResultat["note"];   
+            }
+
+            return resultat;
+        }
+
     }
 }

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cosmos.metier;
+using Cosmos.accesBD;
+
 
 namespace Cosmos.view
 {
@@ -21,16 +24,41 @@ namespace Cosmos.view
     public partial class ModifierAmi : UserControl
     {
         public MainWindow Main { get; set; }
-        public ModifierAmi(MainWindow main)
+        public ModifierAmi(MainWindow main, Utilisateur ami)
         {
             InitializeComponent();
 
             Main = main;
+
+            lblAmi.Content = ami.Nom;
+            txbNote.Text = MySqlUtilisateurService.RetrieveNoteAmiByID(Main.UtilisateurConnecte.IdUtilisateur, ami.IdUtilisateur);
+
         }
 
-        private void btnFermer_Click(object sender, RoutedEventArgs e)
+        private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             Main.grdMain.Children.Remove(this);
         }
+
+        private void btnModifier_Click(object sender, RoutedEventArgs e)
+        {
+            string note = VerifierNote(txbNote.Text);
+
+            txbNote.Text = note;
+
+        }
+
+        private string VerifierNote(string note)
+        {
+            string temp = note;
+            char fuckingguillement = '\\';
+            string calissdemarde = fuckingguillement + "\'";
+
+            temp = temp.Replace("\\", "\\\\" ).Replace("'", calissdemarde);
+
+            return temp;
+        }
+
+
     }
 }

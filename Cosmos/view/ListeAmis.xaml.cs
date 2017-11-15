@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Cosmos.metier;
+using Cosmos.accesBD;
 
 namespace Cosmos.view
 {
@@ -93,8 +94,27 @@ namespace Cosmos.view
 
         private void btnModifier_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranModifierAmi();
+            string temp = retrouverAmiSelectionne();
 
+            Main.EcranModifierAmi(MySqlUtilisateurService.RetrieveByNom(temp));
+
+        }
+
+        private string retrouverAmiSelectionne()
+        {
+            string ami = "";
+            foreach(object laListe in stpListeAmis.Children)
+            {
+                if (laListe is TextBlock)
+                {
+                    TextBlock txbAmi = (TextBlock)laListe;
+                    if (txbAmi.Background == Brushes.DarkGoldenrod)
+                    {
+                        return ami = txbAmi.Text;
+                    }
+                }
+            }
+            return ami;
         }
     }
 }
