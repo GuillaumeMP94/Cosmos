@@ -657,29 +657,57 @@ namespace Cosmos.metier
                 case 4:
                     #region
                     // Plus la strategie a une valeur haute, plus le AI est aggressif
-                   
+
                     // Section de code applicable peu importe la stratégie
                     // Si un flag d'attaque est mit a true, plus tard nous allons sauté par dessus de grande section de code
-                    if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
-                        || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                        || jeu.ChampBatailleUnitesJ1.Champ1 == null
-                        || PeutOblitererCombatTableJeu(jeu, 1))
+                    // De plus, il est important de toujours vérifier si le champ du AI est vide avant d'allé essayer de décider d'attaquer
+                    if(jeu.ChampBatailleUnitesJ2.Champ1 != null)
                     {
-                        AttaqueChamp1 = true;
+                       if (jeu.ChampBatailleUnitesJ1.Champ1 == null
+                           || PeutOblitererCombatTableJeu(jeu, 1))
+                        {
+                            AttaqueChamp1 = true;
+                        }
+                        else if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte != null)
+                        {
+                            if(jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
+                               || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable")
+                                {
+                                    AttaqueChamp1 = true;
+                                }
+                        }                
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
-                        || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                        || jeu.ChampBatailleUnitesJ1.Champ2 == null
-                        || PeutOblitererCombatTableJeu(jeu, 2))
+                    if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
                     {
-                        AttaqueChamp2 = true;
+                        if (jeu.ChampBatailleUnitesJ1.Champ2 == null
+                            || PeutOblitererCombatTableJeu(jeu, 2))
+                        {
+                            AttaqueChamp2 = true;
+                        }
+                        else if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
+                               || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable")
+                            {
+                                AttaqueChamp2 = true;
+                            }
+                        }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
-                        || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                        || jeu.ChampBatailleUnitesJ1.Champ3 == null
-                        || PeutOblitererCombatTableJeu(jeu, 3))
+                    if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
                     {
-                        AttaqueChamp3 = true;
+                        if (jeu.ChampBatailleUnitesJ1.Champ3 == null
+                            || PeutOblitererCombatTableJeu(jeu, 3))
+                        {
+                            AttaqueChamp3 = true;
+                        }
+                        else if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
+                               || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable")
+                            {
+                                AttaqueChamp3 = true;
+                            }
+                        }
                     }
 
                     // Section de choix d'attaque adaptatif à la stratégie
@@ -697,22 +725,22 @@ namespace Cosmos.metier
                         case 3:
                             #region
                             if ( !AttaqueChamp1
-                                && jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation" &&
-                                CombatEstProfitable( jeu, 1 ))
+                                && jeu.ChampBatailleUnitesJ2.Champ1 != null
+                                && CombatEstProfitable( jeu, 1 ))
                             {
                                 AttaqueChamp1 = true;
                             }
                             // ---------------------------- Champ 2 --------------------------------------
                             if (!AttaqueChamp2
-                                && jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation" &&
-                                CombatEstProfitable(jeu, 2))
+                                && jeu.ChampBatailleUnitesJ2.Champ2 != null
+                                && CombatEstProfitable(jeu, 2))
                             {
                                 AttaqueChamp2 = true;
                             }
                             // ---------------------------- Champ 3 --------------------------------------
                             if (!AttaqueChamp3
-                                && jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation" &&
-                                CombatEstProfitable(jeu, 3))
+                                && jeu.ChampBatailleUnitesJ2.Champ3 != null
+                                && CombatEstProfitable(jeu, 3))
                             {
                                 AttaqueChamp3 = true;
                             }
@@ -721,27 +749,27 @@ namespace Cosmos.metier
                         case 4:
                             #region
                             if (!AttaqueChamp1
-                                && jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation" &&
-                                CombatEstProfitable(jeu, 1))
+                                && jeu.ChampBatailleUnitesJ2.Champ1 != null
+                                && CombatEstProfitable(jeu, 1))
                             {
                                 AttaqueChamp1 = true;
                             }
                             // ---------------------------- Champ 2 --------------------------------------
                             if (!AttaqueChamp2
-                                && jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation" &&
-                                CombatEstProfitable(jeu, 2))
+                                && jeu.ChampBatailleUnitesJ2.Champ2 != null
+                                && CombatEstProfitable(jeu, 2))
                             {
                                 AttaqueChamp2 = true;
                             }
                             // ---------------------------- Champ 3 --------------------------------------
                             if (!AttaqueChamp3
-                                && jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation" &&
-                                CombatEstProfitable(jeu, 3))
+                                && jeu.ChampBatailleUnitesJ2.Champ3 != null
+                                && CombatEstProfitable(jeu, 3))
                             {
                                 AttaqueChamp3 = true;
                             }
-                            #endregion
                             break;
+                            #endregion
                         case 5: // PRESS THE ATTACK AT ALL COST
                             #region
                             AttaqueChamp1 = true;
@@ -779,8 +807,13 @@ namespace Cosmos.metier
         private bool CombatEstProfitable(TableDeJeu jeu, int position)
         {
             // Je vérifie si je peut soit faire un échange ou faire un échange/oblitération sur deux tour
-            if (position == 1)
+            if (position == 1 )
             {
+                if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte != null 
+                    && jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation" )
+                {
+                    return false;
+                }
                 if (jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque)
                 {
                     return true;
@@ -793,6 +826,11 @@ namespace Cosmos.metier
             }
             else if (position == 2)
             {
+                if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte != null
+                    && jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation")
+                {
+                    return false;
+                }
                 if (jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.ChampBatailleUnitesJ2.Champ2.Attaque)
                 {
                     return true;
@@ -805,6 +843,11 @@ namespace Cosmos.metier
             }
             else
             {
+                if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte != null
+                    && jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation")
+                {
+                    return false;
+                }
                 if (jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.ChampBatailleUnitesJ2.Champ3.Attaque)
                 {
                     return true;
@@ -870,24 +913,36 @@ namespace Cosmos.metier
                         if (jeu.NbTourComplet > 4)
                         {
                             score = int.MinValue;
+                            score += jeu.LstMainJ2[index].Cout.AlainDollars;
+                            score += jeu.LstMainJ2[index].Cout.BarilNucleaire;
+                            score += jeu.LstMainJ2[index].Cout.Charronite;
                         }
                         else if (jeu.NbTourComplet == 0 && jeu.ChampConstructionsJ1.Champ1 == null)
                         {
-                            score = int.MaxValue;
+                            score = int.MaxValue -500 ;
+                            score += jeu.LstMainJ2[index].Cout.AlainDollars;
+                            score += jeu.LstMainJ2[index].Cout.BarilNucleaire;
+                            score += jeu.LstMainJ2[index].Cout.Charronite;
                         }
                         else if (jeu.ChampConstructionsJ1.Champ1 == null && jeu.ChampConstructionsJ1.Champ2 == null)
                         {
                             score += 50 - (jeu.NbTourComplet * 10);
+                            score += jeu.LstMainJ2[index].Cout.AlainDollars;
+                            score += jeu.LstMainJ2[index].Cout.BarilNucleaire;
+                            score += jeu.LstMainJ2[index].Cout.Charronite;
                         }
                         else
                         {
                             score += 45 - (jeu.NbTourComplet * 10);
+                            score += jeu.LstMainJ2[index].Cout.AlainDollars;
+                            score += jeu.LstMainJ2[index].Cout.BarilNucleaire;
+                            score += jeu.LstMainJ2[index].Cout.Charronite;
                         }
                     }
                     #endregion
                     // ------------------  Unité -----------------------
                     #region
-                    if (jeu.LstMainJ2[index] is Unite)
+                    else if (jeu.LstMainJ2[index] is Unite)
                     {
 
                         // Je vérifie si mon champ de bataille est completement vide
@@ -909,7 +964,8 @@ namespace Cosmos.metier
                                 {
                                     score += 56; // Le score doit allé plus haut qu'un gadget
                                 }
-                                if (jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
+                                if (jeu.LstMainJ2[index].EffetCarte != null
+                                    && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
                                 {
                                     score += 16;
                                 }
@@ -917,7 +973,8 @@ namespace Cosmos.metier
                             #endregion
                             case 1:
                                 #region
-                                if (jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
+                                if (jeu.LstMainJ2[index].EffetCarte != null
+                                    && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
                                 {
                                     score += 16;
                                 }
@@ -926,7 +983,9 @@ namespace Cosmos.metier
                             #endregion
                             case 2:
                                 #region
-                                if (jeu.LstMainJ2[index].EffetCarte.Type == "Célérité" && ExisteChampUniteVideEnemi(jeu))
+                                if (jeu.LstMainJ2[index].EffetCarte != null
+                                    && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité" 
+                                    && ExisteChampUniteVideEnemi(jeu))
                                 {
                                     score += 16;
                                 }
@@ -934,7 +993,9 @@ namespace Cosmos.metier
                             #endregion
                             case 3:
                                 #region
-                                if (jeu.LstMainJ2[index].EffetCarte.Type == "Célérité" && ExisteChampUniteVideEnemi(jeu))
+                                if (jeu.LstMainJ2[index].EffetCarte != null
+                                    && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité" 
+                                    && ExisteChampUniteVideEnemi(jeu))
                                 {
                                     score += 16;
                                 }
@@ -942,7 +1003,9 @@ namespace Cosmos.metier
                             #endregion
                             case 4:
                                 #region
-                                if (jeu.LstMainJ2[index].EffetCarte.Type == "Célérité" && ExisteChampUniteVideEnemi(jeu))
+                                if (jeu.LstMainJ2[index].EffetCarte != null
+                                    && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité" 
+                                    && ExisteChampUniteVideEnemi(jeu))
                                 {
                                     score += 16;
                                 }
@@ -964,7 +1027,7 @@ namespace Cosmos.metier
                     #endregion
                     // ------------------  Gadget -----------------------
                     #region
-                    if (jeu.LstMainJ2[index] is Gadget)
+                    else if (jeu.LstMainJ2[index] is Gadget)
                     {
                         // TODO 
                         // Pour l'instant, un gadget a un score assigné au hasard                    
@@ -1060,7 +1123,7 @@ namespace Cosmos.metier
                     // Il faut que je trouve une combinaison de deux cartes jouable
 
                     // Fonctionnera pas, me faut les index
-                    lstCoupAJouer = trouverLstUniteJouable(jeu, lstCoupEvaluer, 2);
+                    lstCoupAJouer = TrouverLstUniteJouable(jeu, lstCoupEvaluer, 2);
 
 
                     // Nous avons deux cartes, on va essayer de pas faire n'importe quoi avec
@@ -1085,7 +1148,7 @@ namespace Cosmos.metier
         /// <param name="lstCoupEvaluer"></param>
         /// <param name="nbCarteAJouer"></param>
         /// <returns></returns>
-        private List<int> trouverLstUniteJouable(TableDeJeu jeu, List<int> lstCoupEvaluer, int nbCarteAJouer)
+        private List<int> TrouverLstUniteJouable(TableDeJeu jeu, List<int> lstCoupEvaluer, int nbCarteAJouer)
         {
             List<int> lstAJouer = new List<int>();
 
