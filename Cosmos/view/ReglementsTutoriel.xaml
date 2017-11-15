@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="Cosmos.view.ReglementsTutoriel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+    <Grid Width="600" Height="auto" HorizontalAlignment="Center" Margin="0,25,0,5">
+        <Border Width="auto" Height="auto" Background="Black" Opacity="0.6" Margin="0,15,0,15" CornerRadius="15"/>
+
+        <Border Width="300" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0">
+            <Image Source="/images/CosmosLogo.png" />
+        </Border>
+
+        <Label Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,100,0,0" FontSize="20" Content="Règlements"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Width="550" HorizontalScrollBarVisibility="Disabled" Margin="0,145,0,125"  >
+            <TextBlock Foreground="white" Width="525" TextWrapping="Wrap" TextAlignment="Justify" FontSize="16">
+                <Bold >RÈGLES HORS-PARTIE :</Bold> <LineBreak/>
+                <Bold>Deck :</Bold>  Un deck est nécessaire pour n’importe qui qui veut devenir le héros de la galaxie! Un deck permet de jouer une partie et contient 50 cartes. Par contre, ceux-ci peuvent seulement contenir trois copies d’une même carte maximum. Vous pouvez personnaliser vos decks comme vous voulez, mais vous êtes limité à seulement trois.<LineBreak/><LineBreak/>
+                <Bold>RÈGLES LORS DE LA PARTIE : </Bold> <LineBreak/>
+                <Bold>Ressources :</Bold> Chaque joueur a accès à trois ressources différentes. Celles-ci permettent de payer le coût des cartes pour pouvoir les jouer. Les trois ressources sont : <LineBreak/><LineBreak/>
+                <Bold>Charronite :</Bold>  La charronite est un métal très solide et très léger qui est très rare dans la galaxie. Ce métal permet de construire des vaisseaux de guerre ou des armures. Des cartes ayant un coût élevé en charronite vont généralement avoir beaucoup de points de défenses.<LineBreak/><LineBreak/>
+                <Bold>Barils Nucléaires : </Bold> Les barils nucléaires sont le résultat de production d’énergie nucléaire. C’est la meilleur source de courant connue dans la galaxie. Celle-ci permet d’alimenter les robots ou les vaisseaux. De plus, certaines unités étranges se nourrissent ou alimentent leurs armes avec celle-ci. Cette ressource est généralement associée à des unités avec une balance entre offense et défense. Elle permet aussi d'accéder à des gadgets destructeurs comme une bombe nucléaire!<LineBreak/><LineBreak/>
+                <Bold>Alain Dollars : </Bold> Cette forme de monnaie est reconnue partout à travers la galaxie. Si votre armée manque de force, utilisez vos Alain Dollars pour recruter de puissants mercenaires! Cependant, les forces recrutées avec l’argent ont tendance à avoir une force offensive haute au coût d’une défense médiocre.<LineBreak/><LineBreak/>
+                <Bold>Points de blindage:</Bold> Si vous êtes familier avec les jeux vidéo, ce sont vos points de vie. Vos points de blindage sont votre ressource vital, lorsque vous tombez à zéro, vous avez perdu. Vous débutez la partie avec 25 points de blindage.<LineBreak/><LineBreak/>
+                <Bold>Decks:</Bold> Votre deck contient vos cartes et débute avec 50 cartes. La quantité de cartes dans celui-ci va diminuer au courant de la partie, mais peut augmenter par une variété d’effets. Votre deck est placé de façon aléatoire au début de la partie et vous n’avez aucune façon de connaître l’ordre des cartes dans celui-ci. Les mêmes règles s’appliquent à votre adversaire.<LineBreak/><LineBreak/>
+                <Bold>Main</Bold> : Devant vous se trouve votre main. Celle-ci contient des cartes que vous voyez et que vous pouvez jouer. Au début de la partie vous aurez 6 cartes dans votre main, même chose pour votre adversaire.<LineBreak/><LineBreak/>
+                <Bold>Usine de recyclage:</Bold> Les unités et bâtiments détruits par un effet ou un combat se retrouvent là. Même chose pour les gadgets qui ont été joués. Certains effets vous permettent d'interagir avec cette zone. De plus, si vous n’avez plus de cartes dans votre deck, vous brassez le contenu de votre usine de recyclage dans votre deck.<LineBreak/><LineBreak/>
+                <Bold>DÉROULEMENT DE LA PARTIE :</Bold><LineBreak/>
+                <Bold>Points de ressources :</Bold> Lors du début de la partie vous avez 6 points de ressources. Ceux-ci peuvent être répartis dans vos trois ressources comme vous voulez, mais vous devez avoir 1 point dans chaque ressource et maximum 3 points dans une seule ressource. Vous obtiendrez passivement un point de ressource supplémentaire à tous le trois tours. Pour chaque point de ressource investi dans une ressource, vous recevrez une ressource de la ressource en question.<LineBreak/><LineBreak/>
+                <Bold>Pige:</Bold> Au début de la partie, vous pigez 6 cartes qui se retrouveront dans votre main. Par la suite, après avoir reçu vos ressources, vous aurez accès à deux cartes. Vous choisissez l’une de celle-ci et elle sera pigé et ajouté à votre main. L’autre se retrouve en dessous de votre deck. D’autres effets peuvent causer la pige de cartes.<LineBreak/><LineBreak/>
+                <Bold>PHASES :</Bold> Il y a quatre phases distinctes.<LineBreak/> 
+                <Bold>Phase de ressources :</Bold> Lors de cette phase, vous gagnez des ressources en fonction de vos points de ressources et d’autres effets comme un bâtiment. Par la suite, vous pigez pour votre tour.<LineBreak/><LineBreak/>
+                <Bold>Phase principale :</Bold> Dans cette phase, vous pouvez jouer des cartes, que ce soit des unités, des gadgets ou des bâtiments. Vous pouvez jouer autant de cartes que voulu tant que vous avez les ressources nécessaires.<LineBreak/><LineBreak/>
+                <Bold>Phase d’attaque :</Bold> Cette phase débute par la décision de qui attaque. Ensuite, les unités qui attaque vont combattrent l’unité qui se trouve dans la même ligne. Chaque unité fait ses dégâts à l’autre unité. Si aucun combattant n’arrête l’attaquant, celle-ci fait des dégât aux points de blindage du joueur attaqué.<LineBreak/><LineBreak/>
+                <Bold>Phase de fin :</Bold> Certaines cartes font références à cette phase. Généralement, rien ne se passe et les effets qui duraient pour un tour prennent fin.<LineBreak/><LineBreak/>
+                <Bold>Fin de partie :</Bold> Lorsqu’un joueur tombe à zéro points de blindage ou moins il perd la partie. Il est aussi possible qu’une carte cause à un joueur de perdre automatiquement.<LineBreak/><LineBreak/>
+
+
+            </TextBlock>
+        </ScrollViewer>
+
+        <Button Name="btnTutoriel" VerticalAlignment="Bottom" Margin="0,0,0,75" Height="30" Cursor="Hand"
+                Width="300" HorizontalAlignment="Center" Click="btnTutoriel_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Tutoriel
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand"
+                Width="300" HorizontalAlignment="Center" Click="btnMenuPrincipal_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Menu principal
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+    </Grid>
+</UserControl>
