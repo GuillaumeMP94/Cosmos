@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -430,7 +430,7 @@ namespace Cosmos.metier
                     if(uneCarte is Unite)
                     {
                         // Une carte avec célérité peut attaquer immédiatement
-                        if (uneCarte.EffetCarte.Type == "Célérité")
+                        if (uneCarte.EffetCarte != null && uneCarte.EffetCarte.Type == "Célérité")
                         {
                             // Je vérifie si l'unité peut faire assez de dégat pour mettre l'adversaire a 0 ou moins. 
                             int totalPostAtt = jeu.Joueur1.PointDeBlindage - uneCarte.getAttaque();
@@ -439,22 +439,22 @@ namespace Cosmos.metier
                             {
                                 if (jeu.ChampBatailleUnitesJ1.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ1 == null)
                                 {
-                                    jeu.JouerCarteAI( 1 );
                                     ChoixChampUnite = 1; // Flag pour décider où jouer la carte par la suite
+                                    jeu.JouerCarteAI( 1 );
                                     return true;
                                     
                                 }
                                 if (jeu.ChampBatailleUnitesJ1.Champ2 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null)
                                 {
-                                    jeu.JouerCarteAI(2);
                                     ChoixChampUnite = 2;
+                                    jeu.JouerCarteAI(2);
                                     return true;
                                     
                                 }
                                 if (jeu.ChampBatailleUnitesJ1.Champ3 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                 {
-                                    jeu.JouerCarteAI(3);
                                     ChoixChampUnite = 3;
+                                    jeu.JouerCarteAI(3);
                                     return true;
                                     
                                 }
@@ -515,23 +515,53 @@ namespace Cosmos.metier
                     //
                     // De plus, le AI à une chance sur quatre de ne pas attaquer devant l'inconnu
                     // Chaque case n'ont pas le même "flag" de random par contre, il est impossible qu'il n'attaque pas avec plus qu'une unité                     
-                    if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable" 
-                        || jeu.ChampBatailleUnitesJ1.Champ1 == null
-                        ||  rnd.Next(1,4) != 1  )
+                    if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
                     {
-                        AttaqueChamp1 = true;
+                        if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
+                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive")
+                            {
+                                AttaqueChamp1 = true;
+                            }                            
+                        }
+                        if ( jeu.ChampBatailleUnitesJ1.Champ1 == null
+                            || rnd.Next(1, 4) != 1)
+                        {
+                            AttaqueChamp1 = true;
+                        }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable" 
-                        || jeu.ChampBatailleUnitesJ1.Champ2 == null
-                        || rnd.Next(1, 4) != 2)
+                    if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
                     {
-                        AttaqueChamp2 = true;
+                        if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
+                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive")
+                            {
+                                AttaqueChamp2 = true;
+                            }
+                        }
+                        if (jeu.ChampBatailleUnitesJ1.Champ2 == null
+                            || rnd.Next(1, 4) != 2)
+                        {
+                            AttaqueChamp2 = true;
+                        }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable" 
-                        || jeu.ChampBatailleUnitesJ1.Champ3 == null
-                        || rnd.Next(1, 4) != 3)
+                    if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
                     {
-                        AttaqueChamp3 = true;
+                        if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
+                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive")
+                            {
+                                AttaqueChamp3 = true;
+                            }
+                        }
+                        if (jeu.ChampBatailleUnitesJ1.Champ3 == null
+                            || rnd.Next(1, 4) != 3)
+                        {
+                            AttaqueChamp3 = true;
+                        }
                     }
 
                     break;
@@ -541,57 +571,83 @@ namespace Cosmos.metier
                     ---------------------------------------------------------------------------------------------- */
                 case 3:
                     #region
-                    // Pour le plaisir de la chose, un peu de RNG est encore présent, mais pas beaucoup    
-                    // L'effet radiation avantage à ne pas attaquer. Les cartes avec cette effet n'attaque que si il n'y a pas de bloqueur   
+                    // Pour le plaisir de la chose, un peu de RNG est encore présent, mais pas beaucoup      
                     // De plus, si l'unité adverse a plus de defense et d'attaque le AI n'attaque pas. 
-                    if (PeutOblitererCombatTableJeu(jeu, 1))
+                    // Avant toute chose je vérifie
+                    if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
                     {
-                        AttaqueChamp1 = true;
-                    }
-                    else if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "Radiation"
-                        || ( jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque 
-                        && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense) )
-                     {
-                        if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                            || jeu.ChampBatailleUnitesJ1.Champ1 == null
-                            || rnd.Next(1, 10) != 1)
+                        if (PeutOblitererCombatTableJeu(jeu, 1))
                         {
                             AttaqueChamp1 = true;
                         }
+                        else if ((jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                            && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense))
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte != null)
+                            {
+                                if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
+                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive")
+                                {
+                                    AttaqueChamp1 = true;
+                                }                                
+                            }
+                                if (jeu.ChampBatailleUnitesJ1.Champ1 == null
+                                || rnd.Next(1, 10) != 1)
+                            {
+                                AttaqueChamp1 = true;
+                            }
+                        }
                     }
                     // --------------------------- CHAMP 2 ----------------------------------------------------------
-                    if (PeutOblitererCombatTableJeu(jeu, 2))
+                    if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
                     {
-                        AttaqueChamp2 = true;
-                    }
-                    else if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "Radiation"
-                        || (jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
-                        && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
-                    {
-                        if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                           || jeu.ChampBatailleUnitesJ1.Champ2 == null
-                           || rnd.Next(1, 10) != 2)
+                        if (PeutOblitererCombatTableJeu(jeu, 2))
                         {
                             AttaqueChamp2 = true;
                         }
+                        else if ((jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
+                            && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte != null)
+                            {
+                                if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
+                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive")
+                                {
+                                    AttaqueChamp2 = true;
+                                }
+                            }
+                            if (jeu.ChampBatailleUnitesJ1.Champ2 == null
+                            || rnd.Next(1, 10) != 1)
+                            {
+                                AttaqueChamp2 = true;
+                            }
+                        }
                     }
                     // --------------------------- CHAMP 3 ----------------------------------------------------------
-                    if (PeutOblitererCombatTableJeu(jeu, 3))
+                    if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
                     {
-                        AttaqueChamp3 = true;
-                    }
-                    else if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "Radiation"
-                        || (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
-                        && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
-                    {
-                        if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                           || jeu.ChampBatailleUnitesJ1.Champ3 == null
-                           || rnd.Next(1, 10) != 3)
+                        if (PeutOblitererCombatTableJeu(jeu, 3))
                         {
                             AttaqueChamp3 = true;
                         }
+                        else if ( (jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
+                            && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte != null)
+                            {
+                                if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
+                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive")
+                                {
+                                    AttaqueChamp3 = true;
+                                }
+                            }
+                            if (jeu.ChampBatailleUnitesJ1.Champ3 == null
+                            || rnd.Next(1, 10) != 1)
+                            {
+                                AttaqueChamp3 = true;
+                            }
+                        }
                     }
-
 
                     break;
                 #endregion
@@ -791,8 +847,7 @@ namespace Cosmos.metier
             // De plus, pour sauver un peu de temps on regarde pas cette possibilité en début de partie
             if (jeu.NbTourComplet > 3 && PossibiliteDefaiteUnite(jeu) )
             {
-                
-                //TODO
+                JouerEmpecherDefaite(jeu, listeCoupsPermis);                
             }
             else
             {
@@ -924,6 +979,158 @@ namespace Cosmos.metier
 
             return listeCoupsPermisEvaluer;
         }
+
+        private void JouerEmpecherDefaite(TableDeJeu jeu, List<int> listeCoupsPermis)
+        {
+            //bool peutPerdre = true;
+            int nbBloque = 0;
+            List<int> lstCoupEvaluer = new List<int>();
+            List<int> lstCoupAJouer = new List<int>();
+            List<int> lstDMG = new List<int>();
+
+            if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
+            {
+                lstDMG.Add(jeu.ChampBatailleUnitesJ1.Champ1.Attaque);
+                nbBloque++;
+            }
+            if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
+            {
+                lstDMG.Add(jeu.ChampBatailleUnitesJ1.Champ2.Attaque);
+                nbBloque++;
+            }
+            if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
+            {
+                lstDMG.Add(jeu.ChampBatailleUnitesJ1.Champ3.Attaque);
+                nbBloque++;
+            }
+
+            // TODO
+            // Pour l'instant j'évalue les carte de la même façon même si la défaite approche
+            lstCoupEvaluer = EvaluerListeCoup(listeCoupsPermis, jeu);
+
+            // Il faut enlever les cartes qui ne sont pas des unité
+            foreach ( int index in lstCoupEvaluer )
+            {
+                if ( !(jeu.LstMainJ2[index] is Unite))
+                {
+                    lstCoupEvaluer.Remove(index);
+                }
+            }
+
+            // On vérifie si un nombre de coups nécessaires sont possible. Si non : La défaite est innévitable on sort d'ici.
+            if ( lstCoupEvaluer.Count() - nbBloque < 0 )
+            {
+                return;
+            }
+
+            int scoreMax = lstCoupEvaluer.Max();
+            int c = 0;
+            int indexAJouer = 1;
+
+            foreach (int i in lstCoupEvaluer)
+            {
+                if (lstCoupEvaluer[c] == scoreMax)
+                {
+                    indexAJouer = i;
+                }
+                c++;
+            }
+            // Vérifier si je dois jouer 1, 2 ou 3 unité
+            switch (nbBloque)
+            {
+                case 1:
+                    if (jeu.ChampBatailleUnitesJ2.Champ1 != null && jeu.ChampBatailleUnitesJ1.Champ1.Attaque == lstDMG.Max())
+                    {
+                        ChoixChampUnite = 1;
+                        jeu.JouerCarteAI(indexAJouer);
+
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ1 != null && jeu.ChampBatailleUnitesJ1.Champ2.Attaque == lstDMG.Max())
+                    {
+                        ChoixChampUnite = 2;
+                        jeu.JouerCarteAI(indexAJouer);
+                    }
+                    else if (jeu.ChampBatailleUnitesJ2.Champ1 != null && jeu.ChampBatailleUnitesJ1.Champ3.Attaque == lstDMG.Max())
+                    {
+                        ChoixChampUnite = 3;
+                        jeu.JouerCarteAI(indexAJouer);
+                    }
+                    break;
+                case 2:
+                    // Il faut que je trouve une combinaison de deux cartes jouable
+
+                    // Fonctionnera pas, me faut les index
+                    lstCoupAJouer = trouverLstUniteJouable(jeu, lstCoupEvaluer, 2);
+
+
+                    // Nous avons deux cartes, on va essayer de pas faire n'importe quoi avec
+                    //if (PeutOblitererCombat(jeu, )  )
+                    //{
+
+                    //}
+
+                    break;
+                case 3:
+
+                    break;
+                default:
+                    return;
+                    // Pas supposé venir ici, si jamais on arrive ici je vais simplement terminé la fonction             
+            }            
+        }
+        /// <summary>
+        /// Retourne une liste de la première combinaison de carte jouable trouvé
+        /// </summary>
+        /// <param name="jeu"></param>
+        /// <param name="lstCoupEvaluer"></param>
+        /// <param name="nbCarteAJouer"></param>
+        /// <returns></returns>
+        private List<int> trouverLstUniteJouable(TableDeJeu jeu, List<int> lstCoupEvaluer, int nbCarteAJouer)
+        {
+            List<int> lstAJouer = new List<int>();
+
+            if ( nbCarteAJouer == 2)
+            {
+                foreach ( int indexX in lstCoupEvaluer )
+                {
+                    foreach (int indexY in lstCoupEvaluer)
+                    {
+                        if ( indexX != indexY 
+                            && (jeu.LstMainJ2[indexX].Cout + jeu.LstMainJ2[indexY].Cout) > new Ressource(-1,-1,-1) )
+                        {
+                            lstAJouer.Add(indexX);
+                            lstAJouer.Add(indexY);
+
+                            return lstAJouer;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (int indexX in lstCoupEvaluer)
+                {
+                    foreach (int indexY in lstCoupEvaluer)
+                    {
+                        foreach (int indexZ in lstCoupEvaluer)
+                        {
+                            if (indexX != indexY && indexX != indexZ && indexY != indexZ 
+                                && (jeu.LstMainJ2[indexX].Cout + jeu.LstMainJ2[indexY].Cout + jeu.LstMainJ2[indexZ].Cout) > new Ressource(-1, -1, -1))
+                            {
+                                lstAJouer.Add(indexX);
+                                lstAJouer.Add(indexY);
+                                lstAJouer.Add(indexZ);
+
+                                return lstAJouer;
+                            }
+                        }
+
+                    }
+                }
+            }
+            return lstAJouer;
+        }
+
         /// <summary>
         /// Vérifie si il existe un champ vide du coté du joueur
         /// </summary>
@@ -982,20 +1189,23 @@ namespace Cosmos.metier
         private bool PeutOblitererCombatTableJeu(TableDeJeu jeu, int position)
         {
             // Je vérifie ici si lors d'un combat mon unité va non seulement détruire l'enemi, mais en plus survivre
-            if ( position == 1 
+            if (jeu.ChampBatailleUnitesJ1.Champ1 != null
+                && position == 1 
                 && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque )
             {
                 return true;
             }
             else if(position == 2
-                && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
-                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque)
+                && jeu.ChampBatailleUnitesJ1.Champ2 != null
+                && jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.ChampBatailleUnitesJ2.Champ2.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ2.Defense > jeu.ChampBatailleUnitesJ1.Champ2.Attaque)
             {
                 return true;
             }
-            else if (jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
-                && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque)
+            else if (jeu.ChampBatailleUnitesJ1.Champ3 != null
+                && jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.ChampBatailleUnitesJ2.Champ3.Attaque
+                && jeu.ChampBatailleUnitesJ2.Champ3.Defense > jeu.ChampBatailleUnitesJ1.Champ3.Attaque)
             {
                 return true;
             }
