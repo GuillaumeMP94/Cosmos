@@ -1,18 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Cosmos.metier
 {
-    public class Deck
+    public class Deck : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         #region Propriétés
         public int IdDeck { get; set; }
         public string Nom { get; set; }
         public List<Carte> CartesDuDeck { get; set; }
         public bool EstChoisi { get; set; }
+        public int NbCarteDeck
+        {
+            get { return nbCarteDeck; }
+            set
+            {
+                nbCarteDeck = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("NbCarteDeck"));
+                }
+
+            }
+        }
+        int nbCarteDeck;
         #endregion
         #region Constructeurs
 
@@ -48,6 +64,7 @@ namespace Cosmos.metier
 
             Carte temp = CartesDuDeck[0];
             CartesDuDeck.RemoveAt(0);
+            NbCarteDeck = CartesDuDeck.Count();
 
             return temp;
 

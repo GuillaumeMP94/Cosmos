@@ -100,9 +100,23 @@ namespace Cosmos.view
             ListBorderImgMainJoueur = new List<Border>();
             ImgMainJoueur = new List<Image>();
 
-
+            // Binding pour les points d'attauqe et de vie des unités en jeu
+            txblEmplacementUnite1J1Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
+            txblEmplacementUnite2J1Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
+            txblEmplacementUnite3J1Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
+            txblEmplacementUnite1J2Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+            txblEmplacementUnite2J2Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+            txblEmplacementUnite3J2Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+            txblEmplacementUnite1J1Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
+            txblEmplacementUnite2J1Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
+            txblEmplacementUnite3J1Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
+            txblEmplacementUnite1J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+            txblEmplacementUnite2J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+            txblEmplacementUnite3J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
-            // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count()
+            txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
+            txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
+            // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count();
             // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
             // TODO testé ^
             TrousseGlobale.PhaseChange += changerPhase;
@@ -235,7 +249,7 @@ namespace Cosmos.view
         }
 
         private void RefreshAll()
-        {
+        {            
             txBlphaseRessource.Refresh();
             txBlphasePrincipale.Refresh();
             txBlphaseAttaque.Refresh();
