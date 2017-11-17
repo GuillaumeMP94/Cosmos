@@ -251,17 +251,13 @@ namespace Cosmos.metier
             {
                 aJouer = LstMainJ1[index];
                 if (joueur1.RessourceActive - aJouer.Cout > temp)
-                {
                     return true;
-                }
             }
             else
             {
                 aJouer = LstMainJ2[index];
                 if (joueur2.RessourceActive - aJouer.Cout > temp)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -274,27 +270,32 @@ namespace Cosmos.metier
         {
             // Le coup à pas été validé                 
             Carte aJouer;
+            Effet aExecuter = null;
 
             // Enlever la carte de la main du joueur et la mettre à l'endroit qu'elle va
             if (joueurActifEst1)
             {
                 aJouer = LstMainJ1[index];
 
-                    Joueur1.RessourceActive -= aJouer.Cout;
-                    if (aJouer is Unite)
-                    {
-                        ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
-                    }
-                    else if (aJouer is Batiment)
-                    {
-                        ChampConstructionsJ1.AjouterAuChamp(aJouer);
-                    }
-                    else if (aJouer is Gadget)
-                    {
-                        LstUsineRecyclageJ1.Add(aJouer);
-                    }
-                    // On enleve la carte de la main
-                    LstMainJ1.Remove(aJouer);
+                Joueur1.RessourceActive -= aJouer.Cout;
+                if (aJouer is Unite)
+                {
+                    ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
+                    if (aJouer.EffetCarte != null)
+                        aExecuter = aJouer.EffetCarte;
+                }
+                else if (aJouer is Batiment)
+                {
+                    ChampConstructionsJ1.AjouterAuChamp(aJouer);
+                }
+                else if (aJouer is Gadget)
+                {
+                    if (aJouer.EffetCarte != null)
+                        aExecuter = aJouer.EffetCarte;
+                    LstUsineRecyclageJ1.Add(aJouer);
+                }
+                // On enleve la carte de la main
+                LstMainJ1.Remove(aJouer);
 
             }
             else
@@ -304,26 +305,70 @@ namespace Cosmos.metier
                 // On enleve les ressources au joueurs
                 Joueur2.RessourceActive -= aJouer.Cout;
                 
-                    if (aJouer is Unite)
-                    {
-                        ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, position);
-                    }
-                    if (aJouer is Batiment)
-                    {
-                        ChampConstructionsJ2.AjouterAuChamp(aJouer);
-                    }
-                    if (aJouer is Gadget)
-                    {
-                        LstUsineRecyclageJ2.Add(aJouer);
-                    }
-                    // On enleve la carte de la main
-                    LstMainJ2.Remove(aJouer);
+                if (aJouer is Unite)
+                {
+                    ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, position);
+                    if (aJouer.EffetCarte != null)
+                        aExecuter = aJouer.EffetCarte;
+                }
+                if (aJouer is Batiment)
+                {
+                    ChampConstructionsJ2.AjouterAuChamp(aJouer);
+                }
+                if (aJouer is Gadget)
+                {
+                    if (aJouer.EffetCarte != null)
+                        aExecuter = aJouer.EffetCarte;
+                    LstUsineRecyclageJ2.Add(aJouer);
+                }
+                // On enleve la carte de la main
+                LstMainJ2.Remove(aJouer);
                 // Refresh all 
                 RefreshAllEventArgs p = new RefreshAllEventArgs();
                 TrousseGlobale TG = new TrousseGlobale();
                 TG.OnRefreshAll(p);
             }
+            if (aExecuter != null)
+                ExecuterEffet(aExecuter);
         }
+
+        private void ExecuterEffet(Effet aExecuter)
+        {
+            /*
+                Cible
+                0	Tout le monde
+                1	Tout les enemies
+                2	Tout les allié
+                3	Tout les bâtiments
+                4	Bâtiments Enemies
+                5	Bâtiments Allié
+                6	Tout les Unités
+                7	Unités Enemies
+                8	Unités Allié
+                9	Tout les Hero
+                10	Hero Enemies
+                11	Hero Allié
+                12	Tout les Unités/Hero
+                13	Unités/Hero Enemies
+                14	Unités/Hero Allié
+                15	Tout les Unités/Bâtiments
+                16	Unités/Bâtiments Enemies
+                17	Unités/Bâtiments Allié
+                18	Tout les bâtiments/hero
+                19	Bâtiments/Hero Enemies
+                20	Bâtiments/Hero Allié
+
+                Valeur	
+                0	Destroy
+                1 à 60	Quantité de dégats
+
+                NbCible	
+                0	Tout le monde
+                1-2-3-4-etc...	La quantité exacte.
+
+                */
+        }
+
         /// <summary>
         /// Permet d'avancer les phases du jeu.
         /// </summary>
@@ -694,7 +739,7 @@ namespace Cosmos.metier
                 else
                     joueurDefense.PointDeBlindage -= attaquant.AttChamp2;
             }
-            if (champ3 && attaquant.Champ1 != null)
+            if (champ3 && attaquant.Champ3 != null)
             {
                 if (defenseur.Champ3 != null)
                 {
