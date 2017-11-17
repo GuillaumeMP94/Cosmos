@@ -42,6 +42,9 @@ namespace Cosmos.accesBD
             }
             return lstResultat;
         }
+
+        
+
         /// <summary>
         /// Fonction qui retourne un utilisateur.
         /// </summary>
@@ -180,6 +183,29 @@ namespace Cosmos.accesBD
             }
 
             return resultat;
+        }
+
+        public static void UpdateNoteAmi(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi, string note)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE Amis SET note = '").Append(note).Append("' WHERE idUtilisateurProprietaire = ")
+                .Append(pIdUtilisateurProprietaire).Append(" AND idUtilisateurAmi = ").Append(pIdUtilisateurAmi);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void InsertAmi(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO Amis (idUtilisateurProprietaire, idUtilisateurAmi) VALUES (")
+                 .Append(pIdUtilisateurProprietaire)
+                 .Append(",").Append(pIdUtilisateurAmi).Append(")");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
         }
 
     }

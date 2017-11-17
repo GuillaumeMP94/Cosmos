@@ -82,6 +82,9 @@
     <Compile Include="metier\TrousseGlobale.cs" />
     <Compile Include="metier\Unite.cs" />
     <Compile Include="metier\Utilisateur.cs" />
+    <Compile Include="view\AjouterAmi.xaml.cs">
+      <DependentUpon>AjouterAmi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="view\AjouterAmi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\Campagne.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

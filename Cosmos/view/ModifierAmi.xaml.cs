@@ -24,16 +24,20 @@ namespace Cosmos.view
     public partial class ModifierAmi : UserControl
     {
         public MainWindow Main { get; set; }
+        private Utilisateur Ami { get; set; }
         public ModifierAmi(MainWindow main, Utilisateur ami)
         {
             InitializeComponent();
 
             Main = main;
 
-            lblAmi.Content = ami.Nom;
-            txbNote.Text = MySqlUtilisateurService.RetrieveNoteAmiByID(Main.UtilisateurConnecte.IdUtilisateur, ami.IdUtilisateur);
+            Ami = ami;
 
+            lblAmi.Content = Ami.Nom;
+            txbNote.Text = MySqlUtilisateurService.RetrieveNoteAmiByID(Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur);
         }
+
+
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
@@ -44,21 +48,38 @@ namespace Cosmos.view
         {
             string note = VerifierNote(txbNote.Text);
 
-            txbNote.Text = note;
+            MySqlUtilisateurService.UpdateNoteAmi(Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur, note);
+
+            Main.grdMain.Children.Remove(this);
 
         }
 
         private string VerifierNote(string note)
         {
-            string temp = note;
-            char fuckingguillement = '\\';
-            string calissdemarde = fuckingguillement + "\'";
+            string temp = "";
 
-            temp = temp.Replace("\\", "\\\\" ).Replace("'", calissdemarde);
+            for (int i = 0; i < note.Length; i++)
+            {    
+                if (note[i] == 92 || note[i] == (char)39)
+                    temp += (char)92; 
+
+                temp += note[i];
+            }
 
             return temp;
         }
 
+        private void txbNote_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key.ToString() == "Return")
+            {
+                btnModifier_Click(sender, e);
+            }
 
+            if(e.Key.ToString() == "Escape")
+            {
+                btnAnnuler_Click(sender, e);
+            }
+        }
     }
 }
