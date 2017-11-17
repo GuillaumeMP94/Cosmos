@@ -49,7 +49,6 @@ namespace Cosmos.view
                 laTableDeJeu.Phase = value;
             }
         }
-        //int phase;
 
         public Partie(MainWindow main)
         {
