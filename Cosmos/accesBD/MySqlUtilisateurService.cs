@@ -208,5 +208,16 @@ namespace Cosmos.accesBD
             ConnectionBD.NonQuery(nonquery.ToString());
         }
 
+        public static void DeleteAmi(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("DELETE FROM Amis WHERE idUtilisateurProprietaire = ").Append(pIdUtilisateurProprietaire)
+                 .Append(" AND idUtilisateurAmi = ").Append(pIdUtilisateurAmi);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
     }
 }

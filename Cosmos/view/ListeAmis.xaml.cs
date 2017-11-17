@@ -23,7 +23,6 @@ namespace Cosmos.view
     public partial class ListeAmis : UserControl
     {
         public MainWindow Main { get; set; }
-        public UserControl ContenuEcran { get; set; }
         
         public ListeAmis(MainWindow main)
         {
@@ -74,12 +73,26 @@ namespace Cosmos.view
 
         private void btnAjouter_Click(object sender, RoutedEventArgs e)
         {
-            EcranAjouterAmi();
+            Main.ContenuAddModifAmi = new AjouterAmi(this);
+            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
         }
 
         private void btnSupprimer_Click(object sender, RoutedEventArgs e)
         {
+            string ami = retrouverAmiSelectionne();
 
+            Main.ContenuAddModifAmi = new SupprimerAmi(this, MySqlUtilisateurService.RetrieveByNom(ami));
+            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
+        }
+
+        
+
+        private void btnModifier_Click(object sender, RoutedEventArgs e)
+        {
+            string ami = retrouverAmiSelectionne();
+
+            Main.ContenuAddModifAmi = new ModifierAmi(this, MySqlUtilisateurService.RetrieveByNom(ami));
+            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
         }
 
         private void RafraichirSurbrillanceListeAmis()
@@ -92,14 +105,6 @@ namespace Cosmos.view
                     txbUnAmi.Background = Brushes.Black;
                 }
             }
-        }
-
-        private void btnModifier_Click(object sender, RoutedEventArgs e)
-        {
-            string ami = retrouverAmiSelectionne();
-
-            Main.EcranModifierAmi(MySqlUtilisateurService.RetrieveByNom(ami));
-
         }
 
         private string retrouverAmiSelectionne()
@@ -119,11 +124,5 @@ namespace Cosmos.view
             return ami;
         }
 
-        public void EcranAjouterAmi()
-        {
-            Main.ContenuAddModifAmi = new AjouterAmi(this);
-            
-            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
-        }
     }
 }

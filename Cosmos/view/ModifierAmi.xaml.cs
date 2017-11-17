@@ -23,34 +23,34 @@ namespace Cosmos.view
     /// </summary>
     public partial class ModifierAmi : UserControl
     {
-        public MainWindow Main { get; set; }
+        public ListeAmis ListeAmis { get; set; }
         private Utilisateur Ami { get; set; }
-        public ModifierAmi(MainWindow main, Utilisateur ami)
+        public ModifierAmi(ListeAmis listeAmi, Utilisateur ami)
         {
             InitializeComponent();
 
-            Main = main;
+            ListeAmis = listeAmi;
 
             Ami = ami;
 
             lblAmi.Content = Ami.Nom;
-            txbNote.Text = MySqlUtilisateurService.RetrieveNoteAmiByID(Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur);
+            txbNote.Text = MySqlUtilisateurService.RetrieveNoteAmiByID(ListeAmis.Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur);
         }
 
 
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
-            Main.grdMain.Children.Remove(this);
+            ListeAmis.Main.grdMain.Children.Remove(this);
         }
 
         private void btnModifier_Click(object sender, RoutedEventArgs e)
         {
             string note = VerifierNote(txbNote.Text);
 
-            MySqlUtilisateurService.UpdateNoteAmi(Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur, note);
+            MySqlUtilisateurService.UpdateNoteAmi(ListeAmis.Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur, note);
 
-            Main.grdMain.Children.Remove(this);
+            ListeAmis.Main.grdMain.Children.Remove(this);
 
         }
 
