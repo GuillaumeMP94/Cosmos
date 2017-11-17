@@ -147,11 +147,6 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
         }
 
-        public void EcranModifierAmi()
-        {
-            ContenuAddModifAmi = new ModifierAmi(this);
-            grdMain.Children.Add(ContenuAddModifAmi);
-        }
 
         #region ValidationChamps
         public string ValiderChampSaisi(string champ)

@@ -42,6 +42,9 @@ namespace Cosmos.accesBD
             }
             return lstResultat;
         }
+
+        
+
         /// <summary>
         /// Fonction qui retourne un utilisateur.
         /// </summary>
@@ -144,7 +147,7 @@ namespace Cosmos.accesBD
             ConnectionBD = new MySqlConnexion();
 
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT idUtilisateurAmi FROM Amis WHERE idUtilisateurProprietaire = '").Append(pIdUtilisateur).Append("'");
+            query.Append("SELECT idUtilisateurAmi FROM Amis WHERE idUtilisateurProprietaire = ").Append(pIdUtilisateur);
 
             dsResultat = ConnectionBD.Query(query.ToString());
             dtResultat = dsResultat.Tables[0];
@@ -156,5 +159,65 @@ namespace Cosmos.accesBD
 
             return lstResultat;
         }
+
+        public static string RetrieveNoteAmiByID(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi)
+        {
+            string resultat = "";
+            DataSet dsResultat;
+            DataTable dtResultat;
+            DataRow drResultat;
+
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT note FROM Amis WHERE idUtilisateurProprietaire = ").Append(pIdUtilisateurProprietaire)
+                 .Append(" AND idUtilisateurAmi = ").Append(pIdUtilisateurAmi);
+
+            dsResultat = ConnectionBD.Query(query.ToString());
+            dtResultat = dsResultat.Tables[0];
+
+            if (dtResultat.Rows.Count > 0)
+            {
+                drResultat = dtResultat.Rows[0];
+
+                if (!drResultat.IsNull(0) )
+                    resultat = (string)drResultat["note"];   
+            }
+
+            return resultat;
+        }
+
+        public static void UpdateNoteAmi(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi, string note)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE Amis SET note = '").Append(note).Append("' WHERE idUtilisateurProprietaire = ")
+                .Append(pIdUtilisateurProprietaire).Append(" AND idUtilisateurAmi = ").Append(pIdUtilisateurAmi);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void InsertAmi(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO Amis (idUtilisateurProprietaire, idUtilisateurAmi) VALUES (")
+                 .Append(pIdUtilisateurProprietaire)
+                 .Append(",").Append(pIdUtilisateurAmi).Append(")");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void DeleteAmi(int pIdUtilisateurProprietaire, int pIdUtilisateurAmi)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("DELETE FROM Amis WHERE idUtilisateurProprietaire = ").Append(pIdUtilisateurProprietaire)
+                 .Append(" AND idUtilisateurAmi = ").Append(pIdUtilisateurAmi);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
     }
 }

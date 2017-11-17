@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cosmos.metier;
+using Cosmos.accesBD;
+
 
 namespace Cosmos.view
 {
@@ -20,17 +23,63 @@ namespace Cosmos.view
     /// </summary>
     public partial class ModifierAmi : UserControl
     {
-        public MainWindow Main { get; set; }
-        public ModifierAmi(MainWindow main)
+        public ListeAmis ListeAmis { get; set; }
+        private Utilisateur Ami { get; set; }
+        public ModifierAmi(ListeAmis listeAmi, Utilisateur ami)
         {
             InitializeComponent();
 
-            Main = main;
+            ListeAmis = listeAmi;
+
+            Ami = ami;
+
+            lblAmi.Content = Ami.Nom;
+            txbNote.Text = MySqlUtilisateurService.RetrieveNoteAmiByID(ListeAmis.Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur);
         }
 
-        private void btnFermer_Click(object sender, RoutedEventArgs e)
+
+
+        private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
-            Main.grdMain.Children.Remove(this);
+            ListeAmis.Main.grdMain.Children.Remove(this);
+        }
+
+        private void btnModifier_Click(object sender, RoutedEventArgs e)
+        {
+            string note = VerifierNote(txbNote.Text);
+
+            MySqlUtilisateurService.UpdateNoteAmi(ListeAmis.Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur, note);
+
+            ListeAmis.Main.grdMain.Children.Remove(this);
+
+        }
+
+        private string VerifierNote(string note)
+        {
+            string temp = "";
+
+            for (int i = 0; i < note.Length; i++)
+            {    
+                if (note[i] == 92 || note[i] == (char)39)
+                    temp += (char)92; 
+
+                temp += note[i];
+            }
+
+            return temp;
+        }
+
+        private void txbNote_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key.ToString() == "Return")
+            {
+                btnModifier_Click(sender, e);
+            }
+
+            if(e.Key.ToString() == "Escape")
+            {
+                btnAnnuler_Click(sender, e);
+            }
         }
     }
 }

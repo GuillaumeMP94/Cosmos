@@ -82,6 +82,9 @@
     <Compile Include="metier\TrousseGlobale.cs" />
     <Compile Include="metier\Unite.cs" />
     <Compile Include="metier\Utilisateur.cs" />
+    <Compile Include="view\AjouterAmi.xaml.cs">
+      <DependentUpon>AjouterAmi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,9 @@
     <Compile Include="view\ReglementsTutoriel.xaml.cs">
       <DependentUpon>ReglementsTutoriel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\SupprimerAmi.xaml.cs">
+      <DependentUpon>SupprimerAmi.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,6 +133,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="view\AjouterAmi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\Campagne.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\ReglementsTutoriel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\SupprimerAmi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
