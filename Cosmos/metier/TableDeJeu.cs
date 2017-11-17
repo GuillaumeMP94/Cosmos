@@ -662,6 +662,7 @@ namespace Cosmos.metier
         /// <returns>Liste des index des coup valide</returns>
         public List<int> listeCoupValideAI()
         {
+        
             List<int> listeCoupPermis = new List<int>();
 
             int compteur = 0;

@@ -66,7 +66,7 @@ namespace Cosmos.view
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
 
-            Robot = new AI("Robot Turenne", 1, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+            Robot = new AI("Robot Turenne", 4, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
 
             //utilisateur2.Reinitialiser();
             laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
@@ -681,19 +681,19 @@ namespace Cosmos.view
         private void AfficherCoupPoosible()
         {
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
-            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 == null) // TEMP FIX TODO REMOVE
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite1J1.Cursor = Cursors.Hand;
                 imgUnite1J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
             }
-            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 is null)
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 == null)
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite2J1.Cursor = Cursors.Hand;
                 imgUnite2J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
             }
-            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 is null)
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 == null)
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite3J1.Cursor = Cursors.Hand;
