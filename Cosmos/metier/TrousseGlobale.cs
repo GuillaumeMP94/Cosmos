@@ -22,8 +22,7 @@ namespace Cosmos.metier
 
             }
         }
-        // Le prototype que doit respecter la méthode qui s'occupera de gérer l'évènement
-        // Ce sont les noms des méthodes qu'on ajoutera à TrousseGlobale.NouvelleMission += 
+        // Prototypes que doit respecter la méthode qui s'occupera de gérer les évènements
         public delegate void PhaseChangeEventHandler(object sender, PhaseChangeEventArgs e);
         public delegate void RefreshAllEventHandler(object sender, RefreshAllEventArgs e);
 

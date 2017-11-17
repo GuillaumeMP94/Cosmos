@@ -77,14 +77,8 @@ namespace Cosmos.view
             laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
             // Permet de lier l'AI avec la table de jeu
             laTableDeJeu.Subscribe(Robot);
-            // CODE TEMPORAIRE POUR TESTER
-            /*AI ordinateur;
-            var ressourceAI = new metier.Ressource(2, 2, 2);
-            ordinateur = new AI( "Temporaire", 1, ressourceAI, utilisateur2.DeckAJouer, laTableDeJeu);*/
-            // FIN CODE TEMPORAIRE
 
             // Demander à l'utilisateur de distribuer ses ressources.
-            //TODO: Enlever les slash pour afficher EcranRessource
             EcranRessource(laTableDeJeu.Joueur1, RESSOURCEDEPART, RESSOURCEDEPART, this); // Joueur, nbPoints à distribué, levelMaximum de ressource = 3 + nbTour
 
             // Permet le binding. Le datacontext est la table de jeu puisque c'est elle qui contient les data qui seront modifiées.
@@ -121,23 +115,33 @@ namespace Cosmos.view
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
             txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
-            // txBLnbCarteJ1.DataContext = utilisateur1.DeckAJouer.CartesDuDeck.Count();
-            // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
-            // TODO testé ^
+            // Listener des events PhaseChange et RefreshAll
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
         }
-
+        /// <summary>
+        /// Fonction qui averti l'ai de jouer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NotifyAi(object sender, EventArgs e)
         {
             laTableDeJeu.NotifyAi();
         }
-
+        /// <summary>
+        /// Code lorsque l'evenement RefreshAll est lancé quelque part dans l'application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshAllEvent(object sender, RefreshAllEventArgs e)
         {
             RefreshAll();
         }
-
+        /// <summary>
+        /// Fonction qui est executer pour automatisé les phases de fin et de ressource.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void timer_Tick(object sender, EventArgs e)
         {
             if (Phase == 4 || Phase == 1)
@@ -157,7 +161,11 @@ namespace Cosmos.view
                 laTableDeJeu.AvancerPhase();
             }
         }
-
+        /// <summary>
+        /// Fonction qui execute le code pour la fin d'une phase.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changerPhase(object sender, PhaseChangeEventArgs e)
         {
             //laTableDeJeu.AvancerPhase();
@@ -179,6 +187,9 @@ namespace Cosmos.view
             }
             RefreshAll();
         }
+        /// <summary>
+        /// Fonction qui change l'affichage pendant la phase de ressource.
+        /// </summary>
         private void AffichagePhaseRessource()
         {
             txBlphaseRessource.Background = Brushes.Transparent;
@@ -205,6 +216,9 @@ namespace Cosmos.view
             RefreshAll();
             Temps.Stop();
         }
+        /// <summary>
+        /// Actions qui se produit lors de la phase principale.
+        /// </summary>
         private void PhasePrincipale()
         {
             if (txblSlash1J1.Dispatcher.CheckAccess() == true)
@@ -220,7 +234,9 @@ namespace Cosmos.view
             }
             
         }
-
+        /// <summary>
+        /// Fonction qui change l'affichage de la phase principale.
+        /// </summary>
         private void AffichagePhasePrincipale()
         {
             txBlphasePrincipale.Background = Brushes.Transparent;
@@ -228,7 +244,9 @@ namespace Cosmos.view
             txBlphasePrincipale.Foreground = Brushes.DarkGoldenrod;
             txBlphaseAttaque.Foreground = Brushes.Black;
         }
-
+        /// <summary>
+        /// Actions qui se produit lors de la phase d'attaque
+        /// </summary>
         private void PhaseAttaque()
         {
             if (txblSlash1J1.Dispatcher.CheckAccess() == true)
@@ -250,7 +268,9 @@ namespace Cosmos.view
                 laTableDeJeu.ExecuterAttaque(Robot.AttaqueChamp1, Robot.AttaqueChamp2, Robot.AttaqueChamp3);
             Temps.Start();
         }
-
+        /// <summary>
+        /// Affichange de la phase d'attaque.
+        /// </summary>
         private void AffichagePhaseAttaque()
         {
             btnTerminerPhase.IsEnabled = false;
@@ -263,7 +283,9 @@ namespace Cosmos.view
             if (!laTableDeJeu.JoueurActifEst1)
                 imgFinTour.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        /// Actions qui se produit dans la phase de fin
+        /// </summary>
         private void PhaseFin()
         {
             if (txblSlash1J1.Dispatcher.CheckAccess() == true)
@@ -290,7 +312,9 @@ namespace Cosmos.view
 
             RefreshAll();
         }
-
+        /// <summary>
+        /// Affichage de la phase de fin
+        /// </summary>
         private void AffichagePhaseFin()
         {
             txBlphaseFin.Background = Brushes.Transparent;
@@ -298,27 +322,35 @@ namespace Cosmos.view
             txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
             txBlphaseRessource.Foreground = Brushes.Black;
         }
-
+        /// <summary>
+        /// Fonction qui vérifie si le jeu est terminé.
+        /// </summary>
         private void VerifierVictoire()
         {
             if (laTableDeJeu.Joueur2.PointDeBlindage <= 0)
             {
                 // Victoire
                 TrousseGlobale.PhaseChange -= changerPhase;
+                TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 Temps.Stop();
+                TempsAI.Stop();
                 MessageBox.Show("Vous avez gagné!","Victoire", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
             if (laTableDeJeu.Joueur1.PointDeBlindage <= 0)
             {
                 // Défaite
+                TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 Temps.Stop();
+                TempsAI.Stop();
                 MessageBox.Show("Vous avez perdu!", "Défaite", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
         }
-
+        /// <summary>
+        /// Fonction qui réaffiche les éléments du xaml et les mets à jour.
+        /// </summary>
         private void RefreshAll()
         {
             if (txblSlash1J1.Dispatcher.CheckAccess() == true)
@@ -349,22 +381,26 @@ namespace Cosmos.view
                     AfficherMain();
                 });
             }
-            //TODO: test
 
         }
-
+        /// <summary>
+        /// Evenement qui se produit quand on clique sur le bouton abandonner.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
         {
-            Main.QuitterMain();
+            TrousseGlobale.PhaseChange -= changerPhase;
+            TrousseGlobale.RefreshAll -= RefreshAllEvent;
+            Temps.Stop();
+            TempsAI.Stop();
+            Main.EcranMenuPrincipal();
         }
-
-        private void Image_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Main.QuitterMain();
-
-            
-        }
-
+        /// <summary>
+        /// Fonction pour le mouse-over de la carte
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CarteMain_MouseEnter(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
@@ -374,7 +410,11 @@ namespace Cosmos.view
 
             border.Margin = new Thickness(margin.Left, 0, 0, 0);
         }
-
+        /// <summary>
+        /// Fonction pour le mouse over de la carte
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CarteMain_MouseLeave(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
@@ -384,7 +424,10 @@ namespace Cosmos.view
 
             border.Margin = new Thickness(margin.Left, 40, 0, 0);
         }
-
+        /// <summary>
+        /// Construit les images pour la main du joueur.
+        /// </summary>
+        /// <param name="lstMain"></param>
         private void PeuplerImgMainJoueur(List<Carte> lstMain)
         {
             int i = 1;
@@ -394,7 +437,9 @@ namespace Cosmos.view
                 i++;
             }
         }
-
+        /// <summary>
+        /// Construit une liste de border pour souligner les cartes jouables.
+        /// </summary>
         private void PeuplerListBorderMainJoueur()
         {
             foreach (Image element in ImgMainJoueur)
@@ -402,7 +447,11 @@ namespace Cosmos.view
                 CreerBorderDansList(element, ImgMainJoueur.IndexOf(element));
             }
         }
-
+        /// <summary>
+        /// Fonction qui créer les border
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="position"></param>
         private void CreerBorderDansList(Image img, int position)
         {
             Border border = new Border();
@@ -433,7 +482,9 @@ namespace Cosmos.view
             // Insérer la Border dans la ListBorderImgMainJoueur
             ListBorderImgMainJoueur.Add(border);
         }
-
+        /// <summary>
+        /// Fonction pour afficher la main du joueur
+        /// </summary>
         private void AfficherMain()
         {
             ImgMainJoueur.Clear();
@@ -450,7 +501,9 @@ namespace Cosmos.view
                 grdCartesJoueur.Children.Add(element);
             }
         }
-
+        /// <summary>
+        /// Fonction pour afficher les batiments
+        /// </summary>
         private void AfficherChampBatiments()
         {
             // Insérer les img des cartes Batiments en jeu du joueur 2 s'il y en a
@@ -520,7 +573,9 @@ namespace Cosmos.view
                 imgBatiment4J1.Source = null;
             }
         }
-
+        /// <summary>
+        /// Fonction pour afficher les unites.
+        /// </summary>
         private void AfficherChampUnites()
         {
             // Insérer les img des cartes Unités en jeu du joueur 2 s'il y en a
@@ -648,7 +703,12 @@ namespace Cosmos.view
             emplacementUnite3J1.BorderBrush = Brushes.Transparent;
 
         }
-
+        /// <summary>
+        /// Fonction pour créer des images.
+        /// </summary>
+        /// <param name="nom"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         private Image CreerImageCarte(String nom, int position)
         {
             Image carte = new Image();
@@ -672,14 +732,22 @@ namespace Cosmos.view
 
             return carte;
         }
-
+        /// <summary>
+        /// Fonction pour le zoom sur une carte.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Carte_Zoom(object sender, MouseEventArgs e)
         {
             imgZoom = (Image)sender;
             AfficherCarteZoom(imgZoom, true);          
             
         }
-        
+        /// <summary>
+        /// Fonction qui permet le zoom sur une carte en jeu, ou de la selectionner pour attaquer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Carte_CarteEnJeu_Zoom(object sender, MouseEventArgs e)
         {
             Image img = (Image)sender;
@@ -707,7 +775,11 @@ namespace Cosmos.view
                 AfficherCarteZoom(img, false);
             }
         }
-
+        /// <summary>
+        /// Change le booléen associé pour l'attaque.
+        /// </summary>
+        /// <param name="attaque"></param>
+        /// <returns></returns>
         private bool ChangerBoolAttaque(bool attaque)
         {
             if(attaque)
@@ -720,7 +792,11 @@ namespace Cosmos.view
             }
             return attaque;
         }
-
+        /// <summary>
+        /// Change le contour de la carte pour démontré qu'elle va attaquer.
+        /// </summary>
+        /// <param name="border"></param>
+        /// <param name="attaque"></param>
         private void ChangerBorderAttaque(Border border, bool attaque)
         {
             if (attaque)
@@ -733,8 +809,11 @@ namespace Cosmos.view
                 border.BorderBrush = Brushes.Transparent;
             }
         }
-
-
+        /// <summary>
+        /// Affiche la carte zoomer.
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="carteMain"></param>
         public void AfficherCarteZoom(Image img, bool carteMain)
         {
             rectZoom.Visibility = Visibility.Visible;
@@ -751,7 +830,9 @@ namespace Cosmos.view
             imgZoomCarte.Visibility = Visibility.Visible;
 
         }
-
+        /// <summary>
+        /// Fonction lors de la fermeture de l'écran de ressource.
+        /// </summary>
         public void FermerEcranRessource()
         {
             grd1.Children.Remove(ContenuEcran);
@@ -759,6 +840,13 @@ namespace Cosmos.view
             laTableDeJeu.AvancerPhase();
             AfficherMain();
         }
+        /// <summary>
+        /// Fonction lors de la création de l'écran ressource.
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <param name="points"></param>
+        /// <param name="maxRessourceLevel"></param>
+        /// <param name="partie"></param>
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
             ContenuEcran = new ChoixRessources(joueur, points, maxRessourceLevel, partie);
@@ -766,7 +854,9 @@ namespace Cosmos.view
 
             grd1.Children.Add(ContenuEcran);
         }
-
+        /// <summary>
+        /// Affiche les coups possible du joueur.
+        /// </summary>
         private void AfficherCoupPoosible()
         {
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
@@ -789,7 +879,11 @@ namespace Cosmos.view
                 imgUnite3J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
             }
         }
-
+        /// <summary>
+        /// Permet de choisir l'emplacement de l'unité déployer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChoisirEmplacementUnite(object sender, MouseButtonEventArgs e)
         {
             Image img = (Image)sender;
@@ -805,7 +899,11 @@ namespace Cosmos.view
 
             RefreshAll();
         }
-
+        /// <summary>
+        /// Action lorsque la carte est zoomer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // On peut jouer une carte seulement dans la phase 2
@@ -837,7 +935,11 @@ namespace Cosmos.view
 
             }
         }
-
+        /// <summary>
+        /// Action lorsqu'on click sur le rectangle noir à l'entour du zoom.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rectZoom_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             rectZoom.Visibility = Visibility.Hidden;
