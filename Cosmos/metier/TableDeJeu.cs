@@ -59,7 +59,6 @@ namespace Cosmos.metier
         #endregion
         #region Propriétés
         private int phase;
-        private int nbTour;
         private bool joueurActifEst1;
         private int nbTourComplet;
 
