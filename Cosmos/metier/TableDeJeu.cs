@@ -695,7 +695,7 @@ namespace Cosmos.metier
                 else
                     joueurDefense.PointDeBlindage -= attaquant.AttChamp2;
             }
-            if (champ3 && attaquant.Champ1 != null)
+            if (champ3 && attaquant.Champ3 != null)
             {
                 if (defenseur.Champ3 != null)
                 {
