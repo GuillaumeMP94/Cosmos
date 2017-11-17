@@ -57,7 +57,7 @@ namespace Cosmos.metier
             }
         }
         #endregion
-
+        #region Propriétés
         private int phase;
         private int nbTour;
         private bool joueurActifEst1;
@@ -68,28 +68,15 @@ namespace Cosmos.metier
         // Les deux joueurs
         private Joueur joueur1;
         private Joueur joueur2;
-        #region Propriétés
         // Mains des joueurs
         public List<Carte> LstMainJ1 { get; set; }
 
-        public void NotifyAi()
-        {
-            if (!joueurActifEst1 && (Phase == 2 || Phase == 3))
-            {
-                Notify(); // Permet de dire au AI que c'est à son tour.
-            }
-        }
-
         public List<Carte> LstMainJ2 { get; set; }
-
-
-        //public List<Batiment> LstBatimentJ1 { get; set; } // Bâtiment du joueur 1, celui qui commence la parti
-        //public List<Batiment> LstBatimentJ2 { get; set; }
+        // Champ constructions
         public ChampConstructions ChampConstructionsJ1 { get; set; }
         public ChampConstructions ChampConstructionsJ2 { get; set; }
 
-        //public List<Unite> LstUniteJ1 { get; set; } // Liste des unités du joueurs 1, maximum de 3.
-        //public List<Unite> LstUniteJ2 { get; set; }
+        // Champs de bataille
         public ChampBatailleUnites ChampBatailleUnitesJ1 { get; set; }
         public ChampBatailleUnites ChampBatailleUnitesJ2 { get; set; }
 
@@ -97,7 +84,7 @@ namespace Cosmos.metier
         // Usine de recyclage des joueurs / Défausse
         public List<Carte> LstUsineRecyclageJ1 { get; set; }
         public List<Carte> LstUsineRecyclageJ2 { get; set; }
-
+        // Nombre de tour.
         public int NbTourComplet
         {
             get { return nbTourComplet; }
@@ -111,6 +98,7 @@ namespace Cosmos.metier
 
             }
         }
+        //Phase du jeu.
         public int Phase
         {
             get { return phase; }
@@ -124,19 +112,7 @@ namespace Cosmos.metier
 
             }
         }
-        public int NbTour
-        {
-            get { return nbTour; }
-            set
-            {
-                nbTour = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("NbTour"));
-                }
-
-            }
-        }
+        // Permet de savoir si c'est le tour du joueur 1.
         public bool JoueurActifEst1
         {
             get { return joueurActifEst1; }
@@ -164,11 +140,7 @@ namespace Cosmos.metier
 
             }
         }
-        public void PigerCartes()        {
-            LstMainJ1.Add(Joueur1.PigerCarte());
-            LstMainJ2.Add(Joueur2.PigerCarte());
-            
-        }
+
 
         public Joueur Joueur2
         {
@@ -183,163 +155,8 @@ namespace Cosmos.metier
 
             }
         }
-
-        public void ExecuterAttaque(bool champ1, bool champ2, bool champ3)
-        {
-            ChampBatailleUnites attaquant;
-            ChampBatailleUnites defenseur;
-            Joueur joueurDefense;
-            if (JoueurActifEst1)
-            {
-                attaquant = ChampBatailleUnitesJ1;
-                defenseur = ChampBatailleUnitesJ2;
-                joueurDefense = Joueur2;
-                if (ChampBatailleUnitesJ1.EstEnPreparationChamp1)
-                    champ1 = false;
-                if (ChampBatailleUnitesJ1.EstEnPreparationChamp2)
-                    champ2 = false;
-                if (ChampBatailleUnitesJ1.EstEnPreparationChamp3)
-                    champ3 = false;
-            }
-            else
-            {
-                attaquant = ChampBatailleUnitesJ2;
-                defenseur = ChampBatailleUnitesJ1;
-                joueurDefense = Joueur1;
-                if (ChampBatailleUnitesJ2.EstEnPreparationChamp1)
-                    champ1 = false;
-                if (ChampBatailleUnitesJ2.EstEnPreparationChamp2)
-                    champ2 = false;
-                if (ChampBatailleUnitesJ2.EstEnPreparationChamp3)
-                    champ3 = false;
-            }
-                Tirer(attaquant, defenseur, joueurDefense, champ1, champ2, champ3);
-
-        }
-
-        public void DetruireBatiment()
-        {
-            List<Batiment> DetruitJoueur1;
-            List<Batiment> DetruitJoueur2;
-            DetruitJoueur1 = ChampConstructionsJ1.DetruireBatiments();
-            DetruitJoueur2 = ChampConstructionsJ2.DetruireBatiments();
-            foreach (Batiment unBatiment in DetruitJoueur1)
-            {
-                LstUsineRecyclageJ1.Add(unBatiment);
-            }
-            foreach (Batiment unBatiment in DetruitJoueur2)
-            {
-                LstUsineRecyclageJ2.Add(unBatiment);
-            }
-        }
-
-        public void EffetBatiments()
-        {
-            List<Effet> lstEffet = new List<Effet>();
-            Joueur Actif;
-            Joueur Passif;
-            if (JoueurActifEst1)
-            {
-                Actif = Joueur1;
-                Passif = Joueur2;
-                lstEffet = ChampConstructionsJ1.RetournerEffets();
-            }
-            else
-            {
-                Actif = Joueur2;
-                Passif = Joueur1;
-                lstEffet = ChampConstructionsJ2.RetournerEffets();
-            }
-            ExecuterEffets(Actif, Passif, lstEffet);
-        }
-
-        private void ExecuterEffets(Joueur actif, Joueur passif, List<Effet> lstEffet)
-        {
-            foreach (Effet unEffet in lstEffet)
-            {
-                if (unEffet.Type == "gainParTour")
-                {
-                    actif.RessourceActive += unEffet.GetRessourceJoueur();
-                    passif.RessourceActive += unEffet.GetRessourceAdversaire();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Fonction qui détruit un unité
-        /// </summary>
-        public void DetruireUnite()
-        {
-            List<Unite> DetruiteJoueur1;
-            List<Unite> DetruiteJoueur2;
-            DetruiteJoueur1 = ChampBatailleUnitesJ1.DetruireUnite();
-            DetruiteJoueur2 = ChampBatailleUnitesJ2.DetruireUnite();
-            foreach (Unite unUnite in DetruiteJoueur1)
-            {
-                LstUsineRecyclageJ1.Add(unUnite);
-            }
-            foreach (Unite unUnite in DetruiteJoueur2)
-            {
-                LstUsineRecyclageJ2.Add(unUnite);
-            }
-        }
-        /// <summary>
-        /// Fonction qui rend les unités prêt à attaquer.
-        /// </summary>
-        public void PreparerTroupes()
-        {
-            if (!joueurActifEst1)
-            {
-                ChampBatailleUnitesJ1.Preparer();
-            }
-            else
-            {
-                ChampBatailleUnitesJ2.Preparer();
-            }
-        }
-        /// <summary>
-        /// Mets à jour les points de vie des unités sur le champs de bataille.
-        /// </summary>
-        /// <param name="attaquant">Le champs de bataille de l'attaquant</param>
-        /// <param name="defenseur">Le champs de bataille du défenseur</param>
-        /// <param name="joueurDefense">Le joueur qui reçoit l'attaque</param>
-        /// <param name="champ1">Si on attaque ou pas sur le champs 1</param>
-        /// <param name="champ2">Si on attaque ou pas sur le champs 2</param>
-        /// <param name="champ3">Si on attaque ou pas sur le champs 3</param>
-        private void Tirer(ChampBatailleUnites attaquant, ChampBatailleUnites defenseur, Joueur joueurDefense, bool champ1, bool champ2, bool champ3)
-        {
-            if (champ1 && attaquant.Champ1 != null)
-            {
-                if (defenseur.Champ1 != null)
-                {
-                    attaquant.VieChamp1 -= defenseur.AttChamp1;
-                    defenseur.VieChamp1 -= attaquant.AttChamp1;
-                }
-                else
-                    joueurDefense.PointDeBlindage -= attaquant.AttChamp1;
-            }
-            if (champ2 && attaquant.Champ2 != null)
-            {
-                if (defenseur.Champ2 != null)
-                {
-                    attaquant.VieChamp2 -= defenseur.AttChamp2;
-                    defenseur.VieChamp2 -= attaquant.AttChamp2;
-                }
-                else
-                    joueurDefense.PointDeBlindage -= attaquant.AttChamp2;
-            }
-            if (champ3 && attaquant.Champ1 != null)
-            {
-                if (defenseur.Champ3 != null)
-                {
-                    attaquant.VieChamp3 -= defenseur.AttChamp3;
-                    defenseur.VieChamp3 -= attaquant.AttChamp3;
-                }
-                else
-                    joueurDefense.PointDeBlindage -= attaquant.AttChamp3;
-            }
-        }
         #endregion
+        
         #region Constructeurs
         // Constructeur de la table de jeu.
         // Celle-ci à besoin d'avoir les decks des deux joueurs pour mélanger ceux-ci et distribuer les mains de départs.
@@ -449,7 +266,11 @@ namespace Cosmos.metier
             }
             return false;
         }
-
+        /// <summary>
+        /// Fonction qui permet de jouer une carte
+        /// </summary>
+        /// <param name="index">Position de la carte dans la main du joueur</param>
+        /// <param name="position">Position dans le champs de bataille</param>
         public void JouerCarte(int index, int position)
         {
             // Le coup à pas été validé                 
@@ -504,7 +325,9 @@ namespace Cosmos.metier
                 TG.OnRefreshAll(p);
             }
         }
-
+        /// <summary>
+        /// Permet d'avancer les phases du jeu.
+        /// </summary>
         public void AvancerPhase()
         {
             if (Phase != 4)
@@ -528,80 +351,7 @@ namespace Cosmos.metier
             TrousseGlobale TG = new TrousseGlobale();
             TG.OnPhaseChange(p);
         }
-
-
-        /// <summary>
-        /// Mélange le deck de façon aléatoire. L'algo est médiocre, TODO tester.
-        /// </summary>
-        public void BrasserDeck(List<Carte> leDeck)
-        {
-            //var rnd = new Random();
-            //leDeck.CartesDuDeck.OrderBy(item => rnd.Next());
-            //return aBrasser;
-
-            int n = leDeck.Count();
-            var rnd = new Random();
-
-            while (n > 1)
-            {
-                int k = (rnd.Next(0, n) % n);
-                n--;
-                Carte temp = leDeck[k];
-                leDeck[k] = leDeck[n];
-                leDeck[n] = temp;
-            }
-
-
-            /* Algo alternatif probablement plus efficace
-                int n = list.Count;
-                Random rnd = new Random();
-                while (n > 1) {
-                int k = (rnd.Next(0, n) % n);
-                n--;
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;              
-            */
-        }
-        /// <summary>
-        /// Fonction pour défausser une carte de la main d'un joueur jusqu'à l'usine de recyclage
-        /// </summary>
-        /// <param name="carteADeffausser"></param>
-        /// <param name="estJoueur1"></param>
-        public void DeffausserCarte(Carte carteADeffausser, bool estJoueur1)
-        {
-            if (estJoueur1)
-            {
-                LstMainJ1.Remove(carteADeffausser);
-                LstUsineRecyclageJ1.Add(carteADeffausser);
-            }
-            else
-            {
-                LstMainJ2.Remove(carteADeffausser);
-                LstUsineRecyclageJ2.Add(carteADeffausser);
-            }
-        }
-        /// <summary>
-        /// Deux unités font un combat et se font des dégats. Cette fonctionne assume qu'il n'y a aucun effet sur les cartes
-        /// </summary>
-        /// <param name="unite1"></param>
-        /// <param name="unite2"></param>
-        public void CombatUniteAucunEffet(Unite unite1, Unite unite2)
-        {
-            unite1.Defense -= unite2.Attaque;
-            unite2.Defense -= unite1.Attaque;
-
-            // Si la defense de l'unité est a zero ou moins elle est détruite.
-            if (unite1.Defense < 1)
-            {
-                //LstUniteJ1.Remove(unite1);
-            }
-
-            if (unite2.Defense < 1)
-            {
-                //LstUniteJ2.Remove(unite2);
-            }
-        }
+        
         /// <summary>
         /// Brasse LES decks des joueurs
         /// </summary>
@@ -627,7 +377,7 @@ namespace Cosmos.metier
         /// <summary>
         /// Brasse le deck du joueur choisi
         /// </summary>
-        /// <param name="joueurUn"></param>
+        /// <param name="joueurUn">Affecte le joueur 1?</param>
         public void BrasserDeck(bool joueurUn)
         {
             if (joueurUn)
@@ -639,6 +389,10 @@ namespace Cosmos.metier
                 Joueur2.BrasserDeck();
             }
         }
+        /// <summary>
+        /// Pige une carte selon le joueur choisi.
+        /// </summary>
+        /// <param name="joueurUn">Affecte le joueur 1?</param>
         public void PigerCarte(bool joueurUn)
         {
             if (joueurUn)
@@ -650,6 +404,9 @@ namespace Cosmos.metier
                 LstMainJ2.Add(Joueur2.PigerCarte());
             }
         }
+        /// <summary>
+        /// Piger une carte selon le tour.
+        /// </summary>
         public void PigerCarte()
         {
             if (JoueurActifEst1)
@@ -687,7 +444,10 @@ namespace Cosmos.metier
             }
             return listeCoupPermis;
         }
-
+        /// <summary>
+        /// Genere une liste de coup valide pour l'AI.
+        /// </summary>
+        /// <returns></returns>
         public List<int> listeCoupValideUniteAI()
         {
             List<int> listeCoupPermis = new List<int>();
@@ -705,7 +465,10 @@ namespace Cosmos.metier
             return listeCoupPermis;
         }
 
-
+        /// <summary>
+        /// Fonction de jouer une carte pour l'ai
+        /// </summary>
+        /// <param name="index"></param>
         public void JouerCarteAI(int index)
         {
             Carte aJouer;
@@ -732,7 +495,11 @@ namespace Cosmos.metier
 
 
         }
-
+        /// <summary>
+        /// Fonction qui retourne si la carte est un unité ou non.
+        /// </summary>
+        /// <param name="indexCarteZoomer"></param>
+        /// <returns></returns>
         public bool CarteAJouerEstUnite(int indexCarteZoomer)
         {
             if (JoueurActifEst1)
@@ -750,5 +517,195 @@ namespace Cosmos.metier
                     return false;
             }
         }
+        /// <summary>
+        /// Fonction qui dit au AI que c'est sont tour.
+        /// </summary>
+        public void NotifyAi()
+        {
+            if (!joueurActifEst1 && (Phase == 2 || Phase == 3))
+            {
+                Notify(); // Permet de dire au AI que c'est à son tour.
+            }
+        }
+        /// <summary>
+        /// Fonction qui dit au 2 joueurs de piger une carte.
+        /// </summary>
+        public void PigerCartes()
+        {
+            LstMainJ1.Add(Joueur1.PigerCarte());
+            LstMainJ2.Add(Joueur2.PigerCarte());
+
+        }
+        /// <summary>
+        /// Fonction pour executer une attaque.
+        /// </summary>
+        /// <param name="champ1">Est-ce que le champ 1 attaque?</param>
+        /// <param name="champ2">Est-ce que le champ 2 attaque?</param>
+        /// <param name="champ3">Est-ce que le champ 3 attaque?</param>
+        public void ExecuterAttaque(bool champ1, bool champ2, bool champ3)
+        {
+            ChampBatailleUnites attaquant;
+            ChampBatailleUnites defenseur;
+            Joueur joueurDefense;
+            if (JoueurActifEst1)
+            {
+                attaquant = ChampBatailleUnitesJ1;
+                defenseur = ChampBatailleUnitesJ2;
+                joueurDefense = Joueur2;
+                if (ChampBatailleUnitesJ1.EstEnPreparationChamp1)
+                    champ1 = false;
+                if (ChampBatailleUnitesJ1.EstEnPreparationChamp2)
+                    champ2 = false;
+                if (ChampBatailleUnitesJ1.EstEnPreparationChamp3)
+                    champ3 = false;
+            }
+            else
+            {
+                attaquant = ChampBatailleUnitesJ2;
+                defenseur = ChampBatailleUnitesJ1;
+                joueurDefense = Joueur1;
+                if (ChampBatailleUnitesJ2.EstEnPreparationChamp1)
+                    champ1 = false;
+                if (ChampBatailleUnitesJ2.EstEnPreparationChamp2)
+                    champ2 = false;
+                if (ChampBatailleUnitesJ2.EstEnPreparationChamp3)
+                    champ3 = false;
+            }
+            Tirer(attaquant, defenseur, joueurDefense, champ1, champ2, champ3);
+
+        }
+        /// <summary>
+        /// Fonction qui detruit les batiments des joueurs selon leur points de vie
+        /// </summary>
+        public void DetruireBatiment()
+        {
+            List<Batiment> DetruitJoueur1;
+            List<Batiment> DetruitJoueur2;
+            DetruitJoueur1 = ChampConstructionsJ1.DetruireBatiments();
+            DetruitJoueur2 = ChampConstructionsJ2.DetruireBatiments();
+            foreach (Batiment unBatiment in DetruitJoueur1)
+            {
+                LstUsineRecyclageJ1.Add(unBatiment);
+            }
+            foreach (Batiment unBatiment in DetruitJoueur2)
+            {
+                LstUsineRecyclageJ2.Add(unBatiment);
+            }
+        }
+        /// <summary>
+        /// Fonction qui construit une liste des effets des batiments du joueur dont c'est le tour.
+        /// </summary>
+        public void EffetBatiments()
+        {
+            List<Effet> lstEffet = new List<Effet>();
+            Joueur Actif;
+            Joueur Passif;
+            if (JoueurActifEst1)
+            {
+                Actif = Joueur1;
+                Passif = Joueur2;
+                lstEffet = ChampConstructionsJ1.RetournerEffets();
+            }
+            else
+            {
+                Actif = Joueur2;
+                Passif = Joueur1;
+                lstEffet = ChampConstructionsJ2.RetournerEffets();
+            }
+            ExecuterEffetsBatiments(Actif, Passif, lstEffet);
+        }
+        /// <summary>
+        /// Fonction qui execute la liste des effets des batiments
+        /// </summary>
+        /// <param name="actif"></param>
+        /// <param name="passif"></param>
+        /// <param name="lstEffet"></param>
+        private void ExecuterEffetsBatiments(Joueur actif, Joueur passif, List<Effet> lstEffet)
+        {
+            foreach (Effet unEffet in lstEffet)
+            {
+                if (unEffet.Type == "gainParTour")
+                {
+                    actif.RessourceActive += unEffet.GetRessourceJoueur();
+                    passif.RessourceActive += unEffet.GetRessourceAdversaire();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fonction qui détruit un unité
+        /// </summary>
+        public void DetruireUnite()
+        {
+            List<Unite> DetruiteJoueur1;
+            List<Unite> DetruiteJoueur2;
+            DetruiteJoueur1 = ChampBatailleUnitesJ1.DetruireUnite();
+            DetruiteJoueur2 = ChampBatailleUnitesJ2.DetruireUnite();
+            foreach (Unite unUnite in DetruiteJoueur1)
+            {
+                LstUsineRecyclageJ1.Add(unUnite);
+            }
+            foreach (Unite unUnite in DetruiteJoueur2)
+            {
+                LstUsineRecyclageJ2.Add(unUnite);
+            }
+        }
+        /// <summary>
+        /// Fonction qui rend les unités prêt à attaquer.
+        /// </summary>
+        public void PreparerTroupes()
+        {
+            if (!joueurActifEst1)
+            {
+                ChampBatailleUnitesJ1.Preparer();
+            }
+            else
+            {
+                ChampBatailleUnitesJ2.Preparer();
+            }
+        }
+        /// <summary>
+        /// Mets à jour les points de vie des unités sur le champs de bataille.
+        /// </summary>
+        /// <param name="attaquant">Le champs de bataille de l'attaquant</param>
+        /// <param name="defenseur">Le champs de bataille du défenseur</param>
+        /// <param name="joueurDefense">Le joueur qui reçoit l'attaque</param>
+        /// <param name="champ1">Si on attaque ou pas sur le champs 1</param>
+        /// <param name="champ2">Si on attaque ou pas sur le champs 2</param>
+        /// <param name="champ3">Si on attaque ou pas sur le champs 3</param>
+        private void Tirer(ChampBatailleUnites attaquant, ChampBatailleUnites defenseur, Joueur joueurDefense, bool champ1, bool champ2, bool champ3)
+        {
+            if (champ1 && attaquant.Champ1 != null)
+            {
+                if (defenseur.Champ1 != null)
+                {
+                    attaquant.VieChamp1 -= defenseur.AttChamp1;
+                    defenseur.VieChamp1 -= attaquant.AttChamp1;
+                }
+                else
+                    joueurDefense.PointDeBlindage -= attaquant.AttChamp1;
+            }
+            if (champ2 && attaquant.Champ2 != null)
+            {
+                if (defenseur.Champ2 != null)
+                {
+                    attaquant.VieChamp2 -= defenseur.AttChamp2;
+                    defenseur.VieChamp2 -= attaquant.AttChamp2;
+                }
+                else
+                    joueurDefense.PointDeBlindage -= attaquant.AttChamp2;
+            }
+            if (champ3 && attaquant.Champ1 != null)
+            {
+                if (defenseur.Champ3 != null)
+                {
+                    attaquant.VieChamp3 -= defenseur.AttChamp3;
+                    defenseur.VieChamp3 -= attaquant.AttChamp3;
+                }
+                else
+                    joueurDefense.PointDeBlindage -= attaquant.AttChamp3;
+            }
+        }
+
     }
 }
