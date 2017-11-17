@@ -36,6 +36,7 @@ namespace Cosmos.view
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
         public DispatcherTimer Temps { get; set; }
+        public DispatcherTimer TempsAI { get; set; }
         public bool Unite1J1Attack { get; set; }
         public bool Unite2J1Attack { get; set; }
         public bool Unite3J1Attack { get; set; }
@@ -48,16 +49,20 @@ namespace Cosmos.view
                 laTableDeJeu.Phase = value;
             }
         }
-        //int phase;
 
         public Partie(MainWindow main)
         {
             InitializeComponent();
             Main = main;
-            //Timer pour refresh
+            //Timer pour changer automatiquement la phase de fin et la phase de ressource.
             Temps = new DispatcherTimer();
             Temps.Interval = TimeSpan.FromMilliseconds(1000);
             Temps.Tick += timer_Tick;
+            //Timer pour avertir le AI;
+            TempsAI = new DispatcherTimer();
+            TempsAI.Interval = TimeSpan.FromMilliseconds(1000);
+            TempsAI.Tick += NotifyAi;
+            TempsAI.Start();
             //TODO: Utilisateur Connecter
             Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
@@ -120,7 +125,17 @@ namespace Cosmos.view
             // txBLnbCarteJ2.DataContext = utilisateur2.DeckAJouer.CartesDuDeck.Count()
             // TODO testé ^
             TrousseGlobale.PhaseChange += changerPhase;
+            TrousseGlobale.RefreshAll += RefreshAllEvent;
+        }
 
+        private void NotifyAi(object sender, EventArgs e)
+        {
+            laTableDeJeu.NotifyAi();
+        }
+
+        private void RefreshAllEvent(object sender, RefreshAllEventArgs e)
+        {
+            RefreshAll();
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -164,7 +179,19 @@ namespace Cosmos.view
             }
             RefreshAll();
         }
-
+        private void AffichagePhaseRessource()
+        {
+            txBlphaseRessource.Background = Brushes.Transparent;
+            txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
+            txBlphasePrincipale.Foreground = Brushes.Black;
+            imgFinTour.Visibility = Visibility.Hidden;
+            if (laTableDeJeu.JoueurActifEst1)
+            {
+                btnTerminerPhase.IsEnabled = true;
+                btnTerminerPhase.Visibility = Visibility.Visible;
+            }
+        }
         /// <summary>
         /// Actions qui se produit lors de la phase de ressource
         /// </summary>
@@ -174,17 +201,27 @@ namespace Cosmos.view
             laTableDeJeu.AttribuerRessourceLevel();
             laTableDeJeu.EffetBatiments();
             laTableDeJeu.PigerCarte();
-            txBlphaseRessource.Background = Brushes.Transparent;
-            txBlphasePrincipale.Background = Brushes.DarkGoldenrod;
-            txBlphaseRessource.Foreground = Brushes.DarkGoldenrod;
-            txBlphasePrincipale.Foreground = Brushes.Black;
-            imgFinTour.Visibility = Visibility.Hidden;
+            AffichagePhaseRessource();
             RefreshAll();
             Temps.Stop();
-            btnTerminerPhase.IsEnabled = true;
-            btnTerminerPhase.Visibility = Visibility.Visible;
         }
         private void PhasePrincipale()
+        {
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                AffichagePhasePrincipale();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    AffichagePhasePrincipale();
+                });
+            }
+            
+        }
+
+        private void AffichagePhasePrincipale()
         {
             txBlphasePrincipale.Background = Brushes.Transparent;
             txBlphaseAttaque.Background = Brushes.DarkGoldenrod;
@@ -193,6 +230,28 @@ namespace Cosmos.view
         }
 
         private void PhaseAttaque()
+        {
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                AffichagePhaseAttaque();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    AffichagePhaseAttaque();
+                });
+            }
+            
+            RefreshAll();
+            if (laTableDeJeu.JoueurActifEst1)
+                laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
+            else
+                laTableDeJeu.ExecuterAttaque(Robot.AttaqueChamp1, Robot.AttaqueChamp2, Robot.AttaqueChamp3);
+            Temps.Start();
+        }
+
+        private void AffichagePhaseAttaque()
         {
             btnTerminerPhase.IsEnabled = false;
             btnTerminerPhase.Visibility = Visibility.Hidden;
@@ -203,22 +262,25 @@ namespace Cosmos.view
             txBlphaseFin.Foreground = Brushes.Black;
             if (!laTableDeJeu.JoueurActifEst1)
                 imgFinTour.Visibility = Visibility.Visible;
-            RefreshAll();
-            if (laTableDeJeu.JoueurActifEst1)
-                laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
-            else
-                laTableDeJeu.ExecuterAttaque(Robot.AttaqueChamp1, Robot.AttaqueChamp2, Robot.AttaqueChamp3);
-            Temps.Start();
         }
+
         private void PhaseFin()
         {
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                AffichagePhaseFin();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    AffichagePhaseFin();
+                });
+            }
             laTableDeJeu.PreparerTroupes();
             laTableDeJeu.DetruireUnite();
             laTableDeJeu.DetruireBatiment();
-            txBlphaseFin.Background = Brushes.Transparent;
-            txBlphaseRessource.Background = Brushes.DarkGoldenrod;
-            txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
-            txBlphaseRessource.Foreground = Brushes.Black;
+            
             VerifierVictoire();
             
             // On remet les trois Bools pour l'attaque a False
@@ -227,6 +289,14 @@ namespace Cosmos.view
             Unite3J1Attack = false;
 
             RefreshAll();
+        }
+
+        private void AffichagePhaseFin()
+        {
+            txBlphaseFin.Background = Brushes.Transparent;
+            txBlphaseRessource.Background = Brushes.DarkGoldenrod;
+            txBlphaseFin.Foreground = Brushes.DarkGoldenrod;
+            txBlphaseRessource.Foreground = Brushes.Black;
         }
 
         private void VerifierVictoire()
@@ -250,18 +320,37 @@ namespace Cosmos.view
         }
 
         private void RefreshAll()
-        {            
-            txBlphaseRessource.Refresh();
-            txBlphasePrincipale.Refresh();
-            txBlphaseAttaque.Refresh();
-            txBlphaseFin.Refresh();
-            imgFinTour.Refresh();
-            // Afficher les cartes sur le champ de bataille, les unités et les batiement
-            AfficherChampUnites();
-            AfficherChampBatiments();
-            AfficherMain();
+        {
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                txBlphaseRessource.Refresh();
+                txBlphasePrincipale.Refresh();
+                txBlphaseAttaque.Refresh();
+                txBlphaseFin.Refresh();
+                imgFinTour.Refresh();
+                // Afficher les cartes sur le champ de bataille, les unités et les batiement
+                AfficherChampUnites();
+                AfficherChampBatiments();
+                AfficherMain();
+
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    txBlphaseRessource.Refresh();
+                    txBlphasePrincipale.Refresh();
+                    txBlphaseAttaque.Refresh();
+                    txBlphaseFin.Refresh();
+                    imgFinTour.Refresh();
+                    // Afficher les cartes sur le champ de bataille, les unités et les batiement
+                    AfficherChampUnites();
+                    AfficherChampBatiments();
+                    AfficherMain();
+                });
+            }
             //TODO: test
-            //AfficherCoupPoosible();
+
         }
 
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)

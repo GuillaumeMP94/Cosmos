@@ -9,7 +9,7 @@
              x:Name="Root">
 
     <Grid Margin="15,15,15,15" Name="grd1">
-        <Image Name="imgFinTour" Height="600" Source="/images/Turn.png" Visibility="Hidden" Panel.ZIndex="99"/>
+        <Image Name="imgFinTour" Height="300" Source="/images/Turn.png" Visibility="Hidden" Panel.ZIndex="99"/>
         <Border BorderThickness="5" BorderBrush="Transparent" />
 
         <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">

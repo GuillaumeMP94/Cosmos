@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -37,10 +38,25 @@ namespace Cosmos.metier
 
         public void OnNext(TableDeJeu jeu)
         {
-            //Phase principale
-            JouerCoup(jeu);
-            // Phase de combat
-            PhaseAttaqueAI(jeu);
+            if (jeu.Phase == 2)
+            {
+                Task.Delay(1000).ContinueWith(_ =>
+                {
+                    //Phase principale
+                    JouerCoup(jeu);
+
+                });
+
+            }
+            if (jeu.Phase ==3 )
+            {
+                Task.Delay(1000).ContinueWith(_ =>
+                {
+
+                    // Phase de combat
+                    PhaseAttaqueAI(jeu);
+                });
+            }
 
         }
         #endregion
@@ -486,7 +502,6 @@ namespace Cosmos.metier
         {
             Random rnd = new Random(DateTime.Now.Millisecond);
             ReinitialiserChampAttaque();
-
             switch (difficulte)
             {
                 /* ---------------------------------------------------------------------------------------------- 

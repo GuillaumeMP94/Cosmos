@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static Cosmos.metier.TrousseGlobale;
 
@@ -70,6 +71,15 @@ namespace Cosmos.metier
         #region Propriétés
         // Mains des joueurs
         public List<Carte> LstMainJ1 { get; set; }
+
+        public void NotifyAi()
+        {
+            if (!joueurActifEst1 && (Phase == 2 || Phase == 3))
+            {
+                Notify(); // Permet de dire au AI que c'est à son tour.
+            }
+        }
+
         public List<Carte> LstMainJ2 { get; set; }
 
 
@@ -488,6 +498,10 @@ namespace Cosmos.metier
                     }
                     // On enleve la carte de la main
                     LstMainJ2.Remove(aJouer);
+                // Refresh all 
+                RefreshAllEventArgs p = new RefreshAllEventArgs();
+                TrousseGlobale TG = new TrousseGlobale();
+                TG.OnRefreshAll(p);
             }
         }
 
@@ -510,14 +524,11 @@ namespace Cosmos.metier
                     joueurActifEst1 = true;
                 }
             }
-            PhaseChangeEventArgs p = new PhaseChangeEventArgs(1);
+            PhaseChangeEventArgs p = new PhaseChangeEventArgs();
             TrousseGlobale TG = new TrousseGlobale();
             TG.OnPhaseChange(p);
-            if (Phase == 2 && !joueurActifEst1)
-            {
-                Notify(); // Permet de dire au AI que c'est à son tour.
-            }
         }
+
 
         /// <summary>
         /// Mélange le deck de façon aléatoire. L'algo est médiocre, TODO tester.
