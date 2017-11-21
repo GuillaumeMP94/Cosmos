@@ -97,6 +97,9 @@
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\GestionCartes.xaml.cs">
+      <DependentUpon>GestionCartes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\ListeAmis.xaml.cs">
       <DependentUpon>ListeAmis.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\CreationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\GestionCartes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
