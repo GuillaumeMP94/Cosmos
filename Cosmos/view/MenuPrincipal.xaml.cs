@@ -26,6 +26,8 @@ namespace Cosmos.view
             InitializeComponent();
 
             Main = main;
+
+            ValiderNeoJoueur();
         }
 
         private void btnQuitter_Click(object sender, RoutedEventArgs e)
@@ -69,6 +71,43 @@ namespace Cosmos.view
             Main.EcranListeAmis();
         }
 
-        
+        private void ValiderNeoJoueur()
+        {
+            if (Main.UtilisateurConnecte.CartesUtilisateurs.Count == 0)
+            {
+                btnCampagne.Opacity = 0.6;
+                btnCampagne.IsEnabled = false;
+
+                btnMultijoueur.Opacity = 0.6;
+                btnMultijoueur.IsEnabled = false;
+
+                btnGestionDecks.Opacity = 0.6;
+                btnGestionDecks.IsEnabled = false;
+
+                btnOptions.Opacity = 0.6;
+                btnOptions.IsEnabled = false;
+
+                btnListeAmis.Opacity = 0.6;
+                btnListeAmis.IsEnabled = false;
+            }
+            else
+            {
+                btnCampagne.Opacity = 1;
+                btnCampagne.IsEnabled = true;
+
+                btnMultijoueur.Opacity = 1;
+                btnMultijoueur.IsEnabled = true;
+
+                btnGestionDecks.Opacity = 1;
+                btnGestionDecks.IsEnabled = true;
+
+                btnOptions.Opacity = 1;
+                btnOptions.IsEnabled = true;
+
+                btnListeAmis.Opacity = 1;
+                btnListeAmis.IsEnabled = true;
+            }
+            
+        }
     }
 }
