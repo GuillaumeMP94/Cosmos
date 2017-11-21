@@ -42,7 +42,7 @@ namespace Cosmos.view
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("En construction");
+            Main.EcranOptionCompte();
         }
 
         private void btnGestionDecks_Click(object sender, RoutedEventArgs e)

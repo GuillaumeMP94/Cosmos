@@ -112,6 +112,12 @@ namespace Cosmos.view
             txblEmplacementUnite1J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
             txblEmplacementUnite2J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
             txblEmplacementUnite3J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+
+            // binding pour le gain de ressources par tour
+            txBlnbCharroniteTourJ.DataContext = laTableDeJeu.Joueur1.LevelRessource.Charronite;
+            txBlnbBarilTourJ.DataContext = laTableDeJeu.Joueur1.LevelRessource.BarilNucleaire;
+            txBlnbAlainDollarTourJ.DataContext = laTableDeJeu.Joueur1.LevelRessource.AlainDollars;
+
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
             txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
@@ -364,6 +370,7 @@ namespace Cosmos.view
                 AfficherChampUnites();
                 AfficherChampBatiments();
                 AfficherMain();
+                AfficherDerniereUsine();
 
             }
             else
@@ -510,67 +517,99 @@ namespace Cosmos.view
             if(laTableDeJeu.ChampConstructionsJ2.Champ1 != null)
             {
                 imgBatiment1J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ1.Nom + ".jpg"));
+                imgBatiment1J2.Cursor = Cursors.Hand;
+                imgBatiment1J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment1J2.Source = null;
+                imgBatiment1J2.Cursor = Cursors.Arrow;
+                imgBatiment1J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampConstructionsJ2.Champ2 != null)
             {
                 imgBatiment2J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ2.Nom + ".jpg"));
+                imgBatiment2J2.Cursor = Cursors.Hand;
+                imgBatiment2J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment2J2.Source = null;
+                imgBatiment2J2.Cursor = Cursors.Arrow;
+                imgBatiment2J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampConstructionsJ2.Champ3 != null)
             {
                 imgBatiment3J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ3.Nom + ".jpg"));
+                imgBatiment3J2.Cursor = Cursors.Hand;
+                imgBatiment3J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment3J2.Source = null;
+                imgBatiment3J2.Cursor = Cursors.Arrow;
+                imgBatiment3J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampConstructionsJ2.Champ4 != null)
             {
                 imgBatiment4J2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ2.Champ4.Nom + ".jpg"));
+                imgBatiment4J2.Cursor = Cursors.Hand;
+                imgBatiment4J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment4J2.Source = null;
+                imgBatiment4J2.Cursor = Cursors.Arrow;
+                imgBatiment4J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             // Insérer les img des cartes Batiments en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampConstructionsJ1.Champ1 != null)
             {
                 imgBatiment1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ1.Nom + ".jpg"));
+                imgBatiment1J1.Cursor = Cursors.Hand;
+                imgBatiment1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment1J1.Source = null;
+                imgBatiment1J1.Cursor = Cursors.Arrow;
+                imgBatiment1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampConstructionsJ1.Champ2 != null)
             {
                 imgBatiment2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ2.Nom + ".jpg"));
+                imgBatiment2J1.Cursor = Cursors.Hand;
+                imgBatiment2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment2J1.Source = null;
+                imgBatiment2J1.Cursor = Cursors.Arrow;
+                imgBatiment2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampConstructionsJ1.Champ3 != null)
             {
                 imgBatiment3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ3.Nom + ".jpg"));
+                imgBatiment3J1.Cursor = Cursors.Hand;
+                imgBatiment3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment3J1.Source = null;
+                imgBatiment3J1.Cursor = Cursors.Arrow;
+                imgBatiment3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
             if (laTableDeJeu.ChampConstructionsJ1.Champ4 != null)
             {
                 imgBatiment4J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.ChampConstructionsJ1.Champ4.Nom + ".jpg"));
+                imgBatiment4J1.Cursor = Cursors.Hand;
+                imgBatiment4J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
                 imgBatiment4J1.Source = null;
+                imgBatiment4J1.Cursor = Cursors.Arrow;
+                imgBatiment4J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             }
         }
         /// <summary>
@@ -820,14 +859,29 @@ namespace Cosmos.view
 
             if(carteMain)
             {
-                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);                
             }
             else
             {
-                IndexCarteZoomer = 99; // On met l'index à 99 pour détecter qu'il a clicker sur une carte en jeu.
+                IndexCarteZoomer = 99; // On met l'index à 99 pour détecter qu'il a clicker sur une carte en jeu.                
             }
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
+
+        }
+        /// <summary>
+        /// Fonction pour afficher la dernière carte arrivée dans l'usine de recyclage
+        /// </summary>
+        public void AfficherDerniereUsine()
+        {
+            if(laTableDeJeu.LstUsineRecyclageJ1.Count > 0)
+            {
+                imgUsineRecyclageJ1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.LstUsineRecyclageJ1[laTableDeJeu.LstUsineRecyclageJ1.Count - 1].Nom + ".jpg"));
+            }
+            if(laTableDeJeu.LstUsineRecyclageJ2.Count > 0)
+            {
+                imgUsineRecyclageJ2.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + laTableDeJeu.LstUsineRecyclageJ2[laTableDeJeu.LstUsineRecyclageJ2.Count - 1].Nom + ".jpg"));
+            }
 
         }
         /// <summary>
