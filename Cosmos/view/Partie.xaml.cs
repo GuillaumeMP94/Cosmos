@@ -115,10 +115,17 @@ namespace Cosmos.view
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
             txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
-            // Listener des events PhaseChange et RefreshAll
+            // Listener des events PhaseChange, RefreshAll et ChoisirCible
+            TrousseGlobale.ChoisirCible += ChoixCible;
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
         }
+
+        private void ChoixCible(object sender, ChoisirCibleEventArgs e)
+        {
+            MessageBox.Show("Choisi ta cible");
+        }
+
         /// <summary>
         /// Fonction qui averti l'ai de jouer.
         /// </summary>
@@ -212,7 +219,17 @@ namespace Cosmos.view
             laTableDeJeu.AttribuerRessourceLevel();
             laTableDeJeu.EffetBatiments();
             laTableDeJeu.PigerCarte();
-            AffichagePhaseRessource();
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                AffichagePhaseRessource();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    AffichagePhaseRessource();
+                });
+            }
             RefreshAll();
             Temps.Stop();
         }

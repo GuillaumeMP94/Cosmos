@@ -334,6 +334,20 @@ namespace Cosmos.metier
 
         private void ExecuterEffet(Effet aExecuter)
         {
+            if (aExecuter.Type == "impact")
+            {
+                // Si pas le nombre de cible n'est pas important, donc frappe tous ce qu'il y a dans cible.
+                if (aExecuter.getCible() == 10 || aExecuter.getCible() == 11 || aExecuter.getNbCible() == 0)
+                    ExecuterImpact(aExecuter);
+                else if ( joueurActifEst1 )
+                {
+                    // Lancer un evenement pour que parti le catch.
+                    ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(aExecuter.getCible());
+                    TrousseGlobale TG = new TrousseGlobale();
+                    TG.OnChoisirCible(p);
+                    //ChoisirCible(aExecuter.getCible(), aExecuter.getNbCible());
+                }
+            }
             /*
                 Cible
                 0	Tout le monde
@@ -367,6 +381,77 @@ namespace Cosmos.metier
                 1-2-3-4-etc...	La quantité exacte.
 
                 */
+        }
+
+        private void ExecuterImpact(Effet aExecuter)
+        {
+            Joueur Attaquant, Defenseur;
+            ChampConstructions ConstructionAttaquant, ConstructionDefenseur;
+            ChampBatailleUnites BatailleAttaquant, BatailleDefenseur;
+            if (JoueurActifEst1)
+            {
+                Attaquant = Joueur1;
+                Defenseur = Joueur2;
+                ConstructionAttaquant = ChampConstructionsJ1;
+                ConstructionDefenseur = ChampConstructionsJ2;
+                BatailleAttaquant = ChampBatailleUnitesJ1;
+                BatailleDefenseur = ChampBatailleUnitesJ2;
+            }
+            else
+            {
+                Attaquant = Joueur2;
+                Defenseur = Joueur1;
+                ConstructionAttaquant = ChampConstructionsJ2;
+                ConstructionDefenseur = ChampConstructionsJ1;
+                BatailleAttaquant = ChampBatailleUnitesJ2;
+                BatailleDefenseur = ChampBatailleUnitesJ1;
+            }
+            if (aExecuter.getCible() == 10 || aExecuter.getCible() == 9 || aExecuter.getCible() == 0 || aExecuter.getCible() == 1 || aExecuter.getCible() == 12 || aExecuter.getCible() == 13 || aExecuter.getCible() == 18 || aExecuter.getCible() == 19)
+                Defenseur.PointDeBlindage -= aExecuter.getValeur();
+            if (aExecuter.getCible() == 11 || aExecuter.getCible() == 9 || aExecuter.getCible() == 0 || aExecuter.getCible() == 2 || aExecuter.getCible() == 12 || aExecuter.getCible() == 14 || aExecuter.getCible() == 18 || aExecuter.getCible() == 20)
+                Attaquant.PointDeBlindage -= aExecuter.getValeur();
+            if (aExecuter.getCible() == 0 || aExecuter.getCible() == 1 || aExecuter.getCible() == 3 || aExecuter.getCible() == 4 || aExecuter.getCible() == 15 || aExecuter.getCible() == 16 || aExecuter.getCible() == 18 || aExecuter.getCible() == 19)
+            {
+                // TODO: Changer .Defense
+                if (ConstructionDefenseur.Champ1 != null)
+                    ConstructionDefenseur.Champ1.Defense -= aExecuter.getValeur();
+                if (ConstructionDefenseur.Champ2 != null)
+                    ConstructionDefenseur.Champ2.Defense -= aExecuter.getValeur();
+                if (ConstructionDefenseur.Champ3 != null)
+                    ConstructionDefenseur.Champ3.Defense -= aExecuter.getValeur();
+                if (ConstructionDefenseur.Champ4 != null)
+                    ConstructionDefenseur.Champ4.Defense -= aExecuter.getValeur();
+            }
+            if (aExecuter.getCible() == 0 || aExecuter.getCible() == 2 || aExecuter.getCible() == 3 || aExecuter.getCible() == 5 || aExecuter.getCible() == 15 || aExecuter.getCible() == 17 || aExecuter.getCible() == 18 || aExecuter.getCible() == 20)
+            {
+                // TODO: Changer Defense
+                if (ConstructionAttaquant.Champ1 != null)
+                    ConstructionAttaquant.Champ1.Defense -= aExecuter.getValeur();
+                if (ConstructionAttaquant.Champ2 != null)
+                    ConstructionAttaquant.Champ2.Defense -= aExecuter.getValeur();
+                if (ConstructionAttaquant.Champ3 != null)
+                    ConstructionAttaquant.Champ3.Defense -= aExecuter.getValeur();
+                if (ConstructionAttaquant.Champ4 != null)
+                    ConstructionAttaquant.Champ4.Defense -= aExecuter.getValeur();
+            }
+            if (aExecuter.getCible() == 0 || aExecuter.getCible() == 1 || aExecuter.getCible() == 6 || aExecuter.getCible() == 7 || aExecuter.getCible() == 12 || aExecuter.getCible() == 13 || aExecuter.getCible() == 15 || aExecuter.getCible() == 16)
+            {
+                if (BatailleDefenseur.Champ1 != null)
+                    BatailleDefenseur.VieChamp1 -= aExecuter.getValeur();
+                if (BatailleDefenseur.Champ2 != null)
+                    BatailleDefenseur.VieChamp2 -= aExecuter.getValeur();
+                if (BatailleDefenseur.Champ3 != null)
+                    BatailleDefenseur.VieChamp3 -= aExecuter.getValeur();
+            }
+            if (aExecuter.getCible() == 0 || aExecuter.getCible() == 2 || aExecuter.getCible() == 6 || aExecuter.getCible() == 8 || aExecuter.getCible() == 12 || aExecuter.getCible() == 14 || aExecuter.getCible() == 15 || aExecuter.getCible() == 17)
+            {
+                if (BatailleAttaquant.Champ1 != null)
+                    BatailleAttaquant.VieChamp1 -= aExecuter.getValeur();
+                if (BatailleAttaquant.Champ2 != null)
+                    BatailleAttaquant.VieChamp2 -= aExecuter.getValeur();
+                if (BatailleAttaquant.Champ3 != null)
+                    BatailleAttaquant.VieChamp3 -= aExecuter.getValeur();
+            }
         }
 
         /// <summary>
