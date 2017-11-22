@@ -88,6 +88,9 @@
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ChoixCible.xaml.cs">
+      <DependentUpon>ChoixCible.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\ChoixRessources.xaml.cs">
       <DependentUpon>ChoixRessources.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\Campagne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ChoixCible.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,6 +315,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="docs\MySqlCommand.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\partie\check.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

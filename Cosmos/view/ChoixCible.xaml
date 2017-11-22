@@ -1,0 +1,161 @@
+﻿<UserControl x:Class="Cosmos.view.ChoixCible"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1400">
+    <Grid Name="grd1">
+        
+        <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
+            <Rectangle Name="recChoixJoueur2" Visibility="Hidden" Margin="5,0,0,750" Fill="DarkGoldenrod" Opacity="0.7" PreviewMouseLeftButtonDown="recChoixJoueur2_Click"></Rectangle>
+            <Image Name="imgChoixJoueur2" Margin="5,0,0,750" Source="/images/partie/check.png" PreviewMouseLeftButtonDown="recChoixJoueur2_Click" Visibility="Hidden"></Image>
+            <Rectangle Name="recChoixJoueur1" Visibility="Hidden" Margin="5,750,0,0" Fill="DarkGoldenrod" PreviewMouseLeftButtonDown="recChoixJoueur1_Click" Opacity="0.7"></Rectangle>
+            <Image Name="imgChoixJoueur1" Margin="5,750,0,0" Source="/images/partie/check.png" PreviewMouseLeftButtonDown="recChoixJoueur1_Click" Visibility="Hidden"></Image>
+        </Grid>
+
+        <Grid Name="grdChoixJoueur" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="320,0,0,10"
+              Width="850" Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle Name="recMainJoueur1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur1_Click">
+            </Rectangle>
+            <Image Name="imgMainJoueur1" Source="/images/partie/check.png" Visibility="Hidden" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur1_Click"></Image>
+
+            <Rectangle Name="recDeckJoueur1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur1_Click">
+            </Rectangle>
+            <Image Name="imgDeckJoueur1" Source="/images/partie/check.png" Visibility="Hidden" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur1_Click"/>
+
+            <Rectangle Name="recRecyclageJoueur1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" PreviewMouseLeftButtonDown="recRecyclageJoueur1_Click">
+            </Rectangle>
+            <Image Grid.Column="2" Source="/images/partie/check.png" Visibility="Hidden" PreviewMouseLeftButtonDown="recRecyclageJoueur1_Click"/>
+
+        </Grid>
+
+        <Grid Name="grdCartesAdversaire" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="320,10,0,0"
+              Width="850" Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle Name="recMainJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur2_Click"/>
+            <Image Name="imgMainJoueur2" Visibility="Hidden" Source="/images/partie/check.png" PreviewMouseLeftButtonDown="recMainJoueur2_Click"></Image>
+
+            <Rectangle Name="recDeckJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click">
+            </Rectangle>
+            <Image Name="imgDeckJoueur2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click"/>
+
+            <Rectangle Name="recRecyclageJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" PreviewMouseLeftButtonDown="recRecyclageJoueur2_Click">
+            </Rectangle>
+            <Image Name="imgRecyclageJoueur2" Visibility="Hidden" Grid.Column="2" Source="/images/partie/check.png" PreviewMouseLeftButtonDown="recRecyclageJoueur2_Click"/>
+
+        </Grid>
+
+        <Grid Name="grdBatiments" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="320,0,0,0"
+              Width="300" Height="400">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle Name="recBatiment1J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment1J2_Click">
+            </Rectangle>
+            <Image Name="imgBatiment1J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment1J2_Click"/>
+            <Rectangle Name="recBatiment2J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment2J2_Click">
+            </Rectangle>
+            <Image Name="imgBatiment2J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment2J2_Click"/>
+
+            <Rectangle Name="recBatiment3J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment3J2_Click">
+            </Rectangle>
+            <Image Name="imgBatiment3J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment3J2_Click"/>
+
+            <Rectangle Name="recBatiment4J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment4J2_Click">
+            </Rectangle>
+            <Image Name="imgBatiment4J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment4J2_Click"/>
+
+            <Rectangle Name="recBatiment1J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment1J1_Click">
+            </Rectangle>
+            <Image Name="imgBatiment1J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="0" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment1J1_Click"/>
+
+            <Rectangle Name="recBatiment2J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment2J1_Click">
+            </Rectangle>
+            <Image Name="imgBatiment2J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment2J1_Click"/>
+
+            <Rectangle Name="recBatiment3J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment3J1_Click">
+            </Rectangle>
+            <Image Name="imgBatiment3J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="0" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment3J1_Click"/>
+
+            <Rectangle Name="recBatiment4J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment4J1_Click">
+            </Rectangle>
+            <Image Name="imgBatiment4J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment4J1_Click"/>
+
+
+        </Grid>
+
+        <Grid Name="grdCartesEnjeu"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="630,0,0,0"
+              Width="500" Height="450">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle Name="recUnite1J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite1J2_Click">
+            </Rectangle>
+            <Image Name="imgUnite1J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite1J2_Click"/>
+
+            <Rectangle Name="recUnite2J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite2J2_Click">
+            </Rectangle>
+            <Image Name="imgUnite2J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite2J2_Click"/>
+
+            <Rectangle Name="recUnite3J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite3J2_Click">
+            </Rectangle>
+            <Image Name="imgUnite3J2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="2" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite3J2_Click"/>
+
+            <Rectangle Name="recUnite1J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite1J1_Click">
+            </Rectangle>
+            <Image Name="imgUnite1J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite1J1_Click"/>
+
+            <Rectangle Name="recUnite2J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite2J1_Click">
+            </Rectangle>
+            <Image Name="imgUnite2J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite2J1_Click"/>
+
+            <Rectangle Name="recUnite3J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite3J1_Click">
+            </Rectangle>
+            <Image Name="imgUnite3J1" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="2" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite3J1_Click"/>
+            
+
+        </Grid>
+
+        <Button Name="btnOk" Height="30" Margin="0,235,10,235"
+                Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" IsEnabled="False" Opacity="0.5" Cursor="Hand" Click="btnOk_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Ok
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+    </Grid>
+</UserControl>

@@ -40,6 +40,7 @@ namespace Cosmos.view
         public bool Unite1J1Attack { get; set; }
         public bool Unite2J1Attack { get; set; }
         public bool Unite3J1Attack { get; set; }
+        public List<int> Choix { get; set; }
 
         public int Phase
         {
@@ -54,6 +55,7 @@ namespace Cosmos.view
         {
             InitializeComponent();
             Main = main;
+            Choix = new List<int>();
             //Timer pour changer automatiquement la phase de fin et la phase de ressource.
             Temps = new DispatcherTimer();
             Temps.Interval = TimeSpan.FromMilliseconds(1000);
@@ -115,10 +117,18 @@ namespace Cosmos.view
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
             txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
-            // Listener des events PhaseChange et RefreshAll
+            // Listener des events PhaseChange, RefreshAll et ChoisirCible
+            TrousseGlobale.ChoisirCible += ChoixCibleListener;
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
         }
+
+        private void ChoixCibleListener(object sender, ChoisirCibleEventArgs e)
+        {
+            MessageBox.Show("Choisi ta cible");
+            EcranChoixCible(e.Cible,e.NbCible);
+        }
+
         /// <summary>
         /// Fonction qui averti l'ai de jouer.
         /// </summary>
@@ -212,7 +222,17 @@ namespace Cosmos.view
             laTableDeJeu.AttribuerRessourceLevel();
             laTableDeJeu.EffetBatiments();
             laTableDeJeu.PigerCarte();
-            AffichagePhaseRessource();
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                AffichagePhaseRessource();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    AffichagePhaseRessource();
+                });
+            }
             RefreshAll();
             Temps.Stop();
         }
@@ -850,6 +870,31 @@ namespace Cosmos.view
         public void EcranRessource(Joueur joueur, int points, int maxRessourceLevel, Partie partie)
         {
             ContenuEcran = new ChoixRessources(joueur, points, maxRessourceLevel, partie);
+            recRessource.Visibility = Visibility.Visible;
+
+            grd1.Children.Add(ContenuEcran);
+        }
+        /// <summary>
+        /// Fonction lors de la fermeture de l'écran de choix cible.
+        /// </summary>
+        public void FermerEcranChoixCible()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            recRessource.Visibility = Visibility.Hidden;
+            // Executer l'impact avec les choix.
+            laTableDeJeu.ExecuterImpact(Choix);
+
+        }
+        /// <summary>
+        /// Fonction lors de la création de l'écran choix cible.
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <param name="points"></param>
+        /// <param name="maxRessourceLevel"></param>
+        /// <param name="partie"></param>
+        public void EcranChoixCible(int cible, int nbCible)
+        {
+            ContenuEcran = new ChoixCible(Choix, cible , nbCible , laTableDeJeu, this);
             recRessource.Visibility = Visibility.Visible;
 
             grd1.Children.Add(ContenuEcran);
