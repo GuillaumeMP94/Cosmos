@@ -11,9 +11,11 @@ namespace Cosmos.metier
         public class ChoisirCibleEventArgs : EventArgs
         {
             public int Cible { get; set; }
-            public ChoisirCibleEventArgs(int cible)
+            public int NbCible { get; set; }
+            public ChoisirCibleEventArgs(int cible, int nbCible)
             {
                 Cible = cible;
+                NbCible = nbCible;
             }
         }
         public class PhaseChangeEventArgs:EventArgs
