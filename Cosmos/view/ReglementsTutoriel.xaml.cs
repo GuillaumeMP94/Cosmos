@@ -35,7 +35,7 @@ namespace Cosmos.view
             if (Main.UtilisateurConnecte.CartesUtilisateurs.Count == 0)
             {
                 MySqlCarteService.InsertNewJoueurCard(Main.UtilisateurConnecte);
-                Main.UtilisateurConnecte.CartesUtilisateurs =  MySqlCarteService.RetrieveAllUserCard(Main.UtilisateurConnecte.IdUtilisateur);
+                Main.UtilisateurConnecte.CartesUtilisateurs =  MySqlCarteService.RetrieveAllUserExemplaires(Main.UtilisateurConnecte.IdUtilisateur);
                 MessageBox.Show("Félicitation pour avoir complété le tutoriel! Vous venez de débloquer vos cartes!");
             }
             else

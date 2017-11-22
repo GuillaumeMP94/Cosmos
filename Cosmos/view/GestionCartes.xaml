@@ -7,10 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Name="grdGestionCartes" Width="auto" Height="auto" >
-        <Label Name="lblTitre" Content="Ma collection" Foreground="DarkGoldenrod" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0" Height="40" VerticalAlignment="Top"/>
-        <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="20" >
+        <Label Name="lblTri" Content="Veuillez choisir votre ordre de tri" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="27,140,0,0" Height="40" VerticalAlignment="Top"/>
+        <ComboBox Name="cboChoixTri" Height="30" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,170" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" SelectionChanged="cboChoixTri_SelectionChanged">
+            <ComboBoxItem>A-Z</ComboBoxItem>
+            <ComboBoxItem>Z-A</ComboBoxItem>
+            <ComboBoxItem>Types</ComboBoxItem>
+        </ComboBox>
+        <Border Width="900" Height="625" Background="Black" Opacity="0.6" Margin="20,180,0,15" CornerRadius="15" HorizontalAlignment="Left"/>
+        <Label Name="lblTitre" Content="Ma collection" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0" Height="40" VerticalAlignment="Top"/>
+        <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="15,0,0,70" VerticalAlignment="Bottom" >
             <Grid Name="grdLesCartes">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
