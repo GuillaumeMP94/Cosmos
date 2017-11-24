@@ -191,66 +191,7 @@ namespace Cosmos.accesBD
             return lstResultat;
         }
 
-        /// <summary>
-        /// Retrouve toutes les cartes d'un utilisateur, avec un seul exemplaire.
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        private static List<Carte> RetrieveCardExemplaire(string query)
-        {
-            List<Carte> lstResultat = new List<Carte>();
-            DataSet dsResultat;
-            DataTable dtResultat;
-
-            ConnectionBD = new MySqlConnexion();
-
-            dsResultat = ConnectionBD.Query(query);
-            dtResultat = dsResultat.Tables[0];
-
-            foreach (DataRow dr in dtResultat.Rows)
-            {
-
-                Effet effetCarte = null;
-                if (dr["idEffet"] != DBNull.Value)
-                {
-                    effetCarte = MySqlEffetService.RetrieveById((int)dr["idEffet"]);
-                }
-                if (dr["typeUnite"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
-                {
-                        lstResultat.Add(new Unite((int)dr["idCarte"]
-                                                    , (string)dr["nom"]
-                                                    , effetCarte
-                                                    , new Ressource((int)dr["coutCharronite"], (int)dr["coutBarilNucleaire"], (int)dr["coutAlainDollars"])
-                                                    , (int)dr["pointsAttaque"]
-                                                    , (int)dr["pointsDefense"]
-                                                    )
-                                        );
-                }
-                else if (dr["pointsDefense"] != DBNull.Value) // TODO: vérifié si le if fonctionne sinon changé pour "null"
-                {
-                        lstResultat.Add(new Batiment((int)dr["idCarte"]
-                                                    , (string)dr["nom"]
-                                                    , effetCarte
-                                                    , new Ressource((int)dr["coutCharronite"], (int)dr["coutBarilNucleaire"], (int)dr["coutAlainDollars"])
-                                                    , (int)dr["pointsDefense"]
-                                                    )
-                                        );
-                }
-                else
-                {
-                        lstResultat.Add(new Gadget((int)dr["idCarte"]
-                                                    , (string)dr["nom"]
-                                                    , effetCarte
-                                                    , new Ressource((int)dr["coutCharronite"], (int)dr["coutBarilNucleaire"], (int)dr["coutAlainDollars"])
-                                                    )
-                                        );
-                }
-            }
-
-            return lstResultat;
-        }
-
-
+        
         /// <summary>
         /// Fonction qui construit la commande SQL pour la requête par ID et qui la passe ensuite à Retrieve
         /// </summary>
@@ -280,18 +221,6 @@ namespace Cosmos.accesBD
                  .Append(pIdUtilisateur.ToString());
 
             return RetrieveAllExemplaire(query.ToString());
-        }
-
-        public static List<Carte> RetrieveAllUserCards(int pIdUtilisateur)
-        {
-            StringBuilder query = new StringBuilder();
-            query.Append("SELECT c.* FROM Cartes c ")
-                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
-                 .Append("INNER JOIN Utilisateurs u ON u.idUtilisateur = e.idUtilisateur ")
-                 .Append("WHERE e.idUtilisateur =")
-                 .Append(pIdUtilisateur.ToString());
-
-            return RetrieveCardExemplaire(query.ToString());
         }
 
         public static List<Carte> RetrieveAllDeckCard(int pIdDeck)
@@ -376,33 +305,14 @@ namespace Cosmos.accesBD
             return RetrieveAllExemplaire(query.ToString());
         }
 
-        public static int RetrieveQuantiteExemplaire(int pIdCarte, int pIdUtilisateur)
-        {
-            DataSet dsResultat;
-            DataTable dtResultat;
-            DataRow drResultat;
 
-            StringBuilder query = new StringBuilder();
-            int qte = 0;
-
-            query.Append("SELECT quantite FROM Exemplaires WHERE idCarte = ").Append(pIdCarte)
-                 .Append(" AND idUtilisateur = ").Append(pIdUtilisateur);
-
-            dsResultat = ConnectionBD.Query(query.ToString());
-            dtResultat = dsResultat.Tables[0];
-
-            if (dtResultat.Rows.Count > 0)
-            {
-                drResultat = dtResultat.Rows[0];
-
-                if (!drResultat.IsNull(0))
-                    qte = (int)drResultat["quantite"];
-            }
-
-            return qte;
-        }
-
-        public static List<Exemplaire> RetrieveExemplaires(string nomDeck, int pIdUtilisateur)
+        /// <summary>
+        /// Fonction qui fait une requête pour aller chercher les exemplaires du deck voulu
+        /// </summary>
+        /// <param name="nomDeck"></param>
+        /// <param name="pIdUtilisateur"></param>
+        /// <returns></returns>
+        public static List<Exemplaire> RetrieveExemplairesDeckUser(string nomDeck, int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT c.*, dE.quantite FROM Cartes c ")
@@ -411,10 +321,32 @@ namespace Cosmos.accesBD
                  .Append("INNER JOIN Decks d ON d.idDeck = dE.idDeck ")
                  .Append("WHERE d.nom = '").Append(nomDeck).Append("'").Append(" AND d.idUtilisateur =").Append(pIdUtilisateur);
 
-            return RetrieveExemplairesDeckUser(query.ToString());
+            return RetrieveExemplaires(query.ToString());
         }
 
-        private static List<Exemplaire> RetrieveExemplairesDeckUser(string query)
+        /// <summary>
+        /// Fonction qui va chercher la liste complète des exemplaires de l'utilisateur
+        /// </summary>
+        /// <param name="pIdUtilisateur"></param>
+        /// <returns></returns>
+        public static List<Exemplaire> RetrieveExemplairesUser(int pIdUtilisateur)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, e.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("INNER JOIN Utilisateurs u ON u.idUtilisateur = e.idUtilisateur ")
+                 .Append("WHERE e.idUtilisateur =")
+                 .Append(pIdUtilisateur.ToString());
+
+            return RetrieveExemplaires(query.ToString());
+        }
+
+        /// <summary>
+        /// Fonction qui va chercher en BD les exemplaires selon la requête voulue
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        private static List<Exemplaire> RetrieveExemplaires(string query)
         {
             List<Exemplaire> lstResultat = new List<Exemplaire>();
             Carte laCarte = null;

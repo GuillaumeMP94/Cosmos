@@ -24,14 +24,15 @@ namespace Cosmos.view
     {
         private MainWindow Main;
         private List<Carte> LstCartesCollection = MySqlCarteService.RetrieveAllCard();
-        private List<Carte> LstCartesNonAcquises;
+        private List<Exemplaire> LstExemplairesUtilisateur;
         public GestionCartes(MainWindow main)
         {
             InitializeComponent();
 
             Main = main;
 
-            LstCartesNonAcquises = RetirerCartes();
+            LstExemplairesUtilisateur = MySqlCarteService.RetrieveExemplairesUser(Main.UtilisateurConnecte.IdUtilisateur);
+
 
             LstCartesCollection = TrierOrdreAlphabetique("croissant");
 
@@ -60,27 +61,24 @@ namespace Cosmos.view
                 imgCarte.HorizontalAlignment = HorizontalAlignment.Center;
                 imgCarte.Cursor = Cursors.Hand;
                 imgCarte.PreviewMouseLeftButtonUp += ZoomerCarte;
+                imgCarte.Opacity = 0.6;
 
-                //On veut griser les cartes non acquises
-                if (LstCartesNonAcquises != null)
+                foreach (Exemplaire carteUtilisateur in LstExemplairesUtilisateur)
                 {
-                    foreach (Carte carteAEnlever in LstCartesNonAcquises)
+                    if (uneCarte.Nom == carteUtilisateur.Carte.Nom)
                     {
-                        if (carteAEnlever.Nom == uneCarte.Nom)
-                        {
-                            imgCarte.Opacity = 0.6;
-                        }
+                        imgCarte.Opacity = 1;
+                        qte = carteUtilisateur.Quantite;
                     }
+                    
                 }
-                
-
+              
                 grdLesCartes.Children.Add(imgCarte);
                 Grid.SetRow(imgCarte, compteurRow);
                 Grid.SetColumn(imgCarte, compteurColumn);
                 #endregion
 
                 #region LabelQte
-                qte = MySqlCarteService.RetrieveQuantiteExemplaire(uneCarte.IdCarte, Main.UtilisateurConnecte.IdUtilisateur);
                 Label qteCarte = new Label();
                 qteCarte.Content = qte.ToString();
                 qteCarte.Background = Brushes.Wheat;
@@ -108,6 +106,7 @@ namespace Cosmos.view
                     compteurRow++;
                     compteurColumn = 0;
                 }
+                qte = 0;
             }
         }
 
@@ -137,7 +136,6 @@ namespace Cosmos.view
                 }
             }
         }
-
 
         private List<Carte> TrierOrdreAlphabetique(string ordre)
         {
@@ -173,15 +171,14 @@ namespace Cosmos.view
 
         private List<Carte> RetirerCartes()
         {
-            List<Carte> lstCarteUtilisateur = MySqlCarteService.RetrieveAllUserCards(Main.UtilisateurConnecte.IdUtilisateur);
             List<Carte> lstARemove = new List<Carte>();
             List<Carte> lstTemp = MySqlCarteService.RetrieveAllCard();
 
             foreach (Carte carteCollection in lstTemp)
             {
-                foreach (Carte carteUtilisateur in lstCarteUtilisateur)
+                foreach (Exemplaire carteUtilisateur in LstExemplairesUtilisateur)
                 {
-                    if (carteCollection.IdCarte == carteUtilisateur.IdCarte)
+                    if (carteCollection.IdCarte == carteUtilisateur.Carte.IdCarte)
                     {
                         lstARemove.Add(carteCollection);
                     }
@@ -198,7 +195,6 @@ namespace Cosmos.view
 
         private void cboChoixTri_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LstCartesNonAcquises = RetirerCartes();
             grdLesCartes.Children.Clear();
             switch (cboChoixTri.SelectedIndex)
             {
@@ -216,10 +212,15 @@ namespace Cosmos.view
             GenererListeCartes();
         }
 
+        /// <summary>
+        /// Fonction crée et qui affiche les labels contenant les informations d'un deck, soit les exemplaires et leurs quantités
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="posOnglet"></param>
         private void CreerLabels(Deck deck, int posOnglet)
         {
-            int compteurRow = 0;
-            List<Exemplaire> lstExemplairesDeck = MySqlCarteService.RetrieveExemplaires(deck.Nom, Main.UtilisateurConnecte.IdUtilisateur);
+            int compteurRow = 1;
+            List<Exemplaire> lstExemplairesDeck = MySqlCarteService.RetrieveExemplairesDeckUser(deck.Nom, Main.UtilisateurConnecte.IdUtilisateur);
             switch (posOnglet)
             {
                 case 0:
@@ -233,6 +234,7 @@ namespace Cosmos.view
                         lblCarte.Content = exemplaire.Carte.Nom;
                         lblCarte.FontWeight = FontWeights.Bold;
                         lblCarte.FontSize = 15;
+                        lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
 
                         grdDeck1.Children.Add(lblCarte);
                         Grid.SetRow(lblCarte, compteurRow);
@@ -242,6 +244,7 @@ namespace Cosmos.view
                         lblQuantite.Content = exemplaire.Quantite;
                         lblQuantite.FontWeight = FontWeights.Bold;
                         lblQuantite.FontSize = 15;
+                        lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
 
                         grdDeck1.Children.Add(lblQuantite);
                         Grid.SetRow(lblQuantite, compteurRow);
@@ -261,6 +264,7 @@ namespace Cosmos.view
                         lblCarte.Content = exemplaire.Carte.Nom;
                         lblCarte.FontWeight = FontWeights.Bold;
                         lblCarte.FontSize = 15;
+                        lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
 
                         grdDeck2.Children.Add(lblCarte);
                         Grid.SetRow(lblCarte, compteurRow);
@@ -270,6 +274,7 @@ namespace Cosmos.view
                         lblQuantite.Content = exemplaire.Quantite;
                         lblQuantite.FontWeight = FontWeights.Bold;
                         lblQuantite.FontSize = 15;
+                        lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
 
                         grdDeck2.Children.Add(lblQuantite);
                         Grid.SetRow(lblQuantite, compteurRow);
@@ -289,6 +294,7 @@ namespace Cosmos.view
                         lblCarte.Content = exemplaire.Carte.Nom;
                         lblCarte.FontWeight = FontWeights.Bold;
                         lblCarte.FontSize = 15;
+                        lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
 
                         grdDeck3.Children.Add(lblCarte);
                         Grid.SetRow(lblCarte, compteurRow);
@@ -298,6 +304,7 @@ namespace Cosmos.view
                         lblQuantite.Content = exemplaire.Quantite;
                         lblQuantite.FontWeight = FontWeights.Bold;
                         lblQuantite.FontSize = 15;
+                        lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
 
                         grdDeck3.Children.Add(lblQuantite);
                         Grid.SetRow(lblQuantite, compteurRow);

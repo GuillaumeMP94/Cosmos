@@ -56,39 +56,51 @@
             <TabItem Name="tbiEmplacement1" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
                 <ScrollViewer>
                     <Grid Name="grdDeck1">
-                        <Grid.RowDefinitions />
-
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="40"/> 
+                        </Grid.RowDefinitions>
+                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
+                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
             <TabItem Name="tbiEmplacement2" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
                 <ScrollViewer>
                     <Grid Name="grdDeck2">
-                        <Grid.RowDefinitions />
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
+                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
             <TabItem Name="tbiEmplacement3" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
-                    <ScrollViewer>
-                        <Grid Name="grdDeck3">
-                            <Grid.RowDefinitions/>
+                <ScrollViewer>
+                    <Grid Name="grdDeck3">
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ScrollViewer>
-                </TabItem>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
         </TabControl>
         
         
