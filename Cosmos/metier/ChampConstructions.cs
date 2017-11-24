@@ -48,6 +48,19 @@ namespace Cosmos.metier
                 return 4;
             return 0; // Ici c'est une erreur.
         }
+        public int EspaceOccupe()
+        {
+            int resultat = 0;
+            if (Champ1 != null)
+                resultat++;
+            if (Champ2 != null)
+                resultat++;
+            if (Champ3 != null)
+                resultat++;
+            if (Champ4 != null)
+                resultat++;
+            return resultat;
+        }
         public void AjouterAuChamp(Carte carteAjouter)
         {
             if (EspaceDisponible())

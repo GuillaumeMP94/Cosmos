@@ -141,7 +141,6 @@ namespace Cosmos.view
 
         private void ChoixCibleListener(object sender, ChoisirCibleEventArgs e)
         {
-            MessageBox.Show("Choisi ta cible");
             EcranChoixCible(e.Cible,e.NbCible);
         }
 
@@ -1062,9 +1061,13 @@ namespace Cosmos.view
                     }
                     else
                     {
-                        laTableDeJeu.JouerCarte(IndexCarteZoomer, 0); // La position n'est pas nécessaire.
+                        if (laTableDeJeu.EffetPossible(IndexCarteZoomer))
+                        {
+                            laTableDeJeu.JouerCarte(IndexCarteZoomer, 0); // La position n'est pas nécessaire.
+                        }
                         rectZoom.Visibility = Visibility.Hidden;
                         RefreshAll();
+
                     }
                 }
                 else

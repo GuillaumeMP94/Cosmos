@@ -176,7 +176,7 @@ namespace Cosmos.view
             if (Choix.Contains(211))
             {
                 Choix.Remove(211);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment1J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -185,7 +185,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(211);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment1J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -200,7 +200,7 @@ namespace Cosmos.view
             if (Choix.Contains(212))
             {
                 Choix.Remove(212);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment2J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -209,7 +209,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(212);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment2J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -224,7 +224,7 @@ namespace Cosmos.view
             if (Choix.Contains(213))
             {
                 Choix.Remove(213);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment3J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -233,7 +233,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(213);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment3J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -248,7 +248,7 @@ namespace Cosmos.view
             if (Choix.Contains(214))
             {
                 Choix.Remove(214);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment4J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -257,7 +257,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(214);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment4J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -272,7 +272,7 @@ namespace Cosmos.view
             if (Choix.Contains(111))
             {
                 Choix.Remove(111);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment1J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -281,7 +281,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(111);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment1J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -296,7 +296,7 @@ namespace Cosmos.view
             if (Choix.Contains(112))
             {
                 Choix.Remove(112);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment2J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -305,7 +305,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(112);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment2J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -320,7 +320,7 @@ namespace Cosmos.view
             if (Choix.Contains(113))
             {
                 Choix.Remove(113);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment3J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -329,7 +329,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(113);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment3J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -344,7 +344,7 @@ namespace Cosmos.view
             if (Choix.Contains(114))
             {
                 Choix.Remove(114);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgBatiment4J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -353,7 +353,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(114);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgBatiment4J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -368,7 +368,7 @@ namespace Cosmos.view
             if (Choix.Contains(221))
             {
                 Choix.Remove(221);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgUnite1J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -377,7 +377,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(221);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgUnite1J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -392,7 +392,7 @@ namespace Cosmos.view
             if (Choix.Contains(222))
             {
                 Choix.Remove(222);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgUnite2J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -401,7 +401,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(222);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgUnite2J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -416,7 +416,7 @@ namespace Cosmos.view
             if (Choix.Contains(223))
             {
                 Choix.Remove(223);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgUnite3J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -425,7 +425,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(223);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgUnite3J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -440,7 +440,7 @@ namespace Cosmos.view
             if (Choix.Contains(121))
             {
                 Choix.Remove(121);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgUnite1J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -449,7 +449,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(121);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgUnite1J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -464,7 +464,7 @@ namespace Cosmos.view
             if (Choix.Contains(122))
             {
                 Choix.Remove(122);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgUnite2J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -473,7 +473,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(122);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgUnite2J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
@@ -488,7 +488,7 @@ namespace Cosmos.view
             if (Choix.Contains(123))
             {
                 Choix.Remove(123);
-                imgChoixJoueur1.Visibility = Visibility.Hidden;
+                imgUnite3J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
             }
@@ -497,7 +497,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(123);
-                    imgChoixJoueur1.Visibility = Visibility.Visible;
+                    imgUnite3J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
                         btnOk.IsEnabled = true;
