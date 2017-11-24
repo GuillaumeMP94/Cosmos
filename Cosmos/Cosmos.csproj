@@ -302,10 +302,10 @@
     <Resource Include="images\cartes\Brute.jpg" />
     <Resource Include="images\cartes\Casino.jpg" />
     <Resource Include="images\cartes\Charronite Pur.jpg" />
-    <Resource Include="images\cartes\Chef de lAlliance.jpg" />
+    <Resource Include="images\cartes\Chef de l%27Alliance.jpg" />
     <Resource Include="images\cartes\Croiseur de Guerre.jpg" />
     <Resource Include="images\cartes\Croiseur Marine.jpg" />
-    <Resource Include="images\cartes\Cyborg de lAlliance.jpg" />
+    <Resource Include="images\cartes\Cyborg de l%27Alliance.jpg" />
     <Resource Include="images\cartes\Destruction Planétaire.jpg" />
     <Resource Include="images\cartes\Duo Infiltrateur.jpg" />
     <Resource Include="images\cartes\Déployeur de Flotte.jpg" />
@@ -323,7 +323,7 @@
     <Resource Include="images\cartes\Guerrier Spartan.jpg" />
     <Resource Include="images\cartes\Général Radioactif.jpg" />
     <Resource Include="images\cartes\Halo.jpg" />
-    <Resource Include="images\cartes\Infectée.jpg" />
+    <Resource Include="images\cartes\Infecté.jpg" />
     <Resource Include="images\cartes\Insécateur.jpg" />
     <Resource Include="images\cartes\Katarina.jpg" />
     <Resource Include="images\cartes\Laser Spartan.jpg" />
@@ -341,7 +341,7 @@
     <Resource Include="images\cartes\Nova.jpg" />
     <Resource Include="images\cartes\Onde de Choc.jpg" />
     <Resource Include="images\cartes\Orianna Revak.jpg" />
-    <Resource Include="images\cartes\Porteur de lAlliance.jpg" />
+    <Resource Include="images\cartes\Porteur de l%27Alliance.jpg" />
     <Resource Include="images\cartes\Prêtre de Combat.jpg" />
     <Resource Include="images\cartes\Reaper.jpg" />
     <Resource Include="images\cartes\Renégate.jpg" />
@@ -366,7 +366,7 @@
     <Resource Include="images\cartes\Usine Nucléaire.jpg" />
     <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
     <Resource Include="images\cartes\Vitrification.jpg" />
-    <Resource Include="images\cartes\Vétéran de lAlliance.jpg" />
+    <Resource Include="images\cartes\Vétéran de l%27Alliance.jpg" />
     <Resource Include="images\cartes\Warthog.jpg" />
     <Resource Include="images\cartes\Xaya.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />

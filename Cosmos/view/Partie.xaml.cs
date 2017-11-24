@@ -67,7 +67,7 @@ namespace Cosmos.view
             TempsAI.Tick += NotifyAi;
             TempsAI.Start();
             //TODO: Utilisateur Connecter
-            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Semesis");
+            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
             // TODO: AI
             //Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
