@@ -13,9 +13,10 @@
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
-        <Label Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,100,0,0" FontSize="20" Content="Règlements"/>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="DarkGoldenrod" Margin="0,100,0,0" 
+               FontSize="30" Content="Règlements"/>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Width="550" HorizontalScrollBarVisibility="Disabled" Margin="0,145,0,125"  >
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Width="550" HorizontalScrollBarVisibility="Disabled" Margin="0,155,0,125"  >
             <TextBlock Foreground="white" Width="525" TextWrapping="Wrap" TextAlignment="Justify" FontSize="16">
                 <Bold >RÈGLES HORS-PARTIE :</Bold> <LineBreak/>
                 <Bold>Deck :</Bold>  Un deck est nécessaire pour n’importe qui qui veut devenir le héros de la galaxie! Un deck permet de jouer une partie et contient 50 cartes. Par contre, ceux-ci peuvent seulement contenir trois copies d’une même carte maximum. Vous pouvez personnaliser vos decks comme vous voulez, mais vous êtes limité à seulement trois.<LineBreak/><LineBreak/>

@@ -16,8 +16,11 @@
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
+        <TextBlock Width="300" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="30" Margin="0,115,0,0" 
+                   HorizontalAlignment="Center" Text="Menu Principal" FontWeight="Bold" TextWrapping="Wrap"
+                   TextAlignment="Center"/>
 
-        <Button Width="300" Name="btnCampagne" VerticalAlignment="Top" Margin="0,115,0,0" Height="30" Cursor="Hand" Click="btnCampagne_Click" >
+        <Button Width="300" Name="btnCampagne" VerticalAlignment="Top" Margin="0,165,0,0" Height="30" Cursor="Hand" Click="btnCampagne_Click" >
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -28,7 +31,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Width="300" Name="btnMultijoueur" VerticalAlignment="Top" Margin="0,165,0,0" Height="30" Cursor="Hand" Click="btnMultijoueur_Click">
+        <Button Width="300" Name="btnMultijoueur" VerticalAlignment="Top" Margin="0,215,0,0" Height="30" Cursor="Hand" Click="btnMultijoueur_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -39,7 +42,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Width="300" Name="btnGestionDecks" VerticalAlignment="Top" Margin="0,215,0,0" Height="30" Cursor="Hand" Click="btnGestionDecks_Click">
+        <Button Width="300" Name="btnGestionDecks" VerticalAlignment="Top" Margin="0,265,0,0" Height="30" Cursor="Hand" Click="btnGestionDecks_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -50,7 +53,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Width="300" Name="btnOptions" VerticalAlignment="Top" Margin="0,265,0,0" Height="30" Cursor="Hand" Click="btnOptions_Click">
+        <Button Width="300" Name="btnOptions" VerticalAlignment="Top" Margin="0,315,0,0" Height="30" Cursor="Hand" Click="btnOptions_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -61,7 +64,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Width="300" Name="btnRegleTuto" VerticalAlignment="Top" Margin="0,315,0,0" Height="30" Cursor="Hand" Click="btnRegleTuto_Click">
+        <Button Width="300" Name="btnRegleTuto" VerticalAlignment="Top" Margin="0,365,0,0" Height="30" Cursor="Hand" Click="btnRegleTuto_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -72,7 +75,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>    
-        <Button Width="300" Name="btnDeconnexion" VerticalAlignment="Top" Margin="0,365,0,0" Height="30" Cursor="Hand" Click="btnDeconnexion_Click">
+        <Button Width="300" Name="btnDeconnexion" VerticalAlignment="Top" Margin="0,415,0,0" Height="30" Cursor="Hand" Click="btnDeconnexion_Click">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">

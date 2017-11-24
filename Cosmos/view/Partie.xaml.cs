@@ -32,6 +32,7 @@ namespace Cosmos.view
         public MainWindow Main { get; set; }
         public AI Robot { get; set; }
         public Image imgZoom { get; set; }
+        public List<Image> ImgMainJ2 { get; set; }
         public List<Image> ImgMainJoueur { get; set; }
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
@@ -98,14 +99,17 @@ namespace Cosmos.view
             // Afficher la main
             ListBorderImgMainJoueur = new List<Border>();
             ImgMainJoueur = new List<Image>();
+            ImgMainJ2 = new List<Image>();
 
-            // Binding pour les points d'attauqe et de vie des unités en jeu
+            // Binding pour les points d'attaque et de vie des unités en jeu
             txblEmplacementUnite1J1Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
             txblEmplacementUnite2J1Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
             txblEmplacementUnite3J1Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
             txblEmplacementUnite1J2Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
             txblEmplacementUnite2J2Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
             txblEmplacementUnite3J2Vie.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
+
+            // Binding pour les points de vie des unités en jeu
             txblEmplacementUnite1J1Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
             txblEmplacementUnite2J1Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
             txblEmplacementUnite3J1Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ1;
@@ -114,13 +118,17 @@ namespace Cosmos.view
             txblEmplacementUnite3J2Attaque.DataContext = laTableDeJeu.ChampBatailleUnitesJ2;
 
             // binding pour le gain de ressources par tour
-            txBlnbCharroniteTourJ.DataContext = laTableDeJeu.Joueur1.LevelRessource.Charronite;
-            txBlnbBarilTourJ.DataContext = laTableDeJeu.Joueur1.LevelRessource.BarilNucleaire;
-            txBlnbAlainDollarTourJ.DataContext = laTableDeJeu.Joueur1.LevelRessource.AlainDollars;
+            txBlnbCharroniteTourJ1.DataContext = laTableDeJeu.Joueur1.LevelRessource;
+            txBlnbBarilTourJ1.DataContext = laTableDeJeu.Joueur1.LevelRessource;
+            txBlnbAlainDollarTourJ1.DataContext = laTableDeJeu.Joueur1.LevelRessource;
+            txBlnbCharroniteTourJ2.DataContext = laTableDeJeu.Joueur2.LevelRessource;
+            txBlnbBarilTourJ2.DataContext = laTableDeJeu.Joueur2.LevelRessource;
+            txBlnbAlainDollarTourJ2.DataContext = laTableDeJeu.Joueur2.LevelRessource;
 
             // Compteur pour afficher le nombre de cartes dans le deck des joueurs
             txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
             txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
+
             // Listener des events PhaseChange et RefreshAll
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
@@ -371,6 +379,7 @@ namespace Cosmos.view
                 AfficherChampBatiments();
                 AfficherMain();
                 AfficherDerniereUsine();
+                AfficherCarteMainFermeJ2();
 
             }
             else
@@ -386,6 +395,7 @@ namespace Cosmos.view
                     AfficherChampUnites();
                     AfficherChampBatiments();
                     AfficherMain();
+                    AfficherCarteMainFermeJ2();
                 });
             }
 
@@ -507,6 +517,35 @@ namespace Cosmos.view
             {
                 grdCartesJoueur.Children.Add(element);
             }
+        }
+        /// <summary>
+        /// Afficher à l'écran la main fermé de l'adverdsaire
+        /// </summary>
+        private void AfficherCarteMainFermeJ2()
+        {
+            
+            foreach (Image element in ImgMainJ2)
+            {
+                grdCartesAdversaire.Children.Remove(element);
+            }
+            ImgMainJ2.Clear();
+            int i = 0;
+            foreach(Carte element in laTableDeJeu.LstMainJ2)
+            {
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/CardBack.png"));
+                img.HorizontalAlignment = HorizontalAlignment.Left;
+                img.Margin = new Thickness(i * 50, 0, 0, 0);
+                img.SetValue(Panel.ZIndexProperty, i);
+                
+                grdCartesAdversaire.Children.Add(img);
+                i++;
+                ImgMainJ2.Add(img);
+            }
+
+
+            //grdCartesAdversaire
+            //< Image Source = "/images/CardBack.png" Grid.Column = "0" HorizontalAlignment = "Left" Panel.ZIndex = "1" Margin = "0,0,0,0" />
         }
         /// <summary>
         /// Fonction pour afficher les batiments

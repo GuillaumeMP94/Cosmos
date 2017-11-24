@@ -10,10 +10,13 @@
     <Grid Width="350" Height="auto" HorizontalAlignment="Right" Margin="0,50,75,5">
 
         <Border Width="auto" Height="auto" Background="Black" Opacity="0.5" Margin="0,15,0,15" CornerRadius="15"/>
-        
-        <Label Width="300" Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,35,0,0" Content="Nom d'utilisateur :" />
 
-        <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,70,0,0">
+        <Label Height="50" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="30" Margin="0,35,0,0" 
+               HorizontalAlignment="Center" Content="Connexion" FontWeight="Bold"/>
+
+        <Label Width="300" Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,85,0,0" Content="Nom d'utilisateur :" />
+
+        <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,120,0,0">
             <TextBox  BorderThickness="0" Foreground="DarkGoldenrod" 
                      FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbPseudo" TextChanged="txbPseudo_TextChanged" KeyUp="txbPseudo_KeyUp">
                 <TextBox.Background>
@@ -23,9 +26,9 @@
             </TextBox>
         </Border>
 
-        <Label Width="300" Height="40" VerticalAlignment="Top" Margin="0,95,0,0" Foreground="DarkGoldenrod" Content="Mot de passe :" FontSize="20" />
+        <Label Width="300" Height="40" VerticalAlignment="Top" Margin="0,145,0,0" Foreground="DarkGoldenrod" Content="Mot de passe :" FontSize="20" />
 
-        <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,130,0,0">
+        <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,180,0,0">
             <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" 
                      FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbPassword" PasswordChanged="passbPassword_PasswordChanged" KeyUp="passbPassword_KeyUp">
                 <PasswordBox.Background>
@@ -36,7 +39,7 @@
         </Border>
 
         <Button Width="120" Name="btnPasswordOublie" VerticalAlignment="Top" Content="Mot de passe oublié" Cursor="Hand" 
-                Margin="0,165,0,0" FontWeight="Black" FontStyle="Italic" Click="btnPasswordOublie_Click">
+                Margin="0,215,0,0" FontWeight="Black" FontStyle="Italic" Click="btnPasswordOublie_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <TextBlock TextDecorations="Underline">
@@ -56,7 +59,7 @@
             </Button.Style>
         </Button>
 
-        <Button Width="300" Name="btnConnexion" VerticalAlignment="Top" Margin="0,190,0,0" Height="30" Cursor="Hand" Click="btnConnexion_Click" Opacity="0.25" IsEnabled="False">
+        <Button Width="300" Name="btnConnexion" VerticalAlignment="Top" Margin="0,240,0,0" Height="30" Cursor="Hand" Click="btnConnexion_Click" Opacity="0.25" IsEnabled="False">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -69,7 +72,7 @@
         </Button>
 
         <Button Name="btnCreerCompte" VerticalAlignment="Top" Content="Créer un compte" Width="100" Cursor="Hand" 
-                Margin="0,225,0,0" FontWeight="Black" FontStyle="Italic" Click="btnCreerCompte_Click">
+                Margin="0,275,0,0" FontWeight="Black" FontStyle="Italic" Click="btnCreerCompte_Click" Height="20">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <TextBlock TextDecorations="Underline">
@@ -89,11 +92,11 @@
             </Button.Style>
         </Button>
 
-        <Border Width="300" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,250">
+        <Border Width="300" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,300">
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
-        <TextBlock Width="300" Height="40" Name="txblErreur" VerticalAlignment="Top" Margin="0,250,0,0" Foreground="#D80000" Visibility="Hidden" FontSize="15" FontWeight="Bold" TextWrapping="Wrap"  />
+        <TextBlock Width="300" Height="40" Name="txblErreur" VerticalAlignment="Top" Margin="0,300,0,0" Foreground="#D80000" Visibility="Hidden" FontSize="15" FontWeight="Bold" TextWrapping="Wrap"  />
 
         <Button Width="300" Name="btnQuitter" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,30" Cursor="Hand" Click="btnQuitter_Click">
             <Button.Template>
