@@ -78,8 +78,11 @@ namespace Cosmos.view
                 switch (btn.Name.ToString())
                 {
                     case "btnNiveau1":
-                        PlaySound();
-                        break;                    
+                        PlaySound(Cosmos.Properties.Resources.robert);
+                        break;
+                    case "btnNiveau3":
+                        PlaySound(Cosmos.Properties.Resources.charron);
+                        break;
                 }
                 
             }
@@ -92,10 +95,12 @@ namespace Cosmos.view
             
         }
 
-        private void PlaySound()
+        private void PlaySound(System.IO.Stream uri)
         {            
-            SoundPlayer player = new SoundPlayer(Cosmos.Properties.Resources.robert);            
+            SoundPlayer player = new SoundPlayer(uri);            
             player.Play();
+            
+            
             
         }
 

@@ -63,6 +63,15 @@ namespace Cosmos.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream charron {
+            get {
+                return ResourceManager.GetStream("charron", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream robert {
             get {
                 return ResourceManager.GetStream("robert", resourceCulture);

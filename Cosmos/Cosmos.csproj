@@ -320,6 +320,7 @@
     <Resource Include="images\partie\check.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sons\charron.wav" />
     <Content Include="sons\musiques\superboy.wav" />
     <Content Include="sons\robert.wav" />
   </ItemGroup>
