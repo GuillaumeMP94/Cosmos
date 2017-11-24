@@ -8,19 +8,19 @@
              d:DesignHeight="1000" d:DesignWidth="1400"
              x:Name="Root">
 
-    <Grid Margin="15,15,15,15" Name="grd1">
+    <Grid Margin="25,10,25,10" Name="grd1">
         <Image Name="imgFinTour" Height="300" Source="/images/Turn.png" Visibility="Hidden" Panel.ZIndex="99"/>
         <Border BorderThickness="5" BorderBrush="Transparent" />
 
-        <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
+        <Grid Margin="5,5,5,5" Width="310" x:Name="grd2" HorizontalAlignment="Left">
 
             <Border BorderThickness="5" BorderBrush="Transparent" />
 
-            <TextBlock x:Name="txBlPBA" Text="BLINDAGE&#10;ADVERSE" Foreground="Red"
-                       VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,30,0,0"
+            <TextBlock x:Name="txBlPBA" Text="BLINDAGE" Foreground="Red"
+                       VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,5,0,0"
                        FontSize="30" FontWeight="Bold" TextAlignment="Center"/>
 
-            <Border Margin="5,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
+            <Border Margin="5,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="Red"
                     DataContext="{Binding Joueur2}">
 
@@ -33,10 +33,10 @@
             </Border>
 
             <TextBlock x:Name="txBltxtPBJ" Text="BLINDAGE" Foreground="DarkGoldenrod"
-                       VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,50"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,5"
                        FontWeight="Bold" FontSize="30"/>
 
-            <Border Margin="5,0,0,100" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+            <Border Margin="5,0,0,55" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="DarkGoldenrod"
                     DataContext="{Binding Joueur1}">
 
@@ -60,22 +60,51 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0" Width="25" />
-                        <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
-                        <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
+                        <!--Titres pour la grid de ressources J2-->
+                        <TextBlock  x:Name="txBlTitreRessTourJ2" Text="Gain de ressources par tour" 
+                                    Foreground="DarkGoldenrod" VerticalAlignment="Center" TextWrapping="Wrap"
+                                    HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock  x:Name="txBlTitreRessJ2" Text="Ressources"
+                                    Foreground="DarkGoldenrod" VerticalAlignment="Center" TextWrapping="Wrap"
+                                    HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="1" Grid.Row="0"/>
+                        <TextBlock  x:Name="txBlTitreNBRessJ2" Text="Quantité de ressources"
+                                    Foreground="DarkGoldenrod" VerticalAlignment="Center" TextWrapping="Wrap"
+                                    HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="2" Grid.Row="0"/>
 
-                        <TextBlock Name="txBlnbCharroniteA" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30" Text="{Binding Charronite}">
+                        <!--Gain de ressources par tour J2-->
+                        <TextBlock Name="txBlnbCharroniteTourJ2" Grid.Column="0" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Charronite}" TextAlignment="Center">
                         </TextBlock>
-                        <TextBlock Name="txBlnbBarilA" Grid.Column="1" Grid.Row="1"  Foreground="DarkGoldenrod" FontSize="30" Text="{Binding BarilNucleaire}">
+                        <TextBlock Name="txBlnbBarilTourJ2" Grid.Column="0" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding BarilNucleaire}" TextAlignment="Center" HorizontalAlignment="Left" Width="90">
                         </TextBlock>
-                        <TextBlock Name="txBlnbAlainDollarA" Grid.Column="1" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30" Text="{Binding AlainDollars}">
+                        <TextBlock Name="txBlnbAlainDollarTourJ2" Grid.Column="0" Grid.Row="3"  Foreground="DarkGoldenrod" FontSize="30" 
+                            Text="{Binding AlainDollars}" Height="40" VerticalAlignment="Top" TextAlignment="Center">
+                        </TextBlock>
+
+                        <!--Images des ressources J2-->
+                        <Image Source="/images/ressources/Charronite.png" Grid.Column="1" Grid.Row="1" Width="25"/>
+                        <Image Source="/images/ressources/Baril.png" Grid.Column="1" Grid.Row="2" Width="25" />
+                        <Image Source="/images/ressources/Alain.png" Grid.Column="1" Grid.Row="3" Width="25" />
+
+                        <!--Quantité de ressources J2-->
+                        <TextBlock Name="txBlnbCharroniteA" Grid.Column="2" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30" 
+                                   Text="{Binding Charronite}" TextAlignment="Center">
+                        </TextBlock>
+                        <TextBlock Name="txBlnbBarilA" Grid.Column="2" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30" 
+                                   Text="{Binding BarilNucleaire}" TextAlignment="Center">
+                        </TextBlock>
+                        <TextBlock Name="txBlnbAlainDollarA" Grid.Column="2" Grid.Row="3" Foreground="DarkGoldenrod" FontSize="30" 
+                                   Text="{Binding AlainDollars}" TextAlignment="Center">
                         </TextBlock>
 
                     </Grid>
@@ -90,10 +119,24 @@
                 <TextBlock  x:Name="txBlphaseFin" Text="Phase de fin" Background="Transparent"
                            Margin="10,0,10,10" FontSize="20" Foreground="DarkGoldenrod" TextAlignment="Center"/>
 
+                <Button Name="btnTerminerPhase" Height="30"  Width="200" HorizontalAlignment="Center" 
+                        Background="DarkGoldenrod" Cursor="Hand" Margin="0,0,0,10"  Click="btnTerminerPhase_Click" >
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Terminer la phase
+                                </TextBlock>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
                 <Border BorderThickness="5" BorderBrush="DarkGoldenrod">
 
                     <Grid Name="grdRessourceJ" DataContext="{Binding Joueur1.RessourceActive}" >
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
@@ -101,20 +144,45 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Image Source="/images/ressources/Charronite.png" Grid.Column="0" Grid.Row="0" Width="25" />
-                        <Image Source="/images/ressources/Baril.png" Grid.Column="0" Grid.Row="1" Width="25" />
-                        <Image Source="/images/ressources/Alain.png" Grid.Column="0" Grid.Row="2" Width="25" />
+                        <!--Titres pour la grid de ressources J1 -->
+                        <TextBlock  x:Name="txBlTitreRessTourJ1" Text="Gain de ressources par tour"
+                                    Foreground="DarkGoldenrod" VerticalAlignment="Center" TextWrapping="Wrap"
+                                    HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock  x:Name="txBlTitreRessJ1" Text="Ressources"
+                                    Foreground="DarkGoldenrod" TextWrapping="Wrap"
+                                    HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBlock  x:Name="txBlTitreNBRessJ1" Text="Quantité de ressources"
+                                    Foreground="DarkGoldenrod" VerticalAlignment="Center" TextWrapping="Wrap"
+                                    HorizontalAlignment="Center" TextAlignment="Center" Grid.Column="2" Grid.Row="0"/>
 
-                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="1" Grid.Row="0" Foreground="DarkGoldenrod" FontSize="30"
-                                   Text="{Binding Charronite}">
+                        <!--Gain de ressources par tour J1-->
+                        <TextBlock Name="txBlnbCharroniteTourJ1" Grid.Column="0" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Charronite}" TextAlignment="Center">
                         </TextBlock>
-                        <TextBlock Name="txBlnbBarilJ" Grid.Column="1" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30"
-                                   Text="{Binding BarilNucleaire}">
+                        <TextBlock Name="txBlnbBarilTourJ1" Grid.Column="0" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding BarilNucleaire}" TextAlignment="Center" HorizontalAlignment="Left" Width="90">
                         </TextBlock>
-                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="1" Grid.Row="2"  Foreground="DarkGoldenrod" FontSize="30" 
-                            Text="{Binding AlainDollars}" Height="40" VerticalAlignment="Top">
+                        <TextBlock Name="txBlnbAlainDollarTourJ1" Grid.Column="0" Grid.Row="3"  Foreground="DarkGoldenrod" FontSize="30" 
+                            Text="{Binding AlainDollars}" Height="40" VerticalAlignment="Top" TextAlignment="Center">
+                        </TextBlock>
+
+                        <!--Images des ressources J1-->
+                        <Image Source="/images/ressources/Charronite.png" Grid.Column="1" Grid.Row="1" Width="25"/>
+                        <Image Source="/images/ressources/Baril.png" Grid.Column="1" Grid.Row="2" Width="25" />
+                        <Image Source="/images/ressources/Alain.png" Grid.Column="1" Grid.Row="3" Width="25" />
+
+                        <!--Quantité de ressources J1-->
+                        <TextBlock Name="txBlnbCharroniteJ" Grid.Column="2" Grid.Row="1" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding Charronite}" TextAlignment="Center">
+                        </TextBlock>
+                        <TextBlock Name="txBlnbBarilJ" Grid.Column="2" Grid.Row="2" Foreground="DarkGoldenrod" FontSize="30"
+                                   Text="{Binding BarilNucleaire}" TextAlignment="Center">
+                        </TextBlock>
+                        <TextBlock Name="txBlnbAlainDollarJ" Grid.Column="2" Grid.Row="3"  Foreground="DarkGoldenrod" FontSize="30" 
+                            Text="{Binding AlainDollars}" Height="40" VerticalAlignment="Top" TextAlignment="Center">
                         </TextBlock>
 
                     </Grid>
@@ -140,7 +208,7 @@
                        Panel.ZIndex="1" FontSize="25" Foreground="AntiqueWhite"/>
 
             <Border Name="carteJoueur3" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2">
-                <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
+                <Image Name="imgUsineRecyclageJ1" Grid.Column="2"/>
             </Border>
 
         </Grid>
@@ -152,11 +220,11 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="0,0,0,0"/>
+            <!--<Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="0,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="2" Margin="50,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="3" Margin="100,0,0,0"/>
             <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="4" Margin="150,0,0,0"/>
-            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="200,0,0,0"/>
+            <Image Source="/images/CardBack.png" Grid.Column="0" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="200,0,0,0"/>-->
             <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0"/>
 
             <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1">
@@ -166,7 +234,7 @@
                        Panel.ZIndex="1" FontSize="25" Foreground="AntiqueWhite"/>
 
             <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="2">
-                <Rectangle Grid.Column="2" Fill="WhiteSmoke" Opacity="0.3" />
+                <Image Name="imgUsineRecyclageJ2" Grid.Column="2"/>
             </Border>
 
         </Grid>
@@ -184,36 +252,36 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="0" Padding="5,5,5,5"
                     Name="emplacementBatiment1">
                 <Image Name="imgBatiment1J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="0" Padding="5,5,5,5"
                     Name="emplacementBatiment2">
                 <Image Name="imgBatiment2J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="1" Padding="5,5,5,5"
                     Name="emplacementBatiment3">
                 <Image Name="imgBatiment3J2"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="1" Padding="5,5,5,5"
                     Name="emplacementBatiment4">
                 <Image Name="imgBatiment4J2"/>
             </Border>
 
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="2" Padding="5,5,5,5"
                     Name="emplacementBatiment5">
                 <Image Name="imgBatiment1J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="2" Padding="5,5,5,5"
                     Name="emplacementBatiment6">
                 <Image Name="imgBatiment2J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="0" Grid.Row="3" Padding="5,5,5,5"
                     Name="emplacementBatiment7">
                 <Image Name="imgBatiment3J1"/>
             </Border>
-            <Border BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5"
+            <Border BorderThickness="5" BorderBrush="Pink" Grid.Column="1" Grid.Row="3" Padding="5,5,5,5"
                     Name="emplacementBatiment8">
                 <Image Name="imgBatiment4J1"/>
             </Border>
@@ -342,7 +410,7 @@
 
         </Grid>
 
-        <Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
+        <!--<Button Name="btnTerminerPhase" Height="30" Margin="0,235,10,235"
                 Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand"
                  Click="btnTerminerPhase_Click" >
             <Button.Template>
@@ -354,10 +422,10 @@
                     </Border>
                 </ControlTemplate>
             </Button.Template>
-        </Button>
+        </Button>-->
 
 
-        <Button Name="btnAbandonner" Height="30" Margin="0,325,10,235"
+        <Button Name="btnAbandonner" Height="30" Margin="0,0,25,25" VerticalAlignment="Bottom"
                 Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand"
                  Click="btnAbandonner_Click" >
             <Button.Template>
@@ -378,7 +446,7 @@
                    PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp"/>
 
         <Image Name="imgZoomCarte" Source="/images/cartes/Gronar.jpg" Height="500" VerticalAlignment="Top"
-               HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden" Cursor="Hand" 
+               HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden" Cursor="Hand"
                PreviewMouseLeftButtonUp="imgZoomCarte_PreviewMouseLeftButtonUp"/>
 
     </Grid>

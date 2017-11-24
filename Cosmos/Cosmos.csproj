@@ -89,6 +89,9 @@
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ChoixCible.xaml.cs">
+      <DependentUpon>ChoixCible.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\ChoixRessources.xaml.cs">
       <DependentUpon>ChoixRessources.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\Campagne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ChoixCible.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,6 +303,9 @@
     <Resource Include="docs\MySqlCommand.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\partie\check.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="images\cartes\ATX-317.jpg" />
     <Resource Include="images\cartes\Brute.jpg" />
     <Resource Include="images\cartes\Casino.jpg" />
@@ -321,6 +331,7 @@
     <Resource Include="images\cartes\Guerrier Spartan.jpg" />
     <Resource Include="images\cartes\Général Radioactif.jpg" />
     <Resource Include="images\cartes\Halo.jpg" />
+    <Resource Include="images\cartes\Infecté.jpg" />
     <Resource Include="images\cartes\Insécateur.jpg" />
     <Resource Include="images\cartes\Katarina.jpg" />
     <Resource Include="images\cartes\Laser Spartan.jpg" />
@@ -370,8 +381,6 @@
     <Resource Include="images\cartes\Xaya.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\cartes\Infecté.jpg" />
-  </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

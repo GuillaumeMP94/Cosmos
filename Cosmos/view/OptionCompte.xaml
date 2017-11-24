@@ -15,12 +15,16 @@
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
-        <Label Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,100,0,0" 
+        <Label Height="50" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="30" Margin="0,100,0,0" 
+               HorizontalAlignment="Center" Content="Options du compte" FontWeight="Bold"/>
+
+
+        <Label Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,150,0,0" 
                Width="300" HorizontalAlignment="Center" Content="Nouveau mot de passe :" />
 
         <Border BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top"
-                Width="300" HorizontalAlignment="Center" Margin="0,135,0,0">
-            <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" 
+                Width="300" HorizontalAlignment="Center" Margin="0,185,0,0">
+            <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" IsEnabled="False"
                      FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passNewPassword">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black"
@@ -29,12 +33,12 @@
             </PasswordBox>
         </Border>
 
-        <Label Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,160,0,0"
+        <Label Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,210,0,0"
                Width="300" HorizontalAlignment="Center" Content="Confirmation du mot de passe :" />
 
         <Border BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top"
-                Width="300" HorizontalAlignment="Center" Margin="0,195,0,0">
-            <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" 
+                Width="300" HorizontalAlignment="Center" Margin="0,245,0,0">
+            <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" IsEnabled="False" 
                      FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbConfirmeNewPassword">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black"
@@ -43,8 +47,8 @@
             </PasswordBox>
         </Border>
 
-        <Button Name="btnModifPassword" VerticalAlignment="Top" Margin="0,240,0,0" Height="30" Cursor="Hand"
-                Width="300" HorizontalAlignment="Center" Click="btnModifPassword_Click">
+        <Button Name="btnModifPassword" VerticalAlignment="Top" Margin="0,290,0,0" Height="30" Cursor="Arrow"
+                Width="300" HorizontalAlignment="Center" Click="btnModifPassword_Click" IsEnabled="False" Opacity="0.5">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -56,8 +60,8 @@
             </Button.Template>
         </Button>
 
-        <Button Name="btnModifImage" VerticalAlignment="Top" Margin="0,285,0,0" Height="30" Cursor="Hand"
-                Width="300" HorizontalAlignment="Center" Click="btnModifImage_Click">
+        <Button Name="btnModifImage" VerticalAlignment="Top" Margin="0,335,0,0" Height="30" Cursor="Arrow"
+                Width="300" HorizontalAlignment="Center" Click="btnModifImage_Click" IsEnabled="False" Opacity="0.5">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
@@ -69,8 +73,8 @@
             </Button.Template>
         </Button>
 
-        <Button Name="btnModifSupprimerCompte" VerticalAlignment="Top" Margin="0,330,0,0" Height="30" Cursor="Hand"
-                Width="300" HorizontalAlignment="Center" Click="btnModifSupprimerCompte_Click">
+        <Button Name="btnModifSupprimerCompte" VerticalAlignment="Top" Margin="0,380,0,0" Height="30" Cursor="Arrow"
+                Width="300" HorizontalAlignment="Center" Click="btnModifSupprimerCompte_Click" IsEnabled="False" Opacity="0.5">
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
