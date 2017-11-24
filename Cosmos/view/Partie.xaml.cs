@@ -41,6 +41,7 @@ namespace Cosmos.view
         public bool Unite1J1Attack { get; set; }
         public bool Unite2J1Attack { get; set; }
         public bool Unite3J1Attack { get; set; }
+        public List<int> Choix { get; set; }
 
         public int Phase
         {
@@ -51,10 +52,11 @@ namespace Cosmos.view
             }
         }
 
-        public Partie(MainWindow main)
+        public Partie(MainWindow main, int niveau)
         {
             InitializeComponent();
             Main = main;
+            Choix = new List<int>();
             //Timer pour changer automatiquement la phase de fin et la phase de ressource.
             Temps = new DispatcherTimer();
             Temps.Interval = TimeSpan.FromMilliseconds(1000);
@@ -72,7 +74,9 @@ namespace Cosmos.view
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
             utilisateur1.Reinitialiser();
 
-            Robot = new AI("Robot Turenne", 1, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+
+            Robot = new AI(niveau, new Ressource(2, 2, 2), MySqlDeckService.RetrieveById(1));
+
 
             //utilisateur2.Reinitialiser();
             laTableDeJeu = new TableDeJeu(utilisateur1, Robot);
@@ -129,10 +133,18 @@ namespace Cosmos.view
             txBLnbCarteJ1.DataContext = laTableDeJeu.Joueur1.DeckAJouer;
             txBLnbCarteJ2.DataContext = laTableDeJeu.Joueur2.DeckAJouer;
 
-            // Listener des events PhaseChange et RefreshAll
+            // Listener des events PhaseChange, RefreshAll et ChoisirCible
+            TrousseGlobale.ChoisirCible += ChoixCibleListener;
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
         }
+
+        private void ChoixCibleListener(object sender, ChoisirCibleEventArgs e)
+        {
+            MessageBox.Show("Choisi ta cible");
+            EcranChoixCible(e.Cible,e.NbCible);
+        }
+
         /// <summary>
         /// Fonction qui averti l'ai de jouer.
         /// </summary>
@@ -226,7 +238,17 @@ namespace Cosmos.view
             laTableDeJeu.AttribuerRessourceLevel();
             laTableDeJeu.EffetBatiments();
             laTableDeJeu.PigerCarte();
-            AffichagePhaseRessource();
+            if (txblSlash1J1.Dispatcher.CheckAccess() == true)
+            {
+                AffichagePhaseRessource();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    AffichagePhaseRessource();
+                });
+            }
             RefreshAll();
             Temps.Stop();
         }
@@ -948,24 +970,49 @@ namespace Cosmos.view
             grd1.Children.Add(ContenuEcran);
         }
         /// <summary>
+        /// Fonction lors de la fermeture de l'écran de choix cible.
+        /// </summary>
+        public void FermerEcranChoixCible()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            recRessource.Visibility = Visibility.Hidden;
+            // Executer l'impact avec les choix.
+            laTableDeJeu.ExecuterImpact(Choix);
+
+        }
+        /// <summary>
+        /// Fonction lors de la création de l'écran choix cible.
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <param name="points"></param>
+        /// <param name="maxRessourceLevel"></param>
+        /// <param name="partie"></param>
+        public void EcranChoixCible(int cible, int nbCible)
+        {
+            ContenuEcran = new ChoixCible(Choix, cible , nbCible , laTableDeJeu, this);
+            recRessource.Visibility = Visibility.Visible;
+
+            grd1.Children.Add(ContenuEcran);
+        }
+        /// <summary>
         /// Affiche les coups possible du joueur.
         /// </summary>
         private void AfficherCoupPoosible()
         {
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
-            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 is null)
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 == null) // TEMP FIX TODO REMOVE
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite1J1.Cursor = Cursors.Hand;
                 imgUnite1J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
             }
-            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 is null)
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 == null)
             {
                 imgUnite2J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite2J1.Cursor = Cursors.Hand;
                 imgUnite2J1.PreviewMouseLeftButtonUp += ChoisirEmplacementUnite;
             }
-            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 is null)
+            if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 == null)
             {
                 imgUnite3J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
                 imgUnite3J1.Cursor = Cursors.Hand;

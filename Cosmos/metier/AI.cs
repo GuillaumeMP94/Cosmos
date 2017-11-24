@@ -75,9 +75,23 @@ namespace Cosmos.metier
         public string Nom { get; set; }
         #endregion
         #region Constructeur
-        public AI( string nom, int diff, Ressource debutLevelRessource, Deck deckAI)
+        public AI( int diff, Ressource debutLevelRessource, Deck deckAI)
             :base()
         {
+            string nom = "";
+            switch (diff)
+            {
+                case 1: nom = "Robot Turenne";
+                    break;
+                case 2: nom = "Hesells Thegardens";
+                    break;
+                case 3: nom = "Charronitoman";
+                    break;
+                case 4: nom = "Kesh Sleshall";
+                    break;
+                case 5: nom = "Docteur Brown";
+                    break;
+            }
             Nom = nom;
             difficulte = diff;
             PointDeBlindage = 25;
@@ -100,6 +114,7 @@ namespace Cosmos.metier
         /// <param name="jeu">La table de jeu</param>
         private void JouerCoup(TableDeJeu jeu)
         {
+
             //ReinitialiserChampJouer();
             List<int> ListeCoupsPermis;
             List<int> ListeCoupsPermisUnite;
@@ -309,8 +324,8 @@ namespace Cosmos.metier
                                         {
                                             if (jeu.LstMainJ2[coup].getAttaque() >= jeu.ChampBatailleUnitesJ1.Champ1.Defense)
                                             {
-                                                ChoixChampUnite = 1;
-                                                jeu.JouerCarteAI(coup);
+                                                //ChoixChampUnite = 1;
+                                                jeu.JouerCarte(coup,1);
                                                 ListeCoupsPermis = jeu.listeCoupValideAI();
                                             }
                                         }
@@ -322,8 +337,8 @@ namespace Cosmos.metier
                                         {
                                             if (jeu.LstMainJ2[coup].getAttaque() >= jeu.ChampBatailleUnitesJ1.Champ2.Defense)
                                             {
-                                                ChoixChampUnite = 2;
-                                                jeu.JouerCarteAI(coup);
+                                                //ChoixChampUnite = 2;
+                                                jeu.JouerCarte(coup,2);
                                                 ListeCoupsPermis = jeu.listeCoupValideAI();
                                             }
                                         }
@@ -334,8 +349,8 @@ namespace Cosmos.metier
                                         {
                                             if (jeu.LstMainJ2[coup].getAttaque() >= jeu.ChampBatailleUnitesJ1.Champ3.Defense)
                                             {
-                                                ChoixChampUnite = 3;
-                                                jeu.JouerCarteAI(coup);
+                                                //ChoixChampUnite = 3;
+                                                jeu.JouerCarte(coup,3);
                                                 ListeCoupsPermis = jeu.listeCoupValideAI();
                                             }
                                         }
@@ -347,20 +362,20 @@ namespace Cosmos.metier
                                 {
                                     if (jeu.ChampBatailleUnitesJ2.Champ1 == null)
                                     {
-                                        ChoixChampUnite = 1;
-                                        jeu.JouerCarteAI(ListeCoupsPermis.First());
+                                        //ChoixChampUnite = 1;
+                                        jeu.JouerCarte(ListeCoupsPermis.First(),1 );
                                     }
                                     else if(jeu.ChampBatailleUnitesJ2.Champ2 == null)
                                     {
-                                        ChoixChampUnite = 2;
-                                        jeu.JouerCarteAI(ListeCoupsPermis.First());
+                                        //ChoixChampUnite = 2;
+                                        jeu.JouerCarte(ListeCoupsPermis.First(),2);
                                     }
                                     else if (jeu.ChampBatailleUnitesJ2.Champ3 == null)
                                     {
-                                        ChoixChampUnite = 3;
-                                        jeu.JouerCarteAI(ListeCoupsPermis.First());
+                                        //ChoixChampUnite = 3;
+                                        jeu.JouerCarte(ListeCoupsPermis.First(),3);
                                     }
-                                    ListeCoupsPermis = jeu.listeCoupValideAI();
+                                    ListeCoupsPermis = jeu.listeCoupValideAI(); // why tho
                                 }
                             }
                         }
@@ -393,11 +408,13 @@ namespace Cosmos.metier
                                 {
                                     if ( ListeCoupEvaluer[c] == scoreMax  )
                                     {
-                                        indexAJouer = i;
+                                        indexAJouer = ListeCoupsPermis[c];
+                                        
                                     }
                                     c++;
                                 }
-                                jeu.JouerCarteAI( indexAJouer);
+                                ChoixChampUnite = ChoisirOuJouerCarte(jeu, indexAJouer);
+                                jeu.JouerCarte( indexAJouer , ChoixChampUnite);
                             }  
                         }
                     }
@@ -422,6 +439,215 @@ namespace Cosmos.metier
             jeu.AvancerPhase();
 
         }
+
+        /// <summary>
+        /// Fonction pour déterminer ou le AI veut jouer sa carte
+        /// </summary>
+        /// <param name="jeu"></param>
+        /// <param name="indexAJouer"></param>
+        /// <returns></returns>
+        private int ChoisirOuJouerCarte(TableDeJeu jeu, int indexAJouer)
+        {
+            int champvide = DeterminerChampVide(jeu);
+
+            // Il n'y a null part à jouer
+            if (champvide >= 111000)
+            {
+                return -1;
+            }
+          
+            // Si il n'y a qu'un seul endroit à jouer, on joue la
+            if ( jeu.ChampBatailleUnitesJ2.Champ1 == null
+                && jeu.ChampBatailleUnitesJ2.Champ2 != null
+                && jeu.ChampBatailleUnitesJ2.Champ3 != null) 
+            {
+                return 1;
+            }
+            else if ( jeu.ChampBatailleUnitesJ2.Champ1 != null
+                && jeu.ChampBatailleUnitesJ2.Champ2 == null
+                && jeu.ChampBatailleUnitesJ2.Champ3 != null) 
+            {
+                return 2;
+            }
+            else if (jeu.ChampBatailleUnitesJ2.Champ1 != null
+                && jeu.ChampBatailleUnitesJ2.Champ2 != null
+                && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+            {
+                return 3;
+            }
+
+            // On vérifie si nous pouvons obliter un champ
+            int choixOuJouer = PeutOblitererCombat( jeu, indexAJouer );           
+
+            if (choixOuJouer != -1 )
+            {
+                return choixOuJouer;
+            }
+            
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
+            // Gestion des effets
+            if ( jeu.LstMainJ2[indexAJouer].EffetCarte != null )
+            {
+                if (jeu.LstMainJ2[indexAJouer].EffetCarte.Type == "Radiation")
+                {
+                    #region              
+                    switch (champvide)
+                    {
+                        // Si quelqu'un autre que Franck essaie de comprendre ce qui se passe ici, oubliez ça.
+                        case 1:
+                            return rnd.Next(2, 3);
+                        case 10:
+                            return ((rnd.Next(1, 2) * 2) - 1);
+                        case 100:
+                            return rnd.Next(1, 2);
+                        case 11:
+                            return 3;
+                        case 101:
+                            return 2;
+                        case 110:
+                            return 1;
+
+                        case 1011:
+                            return 3;
+                        case 1010:
+                            return 3;
+                        case 1101:
+                            return 2;
+                        case 1001:
+                            return 2;
+                        case 1110:
+                            return rnd.Next(2, 3);
+                        case 1000:
+                            return rnd.Next(2, 3);
+
+                        case 10001:
+                            return 3;
+                        case 10011:
+                            return 3;
+                        case 11001:
+                            return 3;
+                        case 10100:
+                            return 1;
+                        case 10110:
+                            return 1;
+                        case 10010:
+                            return ((rnd.Next(1, 2) * 2) - 1);
+
+                        case 100000:
+                            return rnd.Next(1, 2);
+                        case 100100:
+                            return rnd.Next(1, 2);
+                        case 100001:
+                            return 2;
+                        case 100101:
+                            return 2;
+                        case 101101:
+                            return 2;
+                        case 101001:
+                            return 2;
+                        case 101000:
+                            return 2;
+                        case 110000:
+                            return 1;
+                        case 100010:
+                            return 1;
+                        case 110010:
+                            return 1;
+                        case 100110:
+                            return 1;
+                        case 110110:
+                            return 1;
+
+
+                        default:
+                            return rnd.Next(1, 3);
+                     }
+                    #endregion
+                }
+                else if (jeu.LstMainJ2[indexAJouer].EffetCarte.Type == "AttaqueFurtive")
+                {
+                    //TODO
+                }
+                else if (jeu.LstMainJ2[indexAJouer].EffetCarte.Type == "TODO")
+                {
+
+                }
+            }
+
+            //Rendu ici, il nous reste les unités sans effet à gerer 
+            //TODO RANDOM TEMPORAIRE
+            if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null
+                                       && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+            {
+                choixOuJouer = rnd.Next(1, 3);
+            }
+            else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null)
+            {
+                choixOuJouer = rnd.Next(1, 2);
+            }
+            else if (jeu.ChampBatailleUnitesJ2.Champ2 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+            {
+                choixOuJouer = rnd.Next(2, 3);
+            }
+            else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+            {
+                choixOuJouer = ((rnd.Next(1, 2) * 2) - 1);
+            }
+
+
+
+            return choixOuJouer;
+        }
+
+        /// <summary>
+        /// 0 = Tout est vide
+        /// 1 =     1  0  0         1000   =  0  0  0
+        ///         0  0  0                   1  0  0
+        ///         
+        /// 10 =    0  1  0         10000  =  0  0  0
+        ///         0  0  0                   0  1  0
+        ///         
+        /// 100 =   0  0  1         100000 =  0  0  0
+        ///         0  0  0                   0  0  1
+        ///         
+        /// 
+        /// </summary>
+        /// <param name="jeu"></param>
+        /// <returns></returns>
+        private int DeterminerChampVide(TableDeJeu jeu)
+        {
+            int DeterminerChampVide = 0;
+
+            if (jeu.ChampBatailleUnitesJ1.Champ1 != null  )
+            {
+                DeterminerChampVide += 1;
+            }
+            if (jeu.ChampBatailleUnitesJ1.Champ2 != null)
+            {
+                DeterminerChampVide += 10;
+            }
+            if (jeu.ChampBatailleUnitesJ1.Champ3 != null)
+            {
+                DeterminerChampVide += 100;
+            }
+            if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
+            {
+                DeterminerChampVide += 1000;
+            }
+            if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
+            {
+                DeterminerChampVide += 10000;
+            }
+            if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
+            {
+                DeterminerChampVide += 100000;
+            }
+
+            return DeterminerChampVide;
+        }
+
+
 
 
         /// <summary>
@@ -672,31 +898,57 @@ namespace Cosmos.metier
                 case 4:
                     #region
                     // Plus la strategie a une valeur haute, plus le AI est aggressif
-                   
+
                     // Section de code applicable peu importe la stratégie
                     // Si un flag d'attaque est mit a true, plus tard nous allons sauté par dessus de grande section de code
-                    if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
-                        || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable"
-                        || jeu.ChampBatailleUnitesJ1.Champ1 == null
-                        || PeutOblitererCombatTableJeu(jeu, 1))
+                    if (jeu.ChampBatailleUnitesJ2.Champ1 != null)
                     {
-                        AttaqueChamp1 = true;
+                        if (jeu.ChampBatailleUnitesJ1.Champ1 == null
+                            || PeutOblitererCombatTableJeu(jeu, 1))
+                        {
+                            AttaqueChamp1 = true;
+                        }
+                        else if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "AttaqueFurtive"
+                                || jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte.Type == "Imblocable")
+                            {
+                                AttaqueChamp1 = true;
+                            }
+                        }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
-                        || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable"
-                        || jeu.ChampBatailleUnitesJ1.Champ2 == null
-                        || PeutOblitererCombatTableJeu(jeu, 2))
+                    if (jeu.ChampBatailleUnitesJ2.Champ2 != null)
                     {
-                        AttaqueChamp2 = true;
+                        if (jeu.ChampBatailleUnitesJ1.Champ2 == null
+                            || PeutOblitererCombatTableJeu(jeu, 2))
+                        {
+                            AttaqueChamp2 = true;
+                        }
+                        else if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "AttaqueFurtive"
+                                || jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte.Type == "Imblocable")
+                            {
+                                AttaqueChamp2 = true;
+                            }
+                        }
                     }
-                    if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
-                        || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable"
-                        || jeu.ChampBatailleUnitesJ1.Champ3 == null
-                        || PeutOblitererCombatTableJeu(jeu, 3))
+                    if (jeu.ChampBatailleUnitesJ2.Champ3 != null)
                     {
-                        AttaqueChamp3 = true;
+                        if (jeu.ChampBatailleUnitesJ1.Champ3 == null
+                            || PeutOblitererCombatTableJeu(jeu, 3))
+                        {
+                            AttaqueChamp3 = true;
+                        }
+                        else if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte != null)
+                        {
+                            if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "AttaqueFurtive"
+                                || jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte.Type == "Imblocable")
+                            {
+                                AttaqueChamp3 = true;
+                            }
+                        }
                     }
-
                     // Section de choix d'attaque adaptatif à la stratégie
                     switch (Strategie){
                         case 1:
@@ -924,7 +1176,8 @@ namespace Cosmos.metier
                                 {
                                     score += 56; // Le score doit allé plus haut qu'un gadget
                                 }
-                                if (jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
+                                if (jeu.LstMainJ2[index].EffetCarte != null
+                                    && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
                                 {
                                     score += 16;
                                 }
@@ -1177,17 +1430,23 @@ namespace Cosmos.metier
         private int PeutOblitererCombat(TableDeJeu jeu, int index)
         {
             // Je vérifie ici si lors d'un combat mon unité va non seulement détruire l'enemi, mais en plus survivre
-            if ( jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.LstMainJ2[index].getAttaque() 
+            if (jeu.ChampBatailleUnitesJ1.Champ1 != null
+                && jeu.ChampBatailleUnitesJ2.Champ1 == null
+                && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.LstMainJ2[index].getAttaque() 
                 && jeu.ChampBatailleUnitesJ1.Champ1.Attaque < jeu.LstMainJ2[index].getDefense() )
             {
                 return 1;
             }
-            if (jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.LstMainJ2[index].getAttaque()
+            if (jeu.ChampBatailleUnitesJ1.Champ2 != null
+                && jeu.ChampBatailleUnitesJ2.Champ2 == null
+                && jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.LstMainJ2[index].getAttaque()
                 && jeu.ChampBatailleUnitesJ1.Champ2.Attaque < jeu.LstMainJ2[index].getDefense())
             {
                 return 2;
             }
-            if (jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.LstMainJ2[index].getAttaque()
+            if (jeu.ChampBatailleUnitesJ1.Champ3 != null
+                && jeu.ChampBatailleUnitesJ2.Champ3 == null
+                && jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.LstMainJ2[index].getAttaque()
                  && jeu.ChampBatailleUnitesJ1.Champ3.Attaque < jeu.LstMainJ2[index].getDefense())
             {
                 return 3;
@@ -1205,13 +1464,16 @@ namespace Cosmos.metier
         {
             // Je vérifie ici si lors d'un combat mon unité va non seulement détruire l'enemi, mais en plus survivre
             if (jeu.ChampBatailleUnitesJ1.Champ1 != null
+                && jeu.ChampBatailleUnitesJ2.Champ1 != null
                 && position == 1 
                 && jeu.ChampBatailleUnitesJ1.Champ1.Defense <= jeu.ChampBatailleUnitesJ2.Champ1.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ1.Defense > jeu.ChampBatailleUnitesJ1.Champ1.Attaque )
             {
                 return true;
             }
-            else if(position == 2
+            else if(jeu.ChampBatailleUnitesJ1.Champ2 != null
+                && jeu.ChampBatailleUnitesJ2.Champ2 != null
+                && position == 2
                 && jeu.ChampBatailleUnitesJ1.Champ2 != null
                 && jeu.ChampBatailleUnitesJ1.Champ2.Defense <= jeu.ChampBatailleUnitesJ2.Champ2.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ2.Defense > jeu.ChampBatailleUnitesJ1.Champ2.Attaque)
@@ -1219,6 +1481,7 @@ namespace Cosmos.metier
                 return true;
             }
             else if (jeu.ChampBatailleUnitesJ1.Champ3 != null
+                && jeu.ChampBatailleUnitesJ2.Champ3 != null
                 && jeu.ChampBatailleUnitesJ1.Champ3.Defense <= jeu.ChampBatailleUnitesJ2.Champ3.Attaque
                 && jeu.ChampBatailleUnitesJ2.Champ3.Defense > jeu.ChampBatailleUnitesJ1.Champ3.Attaque)
             {

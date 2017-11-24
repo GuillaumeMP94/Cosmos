@@ -30,5 +30,17 @@ namespace Cosmos.metier
 		{
 		    return new Impact(this.Type,this.Valeur,this.Cible,this.NbCible);
 		}
-	}
+        public override int getCible()
+        {
+            return Cible;
+        }
+        public override int getNbCible()
+        {
+            return NbCible;
+        }
+        public override int getValeur()
+        {
+            return Valeur;
+        }
+    }
 }

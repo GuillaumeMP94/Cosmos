@@ -25,6 +25,18 @@ namespace Cosmos.metier
 		{
 		    return new Effet(this.Type);
 		}
+        public virtual int getCible()
+        {
+            return 99; // Erreur system
+        }
+        public virtual int getNbCible()
+        {
+            return 99; // Erreur system
+        }
+        public virtual int getValeur()
+        {
+            return 99; // Erreur system
+        }
         public virtual Ressource GetRessourceJoueur()
         {
             return new Ressource(0, 0, 0);
