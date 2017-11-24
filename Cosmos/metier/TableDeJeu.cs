@@ -341,7 +341,7 @@ namespace Cosmos.metier
                     ExecuterImpact();
                 else if ( joueurActifEst1 )
                 {
-                    if (ChoixEffetPossible(AExecuter.getCible()) > AExecuter.getNbCible())
+                    if (ChoixEffetPossible(AExecuter.getCible()) >= AExecuter.getNbCible())
                     {
                         // Lancer un evenement pour que parti le catch.
                         ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), AExecuter.getNbCible());

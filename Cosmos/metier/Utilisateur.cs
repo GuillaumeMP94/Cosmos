@@ -57,7 +57,7 @@ namespace Cosmos.metier
         public override void Reinitialiser()
         {
             PointDeBlindage = 25;
-            RessourceActive = new Ressource(0, 0, 0);
+            RessourceActive = new Ressource(22, 22, 22);
             LevelRessource = new Ressource(1, 1, 1);
             foreach (Deck unDeck in this.DecksUtilisateurs)
             {
