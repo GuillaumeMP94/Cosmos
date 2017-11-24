@@ -75,9 +75,23 @@ namespace Cosmos.metier
         public string Nom { get; set; }
         #endregion
         #region Constructeur
-        public AI( string nom, int diff, Ressource debutLevelRessource, Deck deckAI)
+        public AI( int diff, Ressource debutLevelRessource, Deck deckAI)
             :base()
         {
+            string nom = "";
+            switch (diff)
+            {
+                case 1: nom = "Robot Turenne";
+                    break;
+                case 2: nom = "Hesells Thegardens";
+                    break;
+                case 3: nom = "Charronitoman";
+                    break;
+                case 4: nom = "Kesh Sleshall";
+                    break;
+                case 5: nom = "Docteur Brown";
+                    break;
+            }
             Nom = nom;
             difficulte = diff;
             PointDeBlindage = 25;

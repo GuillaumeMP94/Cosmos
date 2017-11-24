@@ -135,12 +135,12 @@ namespace Cosmos
             grdMain.Children.Add(ContenuListeAmi);
         }
 
-        public void EcranPartie()
+        public void EcranPartie(int niveau)
         {
             grdMain.Children.Remove(ContenuEcran);
             grdMain.Children.Remove(ContenuListeAmi);
 
-            ContenuEcran = new Partie(this);
+            ContenuEcran = new Partie(this, niveau);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/partie/partie_BG.jpg")));
 

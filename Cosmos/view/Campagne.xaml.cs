@@ -55,7 +55,7 @@ namespace Cosmos.view
 
         private void btnNiveau1_Click(object sender, RoutedEventArgs e)
         {
-           Main.EcranPartie(); //EN COURS
+           Main.EcranPartie(1); //EN COURS
         }
 
         private void btnMouseEnter(object sender, MouseEventArgs e)
@@ -93,17 +93,17 @@ namespace Cosmos.view
 
         private void btnNiveau2_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+            Main.EcranPartie(2);
         }
 
         private void btnNiveau3_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+            Main.EcranPartie(3);
         }
 
         private void btnNiveau4_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+            Main.EcranPartie(4);
         }
 
         private void btnNiveau5_Click(object sender, RoutedEventArgs e)
@@ -124,7 +124,7 @@ namespace Cosmos.view
                     break;
                 case "btnNiveau2":
                     niveau = "Niveau 2";
-                    titre = "He sells the garden";
+                    titre = "Hesells Thegardens";
                     break;
                 case "btnNiveau3":
                     niveau = "Niveau 3";
@@ -132,11 +132,11 @@ namespace Cosmos.view
                     break;
                 case "btnNiveau4":
                     niveau = "Niveau 4";
-                    titre = "KESH/SLASH/ALL";
+                    titre = "Kesh Sleshall";
                     break;
                 case "btnNiveau5":
                     niveau = "Niveau 5";
-                    titre = "The preacher";
+                    titre = "Docteur Brown";
                     break;
             }
             txBlStory.Text = @"-***- " + niveau + " - Chef de guerre : " + titre;
