@@ -29,5 +29,10 @@ namespace Cosmos.metier
             else
                 return new Gadget(this.IdCarte, this.Nom, null, new Ressource(this.Cout));
         }
+
+        public override string Type()
+        {
+            return "Gadget";
+        }
     }
 }

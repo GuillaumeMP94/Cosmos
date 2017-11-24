@@ -147,6 +147,15 @@ namespace Cosmos
             grdMain.Children.Add(ContenuEcran);
         }
 
+        public void EcranGestionCartes()
+        {
+            grdMain.Children.Remove(ContenuEcran);
+            grdMain.Children.Remove(ContenuListeAmi);
+            ContenuEcran = new GestionCartes(this);
+
+            grdMain.Children.Add(ContenuEcran);
+        }
+
 
         #region ValidationChamps
         public string ValiderChampSaisi(string champ)
