@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,6 +48,7 @@ namespace Cosmos.view
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
         {
             Main.EcranMenuPrincipal();
+            Main.PlayMusic();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -71,12 +74,29 @@ namespace Cosmos.view
             {
                 PresentationNiveau(btn);
                 brdStory.Visibility = Visibility.Visible;
+
+                switch (btn.Name.ToString())
+                {
+                    case "btnNiveau1":
+                        PlaySound();
+                        break;                    
+                }
+                
             }
 
             btn.Height = 200;
             btn.Width = 200;
 
             estin = true;
+
+            
+        }
+
+        private void PlaySound()
+        {            
+            SoundPlayer player = new SoundPlayer(Cosmos.Properties.Resources.robert);            
+            player.Play();
+            
         }
 
         private void btnMouseLeave(object sender, MouseEventArgs e)

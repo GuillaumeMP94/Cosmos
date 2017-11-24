@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Media;
+using System.Threading;
 
 namespace Cosmos
 {
@@ -36,6 +38,7 @@ namespace Cosmos
         public Utilisateur UtilisateurConnecte { get; set; }
         public Partie Partie { get; set; }
         public List<Utilisateur> LstAmis { get; set; }
+        public SoundPlayer Player { get; set; }
 
         public MainWindow()
         {
@@ -48,10 +51,22 @@ namespace Cosmos
             ContenuEcran = new Connexion(this);
             grdMain.Children.Add(ContenuEcran);
 
+            //Thread Son = new Thread(PlayMusic);
+            //Son.Start();
+            PlayMusic();
+
+
             //TODO: Enlever la prochaine ligne avant remise
             //EcranPartie(1);
             //EcranMenuPrincipal();
+            //EcranCampagne();
 
+        }
+
+        public void PlayMusic()
+        {            
+            Player = new SoundPlayer(Cosmos.Properties.Resources.superboy);
+            Player.PlayLooping();
         }
 
         public void QuitterMain()
@@ -60,7 +75,7 @@ namespace Cosmos
         }
 
         public void EcranMenuPrincipal()
-        {
+        {            
             grdMain.Children.Remove(ContenuEcran);
             ContenuEcran = new MenuPrincipal(this);
 
@@ -112,6 +127,7 @@ namespace Cosmos
         {
             grdMain.Children.Remove(ContenuEcran);
             grdMain.Children.Remove(ContenuListeAmi);
+            Player.Stop();
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
@@ -146,7 +162,6 @@ namespace Cosmos
 
             grdMain.Children.Add(ContenuEcran);
         }
-
 
         #region ValidationChamps
         public string ValiderChampSaisi(string champ)

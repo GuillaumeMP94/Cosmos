@@ -319,5 +319,9 @@
   <ItemGroup>
     <Resource Include="images\partie\check.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sons\musiques\superboy.wav" />
+    <Content Include="sons\robert.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
