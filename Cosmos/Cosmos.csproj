@@ -73,6 +73,7 @@
     <Compile Include="metier\ChampConstructions.cs" />
     <Compile Include="metier\Deck.cs" />
     <Compile Include="metier\Effet.cs" />
+    <Compile Include="metier\Exemplaire.cs" />
     <Compile Include="metier\Gadget.cs" />
     <Compile Include="metier\Gain.cs" />
     <Compile Include="metier\Impact.cs" />

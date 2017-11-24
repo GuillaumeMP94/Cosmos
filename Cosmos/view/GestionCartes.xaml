@@ -7,14 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Name="grdGestionCartes" Width="auto" Height="auto" >
-        <Label Name="lblTri" Content="Veuillez choisir votre ordre de tri" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="27,140,0,0" Height="40" VerticalAlignment="Top"/>
-        <ComboBox Name="cboChoixTri" Height="30" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,170" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" SelectionChanged="cboChoixTri_SelectionChanged">
+        <Label Name="lblTri" Content="Veuillez choisir votre ordre de tri" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="27,140" Height="40" VerticalAlignment="Top"/>
+        <ComboBox Name="cboChoixTri" Height="30" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,170" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  SelectionChanged="cboChoixTri_SelectionChanged">
             <ComboBoxItem>A-Z</ComboBoxItem>
             <ComboBoxItem>Z-A</ComboBoxItem>
             <ComboBoxItem>Types</ComboBoxItem>
         </ComboBox>
         <Border Width="900" Height="625" Background="Black" Opacity="0.6" Margin="20,180,0,15" CornerRadius="15" HorizontalAlignment="Left"/>
-        <Label Name="lblTitre" Content="Ma collection" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0" Height="40" VerticalAlignment="Top"/>
+        <Border Width="250" Height="40" Background="Black" Opacity="0.6" Margin="0,22" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Name="lblTitre" Content="Ma collection" Foreground="DarkGoldenrod" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20" Height="40" VerticalAlignment="Top"/>
         <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="15,0,0,70" VerticalAlignment="Bottom" >
             <Grid Name="grdLesCartes">
                 <Grid.RowDefinitions>
@@ -50,9 +51,49 @@
 
             </Grid>
         </ScrollViewer>
+        <Border Width="450" Height="625" Background="Black" Opacity="0.6" Margin="0,180,30,15" CornerRadius="15" HorizontalAlignment="Right"/>
+        <TabControl Name="tbcDecksUtilisateurs" Width="400" Height="600" Margin="0,180,50,15" HorizontalAlignment="Right" Background="LightGray">
+            <TabItem Name="tbiEmplacement1" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
+                <ScrollViewer>
+                    <Grid Name="grdDeck1">
+                        <Grid.RowDefinitions />
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Name="tbiEmplacement2" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
+                <ScrollViewer>
+                    <Grid Name="grdDeck2">
+                        <Grid.RowDefinitions />
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Name="tbiEmplacement3" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
+                    <ScrollViewer>
+                        <Grid Name="grdDeck3">
+                            <Grid.RowDefinitions/>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+        </TabControl>
         
-        <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Height="30" Margin="0,0,100,30"  
-                Width="200" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand" Click="btnMenuPrincipal_Click" >
+        
+        <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,20"  
+                Width="200" HorizontalAlignment="Center" Background="DarkGoldenrod" Cursor="Hand" Click="btnMenuPrincipal_Click" >
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">

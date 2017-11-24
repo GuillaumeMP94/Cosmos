@@ -37,8 +37,7 @@ namespace Cosmos.view
 
             GenererListeCartes();
 
-            
-
+            GenererDecks();
         }
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
@@ -48,8 +47,8 @@ namespace Cosmos.view
 
         private void GenererListeCartes()
         {
-            int compteurX = 0;
-            int compteurY = 0;
+            int compteurRow = 0;
+            int compteurColumn = 0;
             int qte = 0;
             foreach (Carte uneCarte in LstCartesCollection)
             {
@@ -76,8 +75,8 @@ namespace Cosmos.view
                 
 
                 grdLesCartes.Children.Add(imgCarte);
-                Grid.SetRow(imgCarte, compteurX);
-                Grid.SetColumn(imgCarte, compteurY);
+                Grid.SetRow(imgCarte, compteurRow);
+                Grid.SetColumn(imgCarte, compteurColumn);
                 #endregion
 
                 #region LabelQte
@@ -95,19 +94,46 @@ namespace Cosmos.view
                 qteCarte.Margin = new Thickness(0, 0, 0, 10);
 
                 grdLesCartes.Children.Add(qteCarte);
-                Grid.SetRow(qteCarte, compteurX);
-                Grid.SetColumn(qteCarte, compteurY);
+                Grid.SetRow(qteCarte, compteurRow);
+                Grid.SetColumn(qteCarte, compteurColumn);
                 #endregion
 
-                if (compteurY == 0)
+                if (compteurColumn == 0)
                     imgCarte.Margin = new Thickness(5);
 
-                compteurY++;
+                compteurColumn++;
 
-                if (compteurY == 5)
+                if (compteurColumn == 5)
                 {
-                    compteurX++;
-                    compteurY = 0;
+                    compteurRow++;
+                    compteurColumn = 0;
+                }
+            }
+        }
+
+        private void GenererDecks()
+        {
+            List<Deck> lstDecksUtilisateur = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
+
+            if (lstDecksUtilisateur != null)
+            {
+                for (int i = 0; i < lstDecksUtilisateur.Count; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            tbiEmplacement1.Header = lstDecksUtilisateur[i].Nom;
+                            CreerLabels(lstDecksUtilisateur[i], i);
+                            break;
+                        case 1:
+                            tbiEmplacement2.Header = lstDecksUtilisateur[i].Nom;
+                            CreerLabels(lstDecksUtilisateur[i], i);
+                            break;
+                        case 2:
+                            tbiEmplacement3.Header = lstDecksUtilisateur[i].Nom;
+                            CreerLabels(lstDecksUtilisateur[i], i);
+                            break;
+                    }
                 }
             }
         }
@@ -188,6 +214,99 @@ namespace Cosmos.view
                     break;
             }
             GenererListeCartes();
+        }
+
+        private void CreerLabels(Deck deck, int posOnglet)
+        {
+            int compteurRow = 0;
+            List<Exemplaire> lstExemplairesDeck = MySqlCarteService.RetrieveExemplaires(deck.Nom, Main.UtilisateurConnecte.IdUtilisateur);
+            switch (posOnglet)
+            {
+                case 0:
+                    foreach (Exemplaire exemplaire in lstExemplairesDeck)
+                    {
+                        RowDefinition rwdRangee = new RowDefinition();
+                        rwdRangee.Height = GridLength.Auto;
+                        grdDeck1.RowDefinitions.Add(rwdRangee);
+
+                        Label lblCarte = new Label();
+                        lblCarte.Content = exemplaire.Carte.Nom;
+                        lblCarte.FontWeight = FontWeights.Bold;
+                        lblCarte.FontSize = 15;
+
+                        grdDeck1.Children.Add(lblCarte);
+                        Grid.SetRow(lblCarte, compteurRow);
+                        Grid.SetColumn(lblCarte, 0);
+
+                        Label lblQuantite = new Label();
+                        lblQuantite.Content = exemplaire.Quantite;
+                        lblQuantite.FontWeight = FontWeights.Bold;
+                        lblQuantite.FontSize = 15;
+
+                        grdDeck1.Children.Add(lblQuantite);
+                        Grid.SetRow(lblQuantite, compteurRow);
+                        Grid.SetColumn(lblQuantite, 1);
+
+                        compteurRow++;
+                    }
+                    break;
+                case 1:
+                    foreach (Exemplaire exemplaire in lstExemplairesDeck)
+                    {
+                        RowDefinition rwdRangee = new RowDefinition();
+                        rwdRangee.Height = GridLength.Auto;
+                        grdDeck2.RowDefinitions.Add(rwdRangee);
+
+                        Label lblCarte = new Label();
+                        lblCarte.Content = exemplaire.Carte.Nom;
+                        lblCarte.FontWeight = FontWeights.Bold;
+                        lblCarte.FontSize = 15;
+
+                        grdDeck2.Children.Add(lblCarte);
+                        Grid.SetRow(lblCarte, compteurRow);
+                        Grid.SetColumn(lblCarte, 0);
+
+                        Label lblQuantite = new Label();
+                        lblQuantite.Content = exemplaire.Quantite;
+                        lblQuantite.FontWeight = FontWeights.Bold;
+                        lblQuantite.FontSize = 15;
+
+                        grdDeck2.Children.Add(lblQuantite);
+                        Grid.SetRow(lblQuantite, compteurRow);
+                        Grid.SetColumn(lblQuantite, 1);
+
+                        compteurRow++;
+                    }
+                    break;
+                case 2:
+                    foreach (Exemplaire exemplaire in lstExemplairesDeck)
+                    {
+                        RowDefinition rwdRangee = new RowDefinition();
+                        rwdRangee.Height = GridLength.Auto;
+                        grdDeck3.RowDefinitions.Add(rwdRangee);
+
+                        Label lblCarte = new Label();
+                        lblCarte.Content = exemplaire.Carte.Nom;
+                        lblCarte.FontWeight = FontWeights.Bold;
+                        lblCarte.FontSize = 15;
+
+                        grdDeck3.Children.Add(lblCarte);
+                        Grid.SetRow(lblCarte, compteurRow);
+                        Grid.SetColumn(lblCarte, 0);
+
+                        Label lblQuantite = new Label();
+                        lblQuantite.Content = exemplaire.Quantite;
+                        lblQuantite.FontWeight = FontWeights.Bold;
+                        lblQuantite.FontSize = 15;
+
+                        grdDeck3.Children.Add(lblQuantite);
+                        Grid.SetRow(lblQuantite, compteurRow);
+                        Grid.SetColumn(lblQuantite, 1);
+
+                        compteurRow++;
+                    }
+                    break;
+            }
         }
     }
 }

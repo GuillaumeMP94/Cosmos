@@ -93,5 +93,6 @@ namespace Cosmos.accesBD
             return RetrieveAllDeck(query.ToString());
         }
 
+
     }
 }

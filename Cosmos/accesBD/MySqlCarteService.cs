@@ -333,7 +333,7 @@ namespace Cosmos.accesBD
                 
             }
         }
-
+        #endregion
         public static void InsertExemplaire(Carte carte, Utilisateur utilisateur)
         {
             StringBuilder nonquery = new StringBuilder();
@@ -402,7 +402,38 @@ namespace Cosmos.accesBD
             return qte;
         }
 
-        #endregion
+        public static List<Exemplaire> RetrieveExemplaires(string nomDeck, int pIdUtilisateur)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, dE.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("INNER JOIN DecksExemplaires dE ON dE.idExemplaire = e.idExemplaire ")
+                 .Append("INNER JOIN Decks d ON d.idDeck = dE.idDeck ")
+                 .Append("WHERE d.nom = '").Append(nomDeck).Append("'").Append(" AND d.idUtilisateur =").Append(pIdUtilisateur);
+
+            return RetrieveExemplairesDeckUser(query.ToString());
+        }
+
+        private static List<Exemplaire> RetrieveExemplairesDeckUser(string query)
+        {
+            List<Exemplaire> lstResultat = new List<Exemplaire>();
+            Carte laCarte = null;
+            DataSet dsResultat;
+            DataTable dtResultat;
+
+            ConnectionBD = new MySqlConnexion();
+
+            dsResultat = ConnectionBD.Query(query);
+            dtResultat = dsResultat.Tables[0];
+
+            foreach (DataRow dr in dtResultat.Rows)
+            {
+                laCarte = MySqlCarteService.RetrieveById((int)dr["idCarte"]);
+                lstResultat.Add(new Exemplaire(laCarte, (int)dr["quantite"]));
+            }
+
+            return lstResultat;
+        }
     }
 
 
