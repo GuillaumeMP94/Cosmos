@@ -73,6 +73,7 @@
     <Compile Include="metier\ChampConstructions.cs" />
     <Compile Include="metier\Deck.cs" />
     <Compile Include="metier\Effet.cs" />
+    <Compile Include="metier\Exemplaire.cs" />
     <Compile Include="metier\Gadget.cs" />
     <Compile Include="metier\Gain.cs" />
     <Compile Include="metier\Impact.cs" />
@@ -99,6 +100,9 @@
     </Compile>
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\GestionCartes.xaml.cs">
+      <DependentUpon>GestionCartes.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\ListeAmis.xaml.cs">
       <DependentUpon>ListeAmis.xaml</DependentUpon>
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\CreationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\GestionCartes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -347,6 +355,8 @@
     <Resource Include="images\cartes\Rumia.jpg" />
     <Resource Include="images\cartes\Récupération.jpg" />
     <Resource Include="images\cartes\Réparation.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="images\cartes\Samus Aran.jpg" />
     <Resource Include="images\cartes\Scout Taligari.jpg" />
     <Resource Include="images\cartes\Simple Mercenaire.jpg" />

@@ -122,6 +122,11 @@ namespace Cosmos.accesBD
 
             return resultat;
         }
+        /// <summary>
+        /// Retrouve tous les exemplaires avec leur quantité
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         private static List<Carte> RetrieveAllExemplaire(string query)
         {
             List<Carte> lstResultat = new List<Carte>();
@@ -185,6 +190,8 @@ namespace Cosmos.accesBD
 
             return lstResultat;
         }
+
+        
         /// <summary>
         /// Fonction qui construit la commande SQL pour la requête par ID et qui la passe ensuite à Retrieve
         /// </summary>
@@ -202,8 +209,9 @@ namespace Cosmos.accesBD
         {
             return RetrieveAll("SELECT * FROM Cartes");
         }
-        
-        public static List<Carte> RetrieveAllUserCard(int pIdUtilisateur)
+
+
+        public static List<Carte> RetrieveAllUserExemplaires(int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT c.*, e.quantite FROM Cartes c ")
@@ -254,7 +262,7 @@ namespace Cosmos.accesBD
                 
             }
         }
-
+        #endregion
         public static void InsertExemplaire(Carte carte, Utilisateur utilisateur)
         {
             StringBuilder nonquery = new StringBuilder();
@@ -296,6 +304,69 @@ namespace Cosmos.accesBD
 
             return RetrieveAllExemplaire(query.ToString());
         }
-        #endregion
+
+
+        /// <summary>
+        /// Fonction qui fait une requête pour aller chercher les exemplaires du deck voulu
+        /// </summary>
+        /// <param name="nomDeck"></param>
+        /// <param name="pIdUtilisateur"></param>
+        /// <returns></returns>
+        public static List<Exemplaire> RetrieveExemplairesDeckUser(string nomDeck, int pIdUtilisateur)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, dE.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("INNER JOIN DecksExemplaires dE ON dE.idExemplaire = e.idExemplaire ")
+                 .Append("INNER JOIN Decks d ON d.idDeck = dE.idDeck ")
+                 .Append("WHERE d.nom = '").Append(nomDeck).Append("'").Append(" AND d.idUtilisateur =").Append(pIdUtilisateur);
+
+            return RetrieveExemplaires(query.ToString());
+        }
+
+        /// <summary>
+        /// Fonction qui va chercher la liste complète des exemplaires de l'utilisateur
+        /// </summary>
+        /// <param name="pIdUtilisateur"></param>
+        /// <returns></returns>
+        public static List<Exemplaire> RetrieveExemplairesUser(int pIdUtilisateur)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT c.*, e.quantite FROM Cartes c ")
+                 .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
+                 .Append("INNER JOIN Utilisateurs u ON u.idUtilisateur = e.idUtilisateur ")
+                 .Append("WHERE e.idUtilisateur =")
+                 .Append(pIdUtilisateur.ToString());
+
+            return RetrieveExemplaires(query.ToString());
+        }
+
+        /// <summary>
+        /// Fonction qui va chercher en BD les exemplaires selon la requête voulue
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        private static List<Exemplaire> RetrieveExemplaires(string query)
+        {
+            List<Exemplaire> lstResultat = new List<Exemplaire>();
+            Carte laCarte = null;
+            DataSet dsResultat;
+            DataTable dtResultat;
+
+            ConnectionBD = new MySqlConnexion();
+
+            dsResultat = ConnectionBD.Query(query);
+            dtResultat = dsResultat.Tables[0];
+
+            foreach (DataRow dr in dtResultat.Rows)
+            {
+                laCarte = MySqlCarteService.RetrieveById((int)dr["idCarte"]);
+                lstResultat.Add(new Exemplaire(laCarte, (int)dr["quantite"]));
+            }
+
+            return lstResultat;
+        }
     }
+
+
 }

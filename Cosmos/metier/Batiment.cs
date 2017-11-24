@@ -32,5 +32,10 @@ namespace Cosmos.metier
             else
                 return new Batiment(this.IdCarte, this.Nom, null, new Ressource(this.Cout), this.Defense);
         }
+
+        public override string Type()
+        {
+            return "Batiment";
+        }
     }
 }
