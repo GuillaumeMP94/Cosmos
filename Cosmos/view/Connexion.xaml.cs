@@ -29,6 +29,8 @@ namespace Cosmos.view
             InitializeComponent();
 
             Main = main;
+            FocusManager.SetFocusedElement(Main, txbPseudo);
+            Keyboard.Focus(txbPseudo);
         }
 
         private void btnConnexion_Click(object sender, RoutedEventArgs e)
