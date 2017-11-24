@@ -341,11 +341,21 @@ namespace Cosmos.metier
                     ExecuterImpact();
                 else if ( joueurActifEst1 )
                 {
-                    // Lancer un evenement pour que parti le catch.
-                    ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), AExecuter.getNbCible());
-                    TrousseGlobale TG = new TrousseGlobale();
-                    TG.OnChoisirCible(p);
-                    //ChoisirCible(AExecuter.getCible(), AExecuter.getNbCible());
+                    if (ChoixEffetPossible(AExecuter.getCible()) > AExecuter.getNbCible())
+                    {
+                        // Lancer un evenement pour que parti le catch.
+                        ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), AExecuter.getNbCible());
+                        TrousseGlobale TG = new TrousseGlobale();
+                        TG.OnChoisirCible(p);
+                    }
+                    else if (ChoixEffetPossible(AExecuter.getCible()) < AExecuter.getNbCible() && ChoixEffetPossible(AExecuter.getCible()) >0)
+                    {
+                        // Lancer un evenement pour que parti le catch.
+                        ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), ChoixEffetPossible(AExecuter.getCible()));
+                        TrousseGlobale TG = new TrousseGlobale();
+                        TG.OnChoisirCible(p);
+                    }
+                    
                 }
             }
             /*
@@ -381,6 +391,36 @@ namespace Cosmos.metier
                 1-2-3-4-etc...	La quantité exacte.
 
                 */
+        }
+        public bool EffetPossible(int index)
+        {
+            Carte laCarte = LstMainJ1[index];
+            if (laCarte.EffetCarte != null)
+            {
+                AExecuter = laCarte.EffetCarte;
+                if ( AExecuter.Type == "impact" && ChoixEffetPossible(AExecuter.getNbCible()) > 0)
+                    return true;
+            }
+            return false;
+        }
+        private int ChoixEffetPossible(int cible)
+        {
+            int resultat = 0;
+
+            if (AExecuter.getCible() == 10 || AExecuter.getCible() == 9 || AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 12 || AExecuter.getCible() == 13 || AExecuter.getCible() == 18 || AExecuter.getCible() == 19)
+                resultat++;
+            if (AExecuter.getCible() == 11 || AExecuter.getCible() == 9 || AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 12 || AExecuter.getCible() == 14 || AExecuter.getCible() == 18 || AExecuter.getCible() == 20)
+                resultat++;
+            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 3 || AExecuter.getCible() == 4 || AExecuter.getCible() == 15 || AExecuter.getCible() == 16 || AExecuter.getCible() == 18 || AExecuter.getCible() == 19)
+                resultat += ChampConstructionsJ2.EspaceOccupe();
+            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 3 || AExecuter.getCible() == 5 || AExecuter.getCible() == 15 || AExecuter.getCible() == 17 || AExecuter.getCible() == 18 || AExecuter.getCible() == 20)
+                resultat += ChampConstructionsJ1.EspaceOccupe();
+            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 6 || AExecuter.getCible() == 7 || AExecuter.getCible() == 12 || AExecuter.getCible() == 13 || AExecuter.getCible() == 15 || AExecuter.getCible() == 16)
+                resultat += ChampBatailleUnitesJ2.EspaceOccupe();
+            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 6 || AExecuter.getCible() == 8 || AExecuter.getCible() == 12 || AExecuter.getCible() == 14 || AExecuter.getCible() == 15 || AExecuter.getCible() == 17)
+                resultat += ChampBatailleUnitesJ1.EspaceOccupe();
+
+            return resultat;
         }
 
         private void ExecuterImpact()
@@ -452,6 +492,8 @@ namespace Cosmos.metier
                 if (BatailleAttaquant.Champ3 != null)
                     BatailleAttaquant.VieChamp3 -= AExecuter.getValeur();
             }
+            DetruireBatiment();
+            DetruireUnite();
         }
 
         /// <summary>
@@ -874,6 +916,8 @@ namespace Cosmos.metier
                 ChampBatailleUnitesJ2.VieChamp2 -= AExecuter.getValeur();
             if (choix.Contains(223))
                 ChampBatailleUnitesJ2.VieChamp3 -= AExecuter.getValeur();
+            DetruireUnite();
+            DetruireBatiment();
         }
     }
 }

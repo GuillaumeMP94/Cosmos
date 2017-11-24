@@ -126,6 +126,17 @@ namespace Cosmos.metier
             }
             return false;
         }
+        public int EspaceOccupe()
+        {
+            int resultat = 0;
+            if (Champ1 != null)
+                resultat++;
+            if (Champ2 != null)
+                resultat++;
+            if (Champ3 != null)
+                resultat++;
+            return resultat;
+        }
 
         public void AjouterAuChamp(Carte carteAjouter, int emplacement)
         {

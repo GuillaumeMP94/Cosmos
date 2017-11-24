@@ -331,7 +331,6 @@
     <Resource Include="images\cartes\Guerrier Spartan.jpg" />
     <Resource Include="images\cartes\Général Radioactif.jpg" />
     <Resource Include="images\cartes\Halo.jpg" />
-    <Resource Include="images\cartes\Infecté.jpg" />
     <Resource Include="images\cartes\Insécateur.jpg" />
     <Resource Include="images\cartes\Katarina.jpg" />
     <Resource Include="images\cartes\Laser Spartan.jpg" />
@@ -381,6 +380,8 @@
     <Resource Include="images\cartes\Xaya.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Resource Include="images\cartes\Infectée.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
