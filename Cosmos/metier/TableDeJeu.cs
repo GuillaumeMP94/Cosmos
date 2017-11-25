@@ -392,6 +392,60 @@ namespace Cosmos.metier
 
                 */
         }
+
+        public void ExecuterEffetFinTour()
+        {
+            List<Effet> effetsAExecuter = new List<Effet>();
+            ChampBatailleUnites unites = null;
+            ChampConstructions batiments = null;
+            Joueur receveur = null;
+            if (!JoueurActifEst1)
+            {
+                unites = ChampBatailleUnitesJ1;
+                batiments = ChampConstructionsJ1;
+                receveur = Joueur2;
+            }
+            else
+            {
+                unites = ChampBatailleUnitesJ2;
+                batiments = ChampConstructionsJ2;
+                receveur = Joueur1;
+            }
+            if (unites.Champ1 != null && unites.Champ1.EffetCarte != null)
+            {
+                if (unites.Champ1.EffetCarte.Type == "radiation")
+                {
+                    effetsAExecuter.Add(unites.Champ1.EffetCarte);
+                }
+            }
+            if (unites.Champ2 != null && unites.Champ2.EffetCarte != null)
+            {
+                if (unites.Champ2.EffetCarte.Type == "radiation")
+                {
+                    effetsAExecuter.Add(unites.Champ2.EffetCarte);
+                }
+            }
+            if (unites.Champ3 != null && unites.Champ3.EffetCarte != null)
+            {
+                if (unites.Champ3.EffetCarte.Type == "radiation")
+                {
+                    effetsAExecuter.Add(unites.Champ3.EffetCarte);
+                }
+            }
+            ExecuterEffets(effetsAExecuter,receveur);
+        }
+
+        private void ExecuterEffets(List<Effet> effetsAExecuter, Joueur receveur)
+        {
+            foreach (Effet unEffet in effetsAExecuter)
+            {
+                if (unEffet is Radiation)
+                {
+                    receveur.PointDeBlindage -= unEffet.getValeur();
+                }
+            }
+        }
+
         public bool EffetPossible(int index)
         {
             Carte laCarte = LstMainJ1[index];

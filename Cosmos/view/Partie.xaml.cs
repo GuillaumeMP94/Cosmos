@@ -335,6 +335,7 @@ namespace Cosmos.view
                 });
             }
             laTableDeJeu.PreparerTroupes();
+            laTableDeJeu.ExecuterEffetFinTour();
             laTableDeJeu.DetruireUnite();
             laTableDeJeu.DetruireBatiment();
             
