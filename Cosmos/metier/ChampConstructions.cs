@@ -27,7 +27,7 @@ namespace Cosmos.metier
             Champ4 = null;
         }
         #endregion
-        private bool EspaceDisponible()
+        public bool EspaceDisponible()
         {
             if (Champ1 == null || Champ2 == null || Champ3 == null || Champ4 == null)
             {

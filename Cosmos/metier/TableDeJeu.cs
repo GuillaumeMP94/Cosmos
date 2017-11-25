@@ -919,5 +919,39 @@ namespace Cosmos.metier
             DetruireUnite();
             DetruireBatiment();
         }
+
+        public bool EspaceUniteEstDisponible()
+        {
+            if (JoueurActifEst1)
+                return ChampBatailleUnitesJ1.EspaceDisponible();
+
+            return ChampBatailleUnitesJ2.EspaceDisponible();
+        }
+
+        public bool EspaceBatimentEstDisponible()
+        {
+            if (JoueurActifEst1)
+                return ChampConstructionsJ1.EspaceDisponible();
+
+            return ChampConstructionsJ2.EspaceDisponible();
+        }
+
+        public bool CarteAJouerEstGadget(int indexCarteZoomer)
+        {
+            if (JoueurActifEst1)
+            {
+                if (LstMainJ1[indexCarteZoomer] is Gadget)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                if (LstMainJ2[indexCarteZoomer] is Gadget)
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }
