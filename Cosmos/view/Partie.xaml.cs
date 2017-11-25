@@ -335,6 +335,7 @@ namespace Cosmos.view
                 });
             }
             laTableDeJeu.PreparerTroupes();
+            laTableDeJeu.ExecuterEffetFinTour();
             laTableDeJeu.DetruireUnite();
             laTableDeJeu.DetruireBatiment();
             
@@ -977,7 +978,8 @@ namespace Cosmos.view
             recRessource.Visibility = Visibility.Hidden;
             // Executer l'impact avec les choix.
             laTableDeJeu.ExecuterImpact(Choix);
-
+            Choix.Clear();
+            RefreshAll();
         }
         /// <summary>
         /// Fonction lors de la création de l'écran choix cible.
@@ -1054,12 +1056,12 @@ namespace Cosmos.view
                 // Il faudrait ré-organiser la main après le 0,5
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
-                    if (laTableDeJeu.CarteAJouerEstUnite(IndexCarteZoomer))
+                    if (laTableDeJeu.CarteAJouerEstUnite(IndexCarteZoomer) && laTableDeJeu.EspaceUniteEstDisponible())
                     {
                         // Choisir l'emplacement.
                         AfficherCoupPoosible();                    
                     }
-                    else
+                    else if (laTableDeJeu.CarteAJouerEstGadget(IndexCarteZoomer))
                     {
                         if (laTableDeJeu.EffetPossible(IndexCarteZoomer))
                         {
@@ -1068,6 +1070,12 @@ namespace Cosmos.view
                         rectZoom.Visibility = Visibility.Hidden;
                         RefreshAll();
 
+                    }
+                    else if (laTableDeJeu.EspaceBatimentEstDisponible())
+                    {
+                        laTableDeJeu.JouerCarte(IndexCarteZoomer, 0);
+                        rectZoom.Visibility = Visibility.Hidden;
+                        RefreshAll();
                     }
                 }
                 else
