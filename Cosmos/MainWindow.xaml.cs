@@ -39,6 +39,7 @@ namespace Cosmos
         public Partie Partie { get; set; }
         public List<Utilisateur> LstAmis { get; set; }
         public SoundPlayer Player { get; set; }
+        public bool MusicOn { get; set; }
 
         public MainWindow()
         {
@@ -64,7 +65,8 @@ namespace Cosmos
         }
 
         public void PlayMusic()
-        {            
+        {
+            MusicOn = true;
             Player = new SoundPlayer(Cosmos.Properties.Resources.superboy);
             Player.PlayLooping();
         }
@@ -128,6 +130,7 @@ namespace Cosmos
             grdMain.Children.Remove(ContenuEcran);
             grdMain.Children.Remove(ContenuListeAmi);
             Player.Stop();
+            imgMusic.Visibility = Visibility.Hidden;
             ContenuEcran = new Campagne(this);
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/campagne/bgSS2.jpg")));
@@ -188,5 +191,20 @@ namespace Cosmos
             return estValide;
         }
         #endregion
+
+        private void imgMusic_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if(imgMusic.Opacity < 1)
+            {
+                PlayMusic();
+                imgMusic.Opacity = 1;
+            }
+            else
+            {
+                Player.Stop();
+                imgMusic.Opacity = 0.5;
+                MusicOn = false;
+            }
+        }
     }
 }

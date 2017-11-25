@@ -320,9 +320,14 @@
     <Resource Include="images\partie\check.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\note.png" />
     <Content Include="sons\charron.wav" />
+    <Content Include="sons\jesus.wav" />
+    <Content Include="sons\meteo.wav" />
     <Content Include="sons\musiques\superboy.wav" />
+    <Content Include="sons\nain.wav" />
     <Content Include="sons\robert.wav" />
+    <Content Include="sons\toto.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

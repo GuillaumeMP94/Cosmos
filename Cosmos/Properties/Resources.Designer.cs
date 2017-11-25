@@ -72,6 +72,33 @@ namespace Cosmos.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream jesus {
+            get {
+                return ResourceManager.GetStream("jesus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream meteo {
+            get {
+                return ResourceManager.GetStream("meteo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream nain {
+            get {
+                return ResourceManager.GetStream("nain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream robert {
             get {
                 return ResourceManager.GetStream("robert", resourceCulture);
@@ -84,6 +111,15 @@ namespace Cosmos.Properties {
         internal static System.IO.UnmanagedMemoryStream superboy {
             get {
                 return ResourceManager.GetStream("superboy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream toto {
+            get {
+                return ResourceManager.GetStream("toto", resourceCulture);
             }
         }
     }
