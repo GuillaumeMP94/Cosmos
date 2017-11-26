@@ -315,5 +315,28 @@ namespace Cosmos.view
                     break;
             }
         }
-    }
+
+		private void btnSupprimer_Click(object sender, RoutedEventArgs e)
+		{
+			if (ValiderSuppression())
+			{
+				string nomDeck = ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString();
+				MySqlDeckService.Delete(Main.UtilisateurConnecte.IdUtilisateur, nomDeck);
+			}
+		}
+
+		private void btnRenommer_Click(object sender, RoutedEventArgs e)
+		{
+			TabItem tbiTest = (TabItem)tbcDecksUtilisateurs.SelectedItem;
+			MessageBox.Show(tbiTest.Header.ToString());
+		}
+
+		private bool ValiderSuppression() {
+
+			if (MessageBox.Show("Êtes vous sur de vouloir supprimer votre deck?", "Suppression de deck", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+				return true;
+			return false;
+		}
+
+	}
 }

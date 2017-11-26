@@ -81,7 +81,16 @@ namespace Cosmos.accesBD
 
         }
 
-        public static List<Deck> RetrieveAllUserDeck(int pIdUtilisateur)
+		private static Deck RetrieveByNom(string nomDeck, int pIdUtilisateur)
+		{
+			StringBuilder query = new StringBuilder();
+			query.Append("SELECT * FROM Decks WHERE nom = '").Append(nomDeck.ToString()).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
+
+			return Retrieve(query.ToString());
+
+		}
+
+		public static List<Deck> RetrieveAllUserDeck(int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT * FROM Decks d ")
@@ -93,6 +102,23 @@ namespace Cosmos.accesBD
             return RetrieveAllDeck(query.ToString());
         }
 
+		public static void Delete(int pIdUtilisateur, string nomDeck)
+		{
+			Deck deckASupprimer = RetrieveByNom(nomDeck, pIdUtilisateur);
 
+			StringBuilder nonquery = new StringBuilder();
+			ConnectionBD = new MySqlConnexion();
+
+			// Delete le deck de la table DecksExemplaires
+			nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(deckASupprimer.IdDeck);
+			ConnectionBD.NonQuery(nonquery.ToString());
+
+			// Delete le deck
+			nonquery = new StringBuilder();
+			nonquery.Append("DELETE FROM Decks WHERE nom = '").Append(deckASupprimer.Nom).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
+
+			ConnectionBD.NonQuery(nonquery.ToString());
+
+		}
     }
 }

@@ -16,7 +16,7 @@
         <Border Width="900" Height="625" Background="Black" Opacity="0.6" Margin="20,180,0,15" CornerRadius="15" HorizontalAlignment="Left"/>
         <Border Width="250" Height="40" Background="Black" Opacity="0.6" Margin="0,22" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Name="lblTitre" Content="Ma collection" Foreground="DarkGoldenrod" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20" Height="40" VerticalAlignment="Top"/>
-        <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="15,0,0,70" VerticalAlignment="Bottom" >
+        <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="15,0,0,155" VerticalAlignment="Bottom" >
             <Grid Name="grdLesCartes">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -52,7 +52,7 @@
             </Grid>
         </ScrollViewer>
         <Border Width="450" Height="625" Background="Black" Opacity="0.6" Margin="0,180,30,15" CornerRadius="15" HorizontalAlignment="Right"/>
-        <TabControl Name="tbcDecksUtilisateurs" Width="400" Height="600" Margin="0,180,50,15" HorizontalAlignment="Right" Background="LightGray">
+        <TabControl Name="tbcDecksUtilisateurs" Width="400" Height="500" Margin="0,130,50,15" HorizontalAlignment="Right" Background="LightGray">
             <TabItem Name="tbiEmplacement1" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
                 <ScrollViewer>
                     <Grid Name="grdDeck1">
@@ -102,8 +102,7 @@
                 </ScrollViewer>
             </TabItem>
         </TabControl>
-        
-        
+                
         <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,20"  
                 Width="200" HorizontalAlignment="Center" Background="DarkGoldenrod" Cursor="Hand" Click="btnMenuPrincipal_Click" >
             <Button.Template>
@@ -117,7 +116,33 @@
             </Button.Template>
         </Button>
 
-        <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
+		<Button Name="btnSupprimer" VerticalAlignment="Bottom" Height="30" Margin="0,0,40,150"  
+                Width="175" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand" Click="btnSupprimer_Click" >
+			<Button.Template>
+				<ControlTemplate>
+					<Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Supprimer le deck
+						</TextBlock>
+					</Border>
+				</ControlTemplate>
+			</Button.Template>
+		</Button>
+		
+		<Button Name="btnRenommer" VerticalAlignment="Bottom" Height="30" Margin="0,0,220,150"  
+                Width="175" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand" Click="btnRenommer_Click" >
+			<Button.Template>
+				<ControlTemplate>
+					<Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Renommer le deck
+						</TextBlock>
+					</Border>
+				</ControlTemplate>
+			</Button.Template>
+		</Button>
+
+		<Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
                    PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp" Cursor="Hand"/>
 
         <Image Name="imgZoomCarte" Height="500" VerticalAlignment="Top"
