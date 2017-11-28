@@ -37,7 +37,7 @@ namespace Cosmos.view
             string nomVerifie = GestionCartes.Main.VerifierTexte(txbNomDeck.Text);
 
             MySqlDeckService.UpdateNomDeck(GestionCartes.Main.UtilisateurConnecte.IdUtilisateur, DeckARenommer, nomVerifie);
-
+            GestionCartes.RefreshAll();
             GestionCartes.Main.grdMain.Children.Remove(this);
             
         }

@@ -132,6 +132,9 @@
     <Compile Include="view\SupprimerAmi.xaml.cs">
       <DependentUpon>SupprimerAmi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\SupprimerDeck.xaml.cs">
+      <DependentUpon>SupprimerDeck.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -205,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\SupprimerAmi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\SupprimerDeck.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

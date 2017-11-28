@@ -33,7 +33,6 @@ namespace Cosmos.view
 
             LstExemplairesUtilisateur = MySqlCarteService.RetrieveExemplairesUser(Main.UtilisateurConnecte.IdUtilisateur);
 
-
             LstCartesCollection = TrierOrdreAlphabetique("croissant");
 
             GenererListeCartes();
@@ -110,11 +109,9 @@ namespace Cosmos.view
             }
         }
 
-        private void GenererDecks()
+        public void GenererDecks()
         {
-            List<Deck> lstDecksUtilisateur = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
-
-            if (lstDecksUtilisateur.Count > 0)
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count > 0 )
             {
                 btnRenommer.Opacity = 1;
                 btnRenommer.IsEnabled = true;
@@ -124,38 +121,24 @@ namespace Cosmos.view
                 btnSupprimer.IsEnabled = true;
                 btnSupprimer.Cursor = Cursors.Hand;
 
-                btnCreerDeck.Opacity = 0.6;
-                btnCreerDeck.IsEnabled = false;
-                btnCreerDeck.Cursor = Cursors.Arrow;
-
-                if (lstDecksUtilisateur[0].CartesDuDeck.Count == 50)
+                if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 3)
+                {
+                    btnCreerDeck.Opacity = 0.6;
+                    btnCreerDeck.IsEnabled = false;
+                    btnCreerDeck.Cursor = Cursors.Arrow;
+                }
+                
+                if (Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count == 50)
                 {
                     btnAjouterCarte.Opacity = 0.6;
                     btnAjouterCarte.IsEnabled = false;
                     btnAjouterCarte.Cursor = Cursors.Arrow;
                 }
 
-                for (int i = 0; i < lstDecksUtilisateur.Count; i++)
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            tbiEmplacement1.Header = lstDecksUtilisateur[i].Nom;
-                            CreerLabels(lstDecksUtilisateur[i], i);
-                            break;
-                        case 1:
-                            tbiEmplacement2.Header = lstDecksUtilisateur[i].Nom;
-                            CreerLabels(lstDecksUtilisateur[i], i);
-                            break;
-                        case 2:
-                            tbiEmplacement3.Header = lstDecksUtilisateur[i].Nom;
-                            CreerLabels(lstDecksUtilisateur[i], i);
-                            break;
-                    }
-                }
+                RefreshOnglets();
             }
         }
-
+        #region TrierCartes
         private List<Carte> TrierOrdreAlphabetique(string ordre)
         {
             List<Carte> lstTemp = LstCartesCollection;
@@ -171,6 +154,26 @@ namespace Cosmos.view
 
             return lstTemp.OrderBy(carte => carte.Type()).ToList();
         }
+
+        private void cboChoixTri_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            grdLesCartes.Children.Clear();
+            switch (cboChoixTri.SelectedIndex)
+            {
+                case 0:
+                    LstCartesCollection = TrierOrdreAlphabetique("croissant");
+                    break;
+                case 1:
+                    LstCartesCollection = TrierOrdreAlphabetique("décroissant");
+                    break;
+                case 2:
+                    LstCartesCollection = TrierTypeCarte();
+
+                    break;
+            }
+            GenererListeCartes();
+        }
+        #endregion 
 
         private void ZoomerCarte(object sender, MouseEventArgs e)
         {
@@ -212,25 +215,6 @@ namespace Cosmos.view
             return lstTemp;
         }
 
-        private void cboChoixTri_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            grdLesCartes.Children.Clear();
-            switch (cboChoixTri.SelectedIndex)
-            {
-                case 0:    
-                    LstCartesCollection = TrierOrdreAlphabetique("croissant");
-                    break;
-                case 1:
-                    LstCartesCollection = TrierOrdreAlphabetique("décroissant");
-                    break;
-                case 2:
-                    LstCartesCollection = TrierTypeCarte();
-                    
-                    break;
-            }
-            GenererListeCartes();
-        }
-
         /// <summary>
         /// Fonction crée et qui affiche les labels contenant les informations d'un deck, soit les exemplaires et leurs quantités
         /// </summary>
@@ -240,116 +224,69 @@ namespace Cosmos.view
         {
             int compteurRow = 1;
             List<Exemplaire> lstExemplairesDeck = MySqlCarteService.RetrieveExemplairesDeckUser(deck.Nom, Main.UtilisateurConnecte.IdUtilisateur);
-            switch (posOnglet)
+
+            foreach (Exemplaire e in lstExemplairesDeck)
             {
-                case 0:
-                    foreach (Exemplaire exemplaire in lstExemplairesDeck)
-                    {
-                        RowDefinition rwdRangee = new RowDefinition();
-                        rwdRangee.Height = GridLength.Auto;
+                RowDefinition rwdRangee = new RowDefinition();
+                rwdRangee.Height = GridLength.Auto;
+
+                Label lblCarte = new Label();
+                lblCarte.Content = e.Carte.Nom;
+                lblCarte.FontWeight = FontWeights.Bold;
+                lblCarte.FontSize = 15;
+                lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
+
+                Label lblQuantite = new Label();
+                lblQuantite.Content = e.Quantite;
+                lblQuantite.FontWeight = FontWeights.Bold;
+                lblQuantite.FontSize = 15;
+                lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
+
+                switch (posOnglet)
+                {
+                    case 0:
                         grdDeck1.RowDefinitions.Add(rwdRangee);
-
-                        Label lblCarte = new Label();
-                        lblCarte.Content = exemplaire.Carte.Nom;
-                        lblCarte.FontWeight = FontWeights.Bold;
-                        lblCarte.FontSize = 15;
-                        lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
-
                         grdDeck1.Children.Add(lblCarte);
-                        Grid.SetRow(lblCarte, compteurRow);
-                        Grid.SetColumn(lblCarte, 0);
-
-                        Label lblQuantite = new Label();
-                        lblQuantite.Content = exemplaire.Quantite;
-                        lblQuantite.FontWeight = FontWeights.Bold;
-                        lblQuantite.FontSize = 15;
-                        lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
-
                         grdDeck1.Children.Add(lblQuantite);
-                        Grid.SetRow(lblQuantite, compteurRow);
-                        Grid.SetColumn(lblQuantite, 1);
-
-                        compteurRow++;
-                    }
-                    break;
-                case 1:
-                    foreach (Exemplaire exemplaire in lstExemplairesDeck)
-                    {
-                        RowDefinition rwdRangee = new RowDefinition();
-                        rwdRangee.Height = GridLength.Auto;
+                        break;
+                    case 1:
                         grdDeck2.RowDefinitions.Add(rwdRangee);
-
-                        Label lblCarte = new Label();
-                        lblCarte.Content = exemplaire.Carte.Nom;
-                        lblCarte.FontWeight = FontWeights.Bold;
-                        lblCarte.FontSize = 15;
-                        lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
-
                         grdDeck2.Children.Add(lblCarte);
-                        Grid.SetRow(lblCarte, compteurRow);
-                        Grid.SetColumn(lblCarte, 0);
-
-                        Label lblQuantite = new Label();
-                        lblQuantite.Content = exemplaire.Quantite;
-                        lblQuantite.FontWeight = FontWeights.Bold;
-                        lblQuantite.FontSize = 15;
-                        lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
-
                         grdDeck2.Children.Add(lblQuantite);
-                        Grid.SetRow(lblQuantite, compteurRow);
-                        Grid.SetColumn(lblQuantite, 1);
-
-                        compteurRow++;
-                    }
-                    break;
-                case 2:
-                    foreach (Exemplaire exemplaire in lstExemplairesDeck)
-                    {
-                        RowDefinition rwdRangee = new RowDefinition();
-                        rwdRangee.Height = GridLength.Auto;
+                        break;
+                    case 2:
                         grdDeck3.RowDefinitions.Add(rwdRangee);
-
-                        Label lblCarte = new Label();
-                        lblCarte.Content = exemplaire.Carte.Nom;
-                        lblCarte.FontWeight = FontWeights.Bold;
-                        lblCarte.FontSize = 15;
-                        lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
-
                         grdDeck3.Children.Add(lblCarte);
-                        Grid.SetRow(lblCarte, compteurRow);
-                        Grid.SetColumn(lblCarte, 0);
-
-                        Label lblQuantite = new Label();
-                        lblQuantite.Content = exemplaire.Quantite;
-                        lblQuantite.FontWeight = FontWeights.Bold;
-                        lblQuantite.FontSize = 15;
-                        lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
-
                         grdDeck3.Children.Add(lblQuantite);
-                        Grid.SetRow(lblQuantite, compteurRow);
-                        Grid.SetColumn(lblQuantite, 1);
+                        break;
+                }
 
-                        compteurRow++;
-                    }
-                    break;
+                Grid.SetRow(lblCarte, compteurRow);
+                Grid.SetColumn(lblCarte, 0);
+
+                Grid.SetRow(lblQuantite, compteurRow);
+                Grid.SetColumn(lblQuantite, 1);
+                compteurRow++;
+
             }
         }
 
-		private void btnSupprimer_Click(object sender, RoutedEventArgs e)
+        private void btnSupprimer_Click(object sender, RoutedEventArgs e)
 		{
-			if (ValiderSuppression())
+            Main.ContenuAddModifSupp = new SupprimerDeck(this, ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString());
+
+            Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
+
+            /*if (ValiderSuppression())
 			{
 				string nomDeck = ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString();
 				MySqlDeckService.Delete(Main.UtilisateurConnecte.IdUtilisateur, nomDeck);
-			}
+			}*/
 		}
 
 		private void btnRenommer_Click(object sender, RoutedEventArgs e)
 		{
-			TabItem tbiTest = (TabItem)tbcDecksUtilisateurs.SelectedItem;
-			MessageBox.Show(tbiTest.Header.ToString());
-
-            Main.ContenuAddModifSupp = new RenommerDeck(this, tbiTest.Header.ToString());
+            Main.ContenuAddModifSupp = new RenommerDeck(this, ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString());
 
             Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
 
@@ -364,7 +301,37 @@ namespace Cosmos.view
 
         private void btnCreerDeck_Click(object sender, RoutedEventArgs e)
         {
+            string nomDefaut = TrouverNomParDefaut();
+            bool estChoisi = false;
 
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0)
+            {
+                estChoisi = true;
+            }
+
+            MySqlDeckService.Insert(nomDefaut, Main.UtilisateurConnecte.IdUtilisateur, estChoisi);
+
+            RefreshAll();
+
+        }
+
+        private string TrouverNomParDefaut()
+        {
+            string nomDeck = "Deck A";
+
+            foreach (Deck leDeck in Main.UtilisateurConnecte.DecksUtilisateurs)
+            {
+                if (leDeck.Nom == "Deck A")
+                {
+                    nomDeck = "Deck B";
+                }
+                else if (leDeck.Nom == "Deck B")
+                {
+                    nomDeck = "Deck C";
+                }
+            }
+
+            return nomDeck;
         }
 
         private void btnAjouterCarte_Click(object sender, RoutedEventArgs e)
@@ -376,5 +343,37 @@ namespace Cosmos.view
         {
 
         }
+
+
+        public void RefreshAll()
+        {
+            Main.UtilisateurConnecte.DecksUtilisateurs = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
+
+    
+            RefreshOnglets();
+        }
+
+        private void RefreshOnglets()
+        {
+            for (int i = 0; i < Main.UtilisateurConnecte.DecksUtilisateurs.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        tbiEmplacement1.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
+                        CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[i], i);
+                        break;
+                    case 1:
+                        tbiEmplacement2.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
+                        CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[i], i);
+                        break;
+                    case 2:
+                        tbiEmplacement3.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
+                        CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[i], i);
+                        break;
+                }
+            }
+        }
+
     }
 }

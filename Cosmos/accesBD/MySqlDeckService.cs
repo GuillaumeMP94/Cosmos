@@ -81,16 +81,16 @@ namespace Cosmos.accesBD
 
         }
 
-		private static Deck RetrieveByNom(string nomDeck, int pIdUtilisateur)
-		{
-			StringBuilder query = new StringBuilder();
-			query.Append("SELECT * FROM Decks WHERE nom = '").Append(nomDeck.ToString()).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
+        private static Deck RetrieveByNom(string nomDeck, int pIdUtilisateur)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT * FROM Decks WHERE nom = '").Append(nomDeck.ToString()).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
 
-			return Retrieve(query.ToString());
+            return Retrieve(query.ToString());
 
-		}
+        }
 
-		public static List<Deck> RetrieveAllUserDeck(int pIdUtilisateur)
+        public static List<Deck> RetrieveAllUserDeck(int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
             query.Append("SELECT * FROM Decks d ")
@@ -102,23 +102,23 @@ namespace Cosmos.accesBD
             return RetrieveAllDeck(query.ToString());
         }
 
-		public static void Delete(int pIdUtilisateur, string nomDeck)
-		{
-			Deck deckASupprimer = RetrieveByNom(nomDeck, pIdUtilisateur);
+        public static void Delete(int pIdUtilisateur, string nomDeck)
+        {
+            Deck deckASupprimer = RetrieveByNom(nomDeck, pIdUtilisateur);
 
-			StringBuilder nonquery = new StringBuilder();
-			ConnectionBD = new MySqlConnexion();
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
 
-			// Delete le deck de la table DecksExemplaires
-			nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(deckASupprimer.IdDeck);
-			ConnectionBD.NonQuery(nonquery.ToString());
+            // Delete le deck de la table DecksExemplaires
+            nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(deckASupprimer.IdDeck);
+            ConnectionBD.NonQuery(nonquery.ToString());
 
-			// Delete le deck
-			nonquery = new StringBuilder();
-			nonquery.Append("DELETE FROM Decks WHERE nom = '").Append(deckASupprimer.Nom).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
+            // Delete le deck
+            nonquery = new StringBuilder();
+            nonquery.Append("DELETE FROM Decks WHERE nom = '").Append(deckASupprimer.Nom).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
 
-			ConnectionBD.NonQuery(nonquery.ToString());
-		}
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
 
         public static void UpdateNomDeck(int pIdUtilisateur, string ancienNomDeck, string nouveauNomDeck)
         {
@@ -127,6 +127,18 @@ namespace Cosmos.accesBD
 
             nonquery.Append("UPDATE Decks SET nom = '").Append(nouveauNomDeck).Append("' WHERE idUtilisateur = ")
                 .Append(pIdUtilisateur).Append(" AND nom = '").Append(ancienNomDeck).Append("'");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void Insert(string nomDeck, int pIdUtilisateur, bool estChoisi)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO Decks (idUtilisateur, nom, estChoisi) VALUES (")
+                 .Append(pIdUtilisateur)
+                 .Append(", '").Append(nomDeck).Append("', ").Append(estChoisi).Append(")");
 
             ConnectionBD.NonQuery(nonquery.ToString());
         }
