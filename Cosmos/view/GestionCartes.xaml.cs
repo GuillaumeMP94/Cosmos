@@ -277,11 +277,6 @@ namespace Cosmos.view
 
             Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
 
-            /*if (ValiderSuppression())
-			{
-				string nomDeck = ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString();
-				MySqlDeckService.Delete(Main.UtilisateurConnecte.IdUtilisateur, nomDeck);
-			}*/
 		}
 
 		private void btnRenommer_Click(object sender, RoutedEventArgs e)
@@ -321,13 +316,17 @@ namespace Cosmos.view
 
             foreach (Deck leDeck in Main.UtilisateurConnecte.DecksUtilisateurs)
             {
-                if (leDeck.Nom == "Deck A")
+                if (leDeck.Nom.ToLower() == "deck c" && nomDeck.ToLower() != "deck b")
                 {
-                    nomDeck = "Deck B";
+                    nomDeck = "Deck A";
                 }
-                else if (leDeck.Nom == "Deck B")
+                else if (leDeck.Nom.ToLower() == "deck b" && nomDeck.ToLower() != "deck a")
                 {
                     nomDeck = "Deck C";
+                }
+                else if (leDeck.Nom.ToLower() == "deck a" && nomDeck.ToLower() != "deck c")
+                {
+                    nomDeck = "Deck B";
                 }
             }
 
@@ -341,7 +340,7 @@ namespace Cosmos.view
 
         private void tbcDecksUtilisateurs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            RefreshAll();
         }
 
 
@@ -349,8 +348,75 @@ namespace Cosmos.view
         {
             Main.UtilisateurConnecte.DecksUtilisateurs = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
 
-    
             RefreshOnglets();
+            RefreshBtnSupprimer();
+            RefreshBtnCreer();
+            RefreshBtnAjouter();
+            RefreshBtnRenommer();
+        }
+
+        private void RefreshBtnRenommer()
+        {
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1)
+            {
+                btnRenommer.Opacity = 0.6;
+                btnRenommer.IsEnabled = false;
+                btnRenommer.Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                btnRenommer.Opacity = 1;
+                btnRenommer.IsEnabled = true;
+                btnRenommer.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void RefreshBtnAjouter()
+        {
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1)
+            {
+                btnAjouterCarte.Opacity = 0.6;
+                btnAjouterCarte.IsEnabled = false;
+                btnAjouterCarte.Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                btnAjouterCarte.Opacity = 1;
+                btnAjouterCarte.IsEnabled = true;
+                btnAjouterCarte.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void RefreshBtnCreer()
+        {
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 3)
+            {
+                btnCreerDeck.Opacity = 0.6;
+                btnCreerDeck.IsEnabled = false;
+                btnCreerDeck.Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                btnCreerDeck.Opacity = 1;
+                btnCreerDeck.IsEnabled = true;
+                btnCreerDeck.Cursor = Cursors.Hand;
+            }
+        }
+
+        private void RefreshBtnSupprimer()
+        {
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1)
+            {
+                btnSupprimer.Opacity = 0.6;
+                btnSupprimer.IsEnabled = false;
+                btnSupprimer.Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                btnSupprimer.Opacity = 1;
+                btnSupprimer.IsEnabled = true;
+                btnSupprimer.Cursor = Cursors.Hand;
+            }
         }
 
         private void RefreshOnglets()

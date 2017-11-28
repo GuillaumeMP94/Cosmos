@@ -40,6 +40,7 @@ namespace Cosmos.view
             StringBuilder message = new StringBuilder();
 
             message.Append(" Êtes vous sur de vouloir supprimer votre deck '").Append(DeckASupprimer).Append("'?");
+            txblMessage.Text = message.ToString();
         }
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
@@ -51,6 +52,12 @@ namespace Cosmos.view
         {
             MySqlDeckService.Delete(GestionCartes.Main.UtilisateurConnecte.IdUtilisateur, DeckASupprimer);
             GestionCartes.RefreshAll();
+
+            for (int i = 3; i > GestionCartes.Main.UtilisateurConnecte.DecksUtilisateurs.Count; i--)
+            {
+                ((TabItem)GestionCartes.tbcDecksUtilisateurs.Items[i-1]).Header = "Emplacement vide";
+            }
+
             GestionCartes.Main.grdMain.Children.Remove(this);
         }
     }
