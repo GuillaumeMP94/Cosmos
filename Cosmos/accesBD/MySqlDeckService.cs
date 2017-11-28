@@ -118,7 +118,17 @@ namespace Cosmos.accesBD
 			nonquery.Append("DELETE FROM Decks WHERE nom = '").Append(deckASupprimer.Nom).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
 
 			ConnectionBD.NonQuery(nonquery.ToString());
-
 		}
+
+        public static void UpdateNomDeck(int pIdUtilisateur, string ancienNomDeck, string nouveauNomDeck)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE Decks SET nom = '").Append(nouveauNomDeck).Append("' WHERE idUtilisateur = ")
+                .Append(pIdUtilisateur).Append(" AND nom = '").Append(ancienNomDeck).Append("'");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
     }
 }

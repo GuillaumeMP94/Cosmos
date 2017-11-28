@@ -46,27 +46,12 @@ namespace Cosmos.view
 
         private void btnModifier_Click(object sender, RoutedEventArgs e)
         {
-            string note = VerifierNote(txbNote.Text);
+            string note = ListeAmis.Main.VerifierTexte(txbNote.Text);
 
             MySqlUtilisateurService.UpdateNoteAmi(ListeAmis.Main.UtilisateurConnecte.IdUtilisateur, Ami.IdUtilisateur, note);
 
             ListeAmis.Main.grdMain.Children.Remove(this);
 
-        }
-
-        private string VerifierNote(string note)
-        {
-            string temp = "";
-
-            for (int i = 0; i < note.Length; i++)
-            {    
-                if (note[i] == 92 || note[i] == (char)39)
-                    temp += (char)92; 
-
-                temp += note[i];
-            }
-
-            return temp;
         }
 
         private void txbNote_KeyUp(object sender, KeyEventArgs e)

@@ -22,7 +22,7 @@ namespace Cosmos.view
     /// </summary>
     public partial class GestionCartes : UserControl
     {
-        private MainWindow Main;
+        public MainWindow Main;
         private List<Carte> LstCartesCollection = MySqlCarteService.RetrieveAllCard();
         private List<Exemplaire> LstExemplairesUtilisateur;
         public GestionCartes(MainWindow main)
@@ -114,8 +114,27 @@ namespace Cosmos.view
         {
             List<Deck> lstDecksUtilisateur = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
 
-            if (lstDecksUtilisateur != null)
+            if (lstDecksUtilisateur.Count > 0)
             {
+                btnRenommer.Opacity = 1;
+                btnRenommer.IsEnabled = true;
+                btnRenommer.Cursor = Cursors.Hand;
+
+                btnSupprimer.Opacity = 1;
+                btnSupprimer.IsEnabled = true;
+                btnSupprimer.Cursor = Cursors.Hand;
+
+                btnCreerDeck.Opacity = 0.6;
+                btnCreerDeck.IsEnabled = false;
+                btnCreerDeck.Cursor = Cursors.Arrow;
+
+                if (lstDecksUtilisateur[0].CartesDuDeck.Count == 50)
+                {
+                    btnAjouterCarte.Opacity = 0.6;
+                    btnAjouterCarte.IsEnabled = false;
+                    btnAjouterCarte.Cursor = Cursors.Arrow;
+                }
+
                 for (int i = 0; i < lstDecksUtilisateur.Count; i++)
                 {
                     switch (i)
@@ -329,6 +348,11 @@ namespace Cosmos.view
 		{
 			TabItem tbiTest = (TabItem)tbcDecksUtilisateurs.SelectedItem;
 			MessageBox.Show(tbiTest.Header.ToString());
+
+            Main.ContenuAddModifSupp = new RenommerDeck(this, tbiTest.Header.ToString());
+
+            Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
+
 		}
 
 		private bool ValiderSuppression() {
@@ -338,5 +362,19 @@ namespace Cosmos.view
 			return false;
 		}
 
-	}
+        private void btnCreerDeck_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAjouterCarte_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void tbcDecksUtilisateurs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
 }
