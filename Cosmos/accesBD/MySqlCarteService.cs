@@ -315,7 +315,7 @@ namespace Cosmos.accesBD
         public static List<Exemplaire> RetrieveExemplairesDeckUser(string nomDeck, int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT c.*, dE.quantite FROM Cartes c ")
+            query.Append("SELECT c.idCarte, e.idExemplaire, dE.quantite FROM Cartes c ")
                  .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
                  .Append("INNER JOIN DecksExemplaires dE ON dE.idExemplaire = e.idExemplaire ")
                  .Append("INNER JOIN Decks d ON d.idDeck = dE.idDeck ")
@@ -332,7 +332,7 @@ namespace Cosmos.accesBD
         public static List<Exemplaire> RetrieveExemplairesUser(int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
-            query.Append("SELECT c.*, e.quantite FROM Cartes c ")
+            query.Append("SELECT c.idCarte, e.idExemplaire, e.quantite FROM Cartes c ")
                  .Append("INNER JOIN Exemplaires e ON c.idCarte = e.idCarte ")
                  .Append("INNER JOIN Utilisateurs u ON u.idUtilisateur = e.idUtilisateur ")
                  .Append("WHERE e.idUtilisateur =")
@@ -361,7 +361,7 @@ namespace Cosmos.accesBD
             foreach (DataRow dr in dtResultat.Rows)
             {
                 laCarte = MySqlCarteService.RetrieveById((int)dr["idCarte"]);
-                lstResultat.Add(new Exemplaire(laCarte, (int)dr["quantite"]));
+                lstResultat.Add(new Exemplaire(laCarte, (int)dr["quantite"], (int)dr["idExemplaire"]));
             }
 
             return lstResultat;

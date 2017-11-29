@@ -142,5 +142,16 @@ namespace Cosmos.accesBD
 
             ConnectionBD.NonQuery(nonquery.ToString());
         }
+
+        internal static void UpdateQteExemplaireDeck(Deck deck, Exemplaire exemplaire, int qte)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE DecksExemplaires ").Append("SET quantite = ").Append(qte).Append(" WHERE idDeck = ")
+                .Append(deck.IdDeck).Append(" AND idExemplaire = ").Append(exemplaire.IdExemplaire);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
     }
 }

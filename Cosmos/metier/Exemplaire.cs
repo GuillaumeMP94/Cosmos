@@ -10,7 +10,9 @@ namespace Cosmos.metier
     public class Exemplaire: INotifyPropertyChanged
     {
         private int quantite;
+        public int IdExemplaire { get; set; }
         public Carte Carte { get; set; }
+
         public int Quantite
         {
             get { return quantite; }
@@ -27,10 +29,11 @@ namespace Cosmos.metier
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Constructeur
-        public Exemplaire(Carte carte, int quantite)
+        public Exemplaire(Carte carte, int quantite, int idExemplaire)
         {
             Carte = carte;
             Quantite = quantite;
+            IdExemplaire = idExemplaire;
         }
 
         #endregion
