@@ -62,8 +62,8 @@ namespace Cosmos.view
             Temps.Tick += timer_Tick;
 
             //TODO: Utilisateur Connecter
-            Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
-            //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
+            //Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
+            Utilisateur utilisateur1 = Main.UtilisateurConnecte;
             // TODO: AI
             //Utilisateur utilisateur2 = MySqlUtilisateurService.RetrieveByNom("Guillaume");
             // TODO: Reinitialiser les utilisateurs à la fin de la partie.
