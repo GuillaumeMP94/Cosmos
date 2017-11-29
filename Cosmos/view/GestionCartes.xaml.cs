@@ -237,7 +237,11 @@ namespace Cosmos.view
                 lblCarte.HorizontalAlignment = HorizontalAlignment.Center;
 
                 Label lblQuantite = new Label();
-                lblQuantite.Content = e.Quantite;
+                //lblQuantite.Content = e.Quantite;
+                Binding myBinding = new Binding("Quantite");
+                myBinding.Source = e;
+                lblQuantite.SetBinding(Label.ContentProperty , myBinding);
+                
                 lblQuantite.FontWeight = FontWeights.Bold;
                 lblQuantite.FontSize = 15;
                 lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
