@@ -24,14 +24,14 @@ namespace Cosmos.view
     {
         public MainWindow Main;
         private List<Carte> LstCartesCollection = MySqlCarteService.RetrieveAllCard();
-        private List<Exemplaire> LstExemplairesUtilisateur;
+        //private List<Exemplaire> LstExemplairesUtilisateur;
         public GestionCartes(MainWindow main)
         {
             InitializeComponent();
 
             Main = main;
 
-            LstExemplairesUtilisateur = MySqlCarteService.RetrieveExemplairesUser(Main.UtilisateurConnecte.IdUtilisateur);
+            //LstExemplairesUtilisateur = MySqlCarteService.RetrieveExemplairesUser(Main.UtilisateurConnecte.IdUtilisateur);
 
             LstCartesCollection = TrierOrdreAlphabetique("croissant");
 
@@ -62,7 +62,7 @@ namespace Cosmos.view
                 imgCarte.PreviewMouseLeftButtonUp += ZoomerCarte;
                 imgCarte.Opacity = 0.6;
 
-                foreach (Exemplaire carteUtilisateur in LstExemplairesUtilisateur)
+                foreach (Exemplaire carteUtilisateur in Main.UtilisateurConnecte.ExemplairesUtilisateurs)
                 {
                     if (uneCarte.Nom == carteUtilisateur.Carte.Nom)
                     {
@@ -198,7 +198,7 @@ namespace Cosmos.view
 
             foreach (Carte carteCollection in lstTemp)
             {
-                foreach (Exemplaire carteUtilisateur in LstExemplairesUtilisateur)
+                foreach (Exemplaire carteUtilisateur in Main.UtilisateurConnecte.ExemplairesUtilisateurs)
                 {
                     if (carteCollection.IdCarte == carteUtilisateur.Carte.IdCarte)
                     {

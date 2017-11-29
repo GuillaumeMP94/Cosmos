@@ -74,7 +74,7 @@ namespace Cosmos.accesBD
                                          );
 
                 // On va chercher les cartes
-                resultat.CartesUtilisateurs = MySqlCarteService.RetrieveAllUserExemplaires((int)drResultat["idUtilisateur"]);
+                resultat.ExemplairesUtilisateurs = MySqlCarteService.RetrieveExemplairesUser((int)drResultat["idUtilisateur"]);
                 // On va chercher les decks
                 resultat.DecksUtilisateurs = MySqlDeckService.RetrieveAllUserDeck((int)drResultat["idUtilisateur"]);
             }
