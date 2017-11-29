@@ -60,7 +60,7 @@ namespace Cosmos.metier
             // Damax utilisateur Debug cheater
             if (Nom == "Damax")
             {
-                RessourceActive = new Ressource(22, 22, 22);
+                RessourceActive = new Ressource(60, 60, 60);
             }
             else
             {
