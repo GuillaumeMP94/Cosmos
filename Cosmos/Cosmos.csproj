@@ -79,6 +79,7 @@
     <Compile Include="metier\Impact.cs" />
     <Compile Include="metier\Joueur.cs" />
     <Compile Include="metier\Radiation.cs" />
+    <Compile Include="metier\Recyclage.cs" />
     <Compile Include="metier\Ressource.cs" />
     <Compile Include="metier\TableDeJeu.cs" />
     <Compile Include="metier\TrousseGlobale.cs" />

@@ -105,5 +105,12 @@ namespace Cosmos.metier
         {
             DeckAJouer.AjouterCarteRecyclage(lstUsineRecyclage);
         }
+
+        public bool EstMort()
+        {
+            if (PointDeBlindage <= 0)
+                return true;
+             return false;
+        }
     }
 }
