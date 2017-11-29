@@ -37,7 +37,6 @@ namespace Cosmos.view
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
         public DispatcherTimer Temps { get; set; }
-        public DispatcherTimer TempsAI { get; set; }
         public bool Unite1J1Attack { get; set; }
         public bool Unite2J1Attack { get; set; }
         public bool Unite3J1Attack { get; set; }
@@ -61,11 +60,7 @@ namespace Cosmos.view
             Temps = new DispatcherTimer();
             Temps.Interval = TimeSpan.FromMilliseconds(1000);
             Temps.Tick += timer_Tick;
-            //Timer pour avertir le AI;
-            TempsAI = new DispatcherTimer();
-            TempsAI.Interval = TimeSpan.FromMilliseconds(1000);
-            TempsAI.Tick += NotifyAi;
-            TempsAI.Start();
+
             //TODO: Utilisateur Connecter
             Utilisateur utilisateur1 = MySqlUtilisateurService.RetrieveByNom("Damax");
             //Utilisateur utilisateur1 = Main.UtilisateurConnecte;
@@ -137,6 +132,12 @@ namespace Cosmos.view
             TrousseGlobale.ChoisirCible += ChoixCibleListener;
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
+            TrousseGlobale.FinPartie += TerminerPartie;
+        }
+
+        private void TerminerPartie(object sender, FinPartieEventArgs e)
+        {
+            VerifierVictoire();
         }
 
         private void ChoixCibleListener(object sender, ChoisirCibleEventArgs e)
@@ -144,15 +145,6 @@ namespace Cosmos.view
             EcranChoixCible(e.Cible,e.NbCible);
         }
 
-        /// <summary>
-        /// Fonction qui averti l'ai de jouer.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NotifyAi(object sender, EventArgs e)
-        {
-            laTableDeJeu.NotifyAi();
-        }
         /// <summary>
         /// Code lorsque l'evenement RefreshAll est lancé quelque part dans l'application.
         /// </summary>
@@ -250,6 +242,7 @@ namespace Cosmos.view
             }
             RefreshAll();
             Temps.Stop();
+            laTableDeJeu.NotifyAi();
         }
         /// <summary>
         /// Actions qui se produit lors de la phase principale.
@@ -267,7 +260,7 @@ namespace Cosmos.view
                     AffichagePhasePrincipale();
                 });
             }
-            
+            laTableDeJeu.NotifyAi();
         }
         /// <summary>
         /// Fonction qui change l'affichage de la phase principale.
@@ -363,23 +356,21 @@ namespace Cosmos.view
         /// </summary>
         private void VerifierVictoire()
         {
-            if (laTableDeJeu.Joueur2.PointDeBlindage <= 0)
+            if (laTableDeJeu.JoueurEstMort(false))
             {
                 // Victoire
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 Temps.Stop();
-                TempsAI.Stop();
                 MessageBox.Show("Vous avez gagné!","Victoire", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
-            if (laTableDeJeu.Joueur1.PointDeBlindage <= 0)
+            if (laTableDeJeu.JoueurEstMort(true))
             {
                 // Défaite
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 Temps.Stop();
-                TempsAI.Stop();
                 MessageBox.Show("Vous avez perdu!", "Défaite", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
@@ -432,7 +423,6 @@ namespace Cosmos.view
             TrousseGlobale.PhaseChange -= changerPhase;
             TrousseGlobale.RefreshAll -= RefreshAllEvent;
             Temps.Stop();
-            TempsAI.Stop();
             Main.EcranMenuPrincipal();
         }
         /// <summary>
@@ -560,6 +550,32 @@ namespace Cosmos.view
                 img.Margin = new Thickness(i * 50, 0, 0, 0);
                 img.SetValue(Panel.ZIndexProperty, i);
                 
+                grdCartesAdversaire.Children.Add(img);
+                i++;
+                ImgMainJ2.Add(img);
+            }
+
+
+            //grdCartesAdversaire
+            //< Image Source = "/images/CardBack.png" Grid.Column = "0" HorizontalAlignment = "Left" Panel.ZIndex = "1" Margin = "0,0,0,0" />
+        }
+        private void AfficherCarteMainOuvertJ2()
+        {
+
+            foreach (Image element in ImgMainJ2)
+            {
+                grdCartesAdversaire.Children.Remove(element);
+            }
+            ImgMainJ2.Clear();
+            int i = 0;
+            foreach (Carte element in laTableDeJeu.LstMainJ2)
+            {
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + element.Nom + ".jpg"));
+                img.HorizontalAlignment = HorizontalAlignment.Left;
+                img.Margin = new Thickness(i * 50, 0, 0, 0);
+                img.SetValue(Panel.ZIndexProperty, i);
+
                 grdCartesAdversaire.Children.Add(img);
                 i++;
                 ImgMainJ2.Add(img);
@@ -857,16 +873,25 @@ namespace Cosmos.view
                 switch(img.Name.Substring(8, 1))
                 {
                     case "1":
-                        Unite1J1Attack = ChangerBoolAttaque(Unite1J1Attack);
-                        ChangerBorderAttaque(emplacementUnite1J1, Unite1J1Attack);
+                        if (laTableDeJeu.ChampBatailleUnitesJ1.AttChamp1 > 0)
+                        {
+                            Unite1J1Attack = ChangerBoolAttaque(Unite1J1Attack);
+                            ChangerBorderAttaque(emplacementUnite1J1, Unite1J1Attack);
+                        }
                         break;
                     case "2":
-                        Unite2J1Attack = ChangerBoolAttaque(Unite2J1Attack);
-                        ChangerBorderAttaque(emplacementUnite2J1, Unite2J1Attack);
+                        if (laTableDeJeu.ChampBatailleUnitesJ1.AttChamp2 > 0)
+                        {
+                            Unite2J1Attack = ChangerBoolAttaque(Unite2J1Attack);
+                            ChangerBorderAttaque(emplacementUnite2J1, Unite2J1Attack);
+                        }
                         break;
                     case "3":
-                        Unite3J1Attack = ChangerBoolAttaque(Unite3J1Attack);
-                        ChangerBorderAttaque(emplacementUnite3J1, Unite3J1Attack);
+                        if (laTableDeJeu.ChampBatailleUnitesJ1.AttChamp3 > 0)
+                        {
+                            Unite3J1Attack = ChangerBoolAttaque(Unite3J1Attack);
+                            ChangerBorderAttaque(emplacementUnite3J1, Unite3J1Attack);
+                        }
                         break;
                 }
             }

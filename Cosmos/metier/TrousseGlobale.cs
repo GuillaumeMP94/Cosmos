@@ -8,6 +8,7 @@ namespace Cosmos.metier
 {
     class TrousseGlobale
     {
+
         public class ChoisirCibleEventArgs : EventArgs
         {
             public int Cible { get; set; }
@@ -32,14 +33,23 @@ namespace Cosmos.metier
 
             }
         }
+        public class FinPartieEventArgs : EventArgs
+        {
+            public FinPartieEventArgs()
+            {
+
+            }
+        }
         // Prototypes que doit respecter la méthode qui s'occupera de gérer les évènements
         public delegate void ChoisirCibleEventHandler(object sender, ChoisirCibleEventArgs e);
         public delegate void PhaseChangeEventHandler(object sender, PhaseChangeEventArgs e);
         public delegate void RefreshAllEventHandler(object sender, RefreshAllEventArgs e);
+        public delegate void FinPartieEventHandler(object sender, FinPartieEventArgs e);
 
         static public event ChoisirCibleEventHandler ChoisirCible;
         static public event PhaseChangeEventHandler PhaseChange;
         static public event RefreshAllEventHandler RefreshAll;
+        static public event FinPartieEventHandler FinPartie;
 
         // Déclenchement de l'évènement
         public virtual void OnPhaseChange(PhaseChangeEventArgs e)
@@ -57,6 +67,11 @@ namespace Cosmos.metier
         {
             if (ChoisirCible != null)
                 ChoisirCible(this, e);
+        }
+        public virtual void OnFinPartie(FinPartieEventArgs e)
+        {
+            if (FinPartie != null)
+                FinPartie(this, e);
         }
     }
 }

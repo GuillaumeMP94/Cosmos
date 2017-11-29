@@ -358,6 +358,10 @@ namespace Cosmos.metier
                     
                 }
             }
+            if (AExecuter.Type == "gain")
+                ExecuterGain();
+            if (AExecuter.Type == "recyclage")
+                ExecuterRecyclage();
             /*
                 Cible
                 0	Tout le monde
@@ -391,6 +395,73 @@ namespace Cosmos.metier
                 1-2-3-4-etc...	La quantité exacte.
 
                 */
+        }
+
+        private void ExecuterRecyclage()
+        {
+            List<Carte> lstRecyclageUtiliser;
+            List<Carte> lstMainUtiliser;
+            Carte aRecycler = null;
+            if (joueurActifEst1)
+            {
+                lstRecyclageUtiliser = LstUsineRecyclageJ1;
+                lstMainUtiliser = LstMainJ1;
+            }
+            else
+            {
+                lstRecyclageUtiliser = LstUsineRecyclageJ2;
+                lstMainUtiliser = LstMainJ2;
+            }
+            if (AExecuter.getCible() == 1)
+            {
+                foreach (Carte uneCarte in lstRecyclageUtiliser)
+                {
+                    if (uneCarte is Unite)
+                    {
+                        aRecycler = uneCarte;
+                    }
+                }
+            }
+            else if (AExecuter.getCible() == 2)
+            {
+                foreach (Carte uneCarte in lstRecyclageUtiliser)
+                {
+                    if (uneCarte is Gadget && (uneCarte.EffetCarte.Type != "recyclage" || uneCarte.EffetCarte.getCible() != 2))
+                    {
+                        aRecycler = uneCarte;
+                    }
+                }
+            }
+            else // c'est 3
+            {
+                foreach (Carte uneCarte in lstRecyclageUtiliser)
+                {
+                    if (uneCarte is Batiment)
+                    {
+                        aRecycler = uneCarte;
+                    }
+                }
+            }
+            lstRecyclageUtiliser.Remove(aRecycler);
+            lstMainUtiliser.Add(aRecycler);
+        }
+
+        private void ExecuterGain()
+        {
+            Joueur Actif;
+            Joueur Passif;
+            if (JoueurActifEst1)
+            {
+                Actif = Joueur1;
+                Passif = Joueur2;
+            }
+            else
+            {
+                Actif = Joueur2;
+                Passif = Joueur1;
+            }
+            Actif.RessourceActive += AExecuter.GetRessourceJoueur();
+            Passif.RessourceActive += AExecuter.GetRessourceAdversaire();
         }
 
         public void ExecuterEffetFinTour()
@@ -435,6 +506,15 @@ namespace Cosmos.metier
             ExecuterEffets(effetsAExecuter,receveur);
         }
 
+        public bool JoueurEstMort(bool joueurUn)
+        {
+            if (joueurUn && Joueur1.EstMort())
+                return true;
+            else if (Joueur2.EstMort())
+                return true;
+            return false;
+        }
+
         private void ExecuterEffets(List<Effet> effetsAExecuter, Joueur receveur)
         {
             foreach (Effet unEffet in effetsAExecuter)
@@ -454,9 +534,43 @@ namespace Cosmos.metier
                 AExecuter = laCarte.EffetCarte;
                 if ( AExecuter.Type == "impact" && ChoixEffetPossible(AExecuter.getNbCible()) > 0)
                     return true;
+                if (AExecuter.Type == "gain")
+                    return true;
+                if (AExecuter.Type == "recyclage" && RecyclagePossible())
+                    return true;
             }
             return false;
         }
+
+        private bool RecyclagePossible()
+        {
+            if (AExecuter.getCible() == 1)
+            {
+                foreach (Carte uneCarte in LstUsineRecyclageJ1)
+                {
+                    if (uneCarte is Unite)
+                        return true;
+                }
+            }
+            if (AExecuter.getCible() == 2)
+            {
+                foreach (Carte uneCarte in LstUsineRecyclageJ1)
+                {
+                    if (uneCarte is Gadget && (uneCarte.EffetCarte.Type != "recyclage" || uneCarte.EffetCarte.getCible() != 2))
+                        return true;
+                }
+            }
+            if (AExecuter.getCible() == 3)
+            {
+                foreach (Carte uneCarte in LstUsineRecyclageJ1)
+                {
+                    if (uneCarte is Batiment)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         private int ChoixEffetPossible(int cible)
         {
             int resultat = 0;
@@ -531,23 +645,37 @@ namespace Cosmos.metier
             if (AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 6 || AExecuter.getCible() == 7 || AExecuter.getCible() == 12 || AExecuter.getCible() == 13 || AExecuter.getCible() == 15 || AExecuter.getCible() == 16)
             {
                 if (BatailleDefenseur.Champ1 != null)
-                    BatailleDefenseur.VieChamp1 -= AExecuter.getValeur();
+                    if (BatailleDefenseur.Champ1.EffetCarte == null || (BatailleDefenseur.Champ1.EffetCarte != null && BatailleDefenseur.Champ1.EffetCarte.Type != "indestructible"))
+                        BatailleDefenseur.VieChamp1 -= AExecuter.getValeur();
                 if (BatailleDefenseur.Champ2 != null)
-                    BatailleDefenseur.VieChamp2 -= AExecuter.getValeur();
+                    if (BatailleDefenseur.Champ2.EffetCarte == null || (BatailleDefenseur.Champ2.EffetCarte != null && BatailleDefenseur.Champ2.EffetCarte.Type != "indestructible"))
+                        BatailleDefenseur.VieChamp2 -= AExecuter.getValeur();
                 if (BatailleDefenseur.Champ3 != null)
-                    BatailleDefenseur.VieChamp3 -= AExecuter.getValeur();
+                    if (BatailleDefenseur.Champ3.EffetCarte == null || (BatailleDefenseur.Champ3.EffetCarte != null && BatailleDefenseur.Champ3.EffetCarte.Type != "indestructible"))
+                        BatailleDefenseur.VieChamp3 -= AExecuter.getValeur();
             }
             if (AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 6 || AExecuter.getCible() == 8 || AExecuter.getCible() == 12 || AExecuter.getCible() == 14 || AExecuter.getCible() == 15 || AExecuter.getCible() == 17)
             {
                 if (BatailleAttaquant.Champ1 != null)
-                    BatailleAttaquant.VieChamp1 -= AExecuter.getValeur();
+                    if (BatailleAttaquant.Champ1.EffetCarte == null || (BatailleAttaquant.Champ1.EffetCarte != null && BatailleAttaquant.Champ1.EffetCarte.Type != "indestructible"))
+                        BatailleAttaquant.VieChamp1 -= AExecuter.getValeur();
                 if (BatailleAttaquant.Champ2 != null)
-                    BatailleAttaquant.VieChamp2 -= AExecuter.getValeur();
+                    if (BatailleAttaquant.Champ2.EffetCarte == null || (BatailleAttaquant.Champ2.EffetCarte != null && BatailleAttaquant.Champ2.EffetCarte.Type != "indestructible"))
+                        BatailleAttaquant.VieChamp2 -= AExecuter.getValeur();
                 if (BatailleAttaquant.Champ3 != null)
-                    BatailleAttaquant.VieChamp3 -= AExecuter.getValeur();
+                    if (BatailleAttaquant.Champ3.EffetCarte == null || (BatailleAttaquant.Champ3.EffetCarte != null && BatailleAttaquant.Champ3.EffetCarte.Type != "indestructible"))
+                        BatailleAttaquant.VieChamp3 -= AExecuter.getValeur();
             }
             DetruireBatiment();
             DetruireUnite();
+            FinDePartie();
+        }
+
+        private void FinDePartie()
+        {
+            FinPartieEventArgs p = new FinPartieEventArgs();
+            TrousseGlobale TG = new TrousseGlobale();
+            TG.OnFinPartie(p);
         }
 
         /// <summary>
@@ -903,30 +1031,36 @@ namespace Cosmos.metier
         {
             if (champ1 && attaquant.Champ1 != null)
             {
-                if (defenseur.Champ1 != null)
+                if (((attaquant.Champ1.EffetCarte != null && attaquant.Champ1.EffetCarte.Type != "imblocable") || attaquant.Champ1.EffetCarte == null) && defenseur.Champ1 != null)
                 {
-                    attaquant.VieChamp1 -= defenseur.AttChamp1;
-                    defenseur.VieChamp1 -= attaquant.AttChamp1;
+                    if (attaquant.Champ1.EffetCarte == null || (attaquant.Champ1.EffetCarte != null && attaquant.Champ1.EffetCarte.Type != "attaqueFurtive" && attaquant.Champ1.EffetCarte.Type != "indestructible"))
+                        attaquant.VieChamp1 -= defenseur.AttChamp1;
+                    if (defenseur.Champ1.EffetCarte == null || (defenseur.Champ1.EffetCarte != null && defenseur.Champ1.EffetCarte.Type != "indestructible"))
+                        defenseur.VieChamp1 -= attaquant.AttChamp1;
                 }
                 else
                     joueurDefense.PointDeBlindage -= attaquant.AttChamp1;
             }
             if (champ2 && attaquant.Champ2 != null)
             {
-                if (defenseur.Champ2 != null)
+                if (((attaquant.Champ2.EffetCarte != null && attaquant.Champ2.EffetCarte.Type != "imblocable") || attaquant.Champ2.EffetCarte == null) && defenseur.Champ2 != null)
                 {
-                    attaquant.VieChamp2 -= defenseur.AttChamp2;
-                    defenseur.VieChamp2 -= attaquant.AttChamp2;
+                    if (attaquant.Champ2.EffetCarte == null || (attaquant.Champ2.EffetCarte != null && attaquant.Champ2.EffetCarte.Type != "attaqueFurtive" && attaquant.Champ2.EffetCarte.Type != "indestructible"))
+                        attaquant.VieChamp2 -= defenseur.AttChamp2;
+                    if (defenseur.Champ2.EffetCarte == null || (defenseur.Champ2.EffetCarte != null && defenseur.Champ2.EffetCarte.Type != "indestructible"))
+                        defenseur.VieChamp2 -= attaquant.AttChamp2;
                 }
                 else
                     joueurDefense.PointDeBlindage -= attaquant.AttChamp2;
             }
             if (champ3 && attaquant.Champ3 != null)
             {
-                if (defenseur.Champ3 != null)
+                if (((attaquant.Champ3.EffetCarte != null && attaquant.Champ3.EffetCarte.Type != "imblocable") || attaquant.Champ3.EffetCarte == null) && defenseur.Champ3 != null)
                 {
-                    attaquant.VieChamp3 -= defenseur.AttChamp3;
-                    defenseur.VieChamp3 -= attaquant.AttChamp3;
+                    if (attaquant.Champ3.EffetCarte == null || (attaquant.Champ3.EffetCarte != null && attaquant.Champ3.EffetCarte.Type != "attaqueFurtive" && attaquant.Champ3.EffetCarte.Type != "indestructible"))
+                        attaquant.VieChamp3 -= defenseur.AttChamp3;
+                    if (defenseur.Champ3.EffetCarte == null || (defenseur.Champ3.EffetCarte != null && defenseur.Champ3.EffetCarte.Type != "indestructible"))
+                        defenseur.VieChamp3 -= attaquant.AttChamp3;
                 }
                 else
                     joueurDefense.PointDeBlindage -= attaquant.AttChamp3;
@@ -958,20 +1092,21 @@ namespace Cosmos.metier
             if (choix.Contains(214))
                 ChampConstructionsJ2.Champ4.Defense -= AExecuter.getValeur();
             // Unité
-            if (choix.Contains(121))
+            if (choix.Contains(121) && (ChampBatailleUnitesJ1.Champ1.EffetCarte == null || (ChampBatailleUnitesJ1.Champ1.EffetCarte != null && ChampBatailleUnitesJ1.Champ1.EffetCarte.Type != "indestructible")))
                 ChampBatailleUnitesJ1.VieChamp1 -= AExecuter.getValeur();
-            if (choix.Contains(122))
+            if (choix.Contains(122) && (ChampBatailleUnitesJ1.Champ2.EffetCarte == null || (ChampBatailleUnitesJ1.Champ2.EffetCarte != null && ChampBatailleUnitesJ1.Champ2.EffetCarte.Type != "indestructible")))
                 ChampBatailleUnitesJ1.VieChamp2 -= AExecuter.getValeur();
-            if (choix.Contains(123))
+            if (choix.Contains(123) && (ChampBatailleUnitesJ1.Champ3.EffetCarte == null || (ChampBatailleUnitesJ1.Champ3.EffetCarte != null && ChampBatailleUnitesJ1.Champ3.EffetCarte.Type != "indestructible")))
                 ChampBatailleUnitesJ1.VieChamp3 -= AExecuter.getValeur();
-            if (choix.Contains(221))
+            if (choix.Contains(221) && (ChampBatailleUnitesJ2.Champ1.EffetCarte == null || (ChampBatailleUnitesJ2.Champ1.EffetCarte != null && ChampBatailleUnitesJ2.Champ1.EffetCarte.Type != "indestructible")))
                 ChampBatailleUnitesJ2.VieChamp1 -= AExecuter.getValeur();
-            if (choix.Contains(222))
+            if (choix.Contains(222) && (ChampBatailleUnitesJ2.Champ2.EffetCarte == null || (ChampBatailleUnitesJ2.Champ2.EffetCarte != null && ChampBatailleUnitesJ2.Champ2.EffetCarte.Type != "indestructible")))
                 ChampBatailleUnitesJ2.VieChamp2 -= AExecuter.getValeur();
-            if (choix.Contains(223))
+            if (choix.Contains(223) && (ChampBatailleUnitesJ2.Champ3.EffetCarte == null || (ChampBatailleUnitesJ2.Champ3.EffetCarte != null && ChampBatailleUnitesJ2.Champ3.EffetCarte.Type != "indestructible")))
                 ChampBatailleUnitesJ2.VieChamp3 -= AExecuter.getValeur();
             DetruireUnite();
             DetruireBatiment();
+            FinDePartie();
         }
 
         public bool EspaceUniteEstDisponible()
