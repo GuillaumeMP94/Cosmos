@@ -28,6 +28,7 @@ namespace Cosmos.view
         public List<Label> LstQteExemplaire { get; set; }
         public List<Button> LstBtnPlus { get; set; }
         public List<Button> LstBtnMoins { get; set; }
+        public List<Button> LstBtnEnlever { get; set; }
         public GestionCartes(MainWindow main)
         {
             InitializeComponent();
@@ -35,12 +36,6 @@ namespace Cosmos.view
             Main = main;
 
             LstCartesCollection = TrierOrdreAlphabetique("croissant");
-
-            LstNomExemplaire = new List<Label>();
-            LstQteExemplaire = new List<Label>();
-
-            LstBtnPlus = new List<Button>();
-            LstBtnMoins = new List<Button>();
 
             GenererListeCartes();
 
@@ -63,6 +58,7 @@ namespace Cosmos.view
                 imgCarte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + uneCarte.Nom + ".jpg"));
                 imgCarte.Width = 160;
                 imgCarte.Height = 190;
+                imgCarte.Name = "img" + uneCarte.IdCarte.ToString();
                 imgCarte.HorizontalAlignment = HorizontalAlignment.Center;
                 imgCarte.Cursor = Cursors.Hand;
                 imgCarte.PreviewMouseLeftButtonUp += ZoomerCarte;
@@ -115,35 +111,6 @@ namespace Cosmos.view
             }
         }
 
-        public void GenererDecks()
-        {
-            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count > 0 )
-            {
-                btnRenommer.Opacity = 1;
-                btnRenommer.IsEnabled = true;
-                btnRenommer.Cursor = Cursors.Hand;
-
-                btnSupprimer.Opacity = 1;
-                btnSupprimer.IsEnabled = true;
-                btnSupprimer.Cursor = Cursors.Hand;
-
-                if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 3)
-                {
-                    btnCreerDeck.Opacity = 0.6;
-                    btnCreerDeck.IsEnabled = false;
-                    btnCreerDeck.Cursor = Cursors.Arrow;
-                }
-                
-                if (Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count == 50)
-                {
-                    btnAjouterCarte.Opacity = 0.6;
-                    btnAjouterCarte.IsEnabled = false;
-                    btnAjouterCarte.Cursor = Cursors.Arrow;
-                }
-
-                RefreshOnglets();
-            }
-        }
         #region TrierCartes
         private List<Carte> TrierOrdreAlphabetique(string ordre)
         {
@@ -189,6 +156,68 @@ namespace Cosmos.view
 
             imgZoomCarte.Source = image.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
+            imgZoomCarte.Name = "z" + image.Name;
+            if (image.Opacity == 1)
+            {
+                imgZoomCarte.Cursor = Cursors.Hand;
+                imgZoomCarte.PreviewMouseLeftButtonUp += ImgZoomCarte_PreviewMouseLeftButtonUp;
+            }
+        }
+
+        private void ImgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Image imageZoom = (Image)sender;
+            bool estPresente = false;
+            int onglet = tbcDecksUtilisateurs.SelectedIndex;
+
+            Exemplaire exemplaireAAjouter = RetrouverCarte(Convert.ToInt32(imgZoomCarte.Name.Substring(4)));
+            int position = RetrouverPositionExemplaire(exemplaireAAjouter);
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count > 0 && tbcDecksUtilisateurs.SelectedIndex <= Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 && LstNomExemplaire.Count > 0)
+            {
+                estPresente = TrouverExemplaireDansDeck(exemplaireAAjouter);
+
+                if (estPresente)
+                {
+                    if (Convert.ToInt32( LstQteExemplaire[position].Content.ToString()) < 3)
+                    {
+                        MySqlDeckService.UpdateQteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAAjouter, Convert.ToInt32(LstQteExemplaire[position].Content.ToString())+1);
+                    }
+                }
+            }
+        }
+
+        private int RetrouverPositionExemplaire(Exemplaire exemplaireAAjouter)
+        {
+            for (int i = 0; i < LstNomExemplaire.Count; i++)
+            {
+                if (LstNomExemplaire[i].Content.ToString() == exemplaireAAjouter.Carte.Nom)
+                    return i;
+            }
+
+            return 0;
+        }
+
+        private bool TrouverExemplaireDansDeck(Exemplaire exemplaireAAjouter)
+        {
+            foreach (Label nomCarte in LstNomExemplaire)
+            {
+                if (nomCarte.Content.ToString() == exemplaireAAjouter.Carte.Nom)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private Exemplaire RetrouverCarte(int idCarte)
+        {
+            foreach (Exemplaire exemplaire in Main.UtilisateurConnecte.ExemplairesUtilisateurs)
+            {
+                if (exemplaire.Carte.IdCarte == idCarte)
+                {
+                    return exemplaire;
+                }
+            }
+            return null;
         }
 
         private void rectZoom_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -230,13 +259,13 @@ namespace Cosmos.view
         {
             int compteurRow = 1;
             List<Exemplaire> lstExemplairesDeck = MySqlCarteService.RetrieveExemplairesDeckUser(deck.Nom, Main.UtilisateurConnecte.IdUtilisateur);
-
             LstNomExemplaire = new List<Label>();
             LstQteExemplaire = new List<Label>();
-
             LstBtnPlus = new List<Button>();
             LstBtnMoins = new List<Button>();
+            LstBtnEnlever = new List<Button>();
 
+            // Pour chaque exemplaire dans les decks, on instancie la grille avec leur nom et leur quantité, ainsi qu'avec des boutons pour incrémenter de 1, soustraire de 1 et enlever complètement l'exemplaire
             foreach (Exemplaire e in lstExemplairesDeck)
             {
                 RowDefinition rwdRangee = new RowDefinition();
@@ -257,11 +286,14 @@ namespace Cosmos.view
                 lblQuantite.FontSize = 15;
                 lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
 
+                #region Boutons
                 Button btnPlus = new Button();
                 btnPlus.Click += new RoutedEventHandler(btnPlus_Click);
                 btnPlus.Width = 30;
                 btnPlus.Height = 30;
                 btnPlus.Content = "+";
+                btnPlus.FontSize = 18;
+                btnPlus.FontWeight = FontWeights.Bold;
                 btnPlus.HorizontalAlignment = HorizontalAlignment.Left;
 
                 Button btnMoins = new Button();
@@ -269,7 +301,21 @@ namespace Cosmos.view
                 btnMoins.Width = 30;
                 btnMoins.Height = 30;
                 btnMoins.Content = "-";
+                btnMoins.FontSize = 18;
+                btnMoins.FontWeight = FontWeights.Bold;
                 btnMoins.HorizontalAlignment = HorizontalAlignment.Center;
+
+                Button btnEnlever = new Button();
+                btnEnlever.Click += new RoutedEventHandler(btnEnlever_Click);
+                btnEnlever.Width = 30;
+                btnEnlever.Height = 30;
+                btnEnlever.Content = "x";
+                btnEnlever.FontSize = 18;
+                btnEnlever.FontWeight = FontWeights.Bold;
+                btnEnlever.Foreground = Brushes.Red;
+                btnEnlever.HorizontalAlignment = HorizontalAlignment.Right;
+                #endregion
+
 
                 switch (posOnglet)
                 {
@@ -279,6 +325,7 @@ namespace Cosmos.view
                         grdDeck1.Children.Add(lblQuantite);
                         grdDeck1.Children.Add(btnPlus);
                         grdDeck1.Children.Add(btnMoins);
+                        grdDeck1.Children.Add(btnEnlever);
                         break;
                     case 1:
                         grdDeck2.RowDefinitions.Add(rwdRangee);
@@ -286,6 +333,7 @@ namespace Cosmos.view
                         grdDeck2.Children.Add(lblQuantite);
                         grdDeck2.Children.Add(btnPlus);
                         grdDeck2.Children.Add(btnMoins);
+                        grdDeck3.Children.Add(btnEnlever);
                         break;
                     case 2:
                         grdDeck3.RowDefinitions.Add(rwdRangee);
@@ -293,20 +341,25 @@ namespace Cosmos.view
                         grdDeck3.Children.Add(lblQuantite);
                         grdDeck3.Children.Add(btnPlus);
                         grdDeck3.Children.Add(btnMoins);
+                        grdDeck3.Children.Add(btnEnlever);
                         break;
                 }
 
+                // Placer label Nom Carte
                 Grid.SetRow(lblCarte, compteurRow);
                 Grid.SetColumn(lblCarte, 0);
-
+                // Placer label Quantité
                 Grid.SetRow(lblQuantite, compteurRow);
                 Grid.SetColumn(lblQuantite, 1);
-
+                // Placer Bouton +
                 Grid.SetRow(btnPlus, compteurRow);
                 Grid.SetColumn(btnPlus, 2);
-
+                // Placer Bouton -
                 Grid.SetRow(btnMoins, compteurRow);
                 Grid.SetColumn(btnMoins, 2);
+                // Placer Bouton x
+                Grid.SetRow(btnEnlever, compteurRow);
+                Grid.SetColumn(btnEnlever, 2);
 
                 compteurRow++;
 
@@ -314,7 +367,23 @@ namespace Cosmos.view
                 LstQteExemplaire.Add(lblQuantite);
                 LstBtnPlus.Add(btnPlus);
                 LstBtnMoins.Add(btnMoins);
+                LstBtnEnlever.Add(btnEnlever);
             }
+        }
+
+        #region Boutons Modification quantité dans deck
+        private void btnEnlever_Click(object sender, RoutedEventArgs e)
+        {
+            Button BoutonEnlever = sender as Button;
+
+            int index = LstBtnEnlever.IndexOf(BoutonEnlever);
+            int onglet = tbcDecksUtilisateurs.SelectedIndex;
+
+            Exemplaire exemplaireAUpdate = RetrouverExemplaireAUpdate(LstNomExemplaire[index].Content.ToString());
+
+            MySqlDeckService.DeleteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet].IdDeck, exemplaireAUpdate.IdExemplaire);
+
+            RefreshAll();
         }
 
         private void btnMoins_Click(object sender, RoutedEventArgs e)
@@ -327,19 +396,14 @@ namespace Cosmos.view
 
             Exemplaire exemplaireAUpdate = RetrouverExemplaireAUpdate(LstNomExemplaire[index].Content.ToString());
 
-            if ((int)LstQteExemplaire[index].Content <= 3 && RetrouverQuantiteExemplaire(LstNomExemplaire[index].Content.ToString()) - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count <= 50)
+            if ((int)LstQteExemplaire[index].Content <= 3 && exemplaireAUpdate.Quantite - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count <= 50)
             {
                 qte = (int)LstQteExemplaire[index].Content - 1;
 
                 if (qte > 0)
-                {
                     MySqlDeckService.UpdateQteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAUpdate, qte);
-                }
                 else
-                {
-                    MySqlDeckService.DeleteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet].IdDeck, exemplaireAUpdate.IdExemplaire);
-                }
-                
+                    MySqlDeckService.DeleteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet].IdDeck, exemplaireAUpdate.IdExemplaire);                
             }
 
             RefreshAll();
@@ -355,7 +419,7 @@ namespace Cosmos.view
 
             Exemplaire exemplaireAUpdate = RetrouverExemplaireAUpdate(LstNomExemplaire[index].Content.ToString());
 
-            if ((int)LstQteExemplaire[index].Content < 3 && RetrouverQuantiteExemplaire(LstNomExemplaire[index].Content.ToString()) - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count < 50)
+            if ((int)LstQteExemplaire[index].Content < 3 && exemplaireAUpdate.Quantite - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count < 50)
             {
                 qte = (int)LstQteExemplaire[index].Content + 1;
                 LstQteExemplaire[index].Content = qte;
@@ -372,33 +436,19 @@ namespace Cosmos.view
             foreach (Exemplaire exemplaire in Main.UtilisateurConnecte.ExemplairesUtilisateurs)
             {
                 if (exemplaire.Carte.Nom == nomCarte)
-                {
                     return exemplaire;
-                }
             }
 
             return null;
         }
+        #endregion
 
-        private int RetrouverQuantiteExemplaire(string nomCarte)
-        {
-            foreach (Exemplaire exemplaire in Main.UtilisateurConnecte.ExemplairesUtilisateurs)
-            {
-                if (exemplaire.Carte.Nom == nomCarte)
-                {
-                    return exemplaire.Quantite;
-                }
-            }
-
-            return 0;
-        }
-
+        #region Boutons en bas des decks
         private void btnSupprimer_Click(object sender, RoutedEventArgs e)
 		{
             Main.ContenuAddModifSupp = new SupprimerDeck(this, ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString());
 
             Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
-
 		}
 
 		private void btnRenommer_Click(object sender, RoutedEventArgs e)
@@ -406,30 +456,32 @@ namespace Cosmos.view
             Main.ContenuAddModifSupp = new RenommerDeck(this, ((TabItem)tbcDecksUtilisateurs.SelectedItem).Header.ToString());
 
             Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
-
 		}
 
-		private bool ValiderSuppression() {
-
-			if (MessageBox.Show("Êtes vous sur de vouloir supprimer votre deck?", "Suppression de deck", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-				return true;
-			return false;
-		}
-
+        #region Créer nouveau deck
         private void btnCreerDeck_Click(object sender, RoutedEventArgs e)
         {
             string nomDefaut = TrouverNomParDefaut();
             bool estChoisi = false;
 
             if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0)
-            {
                 estChoisi = true;
-            }
+            else
+                estChoisi = VerifierDeckChoisi();
 
             MySqlDeckService.Insert(nomDefaut, Main.UtilisateurConnecte.IdUtilisateur, estChoisi);
 
             RefreshAll();
+        }
 
+        private bool VerifierDeckChoisi()
+        {
+            foreach (Deck deckUtilisateur in Main.UtilisateurConnecte.DecksUtilisateurs)
+            {
+                if (deckUtilisateur.EstChoisi)
+                    return false;
+            }
+            return true;
         }
 
         private string TrouverNomParDefaut()
@@ -454,6 +506,7 @@ namespace Cosmos.view
 
             return nomDeck;
         }
+#endregion
 
         private void btnAjouterCarte_Click(object sender, RoutedEventArgs e)
         {
@@ -464,8 +517,9 @@ namespace Cosmos.view
         {
             RefreshAll();
         }
+        #endregion
 
-
+        #region Refraichir la fenêtre
         public void RefreshAll()
         {
             ViderGrids();
@@ -569,10 +623,8 @@ namespace Cosmos.view
                     case 2:
                         tbiEmplacement3.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
                         break;
-                }
-                
+                } 
             }
-         
         }
 
         private void ViderGrids()
@@ -585,9 +637,7 @@ namespace Cosmos.view
                 if (item.GetType() == typeof(Label))
                 {
                     if (((Label)item).Name != "lblCarte1" && ((Label)item).Name != "lblQte1")
-                    {
                         lstLblARemove.Add(((Label)item));
-                    }
                 }
                 else if (item.GetType() == typeof(Button))
                 {
@@ -613,9 +663,7 @@ namespace Cosmos.view
                 if (item.GetType() == typeof(Label))
                 {
                     if (((Label)item).Name != "lblCarte2" && ((Label)item).Name != "lblQte2")
-                    {
                         lstLblARemove.Add(((Label)item));
-                    }
                 }
                 else if (item.GetType() == typeof(Button))
                 {
@@ -641,9 +689,7 @@ namespace Cosmos.view
                 if (item.GetType() == typeof(Label))
                 {
                     if (((Label)item).Name != "lblCarte3" && ((Label)item).Name != "lblQte3")
-                    {
                         lstLblARemove.Add(((Label)item));
-                    }
                 }
                 else if (item.GetType() == typeof(Button))
                 {
@@ -661,5 +707,6 @@ namespace Cosmos.view
                 grdDeck3.Children.Remove(aRemove);
             }
         }
+        #endregion
     }
 }
