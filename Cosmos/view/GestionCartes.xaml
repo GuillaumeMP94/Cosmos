@@ -65,8 +65,8 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
-                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Name="lblCarte1" Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Name="lblQte1" Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -78,11 +78,12 @@
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="175"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
-                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Name="lblCarte2" Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Name="lblQte2" Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -94,11 +95,12 @@
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="175"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
-                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Name="lblCarte3" Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Name="lblQte3" Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>

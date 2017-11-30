@@ -122,6 +122,7 @@ namespace Cosmos.accesBD
 
             return resultat;
         }
+
         /// <summary>
         /// Retrouve tous les exemplaires avec leur quantité
         /// </summary>
@@ -366,6 +367,17 @@ namespace Cosmos.accesBD
 
             return lstResultat;
         }
+
+        public static void DeleteAllExemplairesDeck(int pIdDeck)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            // Delete le deck de la table DecksExemplaires
+            nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(pIdDeck);
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
     }
 
 

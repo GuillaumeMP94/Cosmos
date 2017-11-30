@@ -110,11 +110,9 @@ namespace Cosmos.accesBD
             ConnectionBD = new MySqlConnexion();
 
             // Delete le deck de la table DecksExemplaires
-            nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(deckASupprimer.IdDeck);
-            ConnectionBD.NonQuery(nonquery.ToString());
+            MySqlCarteService.DeleteAllExemplairesDeck(deckASupprimer.IdDeck);
 
             // Delete le deck
-            nonquery = new StringBuilder();
             nonquery.Append("DELETE FROM Decks WHERE nom = '").Append(deckASupprimer.Nom).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
 
             ConnectionBD.NonQuery(nonquery.ToString());
@@ -143,7 +141,7 @@ namespace Cosmos.accesBD
             ConnectionBD.NonQuery(nonquery.ToString());
         }
 
-        internal static void UpdateQteExemplaireDeck(Deck deck, Exemplaire exemplaire, int qte)
+        public static void UpdateQteExemplaireDeck(Deck deck, Exemplaire exemplaire, int qte)
         {
             StringBuilder nonquery = new StringBuilder();
             ConnectionBD = new MySqlConnexion();
@@ -151,6 +149,15 @@ namespace Cosmos.accesBD
             nonquery.Append("UPDATE DecksExemplaires ").Append("SET quantite = ").Append(qte).Append(" WHERE idDeck = ")
                 .Append(deck.IdDeck).Append(" AND idExemplaire = ").Append(exemplaire.IdExemplaire);
 
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void DeleteExemplaireDeck(int pIdDeck, int pIdExemplaire)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(pIdDeck).Append(" AND idExemplaire = ").Append(pIdExemplaire);
             ConnectionBD.NonQuery(nonquery.ToString());
         }
     }

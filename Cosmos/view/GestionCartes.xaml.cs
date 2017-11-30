@@ -44,7 +44,6 @@ namespace Cosmos.view
 
             GenererListeCartes();
 
-            GenererDecks();
         }
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
@@ -232,6 +231,12 @@ namespace Cosmos.view
             int compteurRow = 1;
             List<Exemplaire> lstExemplairesDeck = MySqlCarteService.RetrieveExemplairesDeckUser(deck.Nom, Main.UtilisateurConnecte.IdUtilisateur);
 
+            LstNomExemplaire = new List<Label>();
+            LstQteExemplaire = new List<Label>();
+
+            LstBtnPlus = new List<Button>();
+            LstBtnMoins = new List<Button>();
+
             foreach (Exemplaire e in lstExemplairesDeck)
             {
                 RowDefinition rwdRangee = new RowDefinition();
@@ -314,7 +319,30 @@ namespace Cosmos.view
 
         private void btnMoins_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Button BoutonMoins = sender as Button;
+
+            int index = LstBtnMoins.IndexOf(BoutonMoins);
+            int onglet = tbcDecksUtilisateurs.SelectedIndex;
+            int qte;
+
+            Exemplaire exemplaireAUpdate = RetrouverExemplaireAUpdate(LstNomExemplaire[index].Content.ToString());
+
+            if ((int)LstQteExemplaire[index].Content <= 3 && RetrouverQuantiteExemplaire(LstNomExemplaire[index].Content.ToString()) - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count <= 50)
+            {
+                qte = (int)LstQteExemplaire[index].Content - 1;
+
+                if (qte > 0)
+                {
+                    MySqlDeckService.UpdateQteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAUpdate, qte);
+                }
+                else
+                {
+                    MySqlDeckService.DeleteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet].IdDeck, exemplaireAUpdate.IdExemplaire);
+                }
+                
+            }
+
+            RefreshAll();
         }
 
         private void btnPlus_Click(object sender, RoutedEventArgs e)
@@ -336,6 +364,7 @@ namespace Cosmos.view
             }
 
             RefreshAll();
+
         }
 
         private Exemplaire RetrouverExemplaireAUpdate(string nomCarte)
@@ -439,7 +468,20 @@ namespace Cosmos.view
 
         public void RefreshAll()
         {
+            ViderGrids();
+
             Main.UtilisateurConnecte.DecksUtilisateurs = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
+            
+            if (tbcDecksUtilisateurs.SelectedIndex <= Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1)
+            {
+                int pos = 0;
+
+                if (tbcDecksUtilisateurs.SelectedIndex != -1)
+                {
+                    pos = tbcDecksUtilisateurs.SelectedIndex;
+                }
+                CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[pos], pos);
+            }
 
             RefreshOnglets();
             RefreshBtnSupprimer();
@@ -514,31 +556,110 @@ namespace Cosmos.view
 
         private void RefreshOnglets()
         {
-            ViderGrids();
             for (int i = 0; i < Main.UtilisateurConnecte.DecksUtilisateurs.Count; i++)
             {
                 switch (i)
                 {
                     case 0:
                         tbiEmplacement1.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
-                        CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[i], i);
                         break;
                     case 1:
                         tbiEmplacement2.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
-                        CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[i], i);
                         break;
                     case 2:
                         tbiEmplacement3.Header = Main.UtilisateurConnecte.DecksUtilisateurs[i].Nom;
-                        CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[i], i);
                         break;
                 }
                 
             }
+         
         }
 
         private void ViderGrids()
         {
-            tbcDecksUtilisateurs.Items.Clear();
+            List<Label> lstLblARemove = new List<Label>();
+            List<Button> lstBtnARemove = new List<Button>();
+
+            foreach (object item in grdDeck1.Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if (((Label)item).Name != "lblCarte1" && ((Label)item).Name != "lblQte1")
+                    {
+                        lstLblARemove.Add(((Label)item));
+                    }
+                }
+                else if (item.GetType() == typeof(Button))
+                {
+                    lstBtnARemove.Add(((Button)item));
+                }  
+            }
+
+            foreach (Label aRemove in lstLblARemove)
+            {
+                grdDeck1.Children.Remove(aRemove);
+            }
+
+            foreach (Button aRemove in lstBtnARemove)
+            {
+                grdDeck1.Children.Remove(aRemove);
+            }
+
+            lstLblARemove = new List<Label>();
+            lstBtnARemove = new List<Button>();
+
+            foreach (object item in grdDeck2.Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if (((Label)item).Name != "lblCarte2" && ((Label)item).Name != "lblQte2")
+                    {
+                        lstLblARemove.Add(((Label)item));
+                    }
+                }
+                else if (item.GetType() == typeof(Button))
+                {
+                    lstBtnARemove.Add(((Button)item));
+                }
+            }
+
+            foreach (Label aRemove in lstLblARemove)
+            {
+                grdDeck2.Children.Remove(aRemove);
+            }
+
+            foreach (Button aRemove in lstBtnARemove)
+            {
+                grdDeck2.Children.Remove(aRemove);
+            }
+
+            lstLblARemove = new List<Label>();
+            lstBtnARemove = new List<Button>();
+
+            foreach (object item in grdDeck3.Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if (((Label)item).Name != "lblCarte3" && ((Label)item).Name != "lblQte3")
+                    {
+                        lstLblARemove.Add(((Label)item));
+                    }
+                }
+                else if (item.GetType() == typeof(Button))
+                {
+                    lstBtnARemove.Add(((Button)item));
+                }
+            }
+
+            foreach (Label aRemove in lstLblARemove)
+            {
+                grdDeck3.Children.Remove(aRemove);
+            }
+
+            foreach (Button aRemove in lstBtnARemove)
+            {
+                grdDeck3.Children.Remove(aRemove);
+            }
         }
     }
 }
