@@ -63,6 +63,15 @@ namespace Cosmos.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream batiment {
+            get {
+                return ResourceManager.GetStream("batiment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream charron {
             get {
                 return ResourceManager.GetStream("charron", resourceCulture);
@@ -72,9 +81,45 @@ namespace Cosmos.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream doh1 {
+            get {
+                return ResourceManager.GetStream("doh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream imperial {
+            get {
+                return ResourceManager.GetStream("imperial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream jabba {
+            get {
+                return ResourceManager.GetStream("jabba", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream jesus {
             get {
                 return ResourceManager.GetStream("jesus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream lost {
+            get {
+                return ResourceManager.GetStream("lost", resourceCulture);
             }
         }
         
@@ -93,6 +138,15 @@ namespace Cosmos.Properties {
         internal static System.IO.UnmanagedMemoryStream nain {
             get {
                 return ResourceManager.GetStream("nain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream rebel {
+            get {
+                return ResourceManager.GetStream("rebel", resourceCulture);
             }
         }
         
@@ -120,6 +174,15 @@ namespace Cosmos.Properties {
         internal static System.IO.UnmanagedMemoryStream toto {
             get {
                 return ResourceManager.GetStream("toto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream win {
+            get {
+                return ResourceManager.GetStream("win", resourceCulture);
             }
         }
     }

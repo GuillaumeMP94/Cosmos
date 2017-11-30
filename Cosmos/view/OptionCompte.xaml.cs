@@ -47,5 +47,26 @@ namespace Cosmos.view
         {
 
         }
+
+        private void btnScreen_Click(object sender, RoutedEventArgs e)
+        {
+
+            TextBlock tb = (TextBlock)btnScreen.Template.FindName("txblScreen", btnScreen);
+
+            if(tb.Text == "Mettre en fenêtre mobile")
+            {
+                tb.Text = "Mettre en plein écran";
+                Main.WindowState = WindowState.Normal;
+                Main.WindowStyle = WindowStyle.SingleBorderWindow;                
+            }
+            else
+            {                
+                tb.Text = "Mettre en fenêtre mobile";
+                Main.WindowState = WindowState.Maximized;
+                Main.WindowStyle = WindowStyle.None;
+                Main.Topmost = true;                
+            }
+
+        }
     }
 }
