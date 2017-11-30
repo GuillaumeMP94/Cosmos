@@ -73,10 +73,13 @@
     <Compile Include="metier\ChampConstructions.cs" />
     <Compile Include="metier\Deck.cs" />
     <Compile Include="metier\Effet.cs" />
+    <Compile Include="metier\Exemplaire.cs" />
     <Compile Include="metier\Gadget.cs" />
     <Compile Include="metier\Gain.cs" />
     <Compile Include="metier\Impact.cs" />
     <Compile Include="metier\Joueur.cs" />
+    <Compile Include="metier\Radiation.cs" />
+    <Compile Include="metier\Recyclage.cs" />
     <Compile Include="metier\Ressource.cs" />
     <Compile Include="metier\TableDeJeu.cs" />
     <Compile Include="metier\TrousseGlobale.cs" />
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\GestionCartes.xaml.cs">
+      <DependentUpon>GestionCartes.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\ListeAmis.xaml.cs">
       <DependentUpon>ListeAmis.xaml</DependentUpon>
@@ -157,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\CreationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\GestionCartes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,27 +258,6 @@
     <Resource Include="images\partie\partie_BG_2.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\cartes\ATX-317.jpg" />
-    <Resource Include="images\cartes\Croiseur de Guerre.jpg" />
-    <Resource Include="images\cartes\Elite.jpg" />
-    <Resource Include="images\cartes\Exploreur Taligari.jpg" />
-    <Resource Include="images\cartes\Exterminateur.jpg" />
-    <Resource Include="images\cartes\Gronar.jpg" />
-    <Resource Include="images\cartes\Guerrier Spartan.jpg" />
-    <Resource Include="images\cartes\Katarina.jpg" />
-    <Resource Include="images\cartes\Marine Elite.jpg" />
-    <Resource Include="images\cartes\Marine Taligari.jpg" />
-    <Resource Include="images\cartes\Nova.jpg" />
-    <Resource Include="images\cartes\Orianna Revak.jpg" />
-    <Resource Include="images\cartes\Samus Aran.jpg" />
-    <Resource Include="images\cartes\Transporteur UNSC.jpg" />
-    <Resource Include="images\cartes\Usine de Charronite.jpg" />
-    <Resource Include="images\cartes\Usine Nucléaire.jpg" />
-    <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
-    <Resource Include="images\cartes\Warthog.jpg" />
-    <Resource Include="images\cartes\Xenos.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\ressources\Alain.png" />
     <Resource Include="images\ressources\Baril.png" />
   </ItemGroup>
@@ -281,7 +270,6 @@
   <ItemGroup>
     <Resource Include="images\iconeAmis.png" />
     <Resource Include="images\partie\jouer.jpg" />
-    <Resource Include="images\cartes\Explorateur de l%27Alliance.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="docs\MySqlTransaction.xml" />
@@ -328,6 +316,82 @@
     <Content Include="sons\nain.wav" />
     <Content Include="sons\robert.wav" />
     <Content Include="sons\toto.wav" />
+    <Resource Include="images\cartes\ATX-317.jpg" />
+    <Resource Include="images\cartes\Brute.jpg" />
+    <Resource Include="images\cartes\Casino.jpg" />
+    <Resource Include="images\cartes\Charronite Pur.jpg" />
+    <Resource Include="images\cartes\Chef de l%27Alliance.jpg" />
+    <Resource Include="images\cartes\Croiseur de Guerre.jpg" />
+    <Resource Include="images\cartes\Croiseur Marine.jpg" />
+    <Resource Include="images\cartes\Cyborg de l%27Alliance.jpg" />
+    <Resource Include="images\cartes\Destruction Planétaire.jpg" />
+    <Resource Include="images\cartes\Duo Infiltrateur.jpg" />
+    <Resource Include="images\cartes\Déployeur de Flotte.jpg" />
+    <Resource Include="images\cartes\Elite Radioactive.jpg" />
+    <Resource Include="images\cartes\Elite Taligari.jpg" />
+    <Resource Include="images\cartes\Elite.jpg" />
+    <Resource Include="images\cartes\Explorateur Alliance.jpg" />
+    <Resource Include="images\cartes\Explorateur Taligari.jpg" />
+    <Resource Include="images\cartes\Explosion Nucléaire.jpg" />
+    <Resource Include="images\cartes\EXT-8 Taligari.jpg" />
+    <Resource Include="images\cartes\Exterminateur.jpg" />
+    <Resource Include="images\cartes\Faucheur.jpg" />
+    <Resource Include="images\cartes\Griffe de la Destruction.jpg" />
+    <Resource Include="images\cartes\Gronar.jpg" />
+    <Resource Include="images\cartes\Guerrier Spartan.jpg" />
+    <Resource Include="images\cartes\Général Radioactif.jpg" />
+    <Resource Include="images\cartes\Halo.jpg" />
+    <Resource Include="images\cartes\Insécateur.jpg" />
+    <Resource Include="images\cartes\Katarina.jpg" />
+    <Resource Include="images\cartes\Laser Spartan.jpg" />
+    <Resource Include="images\cartes\Lucky 38.jpg" />
+    <Resource Include="images\cartes\Marché Taligari.jpg" />
+    <Resource Include="images\cartes\Marine de Front.jpg" />
+    <Resource Include="images\cartes\Marine de Mélée.jpg" />
+    <Resource Include="images\cartes\Marine Elite.jpg" />
+    <Resource Include="images\cartes\Marine Taligari.jpg" />
+    <Resource Include="images\cartes\Mercenaire de la République.jpg" />
+    <Resource Include="images\cartes\Metroid.jpg" />
+    <Resource Include="images\cartes\Mission de Sauvetage.jpg" />
+    <Resource Include="images\cartes\Mother Brain.jpg" />
+    <Resource Include="images\cartes\Météore.jpg" />
+    <Resource Include="images\cartes\Nova.jpg" />
+    <Resource Include="images\cartes\Onde de Choc.jpg" />
+    <Resource Include="images\cartes\Orianna Revak.jpg" />
+    <Resource Include="images\cartes\Porteur de l%27Alliance.jpg" />
+    <Resource Include="images\cartes\Prêtre de Combat.jpg" />
+    <Resource Include="images\cartes\Reaper.jpg" />
+    <Resource Include="images\cartes\Renégate.jpg" />
+    <Resource Include="images\cartes\Rumia.jpg" />
+    <Resource Include="images\cartes\Récupération.jpg" />
+    <Resource Include="images\cartes\Réparation.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cartes\Samus Aran.jpg" />
+    <Resource Include="images\cartes\Scout Taligari.jpg" />
+    <Resource Include="images\cartes\Simple Mercenaire.jpg" />
+    <Resource Include="images\cartes\Sniper.jpg" />
+    <Resource Include="images\cartes\Spécimen X.jpg" />
+    <Resource Include="images\cartes\Station Jerico.jpg" />
+    <Resource Include="images\cartes\Station Taligari.jpg" />
+    <Resource Include="images\cartes\Surplus de Charronite.jpg" />
+    <Resource Include="images\cartes\Tali Zorah.jpg" />
+    <Resource Include="images\cartes\Temple Oublié.jpg" />
+    <Resource Include="images\cartes\Tengu Radioactif.jpg" />
+    <Resource Include="images\cartes\Transporteur UNSC.jpg" />
+    <Resource Include="images\cartes\TRX-8 Mercenaire.jpg" />
+    <Resource Include="images\cartes\Usine Abandonné.jpg" />
+    <Resource Include="images\cartes\Usine de Charronite.jpg" />
+    <Resource Include="images\cartes\Usine Nucléaire.jpg" />
+    <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
+    <Resource Include="images\cartes\Vitrification.jpg" />
+    <Resource Include="images\cartes\Vétéran de l%27Alliance.jpg" />
+    <Resource Include="images\cartes\Warthog.jpg" />
+    <Resource Include="images\cartes\Xaya.jpg" />
+    <Resource Include="images\cartes\Xenos.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cartes\Infectée.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

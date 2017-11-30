@@ -52,5 +52,10 @@ namespace Cosmos.metier
         {
             return this.Defense;
         }
+
+        public override string Type()
+        {
+            return "Unite";
+        }
     }
 }

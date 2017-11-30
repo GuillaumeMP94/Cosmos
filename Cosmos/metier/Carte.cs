@@ -30,6 +30,11 @@ namespace Cosmos.metier
         #endregion
         public abstract Carte Clone();
 
+        public virtual string Type()
+        {
+            return "Carte";
+        }
+
         public virtual int getAttaque()
         {
             return 0;

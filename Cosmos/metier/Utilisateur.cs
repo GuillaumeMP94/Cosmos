@@ -57,7 +57,15 @@ namespace Cosmos.metier
         public override void Reinitialiser()
         {
             PointDeBlindage = 25;
-            RessourceActive = new Ressource(20, 20, 20);
+            // Damax utilisateur Debug cheater
+            if (Nom == "Damax")
+            {
+                RessourceActive = new Ressource(60, 60, 60);
+            }
+            else
+            {
+                RessourceActive = new Ressource(0, 0, 0);
+            }
             LevelRessource = new Ressource(1, 1, 1);
             foreach (Deck unDeck in this.DecksUtilisateurs)
             {

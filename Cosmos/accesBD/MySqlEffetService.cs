@@ -54,6 +54,21 @@ namespace Cosmos.accesBD
                                             )
                                    );
                 }
+                else if ((int)dr["champEffetB"] != 99)
+                {
+                    lstResultat.Add(new Recyclage((string)dr["typeEffet"]
+                                            , (int)dr["champEffetA"]
+                                            , (int)dr["champEffetB"]
+                                            )
+                                   );
+                }
+                else if ((int)dr["champEffetA"] != 99)
+                {
+                    lstResultat.Add(new Radiation((string)dr["typeEffet"]
+                                            , (int)dr["champEffetA"]
+                                            )
+                                   );
+                }
                 else
                 {
                     lstResultat.Add(new Effet((string)dr["typeEffet"]));
@@ -99,6 +114,19 @@ namespace Cosmos.accesBD
                                      , (int)drResultat["champEffetB"]
                                      , (int)drResultat["champEffetC"]
                                      );
+            }
+            else if ((int)drResultat["champEffetB"] != 99)
+            {
+                resultat = new Recyclage((string)drResultat["typeEffet"]
+                                        , (int)drResultat["champEffetA"]
+                                        , (int)drResultat["champEffetB"]
+                                        );
+            }
+            else if ((int)drResultat["champEffetA"] != 99)
+            {
+                resultat = new Radiation((string)drResultat["typeEffet"]
+                                        , (int)drResultat["champEffetA"]
+                                        );
             }
             else
             {

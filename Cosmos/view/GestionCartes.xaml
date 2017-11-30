@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="Cosmos.view.GestionCartes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Name="grdGestionCartes" Width="auto" Height="auto" >
+        <Label Name="lblTri" Content="Veuillez choisir votre ordre de tri" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="27,140" Height="40" VerticalAlignment="Top"/>
+        <ComboBox Name="cboChoixTri" Height="30" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,170" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  SelectionChanged="cboChoixTri_SelectionChanged">
+            <ComboBoxItem>A-Z</ComboBoxItem>
+            <ComboBoxItem>Z-A</ComboBoxItem>
+            <ComboBoxItem>Types</ComboBoxItem>
+        </ComboBox>
+        <Border Width="900" Height="625" Background="Black" Opacity="0.6" Margin="20,180,0,15" CornerRadius="15" HorizontalAlignment="Left"/>
+        <Border Width="250" Height="40" Background="Black" Opacity="0.6" Margin="0,22" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Name="lblTitre" Content="Ma collection" Foreground="DarkGoldenrod" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20" Height="40" VerticalAlignment="Top"/>
+        <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="15,0,0,70" VerticalAlignment="Bottom" >
+            <Grid Name="grdLesCartes">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+        </ScrollViewer>
+        <Border Width="450" Height="625" Background="Black" Opacity="0.6" Margin="0,180,30,15" CornerRadius="15" HorizontalAlignment="Right"/>
+        <TabControl Name="tbcDecksUtilisateurs" Width="400" Height="600" Margin="0,180,50,15" HorizontalAlignment="Right" Background="LightGray">
+            <TabItem Name="tbiEmplacement1" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
+                <ScrollViewer>
+                    <Grid Name="grdDeck1">
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="40"/> 
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Name="tbiEmplacement2" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
+                <ScrollViewer>
+                    <Grid Name="grdDeck2">
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Name="tbiEmplacement3" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
+                <ScrollViewer>
+                    <Grid Name="grdDeck3">
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Carte" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                        <Label Content="Quantité" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="DarkGoldenrod"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        
+        
+        <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,20"  
+                Width="200" HorizontalAlignment="Center" Background="DarkGoldenrod" Cursor="Hand" Click="btnMenuPrincipal_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Menu principal
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
+                   PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp" Cursor="Hand"/>
+
+        <Image Name="imgZoomCarte" Height="500" VerticalAlignment="Top"
+               HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden"/>
+    </Grid>
+</UserControl>

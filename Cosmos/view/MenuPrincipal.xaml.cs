@@ -47,7 +47,7 @@ namespace Cosmos.view
 
         private void btnGestionDecks_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("En construction");
+            Main.EcranGestionCartes();
         }
 
         private void btnMultijoueur_Click(object sender, RoutedEventArgs e)
