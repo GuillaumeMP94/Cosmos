@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,6 +48,12 @@ namespace Cosmos.view
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
         {
             Main.EcranMenuPrincipal();
+
+            if(Main.MusicOn)
+            {
+                Main.PlayMusic();
+            }            
+            Main.imgMusic.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -71,12 +79,43 @@ namespace Cosmos.view
             {
                 PresentationNiveau(btn);
                 brdStory.Visibility = Visibility.Visible;
+
+                switch (btn.Name.ToString())
+                {
+                    case "btnNiveau1":
+                        
+                        PlaySound(Cosmos.Properties.Resources.robert);                        
+                        break;
+                    case "btnNiveau2":
+                        PlaySound(Cosmos.Properties.Resources.meteo);
+                        break;
+                    case "btnNiveau3":
+                        PlaySound(Cosmos.Properties.Resources.nain);
+                        break;
+                    case "btnNiveau4":
+                        PlaySound(Cosmos.Properties.Resources.toto);
+                        break;
+                    case "btnNiveau5":
+                        PlaySound(Cosmos.Properties.Resources.jesus);
+                        break;
+                }
+                
             }
 
             btn.Height = 200;
             btn.Width = 200;
 
             estin = true;
+
+            
+        }
+
+        private void PlaySound(System.IO.Stream uri)
+        {
+            //SoundPlayer player = new SoundPlayer(uri);            
+            Main.Player = new SoundPlayer(uri);
+
+            Main.Player.Play();     
         }
 
         private void btnMouseLeave(object sender, MouseEventArgs e)
@@ -87,6 +126,8 @@ namespace Cosmos.view
             btn.Width = btnWidth;
 
             brdStory.Visibility = Visibility.Hidden;
+
+            Main.Player.Stop();
 
             estin = false;
         }
@@ -136,10 +177,10 @@ namespace Cosmos.view
                     break;
                 case "btnNiveau5":
                     niveau = "Niveau 5";
-                    titre = "Docteur Brown";
+                    titre = "The Preacher";
                     break;
             }
-            txBlStory.Text = @"-***- " + niveau + " - Chef de guerre : " + titre;
+            txBlStory.Text = @" - " + niveau + " - Chef de guerre : " + titre;
 
             if (btn.Margin.Top < 250 && btn.Margin.Left < 600)
             {

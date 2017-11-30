@@ -16,10 +16,11 @@
         <Border BorderThickness="7" BorderBrush="White" />
         <Border BorderThickness="7" BorderBrush="White" CornerRadius="20" />
         <Border BorderThickness="7" BorderBrush="White" CornerRadius="30" />
-        <!--<Border BorderThickness="15" BorderBrush="White" CornerRadius="30" />
-        <Border BorderThickness="7" BorderBrush="DarkGoldenrod" />
-        <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="20" />
-        <Border BorderThickness="7" BorderBrush="DarkGoldenrod" CornerRadius="30" />-->
+
+
+        <Image Name="imgMusic" Source="/images/note.png" VerticalAlignment="Top" HorizontalAlignment="Left"
+               Margin="25,25,0,0" Width="75" PreviewMouseLeftButtonUp="imgMusic_PreviewMouseLeftButtonUp"
+               Panel.ZIndex="1" Cursor="Hand"/>
 
     </Grid>
 </Window>
