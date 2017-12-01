@@ -310,8 +310,6 @@
   <ItemGroup>
     <Content Include="sons\win.wav" />
     <Resource Include="images\note.png" />
-<<<<<<< HEAD
-=======
     <Content Include="sons\batiment.wav" />
     <Content Include="sons\charron.wav" />
     <Content Include="sons\doh1.wav" />
@@ -325,7 +323,6 @@
     <Content Include="sons\rebel.wav" />
     <Content Include="sons\robert.wav" />
     <Content Include="sons\toto.wav" />
->>>>>>> 083a0f687fca99ad10a8b3cd6b618289c03efbe0
     <Resource Include="images\cartes\ATX-317.jpg" />
     <Resource Include="images\cartes\Brute.jpg" />
     <Resource Include="images\cartes\Casino Radioactif.jpg" />
