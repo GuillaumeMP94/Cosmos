@@ -309,15 +309,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\note.png" />
-    <Content Include="sons\charron.wav" />
-    <Content Include="sons\jesus.wav" />
-    <Content Include="sons\meteo.wav" />
-    <Content Include="sons\musiques\superboy.wav" />
-    <Content Include="sons\nain.wav" />
-    <Content Include="sons\robert.wav" />
-    <Content Include="sons\toto.wav" />
     <Resource Include="images\cartes\ATX-317.jpg" />
     <Resource Include="images\cartes\Brute.jpg" />
+    <Resource Include="images\cartes\Casino Radioactif.jpg" />
     <Resource Include="images\cartes\Casino.jpg" />
     <Resource Include="images\cartes\Charronite Pur.jpg" />
     <Resource Include="images\cartes\Chef de l%27Alliance.jpg" />
@@ -341,13 +335,14 @@
     <Resource Include="images\cartes\Guerrier Spartan.jpg" />
     <Resource Include="images\cartes\Général Radioactif.jpg" />
     <Resource Include="images\cartes\Halo.jpg" />
+    <Resource Include="images\cartes\Infectée.jpg" />
     <Resource Include="images\cartes\Insécateur.jpg" />
     <Resource Include="images\cartes\Katarina.jpg" />
     <Resource Include="images\cartes\Laser Spartan.jpg" />
     <Resource Include="images\cartes\Lucky 38.jpg" />
     <Resource Include="images\cartes\Marché Taligari.jpg" />
     <Resource Include="images\cartes\Marine de Front.jpg" />
-    <Resource Include="images\cartes\Marine de Mélée.jpg" />
+    <Resource Include="images\cartes\Marine de Mêlée.jpg" />
     <Resource Include="images\cartes\Marine Elite.jpg" />
     <Resource Include="images\cartes\Marine Taligari.jpg" />
     <Resource Include="images\cartes\Mercenaire de la République.jpg" />
@@ -356,6 +351,7 @@
     <Resource Include="images\cartes\Mother Brain.jpg" />
     <Resource Include="images\cartes\Météore.jpg" />
     <Resource Include="images\cartes\Nova.jpg" />
+    <Resource Include="images\cartes\Obscure Confidente.jpg" />
     <Resource Include="images\cartes\Onde de Choc.jpg" />
     <Resource Include="images\cartes\Orianna Revak.jpg" />
     <Resource Include="images\cartes\Porteur de l%27Alliance.jpg" />
@@ -365,8 +361,6 @@
     <Resource Include="images\cartes\Rumia.jpg" />
     <Resource Include="images\cartes\Récupération.jpg" />
     <Resource Include="images\cartes\Réparation.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\cartes\Samus Aran.jpg" />
     <Resource Include="images\cartes\Scout Taligari.jpg" />
     <Resource Include="images\cartes\Simple Mercenaire.jpg" />
@@ -380,7 +374,7 @@
     <Resource Include="images\cartes\Tengu Radioactif.jpg" />
     <Resource Include="images\cartes\Transporteur UNSC.jpg" />
     <Resource Include="images\cartes\TRX-8 Mercenaire.jpg" />
-    <Resource Include="images\cartes\Usine Abandonné.jpg" />
+    <Resource Include="images\cartes\Usine Abandonnée.jpg" />
     <Resource Include="images\cartes\Usine de Charronite.jpg" />
     <Resource Include="images\cartes\Usine Nucléaire.jpg" />
     <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
@@ -389,9 +383,13 @@
     <Resource Include="images\cartes\Warthog.jpg" />
     <Resource Include="images\cartes\Xaya.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\cartes\Infectée.jpg" />
+    <Content Include="sons\charron.wav" />
+    <Content Include="sons\jesus.wav" />
+    <Content Include="sons\meteo.wav" />
+    <Content Include="sons\musiques\superboy.wav" />
+    <Content Include="sons\nain.wav" />
+    <Content Include="sons\robert.wav" />
+    <Content Include="sons\toto.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
