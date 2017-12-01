@@ -363,16 +363,18 @@ namespace Cosmos.view
                 // Victoire
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
+                TrousseGlobale.FinPartie -= TerminerPartie;
                 Temps.Stop();
                 PlaySound(Cosmos.Properties.Resources.win);
                 MessageBox.Show("Vous avez gagné!","Victoire", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
-            if (laTableDeJeu.JoueurEstMort(true))
+            else if (laTableDeJeu.JoueurEstMort(true))
             {
                 // Défaite
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
+                TrousseGlobale.FinPartie -= TerminerPartie;
                 Temps.Stop();
                 PlaySound(Cosmos.Properties.Resources.lost);
                 MessageBox.Show("Vous avez perdu!", "Défaite", MessageBoxButton.OK);
