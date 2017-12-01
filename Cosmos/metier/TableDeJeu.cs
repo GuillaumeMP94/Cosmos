@@ -689,8 +689,7 @@ namespace Cosmos.metier
             }
             else
             {
-                Phase = 1;
-
+                Phase = 1;                
                 if (JoueurActifEst1)
                 {
                     joueurActifEst1 = false;
@@ -698,6 +697,7 @@ namespace Cosmos.metier
                 else
                 {
                     joueurActifEst1 = true;
+                    NbTourComplet++;
                 }
             }
             PhaseChangeEventArgs p = new PhaseChangeEventArgs();
