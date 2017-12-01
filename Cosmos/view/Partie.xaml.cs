@@ -362,6 +362,7 @@ namespace Cosmos.view
             if (laTableDeJeu.JoueurEstMort(false))
             {
                 // Victoire
+                imgFinTour.Visibility = Visibility.Hidden;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.FinPartie -= TerminerPartie;
@@ -372,6 +373,7 @@ namespace Cosmos.view
             else if (laTableDeJeu.JoueurEstMort(true))
             {
                 // Défaite
+                imgFinTour.Visibility = Visibility.Hidden;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.FinPartie -= TerminerPartie;
