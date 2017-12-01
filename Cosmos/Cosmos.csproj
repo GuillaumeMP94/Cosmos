@@ -72,7 +72,6 @@
     <Compile Include="metier\ChampBatailleUnites.cs" />
     <Compile Include="metier\ChampConstructions.cs" />
     <Compile Include="metier\Deck.cs" />
-    <Compile Include="metier\DeckExemplaire.cs" />
     <Compile Include="metier\Effet.cs" />
     <Compile Include="metier\Exemplaire.cs" />
     <Compile Include="metier\Gadget.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="metier\Impact.cs" />
     <Compile Include="metier\Joueur.cs" />
     <Compile Include="metier\Radiation.cs" />
+    <Compile Include="metier\Recyclage.cs" />
     <Compile Include="metier\Ressource.cs" />
     <Compile Include="metier\TableDeJeu.cs" />
     <Compile Include="metier\TrousseGlobale.cs" />
@@ -127,14 +127,8 @@
     <Compile Include="view\ReglementsTutoriel.xaml.cs">
       <DependentUpon>ReglementsTutoriel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\RenommerDeck.xaml.cs">
-      <DependentUpon>RenommerDeck.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\SupprimerAmi.xaml.cs">
       <DependentUpon>SupprimerAmi.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="view\SupprimerDeck.xaml.cs">
-      <DependentUpon>SupprimerDeck.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -204,15 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\RenommerDeck.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="view\SupprimerAmi.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\SupprimerDeck.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,9 +307,22 @@
   <ItemGroup>
     <Resource Include="images\partie\check.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="images\cartes\Assasin Taligari.jpg" />
+    <Content Include="sons\win.wav" />
+    <Resource Include="images\note.png" />
+    <Content Include="sons\batiment.wav" />
+    <Content Include="sons\charron.wav" />
+    <Content Include="sons\doh1.wav" />
+    <Content Include="sons\imperial.wav" />
+    <Content Include="sons\jabba.wav" />
+    <Content Include="sons\jesus.wav" />
+    <Content Include="sons\lost.wav" />
+    <Content Include="sons\meteo.wav" />
+    <Content Include="sons\musiques\superboy.wav" />
+    <Content Include="sons\nain.wav" />
+    <Content Include="sons\rebel.wav" />
+    <Content Include="sons\robert.wav" />
+    <Content Include="sons\toto.wav" />
     <Resource Include="images\cartes\ATX-317.jpg" />
     <Resource Include="images\cartes\Brute.jpg" />
     <Resource Include="images\cartes\Casino Radioactif.jpg" />
@@ -389,7 +388,7 @@
     <Resource Include="images\cartes\Tengu Radioactif.jpg" />
     <Resource Include="images\cartes\Transporteur UNSC.jpg" />
     <Resource Include="images\cartes\TRX-8 Mercenaire.jpg" />
-    <Resource Include="images\cartes\Usine Abandonné.jpg" />
+    <Resource Include="images\cartes\Usine Abandonnée.jpg" />
     <Resource Include="images\cartes\Usine de Charronite.jpg" />
     <Resource Include="images\cartes\Usine Nucléaire.jpg" />
     <Resource Include="images\cartes\Vaisseau UNSC.jpg" />
@@ -398,6 +397,13 @@
     <Resource Include="images\cartes\Warthog.jpg" />
     <Resource Include="images\cartes\Xaya.jpg" />
     <Resource Include="images\cartes\Xenos.jpg" />
+    <Content Include="sons\charron.wav" />
+    <Content Include="sons\jesus.wav" />
+    <Content Include="sons\meteo.wav" />
+    <Content Include="sons\musiques\superboy.wav" />
+    <Content Include="sons\nain.wav" />
+    <Content Include="sons\robert.wav" />
+    <Content Include="sons\toto.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
