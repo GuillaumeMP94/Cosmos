@@ -160,5 +160,17 @@ namespace Cosmos.accesBD
             nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(pIdDeck).Append(" AND idExemplaire = ").Append(pIdExemplaire);
             ConnectionBD.NonQuery(nonquery.ToString());
         }
+
+        public static void InsertExemplaireDeck(Deck deck, Exemplaire exemplaireAAjouter, int quantite)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO DecksExemplaires (idDeck, idExemplaire, quantite) VALUES (")
+                 .Append(deck.IdDeck)
+                 .Append(", ").Append(exemplaireAAjouter.IdExemplaire).Append(", ").Append(quantite).Append(")");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
     }
 }

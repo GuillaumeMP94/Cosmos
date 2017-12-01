@@ -157,6 +157,7 @@ namespace Cosmos.view
             imgZoomCarte.Source = image.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
             imgZoomCarte.Name = "z" + image.Name;
+
             if (image.Opacity == 1)
             {
                 imgZoomCarte.Cursor = Cursors.Hand;
@@ -164,7 +165,7 @@ namespace Cosmos.view
             }
         }
 
-        private void ImgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ImgZoomCarte_PreviewMouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             Image imageZoom = (Image)sender;
             bool estPresente = false;
@@ -172,17 +173,24 @@ namespace Cosmos.view
 
             Exemplaire exemplaireAAjouter = RetrouverCarte(Convert.ToInt32(imgZoomCarte.Name.Substring(4)));
             int position = RetrouverPositionExemplaire(exemplaireAAjouter);
-            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count > 0 && tbcDecksUtilisateurs.SelectedIndex <= Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 && LstNomExemplaire.Count > 0)
-            {
-                estPresente = TrouverExemplaireDansDeck(exemplaireAAjouter);
 
-                if (estPresente)
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count > 0 && tbcDecksUtilisateurs.SelectedIndex <= Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 && LstNomExemplaire.Count >= 0)
+            {
+                if (Main.UtilisateurConnecte.DecksUtilisateurs[onglet].CartesDuDeck.Count < 50)
                 {
-                    if (Convert.ToInt32( LstQteExemplaire[position].Content.ToString()) < 3)
+                    estPresente = TrouverExemplaireDansDeck(exemplaireAAjouter);
+
+                    if (estPresente)
                     {
-                        MySqlDeckService.UpdateQteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAAjouter, Convert.ToInt32(LstQteExemplaire[position].Content.ToString())+1);
+                        if (exemplaireAAjouter.Quantite - Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) > 0 && Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) < 3 )
+                        {
+                            MySqlDeckService.UpdateQteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAAjouter, Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) + 1);
+                        }
                     }
-                }
+                    else
+                        MySqlDeckService.InsertExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAAjouter, 1);
+                    RefreshAll();
+                }    
             }
         }
 
@@ -224,6 +232,7 @@ namespace Cosmos.view
         {
             rectZoom.Visibility = Visibility.Hidden;
             imgZoomCarte.Visibility = Visibility.Hidden;
+            imgZoomCarte.PreviewMouseLeftButtonUp -= ImgZoomCarte_PreviewMouseLeftButtonUp;
         }
 
         private List<Carte> RetirerCartes()
@@ -333,7 +342,7 @@ namespace Cosmos.view
                         grdDeck2.Children.Add(lblQuantite);
                         grdDeck2.Children.Add(btnPlus);
                         grdDeck2.Children.Add(btnMoins);
-                        grdDeck3.Children.Add(btnEnlever);
+                        grdDeck2.Children.Add(btnEnlever);
                         break;
                     case 2:
                         grdDeck3.RowDefinitions.Add(rwdRangee);
@@ -396,7 +405,7 @@ namespace Cosmos.view
 
             Exemplaire exemplaireAUpdate = RetrouverExemplaireAUpdate(LstNomExemplaire[index].Content.ToString());
 
-            if ((int)LstQteExemplaire[index].Content <= 3 && exemplaireAUpdate.Quantite - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count <= 50)
+            if ((int)LstQteExemplaire[index].Content <= 3 && exemplaireAUpdate.Quantite - (int)LstQteExemplaire[index].Content >= 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count <= 50)
             {
                 qte = (int)LstQteExemplaire[index].Content - 1;
 
@@ -542,6 +551,7 @@ namespace Cosmos.view
             RefreshBtnCreer();
             RefreshBtnAjouter();
             RefreshBtnRenommer();
+            //imgZoomCarte.PreviewMouseLeftButtonUp -= ImgZoomCarte_PreviewMouseLeftButtonUp;
         }
 
         private void RefreshBtnRenommer()
