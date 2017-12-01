@@ -428,7 +428,7 @@ namespace Cosmos.view
 
             Exemplaire exemplaireAUpdate = RetrouverExemplaireAUpdate(LstNomExemplaire[index].Content.ToString());
 
-            if ((int)LstQteExemplaire[index].Content < 3 && exemplaireAUpdate.Quantite - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[0].CartesDuDeck.Count < 50)
+            if ((int)LstQteExemplaire[index].Content < 3 && exemplaireAUpdate.Quantite - (int)LstQteExemplaire[index].Content > 0 && Main.UtilisateurConnecte.DecksUtilisateurs[onglet].CartesDuDeck.Count < 50)
             {
                 qte = (int)LstQteExemplaire[index].Content + 1;
                 LstQteExemplaire[index].Content = qte;
@@ -515,10 +515,22 @@ namespace Cosmos.view
 
             return nomDeck;
         }
-#endregion
+        #endregion
 
-        private void btnAjouterCarte_Click(object sender, RoutedEventArgs e)
+        private void btnChoisirDeck_Click(object sender, RoutedEventArgs e)
         {
+            foreach (Deck deckUtilisateur in Main.UtilisateurConnecte.DecksUtilisateurs)
+            {
+                if (deckUtilisateur.IdDeck == Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].IdDeck)
+                    deckUtilisateur.EstChoisi = true;
+                else
+                    deckUtilisateur.EstChoisi = false;
+
+                MySqlDeckService.UpdateChoixDeck(Main.UtilisateurConnecte.IdUtilisateur, deckUtilisateur);
+
+            }
+
+            RefreshAll();
 
         }
 
@@ -549,9 +561,8 @@ namespace Cosmos.view
             RefreshOnglets();
             RefreshBtnSupprimer();
             RefreshBtnCreer();
-            RefreshBtnAjouter();
+            RefreshBtnChoisirDeck();
             RefreshBtnRenommer();
-            //imgZoomCarte.PreviewMouseLeftButtonUp -= ImgZoomCarte_PreviewMouseLeftButtonUp;
         }
 
         private void RefreshBtnRenommer()
@@ -570,19 +581,19 @@ namespace Cosmos.view
             }
         }
 
-        private void RefreshBtnAjouter()
+        private void RefreshBtnChoisirDeck()
         {
-            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].CartesDuDeck.Count == 50)
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].EstChoisi)
             {
-                btnAjouterCarte.Opacity = 0.6;
-                btnAjouterCarte.IsEnabled = false;
-                btnAjouterCarte.Cursor = Cursors.Arrow;
+                btnChoisirDeck.Opacity = 0.6;
+                btnChoisirDeck.IsEnabled = false;
+                btnChoisirDeck.Cursor = Cursors.Arrow;
             }
             else
             {
-                btnAjouterCarte.Opacity = 1;
-                btnAjouterCarte.IsEnabled = true;
-                btnAjouterCarte.Cursor = Cursors.Hand;
+                btnChoisirDeck.Opacity = 1;
+                btnChoisirDeck.IsEnabled = true;
+                btnChoisirDeck.Cursor = Cursors.Hand;
             }
         }
 
@@ -718,5 +729,7 @@ namespace Cosmos.view
             }
         }
         #endregion
+
+        
     }
 }
