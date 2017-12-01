@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace Cosmos.view
         public bool Unite2J1Attack { get; set; }
         public bool Unite3J1Attack { get; set; }
         public List<int> Choix { get; set; }
+        public SoundPlayer Player { get; set; }
 
         public int Phase
         {
@@ -362,6 +364,7 @@ namespace Cosmos.view
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 Temps.Stop();
+                PlaySound(Cosmos.Properties.Resources.win);
                 MessageBox.Show("Vous avez gagné!","Victoire", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
@@ -371,9 +374,16 @@ namespace Cosmos.view
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 Temps.Stop();
+                PlaySound(Cosmos.Properties.Resources.lost);
                 MessageBox.Show("Vous avez perdu!", "Défaite", MessageBoxButton.OK);
                 Main.EcranMenuPrincipal();
             }
+        }
+
+        private void PlaySound(System.IO.Stream uri)
+        {
+            Player = new SoundPlayer(uri);
+            Player.Play();
         }
         /// <summary>
         /// Fonction qui réaffiche les éléments du xaml et les mets à jour.

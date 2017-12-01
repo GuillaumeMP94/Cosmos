@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,7 +70,6 @@ namespace Cosmos.metier
         private Joueur joueur2;
         // Mains des joueurs
         public List<Carte> LstMainJ1 { get; set; }
-
         public List<Carte> LstMainJ2 { get; set; }
         // Champ constructions
         public ChampConstructions ChampConstructionsJ1 { get; set; }
@@ -78,6 +78,8 @@ namespace Cosmos.metier
         // Champs de bataille
         public ChampBatailleUnites ChampBatailleUnitesJ1 { get; set; }
         public ChampBatailleUnites ChampBatailleUnitesJ2 { get; set; }
+
+        public SoundPlayer Player { get; set; }
 
 
         // Usine de recyclage des joueurs / Défausse
@@ -283,16 +285,21 @@ namespace Cosmos.metier
                     ChampBatailleUnitesJ1.AjouterAuChamp(aJouer, position);
                     if (aJouer.EffetCarte != null)
                         AExecuter = aJouer.EffetCarte;
+                    PlaySound(Cosmos.Properties.Resources.rebel);
                 }
                 else if (aJouer is Batiment)
                 {
                     ChampConstructionsJ1.AjouterAuChamp(aJouer);
+                    PlaySound(Cosmos.Properties.Resources.batiment);
                 }
                 else if (aJouer is Gadget)
                 {
                     if (aJouer.EffetCarte != null)
+                    {
                         AExecuter = aJouer.EffetCarte;
-                    LstUsineRecyclageJ1.Add(aJouer);
+                        PlaySound(Cosmos.Properties.Resources.jabba);
+                    }
+                    LstUsineRecyclageJ1.Add(aJouer);                    
                 }
                 // On enleve la carte de la main
                 LstMainJ1.Remove(aJouer);
@@ -310,16 +317,21 @@ namespace Cosmos.metier
                     ChampBatailleUnitesJ2.AjouterAuChamp(aJouer, position);
                     if (aJouer.EffetCarte != null)
                         AExecuter = aJouer.EffetCarte;
+                    PlaySound(Cosmos.Properties.Resources.imperial);
                 }
                 if (aJouer is Batiment)
                 {
                     ChampConstructionsJ2.AjouterAuChamp(aJouer);
+                    PlaySound(Cosmos.Properties.Resources.batiment);
                 }
                 if (aJouer is Gadget)
                 {
                     if (aJouer.EffetCarte != null)
+                    {
                         AExecuter = aJouer.EffetCarte;
-                    LstUsineRecyclageJ2.Add(aJouer);
+                        PlaySound(Cosmos.Properties.Resources.doh1);
+                    }
+                    LstUsineRecyclageJ2.Add(aJouer);                    
                 }
                 // On enleve la carte de la main
                 LstMainJ2.Remove(aJouer);
@@ -998,11 +1010,13 @@ namespace Cosmos.metier
             foreach (Unite unUnite in DetruiteJoueur1)
             {
                 LstUsineRecyclageJ1.Add(unUnite);
+                PlaySound(Cosmos.Properties.Resources.doh1);
             }
             foreach (Unite unUnite in DetruiteJoueur2)
             {
                 LstUsineRecyclageJ2.Add(unUnite);
-            }
+                PlaySound(Cosmos.Properties.Resources.jabba);
+            }            
         }
         /// <summary>
         /// Fonction qui rend les unités prêt à attaquer.
@@ -1141,6 +1155,12 @@ namespace Cosmos.metier
                 else
                     return false;
             }
+        }
+
+        private void PlaySound(System.IO.Stream uri)
+        {            
+            Player = new SoundPlayer(uri);
+            Player.Play();
         }
     }
 }
