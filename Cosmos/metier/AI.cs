@@ -101,7 +101,7 @@ namespace Cosmos.metier
             difficulte = diff;
             PointDeBlindage = 25;
             RessourceActive = new Ressource(0, 0, 0);
-            LevelRessource = debutLevelRessource;
+            LevelRessource = new Ressource(3, 2, 1);
             DeckAJouer = deckAI;
 
             // Propriété pour que le AI keep track de quand il doit attaquer ou pas
@@ -1426,7 +1426,7 @@ namespace Cosmos.metier
             {
                 if (lstCoupEvaluer[c] == scoreMax)
                 {
-                    indexAJouer = i;
+                    indexAJouer = listeCoupsPermis[c];
                 }
                 c++;
             }
@@ -1491,7 +1491,7 @@ namespace Cosmos.metier
             {
                 if (lstCoupEvaluer[c] == scoreMax)
                 {
-                    indexAJouer = i;
+                    indexAJouer = listeCoupsPermis[c];
                 }
                 c++;
             }

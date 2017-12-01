@@ -43,7 +43,22 @@ namespace Cosmos.view
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
         {
-            Main.EcranMenuPrincipal();
+            bool deckComplet = false;
+            foreach (Deck deckUtilisateur in Main.UtilisateurConnecte.DecksUtilisateurs)
+            {
+                if (deckUtilisateur.EstChoisi)
+                {
+                    if (deckUtilisateur.CartesDuDeck.Count == 50)
+                    {
+                        deckComplet = true;
+                    }
+                }
+            }
+
+            if (deckComplet)
+                Main.EcranMenuPrincipal();
+            else
+                MessageBox.Show("Votre deck choisi n'est pas complet. Assurez-vous d'avoir 50 cartes.", "Deck incomplet", MessageBoxButton.OK);
         }
 
         private void GenererListeCartes()
@@ -290,7 +305,6 @@ namespace Cosmos.view
                 Binding myBinding = new Binding("Quantite");
                 myBinding.Source = e;
                 lblQuantite.SetBinding(Label.ContentProperty , myBinding);
-                
                 lblQuantite.FontWeight = FontWeights.Bold;
                 lblQuantite.FontSize = 15;
                 lblQuantite.HorizontalAlignment = HorizontalAlignment.Center;
@@ -556,13 +570,27 @@ namespace Cosmos.view
                     pos = tbcDecksUtilisateurs.SelectedIndex;
                 }
                 CreerLabels(Main.UtilisateurConnecte.DecksUtilisateurs[pos], pos);
+                RefreshQteTotal();
             }
+            else
+                lblQteTotale.Content = 0;
 
             RefreshOnglets();
             RefreshBtnSupprimer();
             RefreshBtnCreer();
             RefreshBtnChoisirDeck();
             RefreshBtnRenommer();
+        }
+
+        private void RefreshQteTotal()
+        {
+            int Qte = 0;
+            foreach (Label qte in LstQteExemplaire)
+            {
+                Qte += Convert.ToInt32(qte.Content.ToString());
+            }
+
+            lblQteTotale.Content = Qte;
         }
 
         private void RefreshBtnRenommer()
@@ -583,7 +611,7 @@ namespace Cosmos.view
 
         private void RefreshBtnChoisirDeck()
         {
-            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].EstChoisi)
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].EstChoisi || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].CartesDuDeck.Count < 50)
             {
                 btnChoisirDeck.Opacity = 0.6;
                 btnChoisirDeck.IsEnabled = false;
