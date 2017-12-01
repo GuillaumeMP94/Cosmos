@@ -1338,53 +1338,12 @@ namespace Cosmos.metier
                                 score += 56; // Le score doit allé plus haut qu'un gadget
                             }
                             if (jeu.LstMainJ2[index].EffetCarte != null
-                                && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
+                                && jeu.LstMainJ2[index].EffetCarte.Type == "TODO")
                             {
                                 score += 16;
                             }
                             break;
-                        #endregion
-                        case 1:
-                            #region
-                            if (jeu.LstMainJ2[index].EffetCarte != null
-                                && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité")
-                            {
-                                score += 16;
-                            }
-
-                            break;
-                        #endregion
-                        case 2:
-                            #region
-                            if (jeu.LstMainJ2[index].EffetCarte != null
-                                && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité"
-                                && ExisteChampUniteVideEnemi(jeu))
-                            {
-                                score += 16;
-                            }
-                            break;
-                        #endregion
-                        case 3:
-                            #region
-                            if (jeu.LstMainJ2[index].EffetCarte != null
-                                && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité"
-                                && ExisteChampUniteVideEnemi(jeu))
-                            {
-                                score += 16;
-                            }
-                            break;
-                        #endregion
-                        case 4:
-                            #region
-                            if (jeu.LstMainJ2[index].EffetCarte != null
-                                && jeu.LstMainJ2[index].EffetCarte.Type == "Célérité"
-                                && ExisteChampUniteVideEnemi(jeu))
-                            {
-                                score += 16;
-                            }
-
-                            break;
-                        #endregion
+                            #endregion
                         default:
                             #region
                             // Le mode par défaut représente le "late game"
