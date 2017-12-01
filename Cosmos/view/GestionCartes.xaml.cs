@@ -583,7 +583,8 @@ namespace Cosmos.view
 
         private void RefreshBtnChoisirDeck()
         {
-            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].EstChoisi)
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 
+                || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].EstChoisi || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].CartesDuDeck.Count < 50)
             {
                 btnChoisirDeck.Opacity = 0.6;
                 btnChoisirDeck.IsEnabled = false;

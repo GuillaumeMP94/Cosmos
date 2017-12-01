@@ -14,8 +14,13 @@
             <ComboBoxItem>Types</ComboBoxItem>
         </ComboBox>
         <Border Width="900" Height="625" Background="Black" Opacity="0.6" Margin="20,180,0,15" CornerRadius="15" HorizontalAlignment="Left"/>
+        
         <Border Width="250" Height="40" Background="Black" Opacity="0.6" Margin="0,22" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Name="lblTitre" Content="Ma collection" Foreground="DarkGoldenrod" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20" Height="40" VerticalAlignment="Top"/>
+
+        <Border Width="450" Height="50" Background="Black" Opacity="0.6" Margin="0,170,30,0" CornerRadius="15" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBlock Name="txblMessage" Width="450" Height="50"  Margin="0,170,30,0" Padding="7,5,5,7" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontWeight="Bold" Text="Pour ajouter une carte dans le deck, sélectionnez la carte voulue dans la section à gauche de votre écran."/>
+
         <ScrollViewer Width="900" Height="600" HorizontalAlignment="Left" Margin="15,0,0,75" VerticalAlignment="Bottom" >
             <Grid Name="grdLesCartes">
                 <Grid.RowDefinitions>
