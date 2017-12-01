@@ -15,7 +15,7 @@
             <Label Name="lblTitre" Height="40" Width="150" Content="Renommer" HorizontalContentAlignment="Center" Foreground="DarkGoldenrod" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="150,15,150,0" />
 
             <TextBlock Name="txblMessage" Height="100" Width="350" TextWrapping="Wrap" FontSize="16" FontWeight="Bold" Foreground="DarkGoldenrod" TextAlignment="Center" Text="Veuillez renommer votre deck"/>
-            <TextBox Name="txbNomDeck" Width="250" Height="30" MaxLength="20" HorizontalContentAlignment="Center"/>
+            <TextBox Name="txbNomDeck" Width="250" Height="30" MaxLength="20" VerticalContentAlignment="Center"/>
 
             <Button Name="btnAnnuler" Width="85" Height="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,30" Cursor="Hand" Click="btnAnnuler_Click">
                 <Button.Template>

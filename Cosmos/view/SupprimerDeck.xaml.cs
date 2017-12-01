@@ -52,6 +52,7 @@ namespace Cosmos.view
         {
             MySqlDeckService.Delete(GestionCartes.Main.UtilisateurConnecte.IdUtilisateur, DeckASupprimer);
             GestionCartes.RefreshAll();
+            
 
             for (int i = 3; i > GestionCartes.Main.UtilisateurConnecte.DecksUtilisateurs.Count; i--)
             {

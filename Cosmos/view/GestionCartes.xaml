@@ -132,13 +132,13 @@
 			</Button.Template>
 		</Button>
 
-        <Button Name="btnAjouterCarte" VerticalAlignment="Bottom" Height="30" Margin="0,0,60,100"  
-                Width="175" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand" Click="btnAjouterCarte_Click" >
+        <Button Name="btnChoisirDeck" VerticalAlignment="Bottom" Height="30" Margin="0,0,60,100"  
+                Width="175" HorizontalAlignment="Right" Background="DarkGoldenrod" Cursor="Hand" Click="btnChoisirDeck_Click" >
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Ajouter une carte
+                            Choisir le deck
                         </TextBlock>
                     </Border>
                 </ControlTemplate>
