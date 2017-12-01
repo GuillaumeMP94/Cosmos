@@ -572,7 +572,7 @@ namespace Cosmos.view
 
         private void RefreshBtnAjouter()
         {
-            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1)
+            if (Main.UtilisateurConnecte.DecksUtilisateurs.Count == 0 || tbcDecksUtilisateurs.SelectedIndex > Main.UtilisateurConnecte.DecksUtilisateurs.Count - 1 || Main.UtilisateurConnecte.DecksUtilisateurs[tbcDecksUtilisateurs.SelectedIndex].CartesDuDeck.Count == 50)
             {
                 btnAjouterCarte.Opacity = 0.6;
                 btnAjouterCarte.IsEnabled = false;
