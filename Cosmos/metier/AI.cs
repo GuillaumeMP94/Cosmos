@@ -247,43 +247,49 @@ namespace Cosmos.metier
                                 }
                                 // Notre AI est toujours pas vraiment bon. Il joue encore n'importe quoi rendu ici     
                                 // TODO répétition de code innutile                          
-                                if (ListeCoupsPermisUnite.Count != 0)
+                                if (ListeCoupsPermis.Count != 0)
                                 {
-                                    if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null
-                                        && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+                                    // Le AI joue n'importe quoi de valide n'importe où si c'est vide
+                                    // Qui sait, peut-être qu'il va vraiment bien jouer! 
+                                    // Par contre, le AI priorise les unités, puis batiment et/ou gadget
+                                    if (ListeCoupsPermisUnite.Count != 0)
                                     {
-                                        ChoixChampUnite = rnd.Next(1, 3);
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
-                                    }
-                                    else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null)
-                                    {
-                                        ChoixChampUnite = rnd.Next(1, 2);
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
-                                    }
-                                    else if (jeu.ChampBatailleUnitesJ2.Champ2 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
-                                    {
-                                        ChoixChampUnite = rnd.Next(2, 3);
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
-                                    }
-                                    else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
-                                    {
-                                        ChoixChampUnite = ((rnd.Next(1, 2) * 2) - 1);
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
-                                    }
-                                    else if (jeu.ChampBatailleUnitesJ2.Champ1 == null)
-                                    {
-                                        ChoixChampUnite = 1;
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
-                                    }
-                                    else if (jeu.ChampBatailleUnitesJ2.Champ2 == null)
-                                    {
-                                        ChoixChampUnite = 2;
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
-                                    }
-                                    else if (jeu.ChampBatailleUnitesJ2.Champ3 == null)
-                                    {
-                                        ChoixChampUnite = 3;
-                                        jeu.JouerCarteAI(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)]);
+                                        if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null
+                                            && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+                                        {
+                                            ChoixChampUnite = rnd.Next(1, 3);
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
+                                        else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ2 == null)
+                                        {
+                                            ChoixChampUnite = rnd.Next(1, 2);
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
+                                        else if (jeu.ChampBatailleUnitesJ2.Champ2 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+                                        {
+                                            ChoixChampUnite = rnd.Next(2, 3);
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
+                                        else if (jeu.ChampBatailleUnitesJ2.Champ1 == null && jeu.ChampBatailleUnitesJ2.Champ3 == null)
+                                        {
+                                            ChoixChampUnite = ((rnd.Next(1, 2) * 2) - 1);
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
+                                        else if (jeu.ChampBatailleUnitesJ2.Champ1 == null)
+                                        {
+                                            ChoixChampUnite = 1;
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
+                                        else if (jeu.ChampBatailleUnitesJ2.Champ2 == null)
+                                        {
+                                            ChoixChampUnite = 2;
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
+                                        else if (jeu.ChampBatailleUnitesJ2.Champ3 == null)
+                                        {
+                                            ChoixChampUnite = 3;
+                                            jeu.JouerCarte(ListeCoupsPermisUnite[rnd.Next(0, ListeCoupsPermisUnite.Count)], ChoixChampUnite);
+                                        }
                                     }
                                 }
                             }
@@ -980,7 +986,7 @@ namespace Cosmos.metier
                         {
                             AttaqueChamp1 = true;
                         }
-                        else if ((jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque
+                        else if ((jeu.ChampBatailleUnitesJ1.Champ1!= null && jeu.ChampBatailleUnitesJ2.Champ1 != null && jeu.ChampBatailleUnitesJ1.Champ1.Attaque > jeu.ChampBatailleUnitesJ2.Champ1.Attaque
                             && jeu.ChampBatailleUnitesJ1.Champ1.Defense > jeu.ChampBatailleUnitesJ2.Champ1.Defense))
                         {
                             if (jeu.ChampBatailleUnitesJ2.Champ1.EffetCarte != null)
@@ -1005,7 +1011,7 @@ namespace Cosmos.metier
                         {
                             AttaqueChamp2 = true;
                         }
-                        else if ((jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
+                        else if ((jeu.ChampBatailleUnitesJ1.Champ2 != null && jeu.ChampBatailleUnitesJ2.Champ2 != null &&  jeu.ChampBatailleUnitesJ1.Champ2.Attaque > jeu.ChampBatailleUnitesJ2.Champ2.Attaque
                             && jeu.ChampBatailleUnitesJ1.Champ2.Defense > jeu.ChampBatailleUnitesJ2.Champ2.Defense))
                         {
                             if (jeu.ChampBatailleUnitesJ2.Champ2.EffetCarte != null)
@@ -1030,7 +1036,7 @@ namespace Cosmos.metier
                         {
                             AttaqueChamp3 = true;
                         }
-                        else if ((jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
+                        else if ((jeu.ChampBatailleUnitesJ1.Champ3 != null && jeu.ChampBatailleUnitesJ2.Champ3 != null &&  jeu.ChampBatailleUnitesJ1.Champ3.Attaque > jeu.ChampBatailleUnitesJ2.Champ3.Attaque
                             && jeu.ChampBatailleUnitesJ1.Champ3.Defense > jeu.ChampBatailleUnitesJ2.Champ3.Defense))
                         {
                             if (jeu.ChampBatailleUnitesJ2.Champ3.EffetCarte != null)
