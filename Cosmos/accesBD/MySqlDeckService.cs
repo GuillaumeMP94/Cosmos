@@ -81,6 +81,15 @@ namespace Cosmos.accesBD
 
         }
 
+        private static Deck RetrieveByNom(string nomDeck, int pIdUtilisateur)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("SELECT * FROM Decks WHERE nom = '").Append(nomDeck.ToString()).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
+
+            return Retrieve(query.ToString());
+
+        }
+
         public static List<Deck> RetrieveAllUserDeck(int pIdUtilisateur)
         {
             StringBuilder query = new StringBuilder();
@@ -93,6 +102,75 @@ namespace Cosmos.accesBD
             return RetrieveAllDeck(query.ToString());
         }
 
+        public static void Delete(int pIdUtilisateur, string nomDeck)
+        {
+            Deck deckASupprimer = RetrieveByNom(nomDeck, pIdUtilisateur);
 
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            // Delete le deck de la table DecksExemplaires
+            MySqlCarteService.DeleteAllExemplairesDeck(deckASupprimer.IdDeck);
+
+            // Delete le deck
+            nonquery.Append("DELETE FROM Decks WHERE nom = '").Append(deckASupprimer.Nom).Append("' AND idUtilisateur = ").Append(pIdUtilisateur);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void UpdateNomDeck(int pIdUtilisateur, string ancienNomDeck, string nouveauNomDeck)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE Decks SET nom = '").Append(nouveauNomDeck).Append("' WHERE idUtilisateur = ")
+                .Append(pIdUtilisateur).Append(" AND nom = '").Append(ancienNomDeck).Append("'");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void Insert(string nomDeck, int pIdUtilisateur, bool estChoisi)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO Decks (idUtilisateur, nom, estChoisi) VALUES (")
+                 .Append(pIdUtilisateur)
+                 .Append(", '").Append(nomDeck).Append("', ").Append(estChoisi).Append(")");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void UpdateQteExemplaireDeck(Deck deck, Exemplaire exemplaire, int qte)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("UPDATE DecksExemplaires ").Append("SET quantite = ").Append(qte).Append(" WHERE idDeck = ")
+                .Append(deck.IdDeck).Append(" AND idExemplaire = ").Append(exemplaire.IdExemplaire);
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void DeleteExemplaireDeck(int pIdDeck, int pIdExemplaire)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("DELETE FROM DecksExemplaires WHERE idDeck = ").Append(pIdDeck).Append(" AND idExemplaire = ").Append(pIdExemplaire);
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
+
+        public static void InsertExemplaireDeck(Deck deck, Exemplaire exemplaireAAjouter, int quantite)
+        {
+            StringBuilder nonquery = new StringBuilder();
+            ConnectionBD = new MySqlConnexion();
+
+            nonquery.Append("INSERT INTO DecksExemplaires (idDeck, idExemplaire, quantite) VALUES (")
+                 .Append(deck.IdDeck)
+                 .Append(", ").Append(exemplaireAAjouter.IdExemplaire).Append(", ").Append(quantite).Append(")");
+
+            ConnectionBD.NonQuery(nonquery.ToString());
+        }
     }
 }

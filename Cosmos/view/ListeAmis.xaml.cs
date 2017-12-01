@@ -73,16 +73,16 @@ namespace Cosmos.view
 
         private void btnAjouter_Click(object sender, RoutedEventArgs e)
         {
-            Main.ContenuAddModifAmi = new AjouterAmi(this);
-            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
+            Main.ContenuAddModifSupp = new AjouterAmi(this);
+            Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
         }
 
         private void btnSupprimer_Click(object sender, RoutedEventArgs e)
         {
             string ami = retrouverAmiSelectionne();
 
-            Main.ContenuAddModifAmi = new SupprimerAmi(this, MySqlUtilisateurService.RetrieveByNom(ami));
-            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
+            Main.ContenuAddModifSupp = new SupprimerAmi(this, MySqlUtilisateurService.RetrieveByNom(ami));
+            Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
         }
 
         
@@ -91,8 +91,8 @@ namespace Cosmos.view
         {
             string ami = retrouverAmiSelectionne();
 
-            Main.ContenuAddModifAmi = new ModifierAmi(this, MySqlUtilisateurService.RetrieveByNom(ami));
-            Main.grdMain.Children.Add(Main.ContenuAddModifAmi);
+            Main.ContenuAddModifSupp = new ModifierAmi(this, MySqlUtilisateurService.RetrieveByNom(ami));
+            Main.grdMain.Children.Add(Main.ContenuAddModifSupp);
         }
 
         private void RafraichirSurbrillanceListeAmis()

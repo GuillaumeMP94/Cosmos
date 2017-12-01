@@ -28,7 +28,7 @@ namespace Cosmos
     {
         public UserControl ContenuEcran { get; set; }
         public UserControl ContenuListeAmi { get; set; }
-        public UserControl ContenuAddModifAmi { get; set; }
+        public UserControl ContenuAddModifSupp { get; set; }
         private Connexion Connexion { get; set; }
         private MenuPrincipal MenuPrincipal { get; set; }
         public CreationCompte Creation { get; set; }
@@ -198,6 +198,21 @@ namespace Cosmos
             }
 
             return estValide;
+        }
+
+        public string VerifierTexte(string texte)
+        {
+            string temp = "";
+
+            for (int i = 0; i < texte.Length; i++)
+            {
+                if (texte[i] == 92 || texte[i] == (char)39)
+                    temp += (char)92;
+
+                temp += texte[i];
+            }
+
+            return temp;
         }
         #endregion
 

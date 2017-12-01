@@ -20,7 +20,7 @@ namespace Cosmos.metier
         public string MotDePasse { get; set; }
         public string Salt { get; set; }
         public List<Deck> DecksUtilisateurs { get; set; }
-        public List<Carte> CartesUtilisateurs { get; set; }
+        public List<Exemplaire> ExemplairesUtilisateurs { get; set; }
         #endregion
         #region Constructeur
         public Utilisateur(int idUtilisateur, string nom)

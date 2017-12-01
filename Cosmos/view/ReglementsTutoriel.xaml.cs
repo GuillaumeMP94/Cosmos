@@ -32,10 +32,10 @@ namespace Cosmos.view
 
         private void btnTutoriel_Click(object sender, RoutedEventArgs e)
         {
-            if (Main.UtilisateurConnecte.CartesUtilisateurs.Count == 0)
+            if (Main.UtilisateurConnecte.ExemplairesUtilisateurs.Count == 0)
             {
                 MySqlCarteService.InsertNewJoueurCard(Main.UtilisateurConnecte);
-                Main.UtilisateurConnecte.CartesUtilisateurs =  MySqlCarteService.RetrieveAllUserExemplaires(Main.UtilisateurConnecte.IdUtilisateur);
+                Main.UtilisateurConnecte.ExemplairesUtilisateurs =  MySqlCarteService.RetrieveExemplairesUser(Main.UtilisateurConnecte.IdUtilisateur);
                 MessageBox.Show("Félicitation pour avoir complété le tutoriel! Vous venez de débloquer vos cartes!");
             }
             else
