@@ -37,6 +37,7 @@ namespace Cosmos.view
         public List<Image> ImgMainJoueur { get; set; }
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
+
         public DispatcherTimer Temps { get; set; }
         public bool Unite1J1Attack { get; set; }
         public bool Unite2J1Attack { get; set; }
@@ -361,24 +362,24 @@ namespace Cosmos.view
             if (laTableDeJeu.JoueurEstMort(false))
             {
                 // Victoire
+                imgFinTour.Visibility = Visibility.Hidden;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.FinPartie -= TerminerPartie;
                 Temps.Stop();
                 PlaySound(Cosmos.Properties.Resources.win);
-                MessageBox.Show("Vous avez gagné!","Victoire", MessageBoxButton.OK);
-                Main.EcranMenuPrincipal();
+                EcranFinDePartie(true);
             }
             else if (laTableDeJeu.JoueurEstMort(true))
             {
                 // Défaite
+                imgFinTour.Visibility = Visibility.Hidden;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.FinPartie -= TerminerPartie;
                 Temps.Stop();
                 PlaySound(Cosmos.Properties.Resources.lost);
-                MessageBox.Show("Vous avez perdu!", "Défaite", MessageBoxButton.OK);
-                Main.EcranMenuPrincipal();
+                EcranFinDePartie(false);
             }
         }
 
@@ -983,6 +984,14 @@ namespace Cosmos.view
 
         }
         /// <summary>
+        /// Fonction lors de la fermeture de l'écran fin de partie.
+        /// </summary>
+        public void FermerEcranFinDePartie()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            Main.EcranMenuPrincipal();
+        }
+        /// <summary>
         /// Fonction lors de la fermeture de l'écran de ressource.
         /// </summary>
         public void FermerEcranRessource()
@@ -991,6 +1000,17 @@ namespace Cosmos.view
             recRessource.Visibility = Visibility.Hidden;
             laTableDeJeu.AvancerPhase();
             AfficherMain();
+        }
+        /// <summary>
+        /// Fonction lors de la création de l'écran fin de partie.
+        /// </summary>
+        /// <param name="victoire"></param>
+        public void EcranFinDePartie(bool victoire)
+        {
+            ContenuEcran = new FinDePartie(this, victoire);
+            recRessource.Visibility = Visibility.Visible;
+
+            grd1.Children.Add(ContenuEcran);
         }
         /// <summary>
         /// Fonction lors de la création de l'écran ressource.

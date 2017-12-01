@@ -47,7 +47,8 @@
 
             <Rectangle Name="recMainJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur2_Click"/>
             <Image Name="imgMainJoueur2" Visibility="Hidden" Source="/images/partie/check.png" PreviewMouseLeftButtonDown="recMainJoueur2_Click"></Image>
-
+            <Rectangle Fill="Black" Grid.Column="0"></Rectangle>
+            <Label Name="lblChoix" Grid.Column="0" FontSize="32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Choisissez" Foreground="DarkGoldenrod"></Label>
             <Rectangle Name="recDeckJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click">
             </Rectangle>
             <Image Name="imgDeckJoueur2" Visibility="Hidden" Source="/images/partie/check.png" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click"/>

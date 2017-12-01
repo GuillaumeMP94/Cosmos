@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Cosmos.view.RenommerDeck"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Name="grdRenommerDeck">
+
+        <Rectangle Name="recEcranNoire" Fill="Black" Opacity="0.6" Height="auto" Width="auto" Visibility="Visible"/>
+        <Grid Width="450" Height="200" >
+            <Border Width="auto" Height="auto" Background="Black" Margin="0,15,0,15" CornerRadius="15"/>
+
+            <Label Name="lblTitre" Height="40" Width="150" Content="Renommer" HorizontalContentAlignment="Center" Foreground="DarkGoldenrod" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="150,15,150,0" />
+
+            <TextBlock Name="txblMessage" Height="100" Width="350" TextWrapping="Wrap" FontSize="16" FontWeight="Bold" Foreground="DarkGoldenrod" TextAlignment="Center" Text="Veuillez renommer votre deck"/>
+            <TextBox Name="txbNomDeck" Width="250" Height="30" MaxLength="20" VerticalContentAlignment="Center"/>
+
+            <Button Name="btnAnnuler" Width="85" Height="45" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,130,30" Cursor="Hand" Click="btnAnnuler_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15">
+				                    Annuler
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            
+            <Button Name="btnRenommer" Width="85" Height="45" HorizontalAlignment="center" VerticalAlignment="Bottom" Margin="113,0,247,30" Cursor="Hand" Click="btnRenommer_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15">
+				                    Renommer
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

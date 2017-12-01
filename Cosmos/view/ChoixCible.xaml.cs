@@ -36,6 +36,14 @@ namespace Cosmos.view
             TableEnCours = tableDeJeu;
             Partie = laPartie;
             AfficherChoix();
+            if (nbCible == 1)
+            {
+                lblChoix.Content += " votre cible!";
+            }
+            else
+            {
+                lblChoix.Content += " vos "+ NbCible.ToString() +" cibles!";
+            }
         }
 
         private void AfficherChoix()

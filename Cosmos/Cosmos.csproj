@@ -103,6 +103,9 @@
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\FinDePartie.xaml.cs">
+      <DependentUpon>FinDePartie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\GestionCartes.xaml.cs">
       <DependentUpon>GestionCartes.xaml</DependentUpon>
     </Compile>
@@ -127,8 +130,14 @@
     <Compile Include="view\ReglementsTutoriel.xaml.cs">
       <DependentUpon>ReglementsTutoriel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\RenommerDeck.xaml.cs">
+      <DependentUpon>RenommerDeck.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\SupprimerAmi.xaml.cs">
       <DependentUpon>SupprimerAmi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\SupprimerDeck.xaml.cs">
+      <DependentUpon>SupprimerDeck.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -166,6 +175,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\FinDePartie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\GestionCartes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,9 +211,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\RenommerDeck.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="view\SupprimerAmi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\SupprimerDeck.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +329,8 @@
     <Resource Include="images\partie\check.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\partie\victoire.png" />
+    <Resource Include="images\partie\defaite.png" />
     <Content Include="sons\win.wav" />
     <Resource Include="images\note.png" />
     <Content Include="sons\batiment.wav" />

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cosmos.accesBD;
 
 namespace Cosmos.view
 {
@@ -26,6 +27,9 @@ namespace Cosmos.view
             InitializeComponent();
 
             Main = main;
+
+            //Main.UtilisateurConnecte.DecksUtilisateurs = MySqlDeckService.RetrieveAllUserDeck(Main.UtilisateurConnecte.IdUtilisateur);
+            //Main.UtilisateurConnecte.CartesUtilisateurs = MySqlCarteService.RetrieveAllUserExemplaires(Main.UtilisateurConnecte.IdUtilisateur);
 
             ValiderNeoJoueur();
         }
@@ -73,7 +77,7 @@ namespace Cosmos.view
 
         private void ValiderNeoJoueur()
         {
-            if (Main.UtilisateurConnecte.CartesUtilisateurs.Count == 0)
+            if ( Main.UtilisateurConnecte.ExemplairesUtilisateurs == null || Main.UtilisateurConnecte.ExemplairesUtilisateurs.Count == 0 )
             {
                 btnCampagne.Opacity = 0.6;
                 btnCampagne.IsEnabled = false;

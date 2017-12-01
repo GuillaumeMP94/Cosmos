@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Cosmos.view.FinDePartie"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cosmos.view"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1400">
+    <Grid>
+        <Image Name="imgFin" Source="/images/partie/victoire.png"></Image>
+        <Button Name="btnOkay" Height="30" Margin="1110,800,0,0"
+                Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGoldenrod" IsEnabled="True" Cursor="Hand" Click="btnOk_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Ok
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</UserControl>
