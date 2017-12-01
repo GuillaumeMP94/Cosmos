@@ -314,7 +314,7 @@
                 <TextBlock Name="txblEmplacementUnite1J2Attaque" HorizontalAlignment="Right" Grid.Column="0" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding AttChamp1}" VerticalAlignment="Top"/>
 
-                <TextBlock Name="txblSlash1J2" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Column="1" Foreground="Red" FontSize="35"
+                <TextBlock Name="txblSlash1J2" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Column="1" Foreground="Black" FontSize="35"
 
                        Text="/" VerticalAlignment="Center"/>
                 <TextBlock Name="txblEmplacementUnite1J2Vie" HorizontalAlignment="Left" Grid.Column="2" Margin="0,12,0,0" Foreground="Black" FontSize="25"
@@ -336,7 +336,7 @@
                 <TextBlock Name="txblEmplacementUnite2J2Attaque" HorizontalAlignment="Right" Grid.Column="0" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding AttChamp2}" VerticalAlignment="Top"/>
 
-                <TextBlock Name="txblSlash2J2" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Column="1" Foreground="Red" FontSize="35"
+                <TextBlock Name="txblSlash2J2" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Column="1" Foreground="Black" FontSize="35"
                        Text="/" VerticalAlignment="Center"/>
                 <TextBlock Name="txblEmplacementUnite2J2Vie" HorizontalAlignment="Left" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding VieChamp2}" VerticalAlignment="Bottom"/>
@@ -358,7 +358,7 @@
 
                 <TextBlock Name="txblEmplacementUnite3J2Attaque" Grid.Column="0" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding AttChamp3}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                <TextBlock Name="txblSlash3J2" HorizontalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                <TextBlock Name="txblSlash3J2" HorizontalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Foreground="Black" FontSize="35"
 
                        Text="/" VerticalAlignment="Center"/>
                 <TextBlock Name="txblEmplacementUnite3J2Vie" HorizontalAlignment="Left" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
@@ -380,7 +380,7 @@
 
                 <TextBlock Name="txblEmplacementUnite1J1Attaque" Grid.Column="0" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding AttChamp1}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                <TextBlock Name="txblSlash1J1" HorizontalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                <TextBlock Name="txblSlash1J1" HorizontalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Foreground="Black" FontSize="35"
 
                        Text="/" VerticalAlignment="Center"/>
                 <TextBlock Name="txblEmplacementUnite1J1Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
@@ -402,7 +402,7 @@
 
                 <TextBlock Name="txblEmplacementUnite2J1Attaque" Grid.Column="0" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding AttChamp2}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                <TextBlock Name="txblSlash2J1" HorizontalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Foreground="Red" FontSize="35"
+                <TextBlock Name="txblSlash2J1" HorizontalAlignment="Center" Margin="0,0,0,5" Grid.Column="1" Foreground="Black" FontSize="35"
 
                        Text="/" VerticalAlignment="Center"/>
                 <TextBlock Name="txblEmplacementUnite2J1Vie" HorizontalAlignment="Left" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
@@ -424,7 +424,7 @@
                 <TextBlock Name="txblEmplacementUnite3J1Attaque" HorizontalAlignment="Right" Grid.Column="0" Margin="0,0,0,5" Foreground="Black" FontSize="25"
                        Text="{Binding AttChamp3}" VerticalAlignment="Top"/>
 
-                <TextBlock Name="txblSlash3J1" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Column="1" Foreground="Red" FontSize="35"
+                <TextBlock Name="txblSlash3J1" Margin="0,0,0,5" HorizontalAlignment="Center" Grid.Column="1" Foreground="Black" FontSize="35"
 
                        Text="/" VerticalAlignment="Center"/>
                 <TextBlock Name="txblEmplacementUnite3J1Vie" Grid.Column="2" Margin="0,0,0,5" Foreground="Black" FontSize="25"
