@@ -103,6 +103,9 @@
     <Compile Include="view\CreationCompte.xaml.cs">
       <DependentUpon>CreationCompte.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\FinDePartie.xaml.cs">
+      <DependentUpon>FinDePartie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\GestionCartes.xaml.cs">
       <DependentUpon>GestionCartes.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\CreationCompte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\FinDePartie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,6 +329,8 @@
     <Resource Include="images\partie\check.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\partie\victoire.png" />
+    <Resource Include="images\partie\defaite.png" />
     <Content Include="sons\win.wav" />
     <Resource Include="images\note.png" />
     <Content Include="sons\batiment.wav" />
