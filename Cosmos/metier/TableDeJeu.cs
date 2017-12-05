@@ -65,6 +65,7 @@ namespace Cosmos.metier
 
         public event PropertyChangedEventHandler PropertyChanged;
         public Effet AExecuter { get; set; }
+        public Effet ATester { get; set; }
         // Les deux joueurs
         private Joueur joueur1;
         private Joueur joueur2;
@@ -247,18 +248,25 @@ namespace Cosmos.metier
         {
             Ressource temp = new Ressource(-1, -1, -1);
             Carte aJouer;
-
+            Joueur leJoueur;
             // Si suite à la soustraction les ressources du joueurs sont à zéro ou plus, le coup est valide.
             if (JoueurActifEst1)
             {
                 aJouer = LstMainJ1[index];
-                if (joueur1.RessourceActive - aJouer.Cout > temp)
-                    return true;
+                leJoueur = Joueur1;
             }
             else
             {
                 aJouer = LstMainJ2[index];
-                if (joueur2.RessourceActive - aJouer.Cout > temp)
+                leJoueur = Joueur2;
+            }
+            if (leJoueur.RessourceActive - aJouer.Cout > temp)
+            {
+                if (aJouer is Unite && EspaceUniteEstDisponible())
+                    return true;
+                if (aJouer is Batiment && EspaceBatimentEstDisponible())
+                    return true;
+                if (aJouer is Gadget && EffetPossible(aJouer))
                     return true;
             }
             return false;
@@ -353,17 +361,17 @@ namespace Cosmos.metier
                     ExecuterImpact();
                 else if ( joueurActifEst1 )
                 {
-                    if (ChoixEffetPossible(AExecuter.getCible()) >= AExecuter.getNbCible())
+                    if (ChoixEffetPossible(AExecuter) >= AExecuter.getNbCible())
                     {
                         // Lancer un evenement pour que parti le catch.
                         ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), AExecuter.getNbCible());
                         TrousseGlobale TG = new TrousseGlobale();
                         TG.OnChoisirCible(p);
                     }
-                    else if (ChoixEffetPossible(AExecuter.getCible()) < AExecuter.getNbCible() && ChoixEffetPossible(AExecuter.getCible()) >0)
+                    else if (ChoixEffetPossible(AExecuter) < AExecuter.getNbCible() && ChoixEffetPossible(AExecuter) >0)
                     {
                         // Lancer un evenement pour que parti le catch.
-                        ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), ChoixEffetPossible(AExecuter.getCible()));
+                        ChoisirCibleEventArgs p = new ChoisirCibleEventArgs(AExecuter.getCible(), ChoixEffetPossible(AExecuter));
                         TrousseGlobale TG = new TrousseGlobale();
                         TG.OnChoisirCible(p);
                     }
@@ -537,26 +545,26 @@ namespace Cosmos.metier
                 }
             }
         }
-
-        public bool EffetPossible(int index)
+        public bool EffetPossible(Carte aJouer)
         {
-            Carte laCarte = LstMainJ1[index];
+            Carte laCarte = aJouer;
+            Effet aTester = laCarte.EffetCarte;
             if (laCarte.EffetCarte != null)
             {
-                AExecuter = laCarte.EffetCarte;
-                if ( AExecuter.Type == "impact" && ChoixEffetPossible(AExecuter.getNbCible()) > 0)
+                aTester = laCarte.EffetCarte;
+                if (aTester.Type == "impact" && ChoixEffetPossible(aTester) > 0)
                     return true;
-                if (AExecuter.Type == "gain")
+                if (aTester.Type == "gain")
                     return true;
-                if (AExecuter.Type == "recyclage" && RecyclagePossible())
+                if (aTester.Type == "recyclage" && RecyclagePossible(aTester))
                     return true;
             }
             return false;
         }
 
-        private bool RecyclagePossible()
+        private bool RecyclagePossible(Effet aTester)
         {
-            if (AExecuter.getCible() == 1)
+            if (aTester.getCible() == 1)
             {
                 foreach (Carte uneCarte in LstUsineRecyclageJ1)
                 {
@@ -564,7 +572,7 @@ namespace Cosmos.metier
                         return true;
                 }
             }
-            if (AExecuter.getCible() == 2)
+            if (aTester.getCible() == 2)
             {
                 foreach (Carte uneCarte in LstUsineRecyclageJ1)
                 {
@@ -572,7 +580,7 @@ namespace Cosmos.metier
                         return true;
                 }
             }
-            if (AExecuter.getCible() == 3)
+            if (aTester.getCible() == 3)
             {
                 foreach (Carte uneCarte in LstUsineRecyclageJ1)
                 {
@@ -583,21 +591,21 @@ namespace Cosmos.metier
             return false;
         }
 
-        private int ChoixEffetPossible(int cible)
+        private int ChoixEffetPossible(Effet aTester)
         {
             int resultat = 0;
 
-            if (AExecuter.getCible() == 10 || AExecuter.getCible() == 9 || AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 12 || AExecuter.getCible() == 13 || AExecuter.getCible() == 18 || AExecuter.getCible() == 19)
+            if (aTester.getCible() == 10 || aTester.getCible() == 9 || aTester.getCible() == 0 || aTester.getCible() == 1 || aTester.getCible() == 12 || aTester.getCible() == 13 || aTester.getCible() == 18 || aTester.getCible() == 19)
                 resultat++;
-            if (AExecuter.getCible() == 11 || AExecuter.getCible() == 9 || AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 12 || AExecuter.getCible() == 14 || AExecuter.getCible() == 18 || AExecuter.getCible() == 20)
+            if (aTester.getCible() == 11 || aTester.getCible() == 9 || aTester.getCible() == 0 || aTester.getCible() == 2 || aTester.getCible() == 12 || aTester.getCible() == 14 || aTester.getCible() == 18 || aTester.getCible() == 20)
                 resultat++;
-            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 3 || AExecuter.getCible() == 4 || AExecuter.getCible() == 15 || AExecuter.getCible() == 16 || AExecuter.getCible() == 18 || AExecuter.getCible() == 19)
+            if (aTester.getCible() == 0 || aTester.getCible() == 1 || aTester.getCible() == 3 || aTester.getCible() == 4 || aTester.getCible() == 15 || aTester.getCible() == 16 || aTester.getCible() == 18 || aTester.getCible() == 19)
                 resultat += ChampConstructionsJ2.EspaceOccupe();
-            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 3 || AExecuter.getCible() == 5 || AExecuter.getCible() == 15 || AExecuter.getCible() == 17 || AExecuter.getCible() == 18 || AExecuter.getCible() == 20)
+            if (aTester.getCible() == 0 || aTester.getCible() == 2 || aTester.getCible() == 3 || aTester.getCible() == 5 || aTester.getCible() == 15 || aTester.getCible() == 17 || aTester.getCible() == 18 || aTester.getCible() == 20)
                 resultat += ChampConstructionsJ1.EspaceOccupe();
-            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 1 || AExecuter.getCible() == 6 || AExecuter.getCible() == 7 || AExecuter.getCible() == 12 || AExecuter.getCible() == 13 || AExecuter.getCible() == 15 || AExecuter.getCible() == 16)
+            if (aTester.getCible() == 0 || aTester.getCible() == 1 || aTester.getCible() == 6 || aTester.getCible() == 7 || aTester.getCible() == 12 || aTester.getCible() == 13 || aTester.getCible() == 15 || aTester.getCible() == 16)
                 resultat += ChampBatailleUnitesJ2.EspaceOccupe();
-            if (AExecuter.getCible() == 0 || AExecuter.getCible() == 2 || AExecuter.getCible() == 6 || AExecuter.getCible() == 8 || AExecuter.getCible() == 12 || AExecuter.getCible() == 14 || AExecuter.getCible() == 15 || AExecuter.getCible() == 17)
+            if (aTester.getCible() == 0 || aTester.getCible() == 2 || aTester.getCible() == 6 || aTester.getCible() == 8 || aTester.getCible() == 12 || aTester.getCible() == 14 || aTester.getCible() == 15 || aTester.getCible() == 17)
                 resultat += ChampBatailleUnitesJ1.EspaceOccupe();
 
             return resultat;
