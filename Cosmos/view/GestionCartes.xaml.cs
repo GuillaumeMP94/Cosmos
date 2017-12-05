@@ -211,10 +211,13 @@ namespace Cosmos.view
 
         private int RetrouverPositionExemplaire(Exemplaire exemplaireAAjouter)
         {
-            for (int i = 0; i < LstNomExemplaire.Count; i++)
+            if (LstNomExemplaire != null)
             {
-                if (LstNomExemplaire[i].Content.ToString() == exemplaireAAjouter.Carte.Nom)
-                    return i;
+                for (int i = 0; i < LstNomExemplaire.Count; i++)
+                {
+                    if (LstNomExemplaire[i].Content.ToString() == exemplaireAAjouter.Carte.Nom)
+                        return i;
+                }
             }
 
             return 0;
