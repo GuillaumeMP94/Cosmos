@@ -511,7 +511,6 @@ namespace Cosmos.view
             if (laTableDeJeu.JoueurActifEst1  && Phase == 2 && laTableDeJeu.validerCoup(position))
             {
                 border.BorderThickness = new Thickness(5);
-                
             }
             // Sinon pas de bordure
             else
@@ -984,6 +983,14 @@ namespace Cosmos.view
 
         }
         /// <summary>
+        /// Fonction lors de la fermeture de l'écran d'options.
+        /// </summary>
+        public void FermerEcranOptions()
+        {
+            grd1.Children.Remove(ContenuEcran);
+            recRessource.Visibility = Visibility.Hidden;
+        }
+        /// <summary>
         /// Fonction lors de la fermeture de l'écran fin de partie.
         /// </summary>
         public void FermerEcranFinDePartie()
@@ -1008,6 +1015,17 @@ namespace Cosmos.view
         public void EcranFinDePartie(bool victoire)
         {
             ContenuEcran = new FinDePartie(this, victoire);
+            recRessource.Visibility = Visibility.Visible;
+
+            grd1.Children.Add(ContenuEcran);
+        }
+        /// <summary>
+        /// Fonction lors de la création de l'écran fin de partie.
+        /// </summary>
+        /// <param name="victoire"></param>
+        public void EcranOptions()
+        {
+            ContenuEcran = new OptionCompte(this);
             recRessource.Visibility = Visibility.Visible;
 
             grd1.Children.Add(ContenuEcran);
@@ -1113,24 +1131,14 @@ namespace Cosmos.view
                 // Il faudrait ré-organiser la main après le 0,5
                 if (laTableDeJeu.validerCoup(IndexCarteZoomer))
                 {
-                    if (laTableDeJeu.CarteAJouerEstUnite(IndexCarteZoomer) && laTableDeJeu.EspaceUniteEstDisponible())
+                    if (laTableDeJeu.CarteAJouerEstUnite(IndexCarteZoomer))
                     {
                         // Choisir l'emplacement.
                         AfficherCoupPoosible();                    
                     }
-                    else if (laTableDeJeu.CarteAJouerEstGadget(IndexCarteZoomer))
+                    else 
                     {
-                        if (laTableDeJeu.EffetPossible(IndexCarteZoomer))
-                        {
-                            laTableDeJeu.JouerCarte(IndexCarteZoomer, 0); // La position n'est pas nécessaire.
-                        }
-                        rectZoom.Visibility = Visibility.Hidden;
-                        RefreshAll();
-
-                    }
-                    else if (laTableDeJeu.EspaceBatimentEstDisponible())
-                    {
-                        laTableDeJeu.JouerCarte(IndexCarteZoomer, 0);
+                        laTableDeJeu.JouerCarte(IndexCarteZoomer, 0); // La position n'est pas nécessaire.
                         rectZoom.Visibility = Visibility.Hidden;
                         RefreshAll();
                     }
@@ -1154,6 +1162,11 @@ namespace Cosmos.view
             imgZoomCarte.Visibility = Visibility.Hidden;
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
             RefreshAll();
+        }
+
+        private void btnOptions_Click(object sender, RoutedEventArgs e)
+        {
+            EcranOptions();
         }
     }
     /// <summary>

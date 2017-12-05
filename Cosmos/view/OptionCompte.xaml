@@ -112,5 +112,17 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Button Name="btnRetourPartie" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand"
+                Width="300" HorizontalAlignment="Center" Click="btnRetourPartie_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                            Retour partie
+                        </TextBlock>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </UserControl>

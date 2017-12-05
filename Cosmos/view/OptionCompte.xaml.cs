@@ -21,11 +21,22 @@ namespace Cosmos.view
     public partial class OptionCompte : UserControl
     {
         public MainWindow Main { get; set; }
+        public Partie LaPartie { get; set; }
         public OptionCompte(MainWindow main)
         {
             InitializeComponent();
 
             Main = main;
+            btnMenuPrincipal.Visibility = Visibility.Visible;
+            btnRetourPartie.Visibility = Visibility.Hidden;
+        }
+        public OptionCompte(Partie laPartie)
+        {
+            InitializeComponent();
+
+            LaPartie = laPartie;
+            btnRetourPartie.Visibility = Visibility.Visible;
+            btnMenuPrincipal.Visibility = Visibility.Hidden;
         }
 
         private void btnModifPassword_Click(object sender, RoutedEventArgs e)
@@ -67,6 +78,11 @@ namespace Cosmos.view
                 Main.Topmost = true;                
             }
 
+        }
+
+        private void btnRetourPartie_Click(object sender, RoutedEventArgs e)
+        {
+            LaPartie.FermerEcranOptions();
         }
     }
 }
