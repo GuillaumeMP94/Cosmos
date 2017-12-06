@@ -19,7 +19,7 @@
             <TextBlock x:Name="txBlPBA" Text="BLINDAGE" Foreground="Red"
                        VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,5,0,0"
                        FontSize="30" FontWeight="Bold" TextAlignment="Center"/>
-
+            <Image Name="imgCibleJ2" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Source="/images/partie/Cible.png" Visibility="Hidden"/>
             <Border Margin="5,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="Red"
                     DataContext="{Binding Joueur2}">
@@ -31,7 +31,7 @@
 
                 </Border>
             </Border>
-
+            <Image Name="imgCibleJ1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" Source="/images/partie/Cible.png" Visibility="Hidden"/>
             <TextBlock x:Name="txBltxtPBJ" Text="BLINDAGE" Foreground="DarkGoldenrod"
                        VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,5"
                        FontWeight="Bold" FontSize="30"/>
@@ -39,7 +39,7 @@
             <Border Margin="5,0,0,55" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="DarkGoldenrod"
                     DataContext="{Binding Joueur1}">
-
+    
                 <Border Margin="5,5,5,5"
                         BorderThickness="3" BorderBrush="DarkGoldenrod">
 
@@ -303,6 +303,8 @@
             <Border Name="emplacementUnite1J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5">
                 <Image Name="imgUnite1J2" Stretch="Fill"/>
             </Border>
+            <Image Name="imgAttaque1J2" Source="/images/partie/MissileAttaqueJoueur2.png" Grid.Column="0" Grid.Row="0" Visibility="Hidden"/>
+            <Image Name="imgCible1J2" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="0" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite1J2" Height="50" Width="90" Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom"
 
                   HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
@@ -324,7 +326,8 @@
             <Border Name="emplacementUnite2J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="0" Margin="5,5,5,5">
                 <Image Name="imgUnite2J2" Stretch="Fill"/>
             </Border>
-
+            <Image Name="imgAttaque2J2" Source="/images/partie/MissileAttaqueJoueur2.png" Grid.Column="1" Grid.Row="0" Visibility="Hidden"/>
+            <Image Name="imgCible2J2" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="0" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite2J2" Height="50" Width="90" Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom"
 
                   HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
@@ -346,7 +349,8 @@
             <Border Name="emplacementUnite3J2" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2" Grid.Row="0" Margin="5,5,5,5">
                 <Image Name="imgUnite3J2" Stretch="Fill"/>
             </Border>
-
+            <Image Name="imgAttaque3J2" Source="/images/partie/MissileAttaqueJoueur2.png" Grid.Column="2" Grid.Row="0" Visibility="Hidden"/>
+            <Image Name="imgCible3J2" Source="/images/partie/Cible.png" Grid.Column="2" Grid.Row="0" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite3J2" Height="50" Width="90" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom"
 
                   HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
@@ -368,7 +372,8 @@
             <Border Name="emplacementUnite1J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
                 <Image Name="imgUnite1J1" Stretch="Fill"/>
             </Border>
-
+            <Image Name="imgAttaque1J1" Source="/images/partie/MissileAttaqueJoueur1.png" Grid.Column="0" Grid.Row="1" Visibility="Hidden"/>
+            <Image Name="imgCible1J1" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="1" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite1J1" Height="50" Width="90" Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom"
 
                   HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
@@ -390,7 +395,8 @@
             <Border Name="emplacementUnite2J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5">
                 <Image Name="imgUnite2J1" Stretch="Fill"/>
             </Border>
-
+            <Image Name="imgAttaque2J1" Source="/images/partie/MissileAttaqueJoueur2.png" Grid.Column="1" Grid.Row="1" Visibility="Hidden"/>
+            <Image Name="imgCible2J1" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="1" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite2J1" Height="50" Width="90" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
 
                   HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">
@@ -412,7 +418,8 @@
             <Border Name="emplacementUnite3J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="2" Grid.Row="1" Margin="5,5,5,5">
                 <Image Name="imgUnite3J1" Stretch="Fill"/>
             </Border>
-
+            <Image Name="imgAttaque3J1" Source="/images/partie/MissileAttaqueJoueur1.png" Grid.Column="2" Grid.Row="1" Visibility="Hidden"/>
+            <Image Name="imgCible3J1" Source="/images/partie/Cible.png" Grid.Column="2" Grid.Row="1" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite3J1" Height="50" Width="90" Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom"
 
                   HorizontalAlignment="Left" Panel.ZIndex="1" Margin="10,0,0,5">

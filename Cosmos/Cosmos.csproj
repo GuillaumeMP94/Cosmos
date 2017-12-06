@@ -331,6 +331,11 @@
   <ItemGroup>
     <Resource Include="images\partie\victoire.png" />
     <Resource Include="images\partie\defaite.png" />
+    <Resource Include="images\partie\MissileAttaqueJoueur1.png" />
+    <Resource Include="images\partie\MissileAttaqueJoueur2.png" />
+    <Resource Include="images\partie\RaygunAttaqueJoueur1.png" />
+    <Resource Include="images\partie\RaygunAttaqueJoueur2.png" />
+    <Resource Include="images\partie\Cible.png" />
     <Content Include="sons\win.wav" />
     <Resource Include="images\note.png" />
     <Content Include="sons\batiment.wav" />
