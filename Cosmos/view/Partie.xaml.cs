@@ -1076,6 +1076,10 @@ namespace Cosmos.view
         private void AfficherCoupPoosible()
         {
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
+            // Enlever les zooms
+            imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 == null) // TEMP FIX TODO REMOVE
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
@@ -1109,7 +1113,10 @@ namespace Cosmos.view
 
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 0);
             rectZoom.Visibility = Visibility.Hidden;
-            img.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+            // Remettre les zoom
+            imgUnite1J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+            imgUnite2J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+            imgUnite3J1.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
 
             // Enlever les évènement
 
