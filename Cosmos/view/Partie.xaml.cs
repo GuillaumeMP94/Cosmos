@@ -294,11 +294,144 @@ namespace Cosmos.view
             
             RefreshAll();
             if (laTableDeJeu.JoueurActifEst1)
+            {
                 laTableDeJeu.ExecuterAttaque(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
+                AfficherAttaqueJ1(Unite1J1Attack, Unite2J1Attack, Unite3J1Attack);
+            }
             else
+            {
                 laTableDeJeu.ExecuterAttaque(Robot.AttaqueChamp1, Robot.AttaqueChamp2, Robot.AttaqueChamp3);
+                AfficherAttaqueJ2(Robot.AttaqueChamp1, Robot.AttaqueChamp2, Robot.AttaqueChamp3);
+            }
             Temps.Start();
         }
+
+
+        private void AfficherAttaqueJ1(bool champ1, bool champ2, bool champ3)
+        {
+            if (champ1 && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    imgAttaque1J1.Visibility = Visibility.Visible;
+                    if (laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
+                        imgCible1J2.Visibility = Visibility.Visible;
+                    else
+                        imgCibleJ2.Visibility = Visibility.Visible;
+                });
+            }
+            if (champ2 && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    imgAttaque2J1.Visibility = Visibility.Visible;
+                    if (laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null)
+                        imgCible2J2.Visibility = Visibility.Visible;
+                    else
+                        imgCibleJ2.Visibility = Visibility.Visible;
+                    
+                });
+            }
+            if (champ3 && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    imgAttaque3J1.Visibility = Visibility.Visible;
+                    if (laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null)
+                        imgCible3J2.Visibility = Visibility.Visible;
+                    else
+                        imgCibleJ2.Visibility = Visibility.Visible;
+
+                });
+            }
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                //Effacer les icons
+                HideAttaque();
+
+            });
+        }
+        private void AfficherAttaqueJ2(bool champ1, bool champ2, bool champ3)
+        {
+            if (champ1 && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp1)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+
+                    imgAttaque1J2.Visibility = Visibility.Visible;
+                    if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
+                        imgCible1J1.Visibility = Visibility.Visible;
+                    else
+                        imgCibleJ1.Visibility = Visibility.Visible;
+                });
+            }
+            if (champ2 && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp2)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    imgAttaque2J2.Visibility = Visibility.Visible;
+                    if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
+                        imgCible2J1.Visibility = Visibility.Visible;
+                    else
+                        imgCibleJ1.Visibility = Visibility.Visible;
+                });
+            }
+            if (champ3 && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp3)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+
+                    imgAttaque3J2.Visibility = Visibility.Visible;
+                    if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
+                        imgCible3J1.Visibility = Visibility.Visible;
+                    else
+                        imgCibleJ1.Visibility = Visibility.Visible;
+                });
+            }
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                //Effacer les icons
+                HideAttaque();
+
+            });
+        }
+
+        private void HideAttaque()
+        {
+            if (imgCible1J1.Dispatcher.CheckAccess() == true)
+            {
+                CacherAttaque();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    CacherAttaque();
+                });
+            }
+        }
+
+        private void CacherAttaque()
+        {
+            // Cible
+            imgCible1J1.Visibility = Visibility.Hidden;
+            imgCible2J1.Visibility = Visibility.Hidden;
+            imgCible3J1.Visibility = Visibility.Hidden;
+            imgCible1J2.Visibility = Visibility.Hidden;
+            imgCible2J2.Visibility = Visibility.Hidden;
+            imgCible3J2.Visibility = Visibility.Hidden;
+            imgCibleJ1.Visibility = Visibility.Hidden;
+            imgCibleJ2.Visibility = Visibility.Hidden;
+            // Attaque
+            imgAttaque1J1.Visibility = Visibility.Hidden;
+            imgAttaque2J1.Visibility = Visibility.Hidden;
+            imgAttaque3J1.Visibility = Visibility.Hidden;
+            imgAttaque1J2.Visibility = Visibility.Hidden;
+            imgAttaque2J2.Visibility = Visibility.Hidden;
+            imgAttaque3J2.Visibility = Visibility.Hidden;
+
+        }
+
         /// <summary>
         /// Affichange de la phase d'attaque.
         /// </summary>
