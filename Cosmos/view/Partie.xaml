@@ -19,7 +19,7 @@
             <TextBlock x:Name="txBlPBA" Text="BLINDAGE" Foreground="Red"
                        VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5,5,0,0"
                        FontSize="30" FontWeight="Bold" TextAlignment="Center"/>
-            <Image Name="imgCibleJ2" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Source="/images/partie/Cible.png" Visibility="Hidden"/>
+            <Image Name="imgCibleJ2" Panel.ZIndex="50" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Source="/images/partie/Cible.png" Visibility="Hidden"/>
             <Border Margin="5,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
                     BorderThickness="3" BorderBrush="Red"
                     DataContext="{Binding Joueur2}">
@@ -31,7 +31,7 @@
 
                 </Border>
             </Border>
-            <Image Name="imgCibleJ1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" Source="/images/partie/Cible.png" Visibility="Hidden"/>
+            <Image Name="imgCibleJ1" Panel.ZIndex="50" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" Source="/images/partie/Cible.png" Visibility="Hidden"/>
             <TextBlock x:Name="txBltxtPBJ" Text="BLINDAGE" Foreground="DarkGoldenrod"
                        VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,0,0,5"
                        FontWeight="Bold" FontSize="30"/>
@@ -395,7 +395,7 @@
             <Border Name="emplacementUnite2J1" BorderThickness="5" BorderBrush="Transparent" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5">
                 <Image Name="imgUnite2J1" Stretch="Fill"/>
             </Border>
-            <Image Name="imgAttaque2J1" Source="/images/partie/MissileAttaqueJoueur2.png" Grid.Column="1" Grid.Row="1" Visibility="Hidden"/>
+            <Image Name="imgAttaque2J1" Source="/images/partie/MissileAttaqueJoueur1.png" Grid.Column="1" Grid.Row="1" Visibility="Hidden"/>
             <Image Name="imgCible2J1" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="1" Visibility="Hidden"/>
             <Grid Name="grdEmplacementUnite2J1" Height="50" Width="90" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom"
 

@@ -309,7 +309,7 @@ namespace Cosmos.view
 
         private void AfficherAttaqueJ1(bool champ1, bool champ2, bool champ3)
         {
-            if (champ1 && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1)
+            if (champ1 && laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp1 )
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -320,7 +320,7 @@ namespace Cosmos.view
                         imgCibleJ2.Visibility = Visibility.Visible;
                 });
             }
-            if (champ2 && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
+            if (champ2 && laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp2)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -332,7 +332,7 @@ namespace Cosmos.view
                     
                 });
             }
-            if (champ3 && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3)
+            if (champ3 && laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null && !laTableDeJeu.ChampBatailleUnitesJ1.EstEnPreparationChamp3 )
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -353,7 +353,7 @@ namespace Cosmos.view
         }
         private void AfficherAttaqueJ2(bool champ1, bool champ2, bool champ3)
         {
-            if (champ1 && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp1)
+            if (champ1 && laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp1)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -365,7 +365,7 @@ namespace Cosmos.view
                         imgCibleJ1.Visibility = Visibility.Visible;
                 });
             }
-            if (champ2 && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp2)
+            if (champ2 && laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp2)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -376,7 +376,7 @@ namespace Cosmos.view
                         imgCibleJ1.Visibility = Visibility.Visible;
                 });
             }
-            if (champ3 && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp3)
+            if (champ3 && laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null && !laTableDeJeu.ChampBatailleUnitesJ2.EstEnPreparationChamp3)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -839,8 +839,12 @@ namespace Cosmos.view
         /// </summary>
         private void AfficherChampUnites()
         {
+            // Pour pas stacker les events
+            imgUnite1J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite2J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite3J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             // Insérer les img des cartes Unités en jeu du joueur 2 s'il y en a
-            if(laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
+            if (laTableDeJeu.ChampBatailleUnitesJ2.Champ1 != null)
             {
                 txblSlash1J2.Visibility = Visibility.Visible;
                 txblEmplacementUnite1J2Attaque.Visibility = Visibility.Visible;
@@ -850,6 +854,8 @@ namespace Cosmos.view
                     imgUnite1J2.Opacity = 0.5;
                 else
                     imgUnite1J2.Opacity = 1;
+                imgUnite1J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
+              
             }
             else
             {
@@ -868,6 +874,7 @@ namespace Cosmos.view
                     imgUnite2J2.Opacity = 0.5;
                 else
                     imgUnite2J2.Opacity = 1;
+                imgUnite2J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
@@ -886,6 +893,7 @@ namespace Cosmos.view
                     imgUnite3J2.Opacity = 0.5;
                 else
                     imgUnite3J2.Opacity = 1;
+                imgUnite3J2.PreviewMouseLeftButtonUp += Carte_CarteEnJeu_Zoom;
             }
             else
             {
@@ -1213,6 +1221,9 @@ namespace Cosmos.view
             imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite1J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite2J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+            imgUnite3J2.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 == null) // TEMP FIX TODO REMOVE
             {
                 imgUnite1J1.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/partie/jouer.jpg"));
