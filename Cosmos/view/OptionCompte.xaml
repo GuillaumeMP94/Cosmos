@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Cosmos.view"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500">
-
-    <Grid Width="350" Height="auto" HorizontalAlignment="Center" Margin="0,50,0,5">
+    <Grid Name="grdOption">
+        <Grid Name="grdOptions" Visibility="Visible" Width="350" Height="auto" HorizontalAlignment="Center" Margin="0,50,0,5">
 
         <Border Width="auto" Height="auto" Background="Black" Opacity="0.6" Margin="0,15,0,15" CornerRadius="15"/>
 
@@ -15,114 +15,92 @@
             <Image Source="/images/CosmosLogo.png" />
         </Border>
 
-        <Label Height="50" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="30" Margin="0,100,0,0" 
+            <Label Height="50" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="30" Margin="0,100,0,0" 
                HorizontalAlignment="Center" Content="Options du compte" FontWeight="Bold"/>
 
+            <Button Name="btnModifPassword" VerticalAlignment="Top" Cursor="Hand" Margin="0,170,0,0" Height="30"
+                    Width="300" HorizontalAlignment="Center" Click="btnModifPassword_Click" IsEnabled="True">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                                Modifier le mot de passe
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <Label Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,150,0,0" 
-               Width="300" HorizontalAlignment="Center" Content="Nouveau mot de passe :" />
+            <Button Name="btnModifImage" VerticalAlignment="Top" Margin="0,210,0,0" Height="30" Cursor="Arrow"
+                    Width="300" HorizontalAlignment="Center" Click="btnModifImage_Click" IsEnabled="False" Opacity="0.5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                                Modifier l'image de profil
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <Border BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top"
-                Width="300" HorizontalAlignment="Center" Margin="0,185,0,0">
-            <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" IsEnabled="False"
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passNewPassword">
-                <PasswordBox.Background>
-                    <SolidColorBrush Color="Black"
-                         Opacity="0.6" />
-                </PasswordBox.Background>
-            </PasswordBox>
-        </Border>
+            <Button Name="btnModifSupprimerCompte" VerticalAlignment="Top" Margin="0,290,0,0" Height="30" Cursor="Arrow"
+                    Width="300" HorizontalAlignment="Center" Click="btnModifSupprimerCompte_Click" IsEnabled="False" Opacity="0.5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                                Supprimer le compte
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <Label Height="40" VerticalAlignment="Top" Foreground="DarkGoldenrod" FontSize="20" Margin="0,210,0,0"
-               Width="300" HorizontalAlignment="Center" Content="Confirmation du mot de passe :" />
-
-        <Border BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top"
-                Width="300" HorizontalAlignment="Center" Margin="0,245,0,0">
-            <PasswordBox  BorderThickness="0" Foreground="DarkGoldenrod" IsEnabled="False" 
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="passbConfirmeNewPassword">
-                <PasswordBox.Background>
-                    <SolidColorBrush Color="Black"
-                         Opacity="0.8" />
-                </PasswordBox.Background>
-            </PasswordBox>
-        </Border>
-
-        <Button Name="btnModifPassword" VerticalAlignment="Top" Margin="0,290,0,0" Height="30" Cursor="Arrow"
-                Width="300" HorizontalAlignment="Center" Click="btnModifPassword_Click" IsEnabled="False" Opacity="0.5">
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Modifier le mot de passe
-                        </TextBlock>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
-        <Button Name="btnModifImage" VerticalAlignment="Top" Margin="0,335,0,0" Height="30" Cursor="Arrow"
-                Width="300" HorizontalAlignment="Center" Click="btnModifImage_Click" IsEnabled="False" Opacity="0.5">
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Modifier l'image de profil
-                        </TextBlock>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
-        <Button Name="btnModifSupprimerCompte" VerticalAlignment="Top" Margin="0,380,0,0" Height="30" Cursor="Arrow"
-                Width="300" HorizontalAlignment="Center" Click="btnModifSupprimerCompte_Click" IsEnabled="False" Opacity="0.5">
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Supprimer le compte
-                        </TextBlock>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
-        <Button Name="btnScreen" VerticalAlignment="Top" Margin="0,425,0,0" Height="30" Cursor="Hand"
-                Width="300" HorizontalAlignment="Center" Click="btnScreen_Click">
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Name="bor" Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <TextBlock Name="txblScreen" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Mettre en fenêtre mobile
-                        </TextBlock>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <CheckBox Name="chbMusic" IsChecked="{Binding MusicOn}" Height="20" Margin="20,-130,0,0">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2.5" ScaleY="2.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <Label Height="50" FontSize="28" FontWeight="Bold" Foreground="DarkGoldenrod" Content="Musique"  Margin="75,-142,0,0"></Label>
+            <Button Name="btnScreen" VerticalAlignment="Top" Margin="0,250,0,0" Height="30" Cursor="Hand"
+                    Width="300" HorizontalAlignment="Center" Click="btnScreen_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Name="bor" Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock Name="txblScreen" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                                Mettre en fenêtre mobile
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
 
-        <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand"
-                Width="300" HorizontalAlignment="Center" Click="btnMenuPrincipal_Click">
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Menu principal
-                        </TextBlock>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-        <Button Name="btnRetourPartie" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand"
-                Width="300" HorizontalAlignment="Center" Click="btnRetourPartie_Click">
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                            Retour partie
-                        </TextBlock>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <Button Name="btnMenuPrincipal" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand"
+                    Width="300" HorizontalAlignment="Center" Click="btnMenuPrincipal_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                                Menu principal
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Name="btnRetourPartie" VerticalAlignment="Bottom" Margin="0,0,0,30" Height="30" Cursor="Hand"
+                    Width="300" HorizontalAlignment="Center" Click="btnRetourPartie_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
+                                Retour partie
+                            </TextBlock>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

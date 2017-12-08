@@ -135,6 +135,12 @@ namespace Cosmos.view
             TrousseGlobale.PhaseChange += changerPhase;
             TrousseGlobale.RefreshAll += RefreshAllEvent;
             TrousseGlobale.FinPartie += TerminerPartie;
+            TrousseGlobale.JouerSon += PlayASound;
+        }
+
+        private void PlayASound(object sender, JouerSonEventArgs e)
+        {
+            PlaySound(e.URI);
         }
 
         private void TerminerPartie(object sender, FinPartieEventArgs e)
@@ -498,6 +504,7 @@ namespace Cosmos.view
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.FinPartie -= TerminerPartie;
+                TrousseGlobale.JouerSon -= PlayASound;
                 Temps.Stop();
                 PlaySound(Cosmos.Properties.Resources.win);
                 EcranFinDePartie(true);
@@ -509,6 +516,7 @@ namespace Cosmos.view
                 TrousseGlobale.RefreshAll -= RefreshAllEvent;
                 TrousseGlobale.PhaseChange -= changerPhase;
                 TrousseGlobale.FinPartie -= TerminerPartie;
+                TrousseGlobale.JouerSon -= PlayASound;
                 Temps.Stop();
                 PlaySound(Cosmos.Properties.Resources.lost);
                 EcranFinDePartie(false);
@@ -517,8 +525,11 @@ namespace Cosmos.view
 
         private void PlaySound(System.IO.Stream uri)
         {
-            Player = new SoundPlayer(uri);
-            Player.Play();
+            if (Main.MusicOn)
+            {
+                Player = new SoundPlayer(uri);
+                Player.Play();
+            }
         }
         /// <summary>
         /// Fonction qui réaffiche les éléments du xaml et les mets à jour.
@@ -1165,7 +1176,7 @@ namespace Cosmos.view
         /// <param name="victoire"></param>
         public void EcranOptions()
         {
-            ContenuEcran = new OptionCompte(this);
+            ContenuEcran = new OptionCompte(Main, this);
             recRessource.Visibility = Visibility.Visible;
 
             grd1.Children.Add(ContenuEcran);

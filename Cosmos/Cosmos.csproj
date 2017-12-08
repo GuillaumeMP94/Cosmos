@@ -91,6 +91,9 @@
     <Compile Include="view\Campagne.xaml.cs">
       <DependentUpon>Campagne.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\ChangerMotPasse.xaml.cs">
+      <DependentUpon>ChangerMotPasse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\ChoixCible.xaml.cs">
       <DependentUpon>ChoixCible.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\Campagne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ChangerMotPasse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

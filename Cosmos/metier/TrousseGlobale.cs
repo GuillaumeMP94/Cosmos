@@ -8,7 +8,14 @@ namespace Cosmos.metier
 {
     class TrousseGlobale
     {
-
+        public class JouerSonEventArgs : EventArgs
+        {
+            public System.IO.Stream URI { get; set; }
+            public JouerSonEventArgs(System.IO.Stream uri)
+            {
+                URI = uri;
+            }
+        }
         public class ChoisirCibleEventArgs : EventArgs
         {
             public int Cible { get; set; }
@@ -41,11 +48,13 @@ namespace Cosmos.metier
             }
         }
         // Prototypes que doit respecter la méthode qui s'occupera de gérer les évènements
+        public delegate void JouerSonEventHandler(object sender, JouerSonEventArgs e);
         public delegate void ChoisirCibleEventHandler(object sender, ChoisirCibleEventArgs e);
         public delegate void PhaseChangeEventHandler(object sender, PhaseChangeEventArgs e);
         public delegate void RefreshAllEventHandler(object sender, RefreshAllEventArgs e);
         public delegate void FinPartieEventHandler(object sender, FinPartieEventArgs e);
 
+        static public event JouerSonEventHandler JouerSon;
         static public event ChoisirCibleEventHandler ChoisirCible;
         static public event PhaseChangeEventHandler PhaseChange;
         static public event RefreshAllEventHandler RefreshAll;
@@ -72,6 +81,11 @@ namespace Cosmos.metier
         {
             if (FinPartie != null)
                 FinPartie(this, e);
+        }
+        public virtual void OnJouerSon(JouerSonEventArgs e)
+        {
+            if (JouerSon != null)
+                JouerSon(this, e);
         }
     }
 }

@@ -1166,9 +1166,10 @@ namespace Cosmos.metier
         }
 
         private void PlaySound(System.IO.Stream uri)
-        {            
-            Player = new SoundPlayer(uri);
-            Player.Play();
+        {
+            JouerSonEventArgs p = new JouerSonEventArgs(uri);
+            TrousseGlobale TG = new TrousseGlobale();
+            TG.OnJouerSon(p);
         }
     }
 }

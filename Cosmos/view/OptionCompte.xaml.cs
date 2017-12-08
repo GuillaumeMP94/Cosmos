@@ -22,26 +22,46 @@ namespace Cosmos.view
     {
         public MainWindow Main { get; set; }
         public Partie LaPartie { get; set; }
+        public UserControl ContenuEcran { get; set; }
         public OptionCompte(MainWindow main)
         {
             InitializeComponent();
-
             Main = main;
+            chbMusic.Click += PlayStopMusic;
+            this.DataContext = Main;
             btnMenuPrincipal.Visibility = Visibility.Visible;
             btnRetourPartie.Visibility = Visibility.Hidden;
         }
-        public OptionCompte(Partie laPartie)
+
+        private void PlayStopMusic(object sender, RoutedEventArgs e)
+        {
+            if (Main.MusicOn == true)
+            {
+                Main.PlayMusic();
+            }
+            else
+            {
+                Main.Player.Stop();
+            }
+        }
+
+        public OptionCompte(MainWindow main, Partie laPartie)
         {
             InitializeComponent();
-
+            Main = main;
+            this.DataContext = Main;
             LaPartie = laPartie;
             btnRetourPartie.Visibility = Visibility.Visible;
             btnMenuPrincipal.Visibility = Visibility.Hidden;
+            btnModifPassword.Opacity = 0.5;
+            btnModifPassword.IsEnabled = false;
+            btnModifPassword.Cursor = Cursors.Arrow;
         }
 
         private void btnModifPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            grdOptions.Visibility = Visibility.Hidden;
+            EcranChangerMotPasse();
         }
 
         private void btnMenuPrincipal_Click(object sender, RoutedEventArgs e)
@@ -79,7 +99,23 @@ namespace Cosmos.view
             }
 
         }
+        /// <summary>
+        /// Fonction qui ouvre l'écran de changement de mot de passe.
+        /// </summary>
+        public void EcranChangerMotPasse()
+        {
+            ContenuEcran = new ChangerMotPasse(this);
 
+            grdOption.Children.Add(ContenuEcran);
+        }
+        /// <summary>
+        /// Fonction lors de la fermeture de l'écran de changement de mot de passe.
+        /// </summary>
+        public void FermerChangerMotPasse()
+        {
+            grdOption.Children.Remove(ContenuEcran);
+            grdOptions.Visibility = Visibility.Visible;
+        }
         private void btnRetourPartie_Click(object sender, RoutedEventArgs e)
         {
             LaPartie.FermerEcranOptions();
