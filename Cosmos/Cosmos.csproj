@@ -249,6 +249,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="docs\GuideUtilisateurCosmos.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -343,6 +344,7 @@
     <Resource Include="images\partie\Cible.png" />
     <Resource Include="images\partie\MissileAttaqueJoueur1.png" />
     <Resource Include="images\partie\MissileAttaqueJoueur2.png" />
+    <Resource Include="images\questionMark.png" />
     <Content Include="sons\win.wav" />
     <Resource Include="images\note.png" />
     <Content Include="sons\batiment.wav" />

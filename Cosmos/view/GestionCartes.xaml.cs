@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Cosmos.metier;
 using Cosmos.accesBD;
+using System.Diagnostics;
 
 namespace Cosmos.view
 {
@@ -576,7 +577,7 @@ namespace Cosmos.view
                 RefreshQteTotal();
             }
             else
-                lblQteTotale.Content = 0;
+                lblQteTotale.Content = "0/50";
 
             RefreshOnglets();
             RefreshBtnSupprimer();
@@ -593,7 +594,7 @@ namespace Cosmos.view
                 Qte += Convert.ToInt32(qte.Content.ToString());
             }
 
-            lblQteTotale.Content = Qte;
+            lblQteTotale.Content = Qte.ToString() + "/50";
         }
 
         private void RefreshBtnRenommer()
@@ -759,8 +760,15 @@ namespace Cosmos.view
                 grdDeck3.Children.Remove(aRemove);
             }
         }
+
         #endregion
 
-        
+        private void btnAide_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Topmost = false;
+            String fileName = @"P:\Projets\PROJ_4205B6_A17\Cosmos\GuideUtilisateurCosmos.pdf";
+            Process.Start(fileName);
+            
+        }
     }
 }
