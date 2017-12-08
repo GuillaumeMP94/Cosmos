@@ -18,13 +18,14 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Media;
 using System.Threading;
+using System.ComponentModel;
 
 namespace Cosmos
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public UserControl ContenuEcran { get; set; }
         public UserControl ContenuListeAmi { get; set; }
@@ -39,7 +40,37 @@ namespace Cosmos
         public Partie Partie { get; set; }
         public List<Utilisateur> LstAmis { get; set; }
         public SoundPlayer Player { get; set; }
-        public bool MusicOn { get; set; }
+        private bool musicOn = true;
+        public bool MusicOn
+        {
+            get { return musicOn; }
+            set
+            {
+                musicOn = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("MusicOn"));
+                }
+
+            }
+        }
+        private bool aideContextuelle = true;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool AideContextuelle
+        {
+            get { return aideContextuelle; }
+            set
+            {
+                aideContextuelle = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("AideContextuelle"));
+                }
+
+            }
+        }
 
         public MainWindow()
         {

@@ -112,10 +112,13 @@ namespace Cosmos.view
 
         private void PlaySound(System.IO.Stream uri)
         {
-            //SoundPlayer player = new SoundPlayer(uri);            
-            Main.Player = new SoundPlayer(uri);
+            if (Main.MusicOn)
+            {
+                //SoundPlayer player = new SoundPlayer(uri);            
+                Main.Player = new SoundPlayer(uri);
 
-            Main.Player.Play();     
+                Main.Player.Play();     
+            }
         }
 
         private void btnMouseLeave(object sender, MouseEventArgs e)
