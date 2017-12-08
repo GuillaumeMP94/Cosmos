@@ -37,7 +37,6 @@ namespace Cosmos.view
         public List<Image> ImgMainJoueur { get; set; }
         public List<Border> ListBorderImgMainJoueur { get; set; }
         public int IndexCarteZoomer { get; set; }
-
         public DispatcherTimer Temps { get; set; }
         public bool Unite1J1Attack { get; set; }
         public bool Unite2J1Attack { get; set; }

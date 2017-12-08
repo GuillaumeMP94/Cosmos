@@ -18,7 +18,7 @@
 
         <Border Width="300" BorderBrush="DarkGoldenrod" BorderThickness="2" Height="30" VerticalAlignment="Top" Margin="0,120,0,0">
             <TextBox  BorderThickness="0" Foreground="DarkGoldenrod" 
-                     FontSize="18" MaxLength="20" Padding="5,0,0,0" Name="txbPseudo" TextChanged="txbPseudo_TextChanged" KeyUp="txbPseudo_KeyUp">
+                     FontSize="18" MaxLength="20" ToolTip="Veuillez-entrer votre nom d'utilisateur" Padding="5,0,0,0" Name="txbPseudo" TextChanged="txbPseudo_TextChanged" KeyUp="txbPseudo_KeyUp">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black"
                          Opacity="0.6" />
