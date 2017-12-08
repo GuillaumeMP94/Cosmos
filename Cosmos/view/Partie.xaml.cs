@@ -576,8 +576,10 @@ namespace Cosmos.view
         /// <param name="e"></param>
         private void btnAbandonner_Click(object sender, RoutedEventArgs e)
         {
-            TrousseGlobale.PhaseChange -= changerPhase;
             TrousseGlobale.RefreshAll -= RefreshAllEvent;
+            TrousseGlobale.PhaseChange -= changerPhase;
+            TrousseGlobale.FinPartie -= TerminerPartie;
+            TrousseGlobale.JouerSon -= PlayASound;
             Temps.Stop();
             Main.EcranMenuPrincipal();
         }
@@ -873,6 +875,7 @@ namespace Cosmos.view
                 txblEmplacementUnite1J2Attaque.Visibility = Visibility.Hidden;
                 txblEmplacementUnite1J2Vie.Visibility = Visibility.Hidden;
                 imgUnite1J2.Source = null;
+                imgUnite1J2.Opacity = 1;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ2 != null)
             {
@@ -892,6 +895,7 @@ namespace Cosmos.view
                 txblEmplacementUnite2J2Attaque.Visibility = Visibility.Hidden;
                 txblEmplacementUnite2J2Vie.Visibility = Visibility.Hidden;
                 imgUnite2J2.Source = null;
+                imgUnite2J2.Opacity = 1;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ2.Champ3 != null)
             {
@@ -911,6 +915,7 @@ namespace Cosmos.view
                 txblEmplacementUnite3J2Attaque.Visibility = Visibility.Hidden;
                 txblEmplacementUnite3J2Vie.Visibility = Visibility.Hidden;
                 imgUnite3J2.Source = null;
+                imgUnite3J2.Opacity = 1;
             }
             // Insérer les img des cartes Unités en jeu du joueur 1 s'il y en a
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ1 != null)
@@ -931,7 +936,8 @@ namespace Cosmos.view
                 txblEmplacementUnite1J1Attaque.Visibility = Visibility.Hidden;
                 txblEmplacementUnite1J1Vie.Visibility = Visibility.Hidden;
                 imgUnite1J1.Source = null;
-                imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;                
+                imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+                imgUnite1J1.Opacity = 1;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ2 != null)
             {
@@ -952,6 +958,7 @@ namespace Cosmos.view
                 txblEmplacementUnite2J1Vie.Visibility = Visibility.Hidden;
                 imgUnite2J1.Source = null;
                 imgUnite2J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+                imgUnite2J1.Opacity = 1;
             }
             if (laTableDeJeu.ChampBatailleUnitesJ1.Champ3 != null)
             {
@@ -972,6 +979,7 @@ namespace Cosmos.view
                 txblEmplacementUnite3J1Vie.Visibility = Visibility.Hidden;
                 imgUnite3J1.Source = null;                
                 imgUnite3J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
+                imgUnite3J1.Opacity = 1;
             }
             imgUnite1J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;            
             imgUnite2J1.PreviewMouseLeftButtonUp -= ChoisirEmplacementUnite;
@@ -1108,11 +1116,13 @@ namespace Cosmos.view
 
             if(carteMain)
             {
-                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);                
+                IndexCarteZoomer = ImgMainJoueur.IndexOf(img);
+                imgZoomCarte.ToolTip = "Cliquez ici pour jouer la carte ou à coté pour retourner la carte dans votre main.";
             }
             else
             {
-                IndexCarteZoomer = 99; // On met l'index à 99 pour détecter qu'il a clicker sur une carte en jeu.                
+                IndexCarteZoomer = 99; // On met l'index à 99 pour détecter qu'il a clicker sur une carte en jeu. 
+                imgZoomCarte.ToolTip = "Cliquez à coté pour retourner à la partie.";
             }
             imgZoomCarte.Source = img.Source;
             imgZoomCarte.Visibility = Visibility.Visible;
@@ -1216,6 +1226,8 @@ namespace Cosmos.view
         /// <param name="partie"></param>
         public void EcranChoixCible(int cible, int nbCible)
         {
+            if (scvReglement.Visibility == Visibility.Visible)
+                scvReglement.Visibility = Visibility.Hidden;
             ContenuEcran = new ChoixCible(Choix, cible , nbCible , laTableDeJeu, this);
             recRessource.Visibility = Visibility.Visible;
 
@@ -1226,6 +1238,8 @@ namespace Cosmos.view
         /// </summary>
         private void AfficherCoupPoosible()
         {
+            if (scvReglement.Visibility == Visibility.Visible)
+                scvReglement.Visibility = Visibility.Hidden;
             grdCartesEnjeu.SetValue(Panel.ZIndexProperty, 99);
             // Enlever les zooms
             imgUnite1J1.PreviewMouseLeftButtonUp -= Carte_CarteEnJeu_Zoom;
@@ -1328,6 +1342,15 @@ namespace Cosmos.view
         private void btnOptions_Click(object sender, RoutedEventArgs e)
         {
             EcranOptions();
+        }
+
+        private void btnReglement_Click(object sender, RoutedEventArgs e)
+        {
+            if (scvReglement.Visibility == Visibility.Visible)
+                scvReglement.Visibility = Visibility.Hidden;
+            else
+                scvReglement.Visibility = Visibility.Visible;
+            
         }
     }
     /// <summary>

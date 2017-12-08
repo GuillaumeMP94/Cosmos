@@ -62,14 +62,14 @@
                     <ScaleTransform ScaleX="2.5" ScaleY="2.5" />
                 </CheckBox.LayoutTransform>
             </CheckBox>
-            <Label Height="50" FontSize="28" FontWeight="Bold" Foreground="DarkGoldenrod" Content="Musique"  Margin="75,-142,0,0"></Label>
+            <Label Height="50" FontSize="22" FontWeight="Bold" Foreground="DarkGoldenrod" Content="Musique"  Margin="75,-135,0,0"></Label>
             <Button Name="btnScreen" VerticalAlignment="Top" Margin="0,250,0,0" Height="30" Cursor="Hand"
                     Width="300" HorizontalAlignment="Center" Click="btnScreen_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Border Name="bor" Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
                             <TextBlock Name="txblScreen" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-                                Mettre en fenêtre mobile
+                                Sortir du mode plein écran
                             </TextBlock>
                         </Border>
                     </ControlTemplate>

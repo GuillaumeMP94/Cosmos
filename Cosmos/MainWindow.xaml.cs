@@ -76,7 +76,7 @@ namespace Cosmos
         {
             InitializeComponent();
 
-            this.Topmost = true;
+            //this.Topmost = true;
 
             this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/images/bg1.png")));
             

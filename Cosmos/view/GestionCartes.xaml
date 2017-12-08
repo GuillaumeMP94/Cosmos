@@ -53,8 +53,8 @@
         </ScrollViewer>
         <Border Width="450" Height="625" Background="Black" Opacity="0.6" Margin="0,180,30,15" CornerRadius="15" HorizontalAlignment="Right"/>
         <Rectangle Fill="LightGray" Height="30" Width="260" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,50,132"/>
-        <Label Content="Quantité totale :" Foreground="DarkGoldenrod" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,132" FontWeight="Bold" FontSize="20" />
-        <Label Name="lblQteTotale" Content="0" Foreground="DarkGoldenrod" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,100,132" FontWeight="Bold" FontSize="20" />
+        <Label Content="Quantité :" Foreground="DarkGoldenrod" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,132" FontWeight="Bold" FontSize="20" />
+        <Label Name="lblQteTotale" Content="0/50" Foreground="DarkGoldenrod" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,90,132" FontWeight="Bold" FontSize="20" />
         <TabControl Name="tbcDecksUtilisateurs" Width="400" Height="500" Margin="0,130,50,60" HorizontalAlignment="Right" Background="LightGray" SelectionChanged="tbcDecksUtilisateurs_SelectionChanged">
             <TabItem Name="tbiEmplacement1" Header="Emplacement vide" FontWeight="Bold" Foreground="DarkGoldenrod">
                 <ScrollViewer>
@@ -177,7 +177,17 @@
         <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
                    PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp" Cursor="Hand"/>
 
-        <Image Name="imgZoomCarte" Height="500" VerticalAlignment="Top"
+        <Image Name="imgZoomCarte" ToolTip="Cliquez ici pour l'ajouter au deck ou cliquer à coté pour retourner à la liste des cartes." Height="500" VerticalAlignment="Top"
                HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden"/>
+
+        <Button Width="50" Height="50" ToolTip="Obtenir de l'aide" Name="btnAide" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,20,0"   Cursor="Hand" Click="btnAide_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="45">
+                        <Image Source="/images/questionMark.png" Height="35" VerticalAlignment="Center"></Image>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </UserControl>

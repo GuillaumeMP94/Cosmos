@@ -38,10 +38,12 @@ namespace Cosmos.view
             if (Main.MusicOn == true)
             {
                 Main.PlayMusic();
+                Main.imgMusic.Opacity = 1;
             }
             else
             {
                 Main.Player.Stop();
+                Main.imgMusic.Opacity = 0.5;
             }
         }
 
@@ -84,15 +86,15 @@ namespace Cosmos.view
 
             TextBlock tb = (TextBlock)btnScreen.Template.FindName("txblScreen", btnScreen);
 
-            if(tb.Text == "Mettre en fenêtre mobile")
+            if(tb.Text == "Sortir du mode plein écran")
             {
-                tb.Text = "Mettre en plein écran";
+                tb.Text = "Mode plein écran";
                 Main.WindowState = WindowState.Normal;
                 Main.WindowStyle = WindowStyle.SingleBorderWindow;                
             }
             else
             {                
-                tb.Text = "Mettre en fenêtre mobile";
+                tb.Text = "Sortir du mode plein écran";
                 Main.WindowState = WindowState.Maximized;
                 Main.WindowStyle = WindowStyle.None;
                 Main.Topmost = true;                

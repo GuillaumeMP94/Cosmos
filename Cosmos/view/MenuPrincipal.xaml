@@ -80,7 +80,7 @@
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="17">
-				            Deconnexion
+				            Déconnexion
                         </TextBlock>
                     </Border>
                 </ControlTemplate>
@@ -99,11 +99,11 @@
             </Button.Template>
         </Button>
 
-        <Button Width="75" Height="75" Name="btnListeAmis" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-500,30"   Cursor="Hand" Click="btnListeAmis_Click" >
+        <Button Width="75" Height="75" ToolTip="Ouvrir votre liste d'amis" Name="btnListeAmis" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-500,30"   Cursor="Hand" Click="btnListeAmis_Click" >
             <Button.Template>
                 <ControlTemplate>
                     <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="10">
-                        <Image Source="/images/iconeAmis.png"></Image>
+                        <Image Source="/images/iconeAmis.png" Height="71" VerticalAlignment="Bottom"></Image>
                     </Border>
                 </ControlTemplate>
             </Button.Template>

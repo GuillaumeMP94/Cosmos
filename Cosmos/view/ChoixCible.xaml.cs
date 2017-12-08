@@ -106,6 +106,7 @@ namespace Cosmos.view
             if (Choix.Contains(200))
             {
                 Choix.Remove(200);
+                recChoixJoueur2.ToolTip = "Cliquez ici pour choisir le joueur adverse.";
                 imgChoixJoueur2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -115,6 +116,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(200);
+                    recChoixJoueur2.ToolTip = "Vous avez choisi votre adversaire, cliquez pour l'enlever des cibles.";
                     imgChoixJoueur2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -130,6 +132,7 @@ namespace Cosmos.view
             if (Choix.Contains(100))
             {
                 Choix.Remove(100);
+                recChoixJoueur1.ToolTip = "Cliquez ici pour vous choisir.";
                 imgChoixJoueur1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -139,6 +142,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(100);
+                    recChoixJoueur1.ToolTip = "Vous vous ciblez, cliquez pour l'enlever des cibles.";
                     imgChoixJoueur1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -184,6 +188,7 @@ namespace Cosmos.view
             if (Choix.Contains(211))
             {
                 Choix.Remove(211);
+                recBatiment1J2.ToolTip = "Cliquez ici pour choisir ce bâtiment de votre adversaire.";
                 imgBatiment1J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -193,6 +198,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(211);
+                    recBatiment1J2.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment1J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -208,6 +214,7 @@ namespace Cosmos.view
             if (Choix.Contains(212))
             {
                 Choix.Remove(212);
+                recBatiment2J2.ToolTip = "Cliquez ici pour choisir ce bâtiment de votre adversaire.";
                 imgBatiment2J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -217,6 +224,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(212);
+                    recBatiment2J2.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment2J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -232,6 +240,7 @@ namespace Cosmos.view
             if (Choix.Contains(213))
             {
                 Choix.Remove(213);
+                recBatiment3J2.ToolTip = "Cliquez ici pour choisir ce bâtiment de votre adversaire.";
                 imgBatiment3J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -241,6 +250,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(213);
+                    recBatiment3J2.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment3J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -256,6 +266,7 @@ namespace Cosmos.view
             if (Choix.Contains(214))
             {
                 Choix.Remove(214);
+                recBatiment4J2.ToolTip = "Cliquez ici pour choisir ce bâtiment de votre adversaire.";
                 imgBatiment4J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -265,6 +276,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(214);
+                    recBatiment4J2.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment4J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -280,6 +292,7 @@ namespace Cosmos.view
             if (Choix.Contains(111))
             {
                 Choix.Remove(111);
+                recBatiment1J1.ToolTip = "Cliquez ici pour choisir votre bâtiment.";
                 imgBatiment1J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -289,6 +302,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(111);
+                    recBatiment1J1.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment1J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -304,6 +318,7 @@ namespace Cosmos.view
             if (Choix.Contains(112))
             {
                 Choix.Remove(112);
+                recBatiment2J1.ToolTip = "Cliquez ici pour choisir votre bâtiment.";
                 imgBatiment2J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -313,6 +328,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(112);
+                    recBatiment2J1.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment2J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -328,6 +344,7 @@ namespace Cosmos.view
             if (Choix.Contains(113))
             {
                 Choix.Remove(113);
+                recBatiment3J1.ToolTip = "Cliquez ici pour choisir votre bâtiment.";
                 imgBatiment3J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -337,6 +354,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(113);
+                    recBatiment3J1.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment3J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -352,6 +370,7 @@ namespace Cosmos.view
             if (Choix.Contains(114))
             {
                 Choix.Remove(114);
+                recBatiment4J1.ToolTip = "Cliquez ici pour choisir votre bâtiment.";
                 imgBatiment4J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -361,6 +380,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(114);
+                    recBatiment4J1.ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles.";
                     imgBatiment4J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -376,6 +396,7 @@ namespace Cosmos.view
             if (Choix.Contains(221))
             {
                 Choix.Remove(221);
+                recUnite1J2.ToolTip = "Cliquez ici pour choisir l'unité de votre adversaire.";
                 imgUnite1J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -385,6 +406,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(221);
+                    recUnite1J2.ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles.";
                     imgUnite1J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -400,6 +422,7 @@ namespace Cosmos.view
             if (Choix.Contains(222))
             {
                 Choix.Remove(222);
+                recUnite2J2.ToolTip = "Cliquez ici pour choisir l'unité de votre adversaire.";
                 imgUnite2J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -409,6 +432,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(222);
+                    recUnite2J2.ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles.";
                     imgUnite2J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -424,6 +448,7 @@ namespace Cosmos.view
             if (Choix.Contains(223))
             {
                 Choix.Remove(223);
+                recUnite3J2.ToolTip = "Cliquez ici pour choisir l'unité de votre adversaire.";
                 imgUnite3J2.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -433,6 +458,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(223);
+                    recUnite3J2.ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles.";
                     imgUnite3J2.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -448,6 +474,7 @@ namespace Cosmos.view
             if (Choix.Contains(121))
             {
                 Choix.Remove(121);
+                recUnite1J1.ToolTip = "Cliquez ici pour choisir votre unité.";
                 imgUnite1J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -457,6 +484,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(121);
+                    recUnite1J1.ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles.";
                     imgUnite1J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -472,6 +500,7 @@ namespace Cosmos.view
             if (Choix.Contains(122))
             {
                 Choix.Remove(122);
+                recUnite2J1.ToolTip = "Cliquez ici pour choisir votre unité.";
                 imgUnite2J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -481,6 +510,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(122);
+                    recUnite2J1.ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles.";
                     imgUnite2J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {
@@ -496,6 +526,7 @@ namespace Cosmos.view
             if (Choix.Contains(123))
             {
                 Choix.Remove(123);
+                recUnite3J1.ToolTip = "Cliquez ici pour choisir votre unité.";
                 imgUnite3J1.Visibility = Visibility.Hidden;
                 btnOk.IsEnabled = false;
                 btnOk.Opacity = 0.5;
@@ -505,6 +536,7 @@ namespace Cosmos.view
                 if (Choix.Count < NbCible)
                 {
                     Choix.Add(123);
+                    recUnite3J1.ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles.";
                     imgUnite3J1.Visibility = Visibility.Visible;
                     if (Choix.Count == NbCible)
                     {

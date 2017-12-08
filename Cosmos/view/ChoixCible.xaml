@@ -9,10 +9,10 @@
     <Grid Name="grd1">
         
         <Grid Margin="10,10,10,10" Width="300" x:Name="grd2" HorizontalAlignment="Left">
-            <Rectangle Name="recChoixJoueur2" Visibility="Hidden" Margin="5,0,0,750" Fill="DarkGoldenrod" Opacity="0.7" PreviewMouseLeftButtonDown="recChoixJoueur2_Click"></Rectangle>
-            <Image Name="imgChoixJoueur2" Margin="5,0,0,750" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recChoixJoueur2_Click" Visibility="Hidden"></Image>
-            <Rectangle Name="recChoixJoueur1" Visibility="Hidden" Margin="5,750,0,0" Fill="DarkGoldenrod" PreviewMouseLeftButtonDown="recChoixJoueur1_Click" Opacity="0.7"></Rectangle>
-            <Image Name="imgChoixJoueur1" Margin="5,750,0,0" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recChoixJoueur1_Click" Visibility="Hidden"></Image>
+            <Rectangle Name="recChoixJoueur2" ToolTip="Cliquez ici pour choisir le joueur adverse." Visibility="Hidden" Margin="5,0,0,750" Fill="DarkGoldenrod" Opacity="0.7" PreviewMouseLeftButtonDown="recChoixJoueur2_Click"></Rectangle>
+            <Image Name="imgChoixJoueur2" ToolTip = "Vous avez choisi votre adversaire, cliquez pour l'enlever des cibles." Margin="5,0,0,750" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recChoixJoueur2_Click" Visibility="Hidden"></Image>
+            <Rectangle Name="recChoixJoueur1" ToolTip="Cliquez ici pour vous choisir." Visibility="Hidden" Margin="5,750,0,0" Fill="DarkGoldenrod" PreviewMouseLeftButtonDown="recChoixJoueur1_Click" Opacity="0.7"></Rectangle>
+            <Image Name="imgChoixJoueur1" ToolTip = "Vous vous ciblez, cliquez pour l'enlever des cibles." Margin="5,750,0,0" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recChoixJoueur1_Click" Visibility="Hidden"></Image>
         </Grid>
 
         <Grid Name="grdChoixJoueur" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="320,0,0,10"
@@ -23,15 +23,15 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Rectangle Name="recMainJoueur1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur1_Click">
+            <Rectangle Name="recMainJoueur1" ToolTip="Cliquez ici pour choisir votre main." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur1_Click">
             </Rectangle>
             <Image Name="imgMainJoueur1" Source="/images/partie/Cible.png" Visibility="Hidden" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur1_Click"></Image>
 
-            <Rectangle Name="recDeckJoueur1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur1_Click">
+            <Rectangle Name="recDeckJoueur1" ToolTip="Cliquez ici pour choisir votre deck." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur1_Click">
             </Rectangle>
             <Image Name="imgDeckJoueur1" Source="/images/partie/Cible.png" Visibility="Hidden" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur1_Click"/>
 
-            <Rectangle Name="recRecyclageJoueur1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" PreviewMouseLeftButtonDown="recRecyclageJoueur1_Click">
+            <Rectangle Name="recRecyclageJoueur1" ToolTip="Cliquez ici pour choisir votre recyclage." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" PreviewMouseLeftButtonDown="recRecyclageJoueur1_Click">
             </Rectangle>
             <Image Grid.Column="2" Source="/images/partie/Cible.png" Visibility="Hidden" PreviewMouseLeftButtonDown="recRecyclageJoueur1_Click"/>
 
@@ -46,14 +46,14 @@
             </Grid.ColumnDefinitions>
 
             <Rectangle Name="recMainJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" PreviewMouseLeftButtonDown="recMainJoueur2_Click"/>
-            <Image Name="imgMainJoueur2" Visibility="Hidden" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recMainJoueur2_Click"></Image>
+            <Image Name="imgMainJoueur2" ToolTip="Cliquez ici pour choisir la main de l'adversaire." Visibility="Hidden" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recMainJoueur2_Click"></Image>
             <Rectangle Fill="Black" Grid.Column="0"></Rectangle>
             <Label Name="lblChoix" Grid.Column="0" FontSize="32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Choisissez" Foreground="DarkGoldenrod"></Label>
-            <Rectangle Name="recDeckJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click">
+            <Rectangle Name="recDeckJoueur2" ToolTip="Cliquez ici pour choisir le deck de votre adversaire." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click">
             </Rectangle>
             <Image Name="imgDeckJoueur2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" PreviewMouseLeftButtonDown="recDeckJoueur2_Click"/>
 
-            <Rectangle Name="recRecyclageJoueur2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" PreviewMouseLeftButtonDown="recRecyclageJoueur2_Click">
+            <Rectangle Name="recRecyclageJoueur2" ToolTip="Cliquez ici pour choisir le recyclage de votre adversaire." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" PreviewMouseLeftButtonDown="recRecyclageJoueur2_Click">
             </Rectangle>
             <Image Name="imgRecyclageJoueur2" Visibility="Hidden" Grid.Column="2" Source="/images/partie/Cible.png" PreviewMouseLeftButtonDown="recRecyclageJoueur2_Click"/>
 
@@ -72,36 +72,36 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Name="recBatiment1J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment1J2_Click">
+            <Rectangle Name="recBatiment1J2" ToolTip="Cliquez ici pour choisir ce bâtiment de votre adversaire." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment1J2_Click">
             </Rectangle>
-            <Image Name="imgBatiment1J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment1J2_Click"/>
-            <Rectangle Name="recBatiment2J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment2J2_Click">
+            <Image Name="imgBatiment1J2" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment1J2_Click"/>
+            <Rectangle Name="recBatiment2J2" ToolTip="Cliquez ici pour choisir ce bâtiment de votre adversaire." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment2J2_Click">
             </Rectangle>
-            <Image Name="imgBatiment2J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment2J2_Click"/>
+            <Image Name="imgBatiment2J2" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recBatiment2J2_Click"/>
 
-            <Rectangle Name="recBatiment3J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment3J2_Click">
+            <Rectangle Name="recBatiment3J2" ToolTip="Cliquez ici pour choisir ce bâtiment de votre adversaire." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment3J2_Click">
             </Rectangle>
-            <Image Name="imgBatiment3J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment3J2_Click"/>
+            <Image Name="imgBatiment3J2" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment3J2_Click"/>
 
-            <Rectangle Name="recBatiment4J2" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment4J2_Click">
+            <Rectangle Name="recBatiment4J2" ToolTip="Cliquez ici pour choisir ce bâtiment de votre adversaire." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment4J2_Click">
             </Rectangle>
-            <Image Name="imgBatiment4J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment4J2_Click"/>
+            <Image Name="imgBatiment4J2" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recBatiment4J2_Click"/>
 
-            <Rectangle Name="recBatiment1J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment1J1_Click">
+            <Rectangle Name="recBatiment1J1" ToolTip="Cliquez ici pour choisir votre bâtiment." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment1J1_Click">
             </Rectangle>
-            <Image Name="imgBatiment1J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment1J1_Click"/>
+            <Image Name="imgBatiment1J1" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment1J1_Click"/>
 
-            <Rectangle Name="recBatiment2J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment2J1_Click">
+            <Rectangle Name="recBatiment2J1" ToolTip="Cliquez ici pour choisir votre bâtiment." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment2J1_Click">
             </Rectangle>
-            <Image Name="imgBatiment2J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment2J1_Click"/>
+            <Image Name="imgBatiment2J1" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="2" PreviewMouseLeftButtonDown="recBatiment2J1_Click"/>
 
-            <Rectangle Name="recBatiment3J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment3J1_Click">
+            <Rectangle Name="recBatiment3J1" ToolTip="Cliquez ici pour choisir votre bâtiment." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment3J1_Click">
             </Rectangle>
-            <Image Name="imgBatiment3J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment3J1_Click"/>
+            <Image Name="imgBatiment3J1" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment3J1_Click"/>
 
-            <Rectangle Name="recBatiment4J1" Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment4J1_Click">
+            <Rectangle Name="recBatiment4J1" ToolTip="Cliquez ici pour choisir votre bâtiment." Visibility="Hidden" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment4J1_Click">
             </Rectangle>
-            <Image Name="imgBatiment4J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment4J1_Click"/>
+            <Image Name="imgBatiment4J1" ToolTip = "Vous avez choisi ce bâtiment, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="3" PreviewMouseLeftButtonDown="recBatiment4J1_Click"/>
 
 
         </Grid>
@@ -118,29 +118,29 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Name="recUnite1J2" Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite1J2_Click">
+            <Rectangle Name="recUnite1J2" ToolTip="Cliquez ici pour choisir l'unité de votre adversaire." Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite1J2_Click">
             </Rectangle>
-            <Image Name="imgUnite1J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite1J2_Click"/>
+            <Image Name="imgUnite1J2" ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite1J2_Click"/>
 
-            <Rectangle Name="recUnite2J2" Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite2J2_Click">
+            <Rectangle Name="recUnite2J2" ToolTip="Cliquez ici pour choisir l'unité de votre adversaire." Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite2J2_Click">
             </Rectangle>
-            <Image Name="imgUnite2J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite2J2_Click"/>
+            <Image Name="imgUnite2J2" ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite2J2_Click"/>
 
-            <Rectangle Name="recUnite3J2" Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite3J2_Click">
+            <Rectangle Name="recUnite3J2" ToolTip="Cliquez ici pour choisir l'unité de votre adversaire." Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite3J2_Click">
             </Rectangle>
-            <Image Name="imgUnite3J2" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="2" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite3J2_Click"/>
+            <Image Name="imgUnite3J2" ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="2" Grid.Row="0" PreviewMouseLeftButtonDown="recUnite3J2_Click"/>
 
-            <Rectangle Name="recUnite1J1" Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite1J1_Click">
+            <Rectangle Name="recUnite1J1" ToolTip="Cliquez ici pour choisir votre unité." Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite1J1_Click">
             </Rectangle>
-            <Image Name="imgUnite1J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite1J1_Click"/>
+            <Image Name="imgUnite1J1" ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="0" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite1J1_Click"/>
 
-            <Rectangle Name="recUnite2J1" Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite2J1_Click">
+            <Rectangle Name="recUnite2J1" ToolTip="Cliquez ici pour choisir votre unité." Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite2J1_Click">
             </Rectangle>
-            <Image Name="imgUnite2J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite2J1_Click"/>
+            <Image Name="imgUnite2J1" ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="1" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite2J1_Click"/>
 
-            <Rectangle Name="recUnite3J1" Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite3J1_Click">
+            <Rectangle Name="recUnite3J1" ToolTip="Cliquez ici pour choisir votre unité." Visibility="Hidden" Margin="2" Fill="DarkGoldenrod" Opacity="0.7" Grid.Column="2" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite3J1_Click">
             </Rectangle>
-            <Image Name="imgUnite3J1" Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="2" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite3J1_Click"/>
+            <Image Name="imgUnite3J1" ToolTip = "Vous avez choisi cette unité, cliquez pour l'enlever des cibles." Visibility="Hidden" Source="/images/partie/Cible.png" Grid.Column="2" Grid.Row="1" PreviewMouseLeftButtonDown="recUnite3J1_Click"/>
             
 
         </Grid>
