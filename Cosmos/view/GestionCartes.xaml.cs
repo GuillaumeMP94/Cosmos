@@ -766,7 +766,7 @@ namespace Cosmos.view
         private void btnAide_Click(object sender, RoutedEventArgs e)
         {
             Main.Topmost = false;
-            String fileName = @"P:\Projets\PROJ_4205B6_A17\Cosmos\GuideUtilisateurCosmos.pdf";
+            String fileName = "GuideUtilisateurCosmos.pdf";
             Process.Start(fileName);
             
         }
