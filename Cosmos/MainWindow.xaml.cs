@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Media;
 using System.Threading;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Cosmos
 {
@@ -260,6 +261,14 @@ namespace Cosmos
                 imgMusic.Opacity = 0.5;
                 MusicOn = false;
             }
+        }
+
+        private void btnAide_Click(object sender, RoutedEventArgs e)
+        {
+            Topmost = false;
+            String fileName = "GuideUtilisateurCosmos.pdf";
+            Process.Start(fileName);
+
         }
     }
 }

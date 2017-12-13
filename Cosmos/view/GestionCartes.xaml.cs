@@ -71,6 +71,7 @@ namespace Cosmos.view
             {
                 #region ImageCarte
                 Image imgCarte = new Image();
+                imgCarte.ToolTip = "Cliquez ici pour agrandir l'image.";
                 imgCarte.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/cartes/" + uneCarte.Nom + ".jpg"));
                 imgCarte.Width = 160;
                 imgCarte.Height = 190;
@@ -200,6 +201,12 @@ namespace Cosmos.view
                     {
                         if (exemplaireAAjouter.Quantite - Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) > 0 && Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) < 3 )
                         {
+                            if (Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) == 2)
+                            {
+                                rectZoom.Visibility = Visibility.Hidden;
+                                imgZoomCarte.Visibility = Visibility.Hidden;
+                                imgZoomCarte.PreviewMouseLeftButtonUp -= ImgZoomCarte_PreviewMouseLeftButtonUp;
+                            }
                             MySqlDeckService.UpdateQteExemplaireDeck(Main.UtilisateurConnecte.DecksUtilisateurs[onglet], exemplaireAAjouter, Convert.ToInt32(LstQteExemplaire[position].Content.ToString()) + 1);
                         }
                     }
@@ -315,6 +322,7 @@ namespace Cosmos.view
 
                 #region Boutons
                 Button btnPlus = new Button();
+                btnPlus.ToolTip = "Ajouter un exemplaire de cette carte au deck.";
                 btnPlus.Click += new RoutedEventHandler(btnPlus_Click);
                 btnPlus.Width = 30;
                 btnPlus.Height = 30;
@@ -324,6 +332,7 @@ namespace Cosmos.view
                 btnPlus.HorizontalAlignment = HorizontalAlignment.Left;
 
                 Button btnMoins = new Button();
+                btnMoins.ToolTip = "Enlever un exemplaire de cette carte au deck.";
                 btnMoins.Click += new RoutedEventHandler(btnMoins_Click);
                 btnMoins.Width = 30;
                 btnMoins.Height = 30;
@@ -333,6 +342,7 @@ namespace Cosmos.view
                 btnMoins.HorizontalAlignment = HorizontalAlignment.Center;
 
                 Button btnEnlever = new Button();
+                btnEnlever.ToolTip = "Enlever tous les exemplaires de cette carte.";
                 btnEnlever.Click += new RoutedEventHandler(btnEnlever_Click);
                 btnEnlever.Width = 30;
                 btnEnlever.Height = 30;

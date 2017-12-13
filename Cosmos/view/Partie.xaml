@@ -503,7 +503,7 @@
                HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden" Cursor="Hand"
                PreviewMouseLeftButtonUp="imgZoomCarte_PreviewMouseLeftButtonUp"/>
         
-        <ScrollViewer Name="scvReglement" Background="Black" Visibility="Hidden" HorizontalAlignment="Right" VerticalScrollBarVisibility="Auto" Width="350" HorizontalScrollBarVisibility="Auto" Margin="0,50,0,140"  >
+        <ScrollViewer Name="scvReglement" Background="Black" Visibility="Hidden" HorizontalAlignment="Right" VerticalScrollBarVisibility="Auto" Width="350" HorizontalScrollBarVisibility="Auto" Margin="0,70,0,130"  >
             <TextBlock Foreground="white" Width="325" TextWrapping="Wrap" TextAlignment="Justify" FontSize="16">
                 <Bold>RÈGLEMENTS</Bold> <LineBreak/>
                 <Bold>Ressources :</Bold> Chaque joueur a accès à trois ressources différentes. Celles-ci permettent de payer le coût des cartes pour pouvoir les jouer. Les trois ressources sont : <LineBreak/><LineBreak/>

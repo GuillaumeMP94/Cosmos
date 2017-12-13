@@ -27,30 +27,17 @@ namespace Cosmos.view
         {
             InitializeComponent();
             Main = main;
-            chbMusic.Click += PlayStopMusic;
+            chbMusic.Click += chbMusic_Click;
             this.DataContext = Main;
             btnMenuPrincipal.Visibility = Visibility.Visible;
             btnRetourPartie.Visibility = Visibility.Hidden;
-        }
-
-        private void PlayStopMusic(object sender, RoutedEventArgs e)
-        {
-            if (Main.MusicOn == true)
-            {
-                Main.PlayMusic();
-                Main.imgMusic.Opacity = 1;
-            }
-            else
-            {
-                Main.Player.Stop();
-                Main.imgMusic.Opacity = 0.5;
-            }
         }
 
         public OptionCompte(MainWindow main, Partie laPartie)
         {
             InitializeComponent();
             Main = main;
+            chbMusic.Click += chbMusicPartie_Click;
             this.DataContext = Main;
             LaPartie = laPartie;
             btnRetourPartie.Visibility = Visibility.Visible;
@@ -58,6 +45,18 @@ namespace Cosmos.view
             btnModifPassword.Opacity = 0.5;
             btnModifPassword.IsEnabled = false;
             btnModifPassword.Cursor = Cursors.Arrow;
+        }
+
+        private void chbMusicPartie_Click(object sender, RoutedEventArgs e)
+        {
+            if (Main.MusicOn == true)
+            {
+                Main.imgMusic.Opacity = 1;
+            }
+            else
+            {
+                Main.imgMusic.Opacity = 0.5;
+            }
         }
 
         private void btnModifPassword_Click(object sender, RoutedEventArgs e)
@@ -121,6 +120,20 @@ namespace Cosmos.view
         private void btnRetourPartie_Click(object sender, RoutedEventArgs e)
         {
             LaPartie.FermerEcranOptions();
+        }
+
+        private void chbMusic_Click(object sender, RoutedEventArgs e)
+        {
+            if (Main.MusicOn == true)
+            {
+                Main.PlayMusic();
+                Main.imgMusic.Opacity = 1;
+            }
+            else
+            {
+                Main.Player.Stop();
+                Main.imgMusic.Opacity = 0.5;
+            }
         }
     }
 }

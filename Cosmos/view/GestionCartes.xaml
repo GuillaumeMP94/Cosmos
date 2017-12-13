@@ -177,17 +177,9 @@
         <Rectangle Name="rectZoom" Fill="Black" Opacity="0.7" Height="auto" Width="auto" Visibility="Hidden"
                    PreviewMouseLeftButtonUp="rectZoom_PreviewMouseLeftButtonUp" Cursor="Hand"/>
 
-        <Image Name="imgZoomCarte" ToolTip="Cliquez ici pour l'ajouter au deck ou cliquer à coté pour retourner à la liste des cartes." Height="500" VerticalAlignment="Top"
+        <Image Name="imgZoomCarte" ToolTip="Cliquez ici pour l'ajouter au deck ou cliquer à côté pour retourner à la liste des cartes." Height="500" VerticalAlignment="Top"
                HorizontalAlignment="Center" Margin="0, 70, 0, 0" Visibility="Hidden"/>
 
-        <Button Width="50" Height="50" ToolTip="Obtenir de l'aide" Name="btnAide" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,20,0"   Cursor="Hand" Click="btnAide_Click" >
-            <Button.Template>
-                <ControlTemplate>
-                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="45">
-                        <Image Source="/images/questionMark.png" Height="35" VerticalAlignment="Center"></Image>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+        
     </Grid>
 </UserControl>

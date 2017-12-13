@@ -581,6 +581,9 @@ namespace Cosmos.view
             TrousseGlobale.FinPartie -= TerminerPartie;
             TrousseGlobale.JouerSon -= PlayASound;
             Temps.Stop();
+            Main.imgMusic.Visibility = Visibility.Visible;
+            if (Main.MusicOn)
+                Main.PlayMusic();
             Main.EcranMenuPrincipal();
         }
         /// <summary>
@@ -1156,6 +1159,9 @@ namespace Cosmos.view
         /// </summary>
         public void FermerEcranFinDePartie()
         {
+            Main.imgMusic.Visibility = Visibility.Visible;
+            if (Main.MusicOn)
+                Main.PlayMusic();
             grd1.Children.Remove(ContenuEcran);
             Main.EcranMenuPrincipal();
         }

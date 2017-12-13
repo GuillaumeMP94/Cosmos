@@ -24,6 +24,15 @@
         <Image Name="imgMusic" Source="/images/note.png" VerticalAlignment="Top" HorizontalAlignment="Left"
                Margin="25,25,0,0" Width="75" PreviewMouseLeftButtonUp="imgMusic_PreviewMouseLeftButtonUp"
                Panel.ZIndex="1" Cursor="Hand"/>
-
+        
+        <Button Width="50" Height="50" ToolTip="Obtenir de l'aide" Name="btnAide" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,20,0"   Cursor="Hand" Click="btnAide_Click" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Background="DarkGoldenrod" BorderThickness="2" BorderBrush="White" CornerRadius="45">
+                        <Image Source="/images/questionMark.png" Height="35" VerticalAlignment="Center"></Image>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>
