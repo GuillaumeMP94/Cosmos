@@ -270,5 +270,10 @@ namespace Cosmos
             Process.Start(fileName);
 
         }
+
+        private void Focus_Main(object sender, MouseButtonEventArgs e)
+        {
+            Topmost = true;
+        }
     }
 }
